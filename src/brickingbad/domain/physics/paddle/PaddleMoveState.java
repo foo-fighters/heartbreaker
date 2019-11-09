@@ -4,8 +4,8 @@ import brickingbad.domain.game.Paddle;
 
 public abstract class PaddleMoveState {
 
-  private Paddle paddle;
-  private Direction direction;
+  private final Paddle paddle;
+  private final Direction direction;
   private final int moveSpeed;
 
   public PaddleMoveState(Paddle paddle, Direction direction) {
