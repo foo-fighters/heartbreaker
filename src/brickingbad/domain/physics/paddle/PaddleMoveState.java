@@ -1,4 +1,19 @@
 package brickingbad.domain.physics.paddle;
 
-public abstract class PaddleMoveState  {
+import brickingbad.domain.game.Paddle;
+
+public abstract class PaddleMoveState {
+
+  private Paddle paddle;
+  private Direction direction;
+  private final int moveSpeed;
+
+  public PaddleMoveState(Paddle paddle, Direction direction) {
+    this.paddle = paddle;
+    this.direction = direction;
+    this.moveSpeed = 10; // TODO: get moveSpeed from some source
+  }
+
+  abstract void updatePosition();
+
 }
