@@ -33,24 +33,24 @@ public class BrickingBadFrame extends JFrame   {
   }
 
   private static void initialize() {
-    panels.add(MainMenuPanel.getInstance(), brickingbad.ui.components.Panel.MAIN_MENU.name());
-    panels.add(BuildingModePanel.getInstance(), brickingbad.ui.components.Panel.BUILDING_MODE.name());
+    panels.add(MainMenuPanel.getInstance(), Panel.MAIN_MENU.name());
+    panels.add(BuildingModePanel.getInstance(), Panel.BUILDING_MODE.name());
   }
 
   public void showBuildingModePanel() {
-    showPanel(brickingbad.ui.components.Panel.BUILDING_MODE);
+    showPanel(Panel.BUILDING_MODE);
   }
 
   public void showRunningModePanel() {
-    showPanel(brickingbad.ui.components.Panel.RUNNING_MODE);
+    showPanel(Panel.RUNNING_MODE);
   }
 
   public void showHelpPanel() {
-    showPanel(brickingbad.ui.components.Panel.HELP);
+    showPanel(Panel.HELP);
   }
 
   public void showLoadGamePanel() {
-    showPanel(brickingbad.ui.components.Panel.LOAD_GAME);
+    showPanel(Panel.LOAD_GAME);
   }
 
   private void showPanel(Panel panel) {
