@@ -1,12 +1,11 @@
 package brickingbad.ui;
 
+import brickingbad.ui.components.Panel;
 import brickingbad.ui.game.BuildingModePanel;
 import brickingbad.ui.menu.MainMenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class BrickingBadFrame extends JFrame   {
 
@@ -34,29 +33,29 @@ public class BrickingBadFrame extends JFrame   {
   }
 
   private static void initialize() {
-    panels.add(MainMenuPanel.getInstance(), "MENU_PANEL");
-    panels.add(BuildingModePanel.getInstance(), "BUILDING_MODE_PANEL");
-  }
-
-  public void showRunningModePanel() {
-    showPanel("RUNNING_MODE_PANEL");
+    panels.add(MainMenuPanel.getInstance(), brickingbad.ui.components.Panel.MAIN_MENU.name());
+    panels.add(BuildingModePanel.getInstance(), brickingbad.ui.components.Panel.BUILDING_MODE.name());
   }
 
   public void showBuildingModePanel() {
-    showPanel("BUILDING_MODE_PANEL");
+    showPanel(brickingbad.ui.components.Panel.BUILDING_MODE);
+  }
+
+  public void showRunningModePanel() {
+    showPanel(brickingbad.ui.components.Panel.RUNNING_MODE);
   }
 
   public void showHelpPanel() {
-    showPanel("HELP_PANEL");
+    showPanel(brickingbad.ui.components.Panel.HELP);
   }
 
   public void showLoadGamePanel() {
-    showPanel("LOAD_GAME_PANEL");
+    showPanel(brickingbad.ui.components.Panel.LOAD_GAME);
   }
 
-  private void showPanel(String name) {
+  private void showPanel(Panel panel) {
     CardLayout layout = (CardLayout) panels.getLayout();
-    layout.show(panels, name);
+    layout.show(panels, panel.name());
   }
 
 }
