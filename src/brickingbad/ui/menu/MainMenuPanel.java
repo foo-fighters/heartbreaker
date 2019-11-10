@@ -42,7 +42,6 @@ public class MainMenuPanel extends JPanel implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    BrickingBadFrame bbFrame = BrickingBadFrame.getInstance();
     if (e.getSource().equals(newGameButton)) {
       bbFrame.showBuildingModePanel();
     } else if (e.getSource().equals(helpButton)) {
