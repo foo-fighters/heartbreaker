@@ -4,9 +4,11 @@ import brickingbad.domain.physics.paddle.Direction;
 
 public class GameController {
 
-  private GameController instance;
+  private static GameController instance;
 
-  public GameController getInstance() {
+  private GameController() { };
+
+  public static GameController getInstance() {
     if (instance == null) {
       instance = new GameController();
     }
