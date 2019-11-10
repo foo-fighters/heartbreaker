@@ -1,5 +1,6 @@
 package brickingbad.ui;
 
+import brickingbad.ui.game.BuildingModePanel;
 import brickingbad.ui.menu.MainMenuPanel;
 
 import javax.swing.*;
@@ -17,7 +18,8 @@ public class BrickingBadFrame extends JFrame {
     panels = new JPanel(new CardLayout());
     add(panels);
 
-    panels.add(MainMenuPanel.getInstance(), "MENUPANEL");
+    panels.add(MainMenuPanel.getInstance(), "MENU_PANEL");
+    panels.add(BuildingModePanel.getInstance(), "BUILDING_MODE_PANEL");
 
     setVisible(true);
   }

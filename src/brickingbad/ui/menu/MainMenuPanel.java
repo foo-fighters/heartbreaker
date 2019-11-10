@@ -9,13 +9,13 @@ public class MainMenuPanel extends JPanel {
 
   private static MainMenuPanel instance;
 
-  private MainMenuPanel() { super(); };
+  private MainMenuPanel() {  };
 
   public static MainMenuPanel getInstance() {
     if (instance == null) {
       instance = new MainMenuPanel();
-      initialize();
     }
+    initialize();
     return instance;
   }
 
