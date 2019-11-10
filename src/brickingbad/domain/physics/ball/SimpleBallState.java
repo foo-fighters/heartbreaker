@@ -2,15 +2,12 @@ package brickingbad.domain.physics.ball;
 
 public class SimpleBallState extends BallState {
 
-
-    public SimpleBallState() {
+    public SimpleBallState(Ball ball) {
+      super(ball);
     }
 
-
-    @java.lang.Override
     void reflect() {
 
     }
-
 
 }
