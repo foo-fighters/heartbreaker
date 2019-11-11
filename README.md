@@ -1,4 +1,4 @@
-# heartbreaker
+# Foo Fighters
 
 * Batuhan Yucer
 * Can Arda Aydin
