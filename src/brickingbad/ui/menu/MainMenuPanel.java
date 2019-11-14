@@ -9,8 +9,6 @@ import java.awt.event.ActionListener;
 
 public class MainMenuPanel extends JPanel implements ActionListener {
 
-  private static MainMenuPanel instance;
-
   private final BrickingBadFrame bbFrame = BrickingBadFrame.getInstance();
 
   private static BBMenuButton newGameButton;
@@ -18,26 +16,16 @@ public class MainMenuPanel extends JPanel implements ActionListener {
   private static BBMenuButton helpButton;
   private static BBMenuButton exitButton;
 
-  private MainMenuPanel() {  };
+  public MainMenuPanel() {
+    newGameButton = new BBMenuButton("NEW GAME", this);
+    loadGameButton = new BBMenuButton("LOAD GAME", this);
+    helpButton = new BBMenuButton("HELP", this);
+    exitButton = new BBMenuButton("EXIT", this);
 
-  public static MainMenuPanel getInstance() {
-    if (instance == null) {
-      instance = new MainMenuPanel();
-      initialize();
-    }
-    return instance;
-  }
-
-  private static void initialize() {
-    newGameButton = new BBMenuButton("NEW GAME");
-    loadGameButton = new BBMenuButton("LOAD GAME");
-    helpButton = new BBMenuButton("HELP");
-    exitButton = new BBMenuButton("EXIT");
-
-    instance.add(newGameButton);
-    instance.add(loadGameButton);
-    instance.add(helpButton);
-    instance.add(exitButton);
+    add(newGameButton);
+    add(loadGameButton);
+    add(helpButton);
+    add(exitButton);
   }
 
   @Override

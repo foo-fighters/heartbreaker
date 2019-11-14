@@ -33,8 +33,8 @@ public class BrickingBadFrame extends JFrame {
   }
 
   private static void initialize() {
-    panels.add(MainMenuPanel.getInstance(), Panel.MAIN_MENU.name());
-    panels.add(BuildingModePanel.getInstance(), Panel.BUILDING_MODE.name());
+    panels.add(new MainMenuPanel(), Panel.MAIN_MENU.name());
+    panels.add(new BuildingModePanel(), Panel.BUILDING_MODE.name());
   }
 
   public void showBuildingModePanel() {
