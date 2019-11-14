@@ -7,7 +7,7 @@ import brickingbad.ui.menu.MainMenuPanel;
 import javax.swing.*;
 import java.awt.*;
 
-public class BrickingBadFrame extends JFrame   {
+public class BrickingBadFrame extends JFrame {
 
   private static BrickingBadFrame instance;
 

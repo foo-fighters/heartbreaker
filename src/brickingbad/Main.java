@@ -7,11 +7,9 @@ import javax.swing.*;
 public class Main {
 
   public static void main(String[] args) {
-    SwingUtilities.invokeLater(new Runnable() {
-      public void run() {
-        BrickingBadFrame.getInstance();
-      }
-    });
+    // Runs the code on the AWT thread. Which lets you modify the GUI from other threads.
+    SwingUtilities.invokeLater(() ->
+            BrickingBadFrame.getInstance());
   }
 
 }
