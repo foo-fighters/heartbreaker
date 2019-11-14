@@ -12,6 +12,7 @@ public class BrickingBadFrame extends JFrame {
   private static BrickingBadFrame instance;
 
   private static JPanel panels;
+  private static Panel currentPanel;
 
   public static BrickingBadFrame getInstance() {
     if (instance == null) {
@@ -53,9 +54,14 @@ public class BrickingBadFrame extends JFrame {
     showPanel(Panel.LOAD_GAME);
   }
 
+  public Panel getCurrentPanel() {
+    return currentPanel;
+  }
+
   private void showPanel(Panel panel) {
     CardLayout layout = (CardLayout) panels.getLayout();
     layout.show(panels, panel.name());
+    this.currentPanel = panel;
   }
 
 }
