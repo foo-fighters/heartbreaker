@@ -18,23 +18,25 @@ public class Game {
   private Ground ground;
   private Wall wall;
   private ArrayList<Brick> bricks;
-  private ArrayList<PowerUp> activePowerUps;
-  private ArrayList<PowerUp> storedPowerUps;
+
   private int score;
   private int lives;
   private Date time;
 
+  private ArrayList<PowerUp> activePowerUps;
+  private ArrayList<PowerUp> storedPowerUps;
+
   private ArrayList<GameObjectListener> objectListeners;
+
+  private Game() {
+    objectListeners = new ArrayList<>();
+  }
 
   public static Game getInstance() {
     if (instance == null) {
       instance = new Game();
     }
     return instance;
-  }
-
-  private Game() {
-
   }
 
   public void addObjectListener(GameObjectListener listener) {
