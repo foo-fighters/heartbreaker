@@ -27,6 +27,8 @@ public class GameButtonPanel extends JPanel implements ActionListener {
     add(loadButton);
     add(pauseButton);
     add(quitButton);
+
+    setOpaque(false);
   }
 
   @Override
