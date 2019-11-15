@@ -50,7 +50,8 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Act
 
   @Override
   public void actionPerformed(ActionEvent e) {
-
+    // if source is submit button
+    //  call game controller -> create bricks
   }
 
 }
