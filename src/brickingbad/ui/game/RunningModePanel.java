@@ -6,6 +6,10 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 public class RunningModePanel extends JPanel {
+
     private ArrayList<UIGameObject> uiObjects;
+
+    public RunningModePanel() {
+    }
 
 }
