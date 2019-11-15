@@ -36,6 +36,8 @@ public class MainMenuPanel extends JPanel implements ActionListener {
       bbFrame.showHelpPanel();
     } else if (e.getSource().equals(loadGameButton)) {
       bbFrame.showLoadGamePanel();
+    } else if (e.getSource().equals(exitButton)) {
+      System.exit(0);
     }
   }
 
