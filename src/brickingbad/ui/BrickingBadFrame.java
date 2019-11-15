@@ -76,6 +76,11 @@ public class BrickingBadFrame extends JFrame {
     showPanel(currentPanelName);
   }
 
+  public void showMainMenuPanel() {
+    currentPanelName = Panel.MAIN_MENU;
+    showPanel(currentPanelName);
+  }
+
   public JPanel getCurrentPanel() {
     return panelsMap.get(currentPanelName.name());
   }

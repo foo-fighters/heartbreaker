@@ -29,7 +29,7 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Act
   }
 
   private void initUI() {
-    gameButtonPanel = new GameButtonPanel(this);
+    gameButtonPanel = new GameButtonPanel();
     brickCountPanel = new BrickCountPanel(this);
 
     JPanel container = new JPanel(new BorderLayout());
@@ -50,7 +50,8 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Act
 
   @Override
   public void actionPerformed(ActionEvent e) {
-
+    // if source is submit button
+    //  call game controller -> create bricks
   }
 
 }
