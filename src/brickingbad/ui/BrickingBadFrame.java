@@ -31,7 +31,7 @@ public class BrickingBadFrame extends JFrame {
 
   private BrickingBadFrame() {
     setTitle("Bricking Bad");
-    setSize(1200, 800);
+    setSize(1280, 720);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     panels = new JPanel(new CardLayout());
