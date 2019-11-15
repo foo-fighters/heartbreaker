@@ -12,6 +12,7 @@ import java.util.Date;
 public class Game {
 
     private Game instance;
+
     private Paddle paddle;
     private ArrayList<Ball> balls;
     private Ground ground;
@@ -23,4 +24,5 @@ public class Game {
     private int lives;
     private Date time;
     private GameObjectListener objectListener;
+
 }

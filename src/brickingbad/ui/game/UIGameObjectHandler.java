@@ -15,4 +15,5 @@ public class UIGameObjectHandler implements GameObjectListener {
     public void removeUIObject(GameObject object) {
 
     }
+
 }
