@@ -4,9 +4,11 @@ import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.GameObjectListener;
 import brickingbad.ui.components.BBGameButton;
+import brickingbad.ui.components.BrickCountPanel;
 import brickingbad.ui.components.UIGameObject;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -20,7 +22,10 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Act
   private BBGameButton pauseButton;
   private BBGameButton quitButton;
 
-  public BuildingModePanel() {
+  private BrickCountPanel brickCountPanel;
+
+  public BuildingModePanel(LayoutManager manager) {
+    setLayout(manager);
     uiObjects = new ArrayList<>();
     initUI();
     Game.getInstance().addObjectListener(this);
@@ -32,10 +37,13 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Act
     pauseButton = new BBGameButton("PAUSE", this);
     quitButton = new BBGameButton("QUIT", this);
 
+    brickCountPanel = new BrickCountPanel(this);
+
     add(saveButton);
     add(loadButton);
     add(pauseButton);
     add(quitButton);
+    add(brickCountPanel);
   }
 
   @Override
