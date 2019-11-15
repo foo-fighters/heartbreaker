@@ -1,4 +1,6 @@
-package brickingbad.ui.components;
+package brickingbad.ui.components.containers;
+
+import brickingbad.ui.components.BBGameButton;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
