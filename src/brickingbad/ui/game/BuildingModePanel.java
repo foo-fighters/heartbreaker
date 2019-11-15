@@ -1,5 +1,6 @@
 package brickingbad.ui.game;
 
+import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.GameObjectListener;
 import brickingbad.ui.components.UIGameObject;
@@ -13,18 +14,15 @@ public class BuildingModePanel extends JPanel implements GameObjectListener {
 
   public BuildingModePanel() {
     uiObjects = new ArrayList<>();
+    Game.getInstance().addObjectListener(this);
 
     JLabel tempLabel = new JLabel("THIS IS THE BUILDING MODE!");
     add(tempLabel);
   }
 
-  public void addUIObject(GameObject gameObject) {
-    uiObjects.add(new UIGameObject(gameObject, this));
-  }
-
   @Override
   public void addObject(GameObject object) {
-
+    uiObjects.add(new UIGameObject(object, this));
   }
 
   @Override

@@ -2,7 +2,7 @@ package brickingbad.ui;
 
 import brickingbad.ui.components.Panel;
 import brickingbad.ui.game.BuildingModePanel;
-import brickingbad.ui.game.HelpPanel;
+import brickingbad.ui.menu.HelpPanel;
 import brickingbad.ui.game.RunningModePanel;
 import brickingbad.ui.menu.LoadPanel;
 import brickingbad.ui.menu.MainMenuPanel;

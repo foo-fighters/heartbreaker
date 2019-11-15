@@ -1,4 +1,4 @@
-package brickingbad.ui.game;
+package brickingbad.ui.menu;
 
 import javax.swing.*;
 

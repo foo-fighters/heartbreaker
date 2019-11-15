@@ -11,19 +11,34 @@ import java.util.Date;
 
 public class Game {
 
-    private Game instance;
+  private static Game instance;
 
-    private Paddle paddle;
-    private ArrayList<Ball> balls;
-    private Ground ground;
-    private Wall wall;
-    private ArrayList<Brick> bricks;
-    private ArrayList<PowerUp> activePowerUps;
-    private ArrayList<PowerUp> storedPowerUps;
-    private int score;
-    private int lives;
-    private Date time;
+  private Paddle paddle;
+  private ArrayList<Ball> balls;
+  private Ground ground;
+  private Wall wall;
+  private ArrayList<Brick> bricks;
+  private ArrayList<PowerUp> activePowerUps;
+  private ArrayList<PowerUp> storedPowerUps;
+  private int score;
+  private int lives;
+  private Date time;
 
-    private ArrayList<GameObjectListener> objectListeners;
+  private ArrayList<GameObjectListener> objectListeners;
+
+  public static Game getInstance() {
+    if (instance == null) {
+      instance = new Game();
+    }
+    return instance;
+  }
+
+  private Game() {
+
+  }
+
+  public void addObjectListener(GameObjectListener listener) {
+    objectListeners.add(listener);
+  }
 
 }
