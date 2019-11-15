@@ -5,12 +5,10 @@ import brickingbad.ui.menu.MainMenuPanel;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-public class BBMenuButton extends JButton {
+public class BBMenuButton extends BBButton {
 
   public BBMenuButton(String text, ActionListener listener) {
-    setText(text);
-    setSize(100, 70);
-    addActionListener(listener);
+    super(text, listener);
   }
 
 }

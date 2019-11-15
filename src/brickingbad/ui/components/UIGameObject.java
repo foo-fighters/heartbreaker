@@ -14,12 +14,20 @@ public class UIGameObject implements Drawable {
     private GameObject gameObject;
     private JPanel panel;
 
+    public UIGameObject(GameObject gameObject, JPanel panel) {
+        this.gameObject = gameObject;
+        this.panel = panel;
+    }
+
     @Override
     public void draw(Graphics g) {
 
     }
 
-    public UIGameObject(Image sprite) {
-        this.sprite = sprite;
+    private void createSprite() {
+        // check gameobject class
+        // obtain sprite
     }
+
+
 }

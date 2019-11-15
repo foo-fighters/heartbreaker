@@ -2,10 +2,15 @@ package brickingbad.ui;
 
 import brickingbad.ui.components.Panel;
 import brickingbad.ui.game.BuildingModePanel;
+import brickingbad.ui.menu.HelpPanel;
+import brickingbad.ui.game.RunningModePanel;
+import brickingbad.ui.menu.LoadPanel;
 import brickingbad.ui.menu.MainMenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BrickingBadFrame extends JFrame {
 
@@ -13,10 +18,13 @@ public class BrickingBadFrame extends JFrame {
 
   private static JPanel panels;
 
+  private static Panel currentPanelName;
+  private static Map<Panel, JPanel> panelsMap;
+
   public static BrickingBadFrame getInstance() {
     if (instance == null) {
       instance = new BrickingBadFrame();
-      initialize();
+      initializePanels();
     }
     return instance;
   }
@@ -30,30 +38,49 @@ public class BrickingBadFrame extends JFrame {
     add(panels);
 
     setVisible(true);
+    setResizable(false);
   }
 
-  private static void initialize() {
-    panels.add(new MainMenuPanel(), Panel.MAIN_MENU.name());
-    panels.add(new BuildingModePanel(), Panel.BUILDING_MODE.name());
+  private static void initializePanels() {
+    panelsMap = new HashMap<>();
+    panelsMap.put(Panel.MAIN_MENU, new MainMenuPanel());
+    panelsMap.put(Panel.BUILDING_MODE, new BuildingModePanel());
+    panelsMap.put(Panel.RUNNING_MODE, new RunningModePanel());
+    panelsMap.put(Panel.LOAD_GAME, new LoadPanel());
+    panelsMap.put(Panel.HELP, new HelpPanel());
+
+    panelsMap.forEach((panelEnum, panel) -> {
+      panels.add(panel, panelEnum.name());
+    });
+
+    showPanel(Panel.MAIN_MENU);
   }
 
   public void showBuildingModePanel() {
-    showPanel(Panel.BUILDING_MODE);
+    currentPanelName = Panel.BUILDING_MODE;
+    showPanel(currentPanelName);
   }
 
   public void showRunningModePanel() {
-    showPanel(Panel.RUNNING_MODE);
+    currentPanelName = Panel.RUNNING_MODE;
+    showPanel(currentPanelName);
   }
 
   public void showHelpPanel() {
-    showPanel(Panel.HELP);
+    currentPanelName = Panel.HELP;
+    showPanel(currentPanelName);
   }
 
   public void showLoadGamePanel() {
-    showPanel(Panel.LOAD_GAME);
+    currentPanelName = Panel.LOAD_GAME;
+    showPanel(currentPanelName);
   }
 
-  private void showPanel(Panel panel) {
+  public JPanel getCurrentPanel() {
+    return panelsMap.get(currentPanelName.name());
+  }
+
+  private static void showPanel(Panel panel) {
     CardLayout layout = (CardLayout) panels.getLayout();
     layout.show(panels, panel.name());
   }
