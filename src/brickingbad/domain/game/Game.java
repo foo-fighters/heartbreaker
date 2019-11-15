@@ -23,6 +23,7 @@ public class Game {
     private int score;
     private int lives;
     private Date time;
-    private GameObjectListener objectListener;
+
+    private ArrayList<GameObjectListener> objectListeners;
 
 }
