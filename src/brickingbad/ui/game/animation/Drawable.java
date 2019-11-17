@@ -1,4 +1,4 @@
-package brickingbad.ui.components;
+package brickingbad.ui.game.animation;
 
 import java.awt.*;
 

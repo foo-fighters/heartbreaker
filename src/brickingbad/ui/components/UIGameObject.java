@@ -1,11 +1,10 @@
 package brickingbad.ui.components;
 
 import brickingbad.domain.game.GameObject;
+import brickingbad.ui.game.animation.Drawable;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UIGameObject implements Drawable {
 
