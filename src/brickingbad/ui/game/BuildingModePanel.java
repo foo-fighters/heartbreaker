@@ -1,12 +1,15 @@
 package brickingbad.ui.game;
 
+import brickingbad.domain.game.Ball;
 import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.GameObjectListener;
+import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.components.BBGameButton;
 import brickingbad.ui.components.containers.BrickCountPanel;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.GameButtonPanel;
+import brickingbad.ui.game.animation.Animator;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -22,17 +25,29 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Act
 
   private ArrayList<UIGameObject> uiObjects;
 
+  private static BuildingModePanel instance;
+
   private GameButtonPanel gameButtonPanel;
   private BrickCountPanel brickCountPanel;
 
   private BufferedImage background;
 
-  public BuildingModePanel() {
+  private BuildingModePanel() {
+    Animator animate = new Animator();
     setLayout(new BorderLayout());
     uiObjects = new ArrayList<>();
     initUI();
     loadBackgroundImage();
     Game.getInstance().addObjectListener(this);
+  }
+
+  public static BuildingModePanel getInstance(){
+
+    if (instance == null){
+      instance = new BuildingModePanel();
+    }
+
+    return instance;
   }
 
   private void initUI() {
@@ -66,10 +81,12 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Act
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     g.drawImage(background, 0, 0, null);
+    uiObjects.forEach((obj) -> obj.draw(g));
   }
 
   private void loadBackgroundImage() {
     try {
+      uiObjects.add(new UIGameObject(new Ball(), this));
       this.background = ImageIO.read(new File("resources/sprites/background.png"));
     } catch (IOException e) {
       e.printStackTrace();

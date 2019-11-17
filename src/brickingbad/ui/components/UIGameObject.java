@@ -12,6 +12,7 @@ public class UIGameObject implements Drawable {
     private Image sprite;
     private GameObject gameObject;
     private JPanel panel;
+    int i = 0;
 
     public UIGameObject(GameObject gameObject, JPanel panel) {
         this.gameObject = gameObject;
@@ -20,7 +21,8 @@ public class UIGameObject implements Drawable {
 
     @Override
     public void draw(Graphics g) {
-
+        System.out.println(i);
+        i++;
     }
 
     private void createSprite() {
