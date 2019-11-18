@@ -8,25 +8,38 @@ import java.util.Vector;
 
 public class Animator implements Runnable {
 
-    Vector elementsToDraw = new Vector();
-    int sleepTime = 100;
-    JPanel currentPanel;
+  private final int SLEEP_TIME = 100;
 
-    public Animator() {
-        currentPanel = BrickingBadFrame.getInstance().getCurrentPanel();
-        (new Thread(this)).start();
-    }
+  private static Animator instance;
 
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                Thread.sleep(sleepTime);
-            } catch (InterruptedException e) {
-                System.out.println("sleep hatası");
-            }
-            BrickingBadFrame.getInstance().repaint();
-        }
+  private JPanel currentPanel;
+
+  private Animator() {
+
+  }
+
+  public static Animator getInstance(JPanel currentPanel) {
+    if (instance == null) {
+      instance = new Animator();
     }
+    instance.currentPanel = currentPanel;
+    return instance;
+  }
+
+  public void start() {
+    (new Thread(instance)).start();
+  }
+
+  @Override
+  public void run() {
+    while (true) {
+      try {
+        Thread.sleep(SLEEP_TIME);
+      } catch (InterruptedException e) {
+        System.out.println("Program interrupted.");
+      }
+      BrickingBadFrame.getInstance().repaint();
+    }
+  }
 
 }

@@ -6,7 +6,6 @@ import brickingbad.ui.menu.HelpPanel;
 import brickingbad.ui.game.RunningModePanel;
 import brickingbad.ui.menu.LoadPanel;
 import brickingbad.ui.menu.MainMenuPanel;
-import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +19,7 @@ public class BrickingBadFrame extends JFrame {
   private static JPanel panels;
 
   private static Panel currentPanelName;
-  private static Map<String, JPanel> panelsMap;
+  private static Map<Panel, JPanel> panelsMap;
 
   public static BrickingBadFrame getInstance() {
     if (instance == null) {
@@ -45,14 +44,14 @@ public class BrickingBadFrame extends JFrame {
   private static void initializePanels() {
     currentPanelName = Panel.MAIN_MENU;
     panelsMap = new HashMap<>();
-    panelsMap.put(Panel.MAIN_MENU.name(), new MainMenuPanel());
-    panelsMap.put(Panel.BUILDING_MODE.name(), BuildingModePanel.getInstance());
-    panelsMap.put(Panel.RUNNING_MODE.name(), new RunningModePanel());
-    panelsMap.put(Panel.LOAD_GAME.name(), new LoadPanel());
-    panelsMap.put(Panel.HELP.name(), new HelpPanel());
+    panelsMap.put(Panel.MAIN_MENU, MainMenuPanel.getInstance());
+    panelsMap.put(Panel.BUILDING_MODE, BuildingModePanel.getInstance());
+    panelsMap.put(Panel.RUNNING_MODE, RunningModePanel.getInstance());
+    panelsMap.put(Panel.LOAD_GAME, LoadPanel.getInstance());
+    panelsMap.put(Panel.HELP, HelpPanel.getInstance());
 
-    panelsMap.forEach((panelName, panel) -> {
-      panels.add(panel, panelName);
+    panelsMap.forEach((panelEnum, panel) -> {
+      panels.add(panel, panelEnum.name());
     });
 
     showPanel(Panel.MAIN_MENU);
@@ -84,7 +83,7 @@ public class BrickingBadFrame extends JFrame {
   }
 
   public JPanel getCurrentPanel() {
-    return panelsMap.get(currentPanelName.name());
+    return panelsMap.get(currentPanelName);
   }
 
   private static void showPanel(Panel panel) {
