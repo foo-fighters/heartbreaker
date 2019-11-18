@@ -45,11 +45,11 @@ public class BrickingBadFrame extends JFrame {
   private static void initializePanels() {
     currentPanelName = Panel.MAIN_MENU;
     panelsMap = new HashMap<>();
-    panelsMap.put(Panel.MAIN_MENU.name(), new MainMenuPanel());
+    panelsMap.put(Panel.MAIN_MENU.name(), MainMenuPanel.getInstance());
     panelsMap.put(Panel.BUILDING_MODE.name(), BuildingModePanel.getInstance());
-    panelsMap.put(Panel.RUNNING_MODE.name(), new RunningModePanel());
-    panelsMap.put(Panel.LOAD_GAME.name(), new LoadPanel());
-    panelsMap.put(Panel.HELP.name(), new HelpPanel());
+    panelsMap.put(Panel.RUNNING_MODE.name(), RunningModePanel.getInstance());
+    panelsMap.put(Panel.LOAD_GAME.name(), LoadPanel.getInstance());
+    panelsMap.put(Panel.HELP.name(), HelpPanel.getInstance());
 
     panelsMap.forEach((panelName, panel) -> {
       panels.add(panel, panelName);

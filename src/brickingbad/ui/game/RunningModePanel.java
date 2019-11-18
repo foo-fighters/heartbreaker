@@ -10,21 +10,30 @@ import java.util.ArrayList;
 
 public class RunningModePanel extends JPanel implements GameObjectListener {
 
-    private ArrayList<UIGameObject> uiObjects;
+  private static RunningModePanel instance;
 
-    public RunningModePanel() {
-        uiObjects = new ArrayList<>();
-        Game.getInstance().addObjectListener(this);
+  private ArrayList<UIGameObject> uiObjects;
+
+  private RunningModePanel() {
+    uiObjects = new ArrayList<>();
+    Game.getInstance().addObjectListener(this);
+  }
+
+  public static RunningModePanel getInstance() {
+    if (instance == null) {
+      instance = new RunningModePanel();
     }
+    return instance;
+  }
 
-    @Override
-    public void addObject(GameObject object) {
-        uiObjects.add(new UIGameObject(object, this));
-    }
+  @Override
+  public void addObject(GameObject object) {
+    uiObjects.add(new UIGameObject(object, this));
+  }
 
-    @Override
-    public void removeObject(GameObject object) {
+  @Override
+  public void removeObject(GameObject object) {
 
-    }
+  }
 
 }
