@@ -12,20 +12,20 @@ public class Game {
 
     private static Game instance;
 
-    private Paddle paddle;
-    private ArrayList<Ball> balls;
-    private Ground ground;
-    private Wall wall;
-    private ArrayList<Brick> bricks;
+    public Paddle paddle;
+    public ArrayList<Ball> balls;
+    public Ground ground;
+    public Wall wall;
+    public ArrayList<Brick> bricks;
 
-    private int score;
-    private int lives;
-    private Date time;
+    public int score;
+    public int lives;
+    public Date time;
 
-    private ArrayList<PowerUp> activePowerUps;
-    private ArrayList<PowerUp> storedPowerUps;
+    public ArrayList<PowerUp> activePowerUps;
+    public ArrayList<PowerUp> storedPowerUps;
 
-    private ArrayList<GameObjectListener> objectListeners;
+    public ArrayList<GameObjectListener> objectListeners;
 
     private Game() {
         objectListeners = new ArrayList<>();

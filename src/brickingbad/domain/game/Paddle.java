@@ -14,7 +14,7 @@ public class Paddle extends GameObject {
   private double angularVelocity;
   public boolean isMagnetized;
 
-  private Paddle(){
+  public Paddle(){
     setIdleMove();
     setIdleRotate();
     position = new Vector(GameConstants.screenWidth / 2, GameConstants.screenHeight - GameConstants.paddleHeight);
