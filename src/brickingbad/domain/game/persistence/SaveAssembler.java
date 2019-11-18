@@ -7,14 +7,14 @@ import brickingbad.domain.game.brick.Brick;
 import java.util.ArrayList;
 
 /**
- * GameDTOAssembler implements the 'assemble' method that takes
- * in a Game object and converts it into the GameDTO POJO
+ * SaveAssembler implements the 'assemble' method that takes
+ * in a Game object and converts it into the Save POJO
  * so that it can be serialized easily.
  */
-public class GameDTOAssembler {
+public class SaveAssembler {
 
-  public static GameDTO assemble(Game game) {
-    GameDTO dto = new GameDTO();
+  public static Save assemble(Game game, String name) {
+    Save save = new Save();
 
     int score = game.getScore();
     int lives = game.getLives();
@@ -44,18 +44,19 @@ public class GameDTOAssembler {
       brickY[i] = brick.getPosition().getY();
     }
 
-    dto.setScore(score);
-    dto.setLives(lives);
-    dto.setBallVelX(ballVelX);
-    dto.setBallVelY(ballVelY);
-    dto.setBallX(ballX);
-    dto.setBallY(ballY);
-    dto.setBrickX(brickX);
-    dto.setBrickY(brickY);
-    dto.setPaddleX(paddleX);
-    dto.setPaddleY(paddleY);
+    save.setName(name);
+    save.setScore(score);
+    save.setLives(lives);
+//    dto.setBallVelX(ballVelX);
+//    dto.setBallVelY(ballVelY);
+//    dto.setBallX(ballX);
+//    dto.setBallY(ballY);
+//    dto.setBrickX(brickX);
+//    dto.setBrickY(brickY);
+    save.setPaddleX(paddleX);
+    save.setPaddleY(paddleY);
 
-    return dto;
+    return save;
   }
 
 }

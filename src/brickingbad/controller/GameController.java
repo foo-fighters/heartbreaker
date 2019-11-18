@@ -1,8 +1,8 @@
 package brickingbad.controller;
 
 import brickingbad.domain.game.Game;
-import brickingbad.domain.game.persistence.GameDTO;
-import brickingbad.domain.game.persistence.GameDTOAssembler;
+import brickingbad.domain.game.persistence.Save;
+import brickingbad.domain.game.persistence.SaveAssembler;
 import brickingbad.domain.physics.paddle.Direction;
 import brickingbad.services.persistence.GameRepository;
 
@@ -19,9 +19,9 @@ public class GameController {
     return instance;
   }
 
-  public void saveGame() {
+  public void saveGame(String name) {
     Game game = Game.getInstance();
-    GameDTO dto = GameDTOAssembler.assemble(game);
+    Save dto = SaveAssembler.assemble(game, name);
     GameRepository.saveGame(dto);
   }
 
