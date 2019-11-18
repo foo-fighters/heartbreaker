@@ -2,9 +2,7 @@ package brickingbad.services;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
-import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
@@ -17,7 +15,7 @@ public class DatabaseService {
           "mongodb+srv://admin:comp302@bricking-bad-lw1qn.mongodb.net/test?retryWrites=true&w=majority");
 
   private static CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
-                                                   fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+          fromProviders(PojoCodecProvider.builder().automatic(true).build()));
 
   private static MongoClient mongoClient = new MongoClient(uri);
   private static MongoDatabase database = mongoClient.getDatabase("brickingBad")

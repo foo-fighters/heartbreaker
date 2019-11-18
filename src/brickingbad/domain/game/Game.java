@@ -2,9 +2,7 @@ package brickingbad.domain.game;
 
 import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.game.border.*;
-import brickingbad.domain.game.alien.*;
 import brickingbad.domain.game.brick.*;
-import brickingbad.domain.game.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,4 +49,35 @@ public class Game {
 
     public void play() {
     }
+
+    // GETTERS & SETTERS
+
+    public ArrayList<Ball> getBalls() {
+        return balls;
+    }
+
+    public Paddle getPaddle() {
+        return paddle;
+    }
+
+    public ArrayList<Brick> getBricks() {
+        return bricks;
+    }
+
+    public ArrayList<PowerUp> getActivePowerUps() {
+        return activePowerUps;
+    }
+
+    public ArrayList<PowerUp> getStoredPowerUps() {
+        return storedPowerUps;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
 }
