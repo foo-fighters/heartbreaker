@@ -4,12 +4,12 @@ public class GameDTO {
 
   private int score;
   private int lives;
-  private int ballX;
-  private int ballY;
   private int paddleX;
   private int paddleY;
   private int[] brickX;
   private int[] brickY;
+  private int[] ballX;
+  private int[] ballY;
 
   public int getScore() {
     return score;
@@ -27,19 +27,19 @@ public class GameDTO {
     this.lives = lives;
   }
 
-  public int getBallX() {
+  public int[] getBallX() {
     return ballX;
   }
 
-  public void setBallX(int ballX) {
+  public void setBallX(int[] ballX) {
     this.ballX = ballX;
   }
 
-  public int getBallY() {
+  public int[] getBallY() {
     return ballY;
   }
 
-  public void setBallY(int ballY) {
+  public void setBallY(int[] ballY) {
     this.ballY = ballY;
   }
 
