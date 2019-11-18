@@ -20,19 +20,4 @@ public class GameRepository {
     gamesCollection.insertOne(save);
   }
 
-  public static void main(String[] args) {
-    Game mockGame = Game.getInstance();
-    mockGame.score = 10;
-    mockGame.lives = 5;
-    mockGame.balls = new ArrayList<>();
-    mockGame.bricks = new ArrayList<>();
-    mockGame.paddle = new Paddle();
-    mockGame.bricks.add(new SimpleBrick());
-    mockGame.bricks.add(new SimpleBrick());
-    mockGame.bricks.add(new SimpleBrick());
-    mockGame.bricks.add(new SimpleBrick());
-    mockGame.balls.add(new Ball(new Vector(10, 10)));
-    GameRepository.saveGame(SaveAssembler.assemble(mockGame, "Mock save"));
-  }
-
 }
