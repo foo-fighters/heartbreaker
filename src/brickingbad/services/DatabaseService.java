@@ -1,4 +1,4 @@
-package brickingbad.services.persistence;
+package brickingbad.services;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -22,5 +22,9 @@ public class DatabaseService {
   private static MongoClient mongoClient = new MongoClient(uri);
   private static MongoDatabase database = mongoClient.getDatabase("brickingBad")
                                                      .withCodecRegistry(pojoCodecRegistry);
+
+  public static MongoDatabase getDatabase() {
+    return database;
+  }
 
 }
