@@ -4,12 +4,12 @@ import brickingbad.domain.game.Paddle;
 
 public class IdlePaddleMoveState extends PaddleMoveState {
 
-  public IdlePaddleMoveState(Paddle paddle, Direction direction) {
-    super(paddle, direction);
+  public IdlePaddleMoveState(Paddle paddle) {
+    super(paddle, Direction.STOP);
   }
 
   @Override
-  void updatePosition() {
+  public void updatePosition() {
 
   }
 

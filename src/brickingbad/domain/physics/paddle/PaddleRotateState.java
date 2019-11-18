@@ -14,6 +14,6 @@ public abstract class PaddleRotateState {
     this.rotateSpeed = 10; // TODO: get rotateSpeed from some source.
   }
 
-  abstract void updatePosition();
+  public abstract void updatePosition();
 
 }

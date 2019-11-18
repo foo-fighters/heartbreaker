@@ -1,21 +1,22 @@
 package brickingbad.domain.physics.paddle;
 
+import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.Paddle;
-
-import javax.swing.text.Position;
 
 public class EndPaddleMoveState extends PaddleMoveState{
 
-  private final Position startPosition;
+  private final int startX;
+  private final int startY;
+  private final int moveSpeed = GameConstants.slowPaddleMovementSpeed;
 
-  public EndPaddleMoveState(Paddle paddle, Direction direction, Position startPosition) {
+  public EndPaddleMoveState(Paddle paddle, Direction direction, int startX, int startY) {
     super(paddle, direction);
-    this.startPosition = startPosition;
+    this.startX = startX;
+    this.startY = startY;
   }
 
   @Override
-  void updatePosition() {
-
+  public void updatePosition() {
   }
 
 }

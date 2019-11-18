@@ -1,7 +1,6 @@
 package brickingbad.domain.game;
 
-import brickingbad.domain.physics.paddle.Direction;
-import brickingbad.domain.physics.paddle.PaddleMoveState;
+import brickingbad.domain.physics.paddle.*;
 
 public class Paddle extends GameObject {
 
@@ -9,24 +8,41 @@ public class Paddle extends GameObject {
   private PaddleMoveState moveState;
   private PaddleMoveState rotateState;
   private double angle;
-  private int angularVelocity;
-  private boolean isMagnetized;
+  private double angularVelocity;
+  public boolean isMagnetized;
 
-  public void launchBalls() { }
+  private Paddle(){
+    setIdleMove();
+    setIdleRotate();
+    angle = 0.0;
+    angularVelocity = 0.0;
+    isMagnetized = false;
+  }
 
+  public void launchBalls() {
+    for (Ball ball: currentBalls) {
+      ball.startMovement(angle);
+    }
+  }
 
-  public void updatePosition() { }
+  public void updatePosition() {
+    moveState.updatePosition();
+    rotateState.updatePosition();
+  }
 
   public void reflect(GameObject object) { }
 
-  public void destroy() { }
+  public void startMove(Direction direction) {
+    moveState = new ActivePaddleMoveState(this, direction);
+  }
 
+  public void endMove(Direction direction){
+    moveState = new EndPaddleMoveState(this, direction, xpos, ypos);
+  }
 
-  public void startMove(Direction direction) { }
-
-  public void endMove(Direction direction){ }
-
-  public void setIdleMove(){ }
+  public void setIdleMove(){
+    moveState = new IdlePaddleMoveState(this);
+  }
 
 
   public void startRotate(Direction direction){ }

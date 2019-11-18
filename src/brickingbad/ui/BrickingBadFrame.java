@@ -1,5 +1,6 @@
 package brickingbad.ui;
 
+import brickingbad.domain.game.GameConstants;
 import brickingbad.ui.components.Panel;
 import brickingbad.ui.game.BuildingModePanel;
 import brickingbad.ui.menu.HelpPanel;
@@ -31,7 +32,7 @@ public class BrickingBadFrame extends JFrame {
 
   private BrickingBadFrame() {
     setTitle("Bricking Bad");
-    setSize(1280, 720);
+    setSize(GameConstants.screenWidth, GameConstants.screenHeight);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     panels = new JPanel(new CardLayout());
