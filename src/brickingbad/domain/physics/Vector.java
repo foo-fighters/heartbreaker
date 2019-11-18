@@ -1,30 +1,31 @@
 package brickingbad.domain.physics;
 
-public class Coordinate {
+public class Vector {
 
-    private int xcoor;
-    private int ycoor;
+    private int xval;
+    private int yval;
 
-    public Coordinate(int xcoor, int ycoor){
-        setPosition(xcoor, ycoor);
+    public Vector() {setVector(0, 0);}
+    public Vector(int xval, int yval){
+        setVector(xval, yval);
     }
 
-    public void setPosition(int xcoor, int ycoor){
-        this.xcoor = xcoor;
-        this.ycoor = ycoor;
+    public void setVector(int xval, int yval){
+        this.xval = xval;
+        this.yval = yval;
     }
 
     public int getX(){
-        return xcoor;
+        return xval;
     }
 
     public int getY(){
-        return ycoor;
+        return yval;
     }
 
-    public void add(Coordinate c){
-        xcoor += c.getX();
-        ycoor += c.getY();
+    public void addVector(Vector c){
+        xval += c.getX();
+        yval += c.getY();
     }
 
 }

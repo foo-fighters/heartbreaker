@@ -44,9 +44,9 @@ public class Game {
         objectListeners.add(listener);
     }
 
-    public List<Object> getObjects() {
-        List<Object> gameObject = new ArrayList<Object>();
-        return gameObject;
+    public List<GameObject> getObjects() {
+        List<GameObject> objects = new ArrayList<GameObject>();
+        return objects;
     }
 
     public void play() {

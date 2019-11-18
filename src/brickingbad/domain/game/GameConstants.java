@@ -8,13 +8,16 @@ public class GameConstants {
 
     // Object sizes
     public final static int ballSize = 17;
-    private final static int paddleLength = screenWidth / 10;
+    public final static int paddleLength = screenWidth / 10;
     public final static int paddleThickness = 20;
     public final static int rectangularBrickLength = paddleLength / 5;
     public final static int rectangularBrickThickness = 20;
     public final static int circularBrickSize = 20;
     public final static int alienSize = 50;
     public final static int powerupSize = 20;
+
+    // Ball movement
+    public final static int ballLaunchSpeed = 100;
 
     // Paddle movement
     public final static int regularPaddleMovementSpeed = paddleLength * 2;
@@ -42,8 +45,9 @@ public class GameConstants {
     public final static int chemicalBallDuration = 60;
     public final static int tallerPaddleDuration = 30;
     public final static int magnetDuration = 30;
+    public final static int tallerPaddleMultiplier = 2;
 
     // Extras
     public final static int mineBrickExplosionRadius = paddleLength * 2;
-
+    public final static int paddleHeight = screenHeight / 10;
 }

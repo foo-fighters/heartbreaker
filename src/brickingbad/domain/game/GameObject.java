@@ -1,18 +1,16 @@
 package brickingbad.domain.game;
 
+import brickingbad.domain.physics.Vector;
+
 public abstract  class GameObject {
 
   protected Shape shape;
-  protected int xsize;
-  protected int ysize;
-  protected int xpos;
-  protected int ypos;
-  protected int xvel;
-  protected int yvel;
+  protected Vector size;
+  protected Vector position;
+  protected Vector velocity;
 
   public void updatePosition() {
-    xpos += xvel;
-    ypos += yvel;
+    position.addVector(velocity);
   }
 
   public void reflect(GameObject object) { }
