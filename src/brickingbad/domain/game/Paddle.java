@@ -1,32 +1,68 @@
 package brickingbad.domain.game;
 
-import brickingbad.domain.physics.paddle.Direction;
-import brickingbad.domain.physics.paddle.PaddleMoveState;
+import brickingbad.domain.physics.Vector;
+import brickingbad.domain.physics.paddle.*;
+
+import java.util.ArrayList;
 
 public class Paddle extends GameObject {
 
-  private Ball[] currentBalls;
+  private ArrayList<Ball> currentBalls;
   private PaddleMoveState moveState;
   private PaddleMoveState rotateState;
   private double angle;
-  private int angularVelocity;
-  private boolean isMagnetized;
+  private double angularVelocity;
+  public boolean isMagnetized;
 
-  public void launchBalls() { }
+  private Paddle(){
+    setIdleMove();
+    setIdleRotate();
+    position = new Vector(GameConstants.screenWidth / 2, GameConstants.screenHeight - GameConstants.paddleHeight);
+    velocity = new Vector();
+    size = new Vector(GameConstants.paddleLength, GameConstants.paddleThickness);
+    shape = Shape.RECTANGLE;
+    angle = 0.0;
+    angularVelocity = 0.0;
+    isMagnetized = false;
+    currentBalls = new ArrayList<>();
+  }
 
+  public Vector getPosition(){
+    return position;
+  }
 
-  public void updatePosition() { }
+  public void setPosition(int x, int y){
+    position.setVector(x,y);
+  }
 
-  public void reflect(GameObject object) { }
+  public void launchBalls() {
+    for (Ball ball: currentBalls) {
+      ball.startMovement(angle);
+      currentBalls.remove(ball);
+    }
+  }
 
-  public void destroy() { }
+  private void catchBall(Ball ball){
+    currentBalls.add(ball);
+    ball.stopMovement();
+  }
 
+  public void updatePosition() {
+    moveState.updatePosition();
+    rotateState.updatePosition();
+  }
 
-  public void startMove(Direction direction) { }
+  public void startMove(Direction direction) {
+    moveState = new ActivePaddleMoveState(this, direction);
+  }
 
-  public void endMove(Direction direction){ }
+  public void endMove(Direction direction){
+    moveState = new EndPaddleMoveState(this, direction, position.getX());
+  }
 
-  public void setIdleMove(){ }
+  public void setIdleMove(){
+    moveState = new IdlePaddleMoveState(this);
+  }
 
 
   public void startRotate(Direction direction){ }
@@ -34,8 +70,5 @@ public class Paddle extends GameObject {
   public void endRotate(Direction direction) { }
 
   public void setIdleRotate(){ }
-
-
-  private void clearBalls() { }
 
 }
