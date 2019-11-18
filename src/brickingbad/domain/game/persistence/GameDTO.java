@@ -10,6 +10,8 @@ public class GameDTO {
   private int[] brickY;
   private int[] ballX;
   private int[] ballY;
+  private int[] ballVelX;
+  private int[] ballVelY;
 
   public int getScore() {
     return score;
@@ -41,6 +43,22 @@ public class GameDTO {
 
   public void setBallY(int[] ballY) {
     this.ballY = ballY;
+  }
+
+  public int[] getBallVelX() {
+    return ballVelX;
+  }
+
+  public void setBallVelX(int[] ballVelX) {
+    this.ballVelX = ballVelX;
+  }
+
+  public int[] getBallVelY() {
+    return ballVelY;
+  }
+
+  public void setBallVelY(int[] ballVelY) {
+    this.ballVelY = ballVelY;
   }
 
   public int getPaddleX() {
