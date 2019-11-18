@@ -8,9 +8,10 @@ import java.util.Vector;
 
 public class Animator implements Runnable {
 
+  private final int SLEEP_TIME = 100;
+
   private static Animator instance;
 
-  private int sleepTime = 100;
   private JPanel currentPanel;
 
   private Animator() {
@@ -33,7 +34,7 @@ public class Animator implements Runnable {
   public void run() {
     while (true) {
       try {
-        Thread.sleep(sleepTime);
+        Thread.sleep(SLEEP_TIME);
       } catch (InterruptedException e) {
         System.out.println("Program interrupted.");
       }
