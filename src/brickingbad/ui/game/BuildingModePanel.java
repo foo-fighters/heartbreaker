@@ -21,9 +21,9 @@ import java.util.ArrayList;
 
 public class BuildingModePanel extends JPanel implements GameObjectListener, ActionListener {
 
-  private ArrayList<UIGameObject> uiObjects;
-
   private static BuildingModePanel instance;
+
+  private ArrayList<UIGameObject> uiObjects;
 
   private GameButtonPanel gameButtonPanel;
   private BrickCountPanel brickCountPanel;
@@ -31,7 +31,7 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Act
   private BufferedImage background;
 
   private BuildingModePanel() {
-    Animator animate = new Animator();
+    Animator.getInstance(this).start();
     setLayout(new BorderLayout());
     uiObjects = new ArrayList<>();
     initUI();
@@ -40,11 +40,9 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Act
   }
 
   public static BuildingModePanel getInstance(){
-
     if (instance == null){
       instance = new BuildingModePanel();
     }
-
     return instance;
   }
 

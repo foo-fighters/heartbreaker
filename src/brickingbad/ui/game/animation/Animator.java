@@ -8,12 +8,25 @@ import java.util.Vector;
 
 public class Animator implements Runnable {
 
-  int sleepTime = 100;
-  JPanel currentPanel;
+  private static Animator instance;
 
-  public Animator() {
-    currentPanel = BrickingBadFrame.getInstance().getCurrentPanel();
-    (new Thread(this)).start();
+  private int sleepTime = 100;
+  private JPanel currentPanel;
+
+  private Animator() {
+
+  }
+
+  public static Animator getInstance(JPanel currentPanel) {
+    if (instance == null) {
+      instance = new Animator();
+    }
+    instance.currentPanel = currentPanel;
+    return instance;
+  }
+
+  public void start() {
+    (new Thread(instance)).start();
   }
 
   @Override
