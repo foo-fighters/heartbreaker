@@ -3,6 +3,7 @@ package brickingbad.domain.game;
 import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.game.border.*;
 import brickingbad.domain.game.brick.*;
+import brickingbad.domain.physics.Vector;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,7 +16,7 @@ public class Game {
     private Paddle paddle;
     private ArrayList<Ball> balls;
     private Ground ground;
-    private Wall wall;
+    private ArrayList<Wall> walls;
     private ArrayList<Brick> bricks;
 
     private int score;
@@ -29,6 +30,11 @@ public class Game {
 
     private Game() {
         objectListeners = new ArrayList<>();
+        balls = new ArrayList<>();
+        walls = new ArrayList<>();
+        bricks = new ArrayList<>();
+        activePowerUps = new ArrayList<>();
+        storedPowerUps = new ArrayList<>();
     }
 
     public static Game getInstance() {
@@ -42,15 +48,29 @@ public class Game {
         objectListeners.add(listener);
     }
 
-    public List<GameObject> getObjects() {
-        List<GameObject> objects = new ArrayList<GameObject>();
-        return objects;
+    public void observeObject(GameObject object){
+        for (GameObjectListener listener: objectListeners) {
+            listener.addObject(object);
+        }
+    }
+
+    public void initialize() {
+        paddle = new Paddle();
+        observeObject(paddle);
+        Ball firstBall = new Ball(paddle.getBallStartPosition());
+        observeObject(firstBall);
+        balls.add(firstBall);
     }
 
     public void play() {
     }
 
     // GETTERS & SETTERS
+
+    public List<GameObject> getObjects() {
+        List<GameObject> objects = new ArrayList<>();
+        return objects;
+    }
 
     public ArrayList<Ball> getBalls() {
         return balls;

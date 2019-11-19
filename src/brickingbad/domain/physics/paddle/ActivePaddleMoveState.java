@@ -2,6 +2,7 @@ package brickingbad.domain.physics.paddle;
 
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.Paddle;
+import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
 
 public class ActivePaddleMoveState extends PaddleMoveState {

@@ -1,5 +1,6 @@
 package brickingbad.ui.menu;
 
+import brickingbad.controller.GameController;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.components.BBMenuButton;
 
@@ -41,6 +42,7 @@ public class MainMenuPanel extends JPanel implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     if (e.getSource().equals(newGameButton)) {
       bbFrame.showBuildingModePanel();
+      GameController.getInstance().initializeGame();
     } else if (e.getSource().equals(helpButton)) {
       bbFrame.showHelpPanel();
     } else if (e.getSource().equals(loadGameButton)) {

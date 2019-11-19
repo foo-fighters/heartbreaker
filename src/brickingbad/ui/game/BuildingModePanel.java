@@ -64,7 +64,7 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Act
 
   @Override
   public void removeObject(GameObject object) {
-
+    uiObjects.remove(object);
   }
 
   @Override

@@ -1,5 +1,6 @@
 package brickingbad.domain.game;
 
+import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.paddle.*;
 
@@ -27,11 +28,11 @@ public class Paddle extends GameObject {
     currentBalls = new ArrayList<>();
   }
 
-  public Vector getPosition(){
+  public Vector getPosition() {
     return position;
   }
 
-  public void setPosition(int x, int y){
+  public void setPosition(int x, int y) {
     position.setVector(x,y);
   }
 
@@ -42,9 +43,16 @@ public class Paddle extends GameObject {
     }
   }
 
-  private void catchBall(Ball ball){
+  private void catchBall(Ball ball) {
     currentBalls.add(ball);
     ball.stopMovement();
+  }
+
+  public Vector getBallStartPosition() {
+    double distance = (GameConstants.paddleThickness + GameConstants.ballSize) / 2.0;
+    Vector offset = new Vector((int)Math.round(distance * Math.sin(angle)), -(int)Math.round(distance * Math.cos(angle)));
+    offset.addVector(this.position);
+    return offset;
   }
 
   public void updatePosition() {
