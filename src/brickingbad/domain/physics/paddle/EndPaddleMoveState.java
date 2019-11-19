@@ -11,11 +11,13 @@ public class EndPaddleMoveState extends PaddleMoveState{
   private final double startX;
   private final double moveSpeed = GameConstants.slowPaddleMovementSpeed;
   private final double stopDistance = GameConstants.paddleStopDistance;
+  private final Vector deltaPos;
 
   public EndPaddleMoveState(Paddle paddle, Direction direction, double startX) {
     this.paddle = paddle;
     this.direction = direction;
     this.startX = startX;
+    this.deltaPos = new Vector(moveSpeed / GameConstants.calculationsPerSecond, 0.0);
   }
 
   @Override
@@ -23,14 +25,22 @@ public class EndPaddleMoveState extends PaddleMoveState{
     if (Math.abs(paddle.getPosition().getX() - startX) > stopDistance) {
       paddle.setIdleMove();
     }else if(direction == Direction.LEFT) {
-      paddle.getPosition().addVector(new Vector(-moveSpeed / GameConstants.calculationsPerSecond, 0.0));
+      if(paddle.getPosition().getX() <= paddle.getSize().getX() / 2.0) {
+        paddle.setIdleMove();
+        return;
+      }
+      paddle.getPosition().addVector(deltaPos.product(-1.0));
       for(Ball ball: paddle.getCurrentBalls()){
-        ball.getPosition().addVector(new Vector(-moveSpeed / GameConstants.calculationsPerSecond, 0.0));
+        ball.getPosition().addVector(deltaPos.product(-1.0));
       }
     }else{
-      paddle.getPosition().addVector(new Vector(moveSpeed / GameConstants.calculationsPerSecond, 0.0));
+      if(paddle.getPosition().getX() >= GameConstants.screenWidth - paddle.getSize().getX() / 2.0) {
+        paddle.setIdleMove();
+        return;
+      }
+      paddle.getPosition().addVector(deltaPos);
       for(Ball ball: paddle.getCurrentBalls()){
-        ball.getPosition().addVector(new Vector(moveSpeed / GameConstants.calculationsPerSecond, 0.0));
+        ball.getPosition().addVector(deltaPos);
       }
     }
   }
