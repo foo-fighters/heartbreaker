@@ -1,6 +1,5 @@
 package brickingbad.domain.game;
 
-import brickingbad.domain.game.powerup.Fireball;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.ball.BallState;
 import brickingbad.domain.physics.ball.ChemicalBallState;

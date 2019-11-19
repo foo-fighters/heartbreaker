@@ -4,7 +4,6 @@ import brickingbad.domain.game.persistence.Save;
 import brickingbad.services.DatabaseService;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
-import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -7,7 +7,6 @@ import brickingbad.domain.game.brick.Brick;
 import brickingbad.domain.game.brick.SimpleBrick;
 import brickingbad.domain.physics.Vector;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
