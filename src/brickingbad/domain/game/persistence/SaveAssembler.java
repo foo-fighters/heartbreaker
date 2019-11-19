@@ -2,8 +2,12 @@ package brickingbad.domain.game.persistence;
 
 import brickingbad.domain.game.Ball;
 import brickingbad.domain.game.Game;
+import brickingbad.domain.game.Paddle;
 import brickingbad.domain.game.brick.Brick;
+import brickingbad.domain.game.brick.SimpleBrick;
+import brickingbad.domain.physics.Vector;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -53,7 +57,40 @@ public class SaveAssembler {
   }
 
   public static void disassemble(Save save, Game game) {
-    // TODO: extract the information from save to game
+    int score = save.score;
+    int lives = save.lives;
+
+    ArrayList<Brick> bricks = new ArrayList<>();
+    save.brickCoordinates.forEach((coordinates) -> {
+      int x = coordinates.get(0);
+      int y = coordinates.get(1);
+      Vector brickPosition = new Vector(x, y);
+      bricks.add(new SimpleBrick(brickPosition));
+    });
+
+    ArrayList<Ball> balls = new ArrayList<>();
+    save.ballCoordinates.forEach((coordinate) -> {
+      int x = coordinate.get(0);
+      int y = coordinate.get(1);
+      Vector ballPosition = new Vector(x, y);
+      balls.add(new Ball(ballPosition));
+    });
+    for (int i = 0; i < balls.size(); i++) {
+      int velX = save.ballVelocities.get(i).get(0);
+      int velY = save.ballVelocities.get(i).get(1);
+      balls.get(i).setVelocity(new Vector(velX, velY));
+    }
+
+    int paddleX = save.paddleCoordinates.get(0);
+    int paddleY = save.paddleCoordinates.get(1);
+    Paddle paddle = new Paddle();
+    paddle.setPosition(paddleX, paddleY);
+
+    game.setScore(score);
+    game.setLives(lives);
+    game.setBricks(bricks);
+    game.setPaddle(paddle);
+    game.setBalls(balls);
   }
 
 }
