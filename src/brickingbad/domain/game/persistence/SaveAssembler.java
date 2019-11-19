@@ -9,13 +9,13 @@ import brickingbad.domain.physics.Vector;
 
 import java.util.ArrayList;
 
-/**
- * SaveAssembler implements the 'assemble' method that takes
- * in a Game object and converts it into the Save POJO
- * so that it can be serialized easily.
- */
+
 public class SaveAssembler {
 
+  /**
+   * Takes a Game object and a name string.
+   * Extracts the necessary information from the game object into the save object.
+   */
   public static Save assemble(Game game, String name) {
     Save save = new Save();
 
