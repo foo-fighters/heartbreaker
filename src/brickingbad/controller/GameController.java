@@ -21,8 +21,8 @@ public class GameController {
 
   public void saveGame(String name) {
     Game game = Game.getInstance();
-    Save dto = SaveAssembler.assemble(game, name);
-    GameRepository.saveGame(dto);
+    Save save = SaveAssembler.assemble(game, name);
+    GameRepository.saveGame(save);
   }
 
   public void startGame() { }
