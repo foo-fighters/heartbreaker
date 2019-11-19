@@ -17,12 +17,12 @@ public class GameConstants {
     public final static int powerupSize = 20;
 
     // Ball movement
-    public final static int ballLaunchSpeed = 100;
+    public final static double ballLaunchSpeed = 100;
 
     // Paddle movement
-    public final static int regularPaddleMovementSpeed = paddleLength * 2;
-    public final static int slowPaddleMovementSpeed = paddleLength;
-    public final static int paddleStopDistance = paddleLength / 2;
+    public final static double regularPaddleMovementSpeed = paddleLength * 2.0;
+    public final static double slowPaddleMovementSpeed = paddleLength;
+    public final static double paddleStopDistance = paddleLength / 2.0;
     public final static double regularPaddleRotationSpeed = 20.0;
     public final static double fastPaddleRotationSpeed = 45.0;
     public final static double paddleRotationLimit = 45.0;
@@ -50,4 +50,6 @@ public class GameConstants {
     // Extras
     public final static int mineBrickExplosionRadius = paddleLength * 2;
     public final static int paddleHeight = screenHeight / 10;
+    public static int framesPerSecond = 60;
+    public static int calculationsPerSecond = 100;
 }

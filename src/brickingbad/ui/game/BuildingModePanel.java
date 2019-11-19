@@ -64,7 +64,7 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Act
 
   @Override
   public void removeObject(GameObject object) {
-    uiObjects.remove(object);
+    uiObjects.removeIf(uiGameObject -> uiGameObject.containsObject(object));
   }
 
   @Override
@@ -82,7 +82,6 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Act
 
   private void loadBackgroundImage() {
     try {
-//      uiObjects.add(new UIGameObject(new Ball(), this));
       this.background = ImageIO.read(new File("resources/sprites/background.png"));
     } catch (IOException e) {
       e.printStackTrace();

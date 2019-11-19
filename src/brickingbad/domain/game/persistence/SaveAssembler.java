@@ -18,15 +18,15 @@ public class SaveAssembler {
 
     int score = game.getScore();
     int lives = game.getLives();
-    int paddleX = game.getPaddle().getPosition().getX();
-    int paddleY = game.getPaddle().getPosition().getY();
+    double paddleX = game.getPaddle().getPosition().getX();
+    double paddleY = game.getPaddle().getPosition().getY();
 
     ArrayList<Ball> balls = game.getBalls();
     int ballCount = balls.size();
-    int[] ballX = new int[ballCount];
-    int[] ballY = new int[ballCount];
-    int[] ballVelX = new int[ballCount];
-    int[] ballVelY = new int[ballCount];
+    double[] ballX = new double[ballCount];
+    double[] ballY = new double[ballCount];
+    double[] ballVelX = new double[ballCount];
+    double[] ballVelY = new double[ballCount];
     for (int i = 0; i < ballCount; i++) {
       ballX[i] = balls.get(i).getPosition().getX();
       ballY[i] = balls.get(i).getPosition().getY();
@@ -36,8 +36,8 @@ public class SaveAssembler {
 
     ArrayList<Brick> bricks = game.getBricks();
     int brickCount = bricks.size();
-    int[] brickX = new int[brickCount];
-    int[] brickY = new int[brickCount];
+    double[] brickX = new double[brickCount];
+    double[] brickY = new double[brickCount];
     for (int i = 0; i < brickCount; i++) {
       Brick brick = bricks.get(i);
       brickX[i] = brick.getPosition().getX();

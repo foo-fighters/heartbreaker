@@ -1,17 +1,59 @@
 package brickingbad.domain.physics;
 
+import brickingbad.domain.game.Game;
+import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.GameObject;
+import brickingbad.ui.BrickingBadFrame;
+import brickingbad.ui.game.animation.Animator;
 
+import javax.swing.*;
 import java.util.List;
 
-public class PhysicsEngine {
+public class PhysicsEngine implements Runnable {
 
-  public static void handleCollisions() {
+  private final int SLEEP_TIME = 1000 / GameConstants.calculationsPerSecond;
+
+  private static PhysicsEngine instance;
+
+  private JPanel currentPanel;
+
+  private PhysicsEngine() {
 
   }
 
-  public static void updatePositions() {
+  public static PhysicsEngine getInstance(JPanel currentPanel) {
+    if (instance == null) {
+      instance = new PhysicsEngine();
+    }
+    instance.currentPanel = currentPanel;
+    return instance;
+  }
 
+  public void start() {
+    (new Thread(instance)).start();
+  }
+
+  @Override
+  public void run() {
+    while (true) {
+      try {
+        Thread.sleep(SLEEP_TIME);
+      } catch (InterruptedException e) {
+        System.out.println("Program interrupted.");
+      }
+      handleCollisions();
+      updatePositions();
+    }
+  }
+
+  private static void handleCollisions() {
+
+  }
+
+  private static void updatePositions() {
+    for (GameObject object: Game.getInstance().getObjects()) {
+      object.updatePosition();
+    }
   }
 
   private static boolean areColliding(GameObject o1, GameObject o2) {

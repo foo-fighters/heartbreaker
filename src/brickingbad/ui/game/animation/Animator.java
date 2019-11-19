@@ -1,5 +1,6 @@
 package brickingbad.ui.game.animation;
 
+import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.brick.Brick;
 import brickingbad.ui.BrickingBadFrame;
 
@@ -8,7 +9,7 @@ import java.util.Vector;
 
 public class Animator implements Runnable {
 
-  private final int SLEEP_TIME = 100;
+  private final int SLEEP_TIME = 1000 / GameConstants.framesPerSecond;
 
   private static Animator instance;
 

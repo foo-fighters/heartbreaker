@@ -3,8 +3,8 @@ package brickingbad.ui.game;
 import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.GameObjectListener;
+import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.ui.components.UIGameObject;
-import brickingbad.ui.components.containers.BrickCountPanel;
 import brickingbad.ui.components.containers.BuildButtonPanel;
 import brickingbad.ui.game.animation.Animator;
 
@@ -28,11 +28,13 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
 
   private RunningModePanel() {
     Animator.getInstance(this).start();
+    PhysicsEngine.getInstance(this).start();
     setLayout(new BorderLayout());
     uiObjects = new ArrayList<>();
     initUI();
     loadBackgroundImage();
     Game.getInstance().addObjectListener(this);
+    this.addKeyListener(new GameKeyboardListener());
   }
 
   public static RunningModePanel getInstance() {
@@ -58,7 +60,7 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
 
   @Override
   public void removeObject(GameObject object) {
-    uiObjects.remove(object);
+    uiObjects.removeIf(uiGameObject -> uiGameObject.containsObject(object));
   }
 
   @Override
@@ -70,7 +72,6 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
 
   private void loadBackgroundImage() {
     try {
-//      uiObjects.add(new UIGameObject(new Ball(), this));
       this.background = ImageIO.read(new File("resources/sprites/background.png"));
     } catch (IOException e) {
       e.printStackTrace();

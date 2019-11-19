@@ -5,6 +5,7 @@ import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.paddle.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Paddle extends GameObject {
 
@@ -36,6 +37,10 @@ public class Paddle extends GameObject {
     position.setVector(x,y);
   }
 
+  public List<Ball> getCurrentBalls() {
+    return currentBalls;
+  }
+
   public void launchBalls() {
     for (Ball ball: currentBalls) {
       ball.startMovement(angle);
@@ -57,7 +62,7 @@ public class Paddle extends GameObject {
 
   public void updatePosition() {
     moveState.updatePosition();
-    rotateState.updatePosition();
+    //rotateState.updatePosition();
   }
 
   public void startMove(Direction direction) {

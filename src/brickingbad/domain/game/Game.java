@@ -18,6 +18,7 @@ public class Game {
     private Ground ground;
     private ArrayList<Wall> walls;
     private ArrayList<Brick> bricks;
+    private ArrayList<GameObject> gameObjects;
 
     private int score;
     private int lives;
@@ -35,6 +36,7 @@ public class Game {
         bricks = new ArrayList<>();
         activePowerUps = new ArrayList<>();
         storedPowerUps = new ArrayList<>();
+        gameObjects = new ArrayList<>();
     }
 
     public static Game getInstance() {
@@ -48,7 +50,8 @@ public class Game {
         objectListeners.add(listener);
     }
 
-    public void observeObject(GameObject object){
+    private void trackObject(GameObject object) {
+        gameObjects.add(object);
         for (GameObjectListener listener: objectListeners) {
             listener.addObject(object);
         }
@@ -56,10 +59,11 @@ public class Game {
 
     public void initialize() {
         paddle = new Paddle();
-        observeObject(paddle);
+        trackObject(paddle);
         Ball firstBall = new Ball(paddle.getBallStartPosition());
-        observeObject(firstBall);
+        trackObject(firstBall);
         balls.add(firstBall);
+        paddle.getCurrentBalls().add(firstBall);
     }
 
     public void play() {
@@ -68,8 +72,7 @@ public class Game {
     // GETTERS & SETTERS
 
     public List<GameObject> getObjects() {
-        List<GameObject> objects = new ArrayList<>();
-        return objects;
+        return gameObjects;
     }
 
     public ArrayList<Ball> getBalls() {
