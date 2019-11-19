@@ -52,4 +52,8 @@ public class SaveAssembler {
     return save;
   }
 
+  public static void disassemble(Save save, Game game) {
+    // TODO: extract the information from save to game
+  }
+
 }

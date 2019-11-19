@@ -13,4 +13,9 @@ public class GameRepository {
     gamesCollection.insertOne(save);
   }
 
+  public static Save loadGame(String name) {
+    // TODO: query the db for the save with the given name
+    return null;
+  }
+
 }

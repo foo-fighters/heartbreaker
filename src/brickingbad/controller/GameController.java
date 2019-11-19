@@ -25,6 +25,10 @@ public class GameController {
     GameRepository.saveGame(save);
   }
 
+  public void loadGame(String name) {
+    Save save = GameRepository.loadGame(name);
+  }
+
   public void startGame() { }
 
 
