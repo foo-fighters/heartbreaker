@@ -5,7 +5,7 @@ import brickingbad.services.DatabaseService;
 import com.mongodb.client.MongoCollection;
 
 
-public class GameRepository {
+public class SaveRepository {
 
   private static MongoCollection<Save> gamesCollection = DatabaseService.getDatabase().getCollection("games", Save.class);
 

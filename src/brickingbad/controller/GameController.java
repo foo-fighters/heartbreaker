@@ -4,7 +4,7 @@ import brickingbad.domain.game.Game;
 import brickingbad.domain.game.persistence.Save;
 import brickingbad.domain.game.persistence.SaveAssembler;
 import brickingbad.domain.physics.paddle.Direction;
-import brickingbad.services.persistence.GameRepository;
+import brickingbad.services.persistence.SaveRepository;
 
 public class GameController {
 
@@ -22,11 +22,11 @@ public class GameController {
   public void saveGame(String name) {
     Game game = Game.getInstance();
     Save save = SaveAssembler.assemble(game, name);
-    GameRepository.saveGame(save);
+    SaveRepository.saveGame(save);
   }
 
   public void loadGame(String name) {
-    Save save = GameRepository.loadGame(name);
+    Save save = SaveRepository.loadGame(name);
   }
 
   public void startGame() { }
