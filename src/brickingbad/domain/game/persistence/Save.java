@@ -5,15 +5,15 @@ import java.util.List;
 
 public class Save {
 
-  String name;
-  int score;
-  int lives;
-  List<Integer> paddleCoordinates;
-  List<List<Integer>> brickCoordinates;
-  List<List<Integer>> ballCoordinates;
-  List<List<Integer>> ballVelocities;
+  public String name;
+  public int score;
+  public int lives;
+  public List<Integer> paddleCoordinates;
+  public List<List<Integer>> brickCoordinates;
+  public List<List<Integer>> ballCoordinates;
+  public List<List<Integer>> ballVelocities;
 
-  Save() {
+  public Save() {
     paddleCoordinates = new ArrayList<>();
     brickCoordinates = new ArrayList<>();
     ballCoordinates = new ArrayList<>();

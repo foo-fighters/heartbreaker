@@ -22,11 +22,11 @@ public class GameController {
   public void saveGame(String name) {
     Game game = Game.getInstance();
     Save save = SaveAssembler.assemble(game, name);
-    SaveRepository.saveGame(save);
+    SaveRepository.addSave(save);
   }
 
   public void loadGame(String name) {
-    Save save = SaveRepository.loadGame(name);
+    Save save = SaveRepository.getSaveByName(name);
   }
 
   public void startGame() { }
