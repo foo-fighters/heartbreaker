@@ -1,15 +1,9 @@
 package brickingbad.domain.physics.ball;
 
-import brickingbad.domain.game.Ball;
+import brickingbad.domain.game.GameObject;
 
 public abstract class BallState {
 
-    private final Ball ball;
-
-    public BallState(Ball ball) {
-      this.ball = ball;
-    }
-
-    abstract void reflect();
+    public abstract void reflect(GameObject object);
 
 }

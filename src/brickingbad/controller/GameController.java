@@ -1,6 +1,10 @@
 package brickingbad.controller;
 
+import brickingbad.domain.game.Game;
+import brickingbad.domain.game.persistence.Save;
+import brickingbad.domain.game.persistence.SaveAssembler;
 import brickingbad.domain.physics.paddle.Direction;
+import brickingbad.services.persistence.SaveRepository;
 
 public class GameController {
 
@@ -13,6 +17,18 @@ public class GameController {
       instance = new GameController();
     }
     return instance;
+  }
+
+  public void saveGame(String name) {
+    Game game = Game.getInstance();
+    Save save = SaveAssembler.assemble(game, name);
+    SaveRepository.addSave(save);
+  }
+
+  public void loadGame(String name) {
+    Game game = Game.getInstance();
+    Save save = SaveRepository.getSaveByName(name);
+    SaveAssembler.disassemble(save, game);
   }
 
   public void startGame() { }

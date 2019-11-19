@@ -9,7 +9,7 @@ public class EndPaddleRotateState extends PaddleRotateState {
   }
 
   @Override
-  void updatePosition() {
+  public void updatePosition() {
   }
 
 }

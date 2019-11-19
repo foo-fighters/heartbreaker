@@ -1,14 +1,17 @@
 package brickingbad.domain.physics.ball;
 
 import brickingbad.domain.game.Ball;
+import brickingbad.domain.game.GameObject;
 
 public class SimpleBallState extends BallState {
 
-    public SimpleBallState(Ball ball) {
-      super(ball);
+    private Ball ball;
+
+    public SimpleBallState(Ball ball){
+        this.ball = ball;
     }
 
-    void reflect() {
+    public void reflect(GameObject object) {
 
     }
 
