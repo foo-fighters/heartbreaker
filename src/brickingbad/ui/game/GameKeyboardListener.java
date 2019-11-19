@@ -21,6 +21,15 @@ public class GameKeyboardListener implements KeyListener {
         if(key == KeyEvent.VK_RIGHT){
             GameController.getInstance().startPaddleMove(Direction.RIGHT);
         }
+        if(key == KeyEvent.VK_A){
+            GameController.getInstance().startPaddleRotate(Direction.LEFT);
+        }
+        if(key == KeyEvent.VK_D){
+            GameController.getInstance().startPaddleRotate(Direction.RIGHT);
+        }
+        if(key == KeyEvent.VK_W){
+            GameController.getInstance().launchBalls();
+        }
     }
 
     @Override
@@ -31,6 +40,12 @@ public class GameKeyboardListener implements KeyListener {
         }
         if(key == KeyEvent.VK_RIGHT){
             GameController.getInstance().endPaddleMove(Direction.RIGHT);
+        }
+        if(key == KeyEvent.VK_A){
+            GameController.getInstance().endPaddleRotate(Direction.LEFT);
+        }
+        if(key == KeyEvent.VK_D){
+            GameController.getInstance().endPaddleRotate(Direction.RIGHT);
         }
     }
 }

@@ -17,7 +17,7 @@ public class GameConstants {
     public final static int powerupSize = 20;
 
     // Ball movement
-    public final static double ballLaunchSpeed = 100;
+    public final static double ballLaunchSpeed = 500;
 
     // Paddle movement
     public final static double regularPaddleMovementSpeed = paddleLength * 2.0;

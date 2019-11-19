@@ -19,7 +19,7 @@ public class Paddle extends GameObject {
   public Paddle(){
     setIdleMove();
     setIdleRotate();
-    position = new Vector(GameConstants.screenWidth / 2, GameConstants.screenHeight - GameConstants.paddleHeight);
+    position = new Vector(GameConstants.screenWidth / 2.0, GameConstants.screenHeight - GameConstants.paddleHeight);
     velocity = new Vector();
     size = new Vector(GameConstants.paddleLength, GameConstants.paddleThickness);
     shape = Shape.RECTANGLE;
@@ -44,8 +44,8 @@ public class Paddle extends GameObject {
   public void launchBalls() {
     for (Ball ball: currentBalls) {
       ball.startMovement(angle);
-      currentBalls.remove(ball);
     }
+    currentBalls.clear();
   }
 
   private void catchBall(Ball ball) {

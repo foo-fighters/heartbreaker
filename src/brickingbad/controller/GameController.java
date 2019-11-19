@@ -25,7 +25,7 @@ public class GameController {
     GameRepository.saveGame(dto);
   }
 
-  public void initializeGame(){
+  public void initializeGame() {
     Game.getInstance().initialize();
   }
 

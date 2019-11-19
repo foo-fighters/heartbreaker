@@ -21,7 +21,7 @@ public class Ball extends GameObject {
     }
 
     public void startMovement(double angle){
-        this.velocity.setVector((int)Math.sin(angle), (int)Math.cos(angle));
+        this.velocity.setVector(launchSpeed * Math.sin(angle), -launchSpeed * Math.cos(angle));
     }
 
     public void stopMovement(){
