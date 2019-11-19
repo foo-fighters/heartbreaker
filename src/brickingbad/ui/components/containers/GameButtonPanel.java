@@ -46,5 +46,4 @@ public class GameButtonPanel extends JPanel implements ActionListener {
     }
   }
 
-
 }

@@ -4,8 +4,16 @@ import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.GameObjectListener;
 import brickingbad.ui.components.UIGameObject;
+import brickingbad.ui.components.containers.BrickCountPanel;
+import brickingbad.ui.components.containers.BuildButtonPanel;
+import brickingbad.ui.game.animation.Animator;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class RunningModePanel extends JPanel implements GameObjectListener {
@@ -14,8 +22,16 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
 
   private ArrayList<UIGameObject> uiObjects;
 
+  private BuildButtonPanel buildButtonPanel;
+
+  private BufferedImage background;
+
   private RunningModePanel() {
+    Animator.getInstance(this).start();
+    setLayout(new BorderLayout());
     uiObjects = new ArrayList<>();
+    initUI();
+    loadBackgroundImage();
     Game.getInstance().addObjectListener(this);
   }
 
@@ -26,6 +42,15 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
     return instance;
   }
 
+  private void initUI() {
+    buildButtonPanel = new BuildButtonPanel();
+
+    JPanel container = new JPanel(new BorderLayout());
+    container.setOpaque(false);
+    add(container, BorderLayout.PAGE_START);
+    container.add(buildButtonPanel, BorderLayout.LINE_START);
+  }
+
   @Override
   public void addObject(GameObject object) {
     uiObjects.add(new UIGameObject(object, this));
@@ -33,7 +58,23 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
 
   @Override
   public void removeObject(GameObject object) {
+    uiObjects.remove(object);
+  }
 
+  @Override
+  protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    g.drawImage(background, 0, 0, null);
+    uiObjects.forEach((obj) -> obj.draw(g));
+  }
+
+  private void loadBackgroundImage() {
+    try {
+//      uiObjects.add(new UIGameObject(new Ball(), this));
+      this.background = ImageIO.read(new File("resources/sprites/background.png"));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
 }
