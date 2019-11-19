@@ -3,7 +3,10 @@ package brickingbad.services.persistence;
 import brickingbad.domain.game.persistence.Save;
 import brickingbad.services.DatabaseService;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import org.bson.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
@@ -18,7 +21,18 @@ public class SaveRepository {
   }
 
   public static List<String> getSaveNames() {
-    return null;
+    List<String> names = new ArrayList<>();
+    MongoCursor<Save> cursor = savesCollection.find().iterator();
+    try {
+      while (cursor.hasNext()) {
+        names.add(cursor.next().name);
+      }
+    } finally {
+      cursor.close();
+    }
+    System.out.println(names.toString());
+    return names;
+
   }
 
   public static Save getSaveByName(String name) {
@@ -26,7 +40,7 @@ public class SaveRepository {
   }
 
   public static void deleteSaveByName(String name) {
-
+    savesCollection.deleteOne(eq("name", name));
   }
 
 }
