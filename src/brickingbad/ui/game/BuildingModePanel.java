@@ -52,11 +52,15 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Act
         buildButtonPanel = new BuildButtonPanel();
         brickCountPanel = new BrickCountPanel();
 
-        JPanel container = new JPanel(new BorderLayout());
-        container.setOpaque(false);
-        add(container, BorderLayout.PAGE_START);
-        container.add(buildButtonPanel, BorderLayout.LINE_START);
-        container.add(brickCountPanel, BorderLayout.LINE_END);
+        JPanel upContainer = new JPanel(new BorderLayout());
+        JPanel downContainer = new JPanel(new BorderLayout());
+        upContainer.setOpaque(false);
+        downContainer.setOpaque(false);
+
+        add(upContainer, BorderLayout.PAGE_START);
+        add(downContainer, BorderLayout.PAGE_END);
+        upContainer.add(buildButtonPanel, BorderLayout.LINE_START);
+        downContainer.add(brickCountPanel, BorderLayout.LINE_END);
     }
 
     @Override
