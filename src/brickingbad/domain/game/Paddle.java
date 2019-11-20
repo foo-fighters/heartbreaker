@@ -94,4 +94,8 @@ public class Paddle extends GameObject {
     return angle;
   }
 
+  public void setAngle(double angle) {
+    this.angle = angle;
+  }
+
 }
