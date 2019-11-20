@@ -59,4 +59,8 @@ public class GameController {
     Game.getInstance().getPaddle().endRotate(direction);
   }
 
+  public void addBricks(int simple, int halfMetal, int mine, int wrapper){
+
+  }
+
 }
