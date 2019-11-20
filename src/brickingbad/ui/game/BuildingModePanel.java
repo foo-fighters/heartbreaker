@@ -20,7 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class BuildingModePanel extends JPanel implements GameObjectListener, ActionListener, ErrorListener {
+public class BuildingModePanel extends JPanel implements GameObjectListener, ErrorListener {
 
     private static BuildingModePanel instance;
 
@@ -75,13 +75,6 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Act
         uiObjects.removeIf(uiGameObject -> uiGameObject.containsObject(object));
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-
-        // if source is submit button
-        //  call game controller -> create bricks
-    }
 
     @Override
     protected void paintComponent(Graphics g) {

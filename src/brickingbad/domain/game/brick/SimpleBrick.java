@@ -14,7 +14,8 @@ public class SimpleBrick extends Brick {
 
     public SimpleBrick(Vector position) {
         this.position = position;
+        this.size = new Vector(GameConstants.rectangularBrickLength, GameConstants.rectangularBrickThickness);
+        this.velocity = new Vector(0,0);
     }
-
 
 }

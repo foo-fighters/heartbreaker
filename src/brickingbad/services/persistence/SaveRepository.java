@@ -29,7 +29,6 @@ public class SaveRepository {
     } finally {
       cursor.close();
     }
-    System.out.println(names.toString());
     return names;
   }
 

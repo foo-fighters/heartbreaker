@@ -10,7 +10,7 @@ public abstract class GameObject {
   protected Shape shape;
   protected Vector size;
   protected Vector position;
-  protected Vector velocity;
+  protected Vector velocity = new Vector(0, 0);
 
   public void updatePosition() {
     position.addVector(velocity.product(1.0 / GameConstants.calculationsPerSecond));

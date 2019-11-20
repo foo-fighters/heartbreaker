@@ -56,6 +56,10 @@ public class Game {
         objectListeners.add(listener);
     }
 
+    public void addErrorListener(ErrorListener err) {
+        errorListeners.add(err);
+    }
+
     private void trackObject(GameObject object) {
         //gameObjects.add(object);
         for (GameObjectListener listener : objectListeners) {
@@ -64,6 +68,15 @@ public class Game {
     }
 
     public void initialize() {
+        for (Brick brick : bricks) {
+            removeObjectFromListeners(brick);
+        }
+        for (Ball ball : balls) {
+            removeObjectFromListeners(ball);
+        }
+        bricks = new ArrayList<>();
+
+        removeObjectFromListeners(paddle);
         paddle = new Paddle();
         trackObject(paddle);
 
@@ -76,8 +89,12 @@ public class Game {
     public void play() {
     }
 
+    private void removeObjectFromListeners(GameObject object) {
+        objectListeners.forEach(listener -> listener.removeObject(object));
+    }
+
     public void removeObject(GameObject object) {
-        objectListeners.forEach((listener) -> listener.removeObject(object));
+        removeObjectFromListeners(object);
         if (object instanceof Brick) {
             bricks.removeIf(brick -> brick.equals(object));
         }
@@ -130,14 +147,7 @@ public class Game {
 
     public void setPaddle(Paddle paddle) {
         this.paddle = paddle;
-    }
-
-    public void setBalls(ArrayList<Ball> balls) {
-        this.balls = balls;
-    }
-
-    public void setBricks(ArrayList<Brick> bricks) {
-        this.bricks = bricks;
+        trackObject(paddle);
     }
 
     public void setScore(int score) {
@@ -165,6 +175,11 @@ public class Game {
 
         bricks.add(brick);
         trackObject(brick);
+    }
+
+    public void addBall(Ball ball) {
+        paddle.getCurrentBalls().add(ball);
+        trackObject(ball);
     }
 
     public boolean checkBrickCount() {
@@ -224,10 +239,6 @@ public class Game {
             sendError(warning);
             return false;
         }
-    }
-
-    public void addErrorListener(ErrorListener err) {
-        errorListeners.add(err);
     }
 
     private void sendError(String err){

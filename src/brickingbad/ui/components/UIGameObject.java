@@ -27,6 +27,9 @@ public class UIGameObject implements Drawable {
     @Override
     public void draw(Graphics g) {
         position.setLocation((int)gameObject.getPosition().getX(), (int)gameObject.getPosition().getY());
+        if (gameObject.getSize() == null) {
+            System.out.println(gameObject.getClass().getSimpleName());
+        }
         position.translate((int)-gameObject.getSize().getX() / 2, (int)-gameObject.getSize().getY() / 2);
         //g.drawRect(position.x, position.y, gameObject.getSize().getX(), gameObject.getSize().getY());
         g.drawImage(sprite, position.x, position.y, null);

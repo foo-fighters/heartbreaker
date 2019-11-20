@@ -19,7 +19,6 @@ public class GameController {
     private GameController() {
     }
 
-
     public static GameController getInstance() {
         if (instance == null) {
             instance = new GameController();
@@ -34,14 +33,14 @@ public class GameController {
     }
 
     public void loadGame(String name) {
-        Game game = Game.getInstance();
         Save save = SaveRepository.getSaveByName(name);
-        SaveAssembler.disassemble(save, game);
+        SaveAssembler.disassemble(save);
+        Game.getInstance().play();
     }
 
-  public List<String> getSaveNames() {
-    return SaveRepository.getSaveNames();
-  }
+    public List<String> getSaveNames() {
+      return SaveRepository.getSaveNames();
+    }
 
     public void initializeGame() {
         Game.getInstance().initialize();
