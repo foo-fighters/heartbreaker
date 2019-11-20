@@ -1,57 +1,99 @@
 package brickingbad.ui.components.containers;
 
+import brickingbad.controller.GameController;
 import brickingbad.ui.components.BBGameButton;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class BrickCountPanel extends JPanel {
 
-  private JTextField simpleBrickField;
-  private JTextField halfMetalBrickField;
-  private JTextField mineBrickField;
-  private JTextField wrapperBrickField;
+public class BrickCountPanel extends JPanel implements ActionListener {
 
-  private JLabel simpleBrickLabel;
-  private JLabel halfMetalBrickLabel;
-  private JLabel mineBrickLabel;
-  private JLabel wrapperBrickLabel;
+    private JTextField simpleBrickField;
+    private JTextField halfMetalBrickField;
+    private JTextField mineBrickField;
+    private JTextField wrapperBrickField;
 
-  private BBGameButton submitButton;
+    private JLabel simpleBrickLabel;
+    private JLabel halfMetalBrickLabel;
+    private JLabel mineBrickLabel;
+    private JLabel wrapperBrickLabel;
 
-  public BrickCountPanel(ActionListener listener) {
-    setLayout(new GridLayout(5, 2));
-    setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.black),
-                                                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+    private BBGameButton submitButton;
 
-    simpleBrickField = new JTextField(2);
-    halfMetalBrickField = new JTextField(2);
-    mineBrickField = new JTextField(2);
-    wrapperBrickField = new JTextField(2);
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
-    simpleBrickLabel = new JLabel("Simple Bricks");
-    halfMetalBrickLabel = new JLabel("Half-metal Bricks");
-    mineBrickLabel = new JLabel("Mine Bricks");
-    wrapperBrickLabel = new JLabel("Wrapper Bricks");
+        if (e.getSource().equals(submitButton)) {
 
-    submitButton = new BBGameButton("Enter", listener);
+            int numSimpleBricks = Integer.parseInt(simpleBrickField.getText());
+            int numHalfMetalBricks = Integer.parseInt(halfMetalBrickField.getText());
+            int numMineBricks = Integer.parseInt(mineBrickField.getText());
+            int numWrapperBricks = Integer.parseInt(wrapperBrickField.getText());
 
-    add(simpleBrickLabel);
-    add(simpleBrickField);
+            GameController.getInstance().createBricks(numSimpleBricks,numHalfMetalBricks,numMineBricks,numWrapperBricks);
+        }
 
-    add(halfMetalBrickLabel);
-    add(halfMetalBrickField);
+        // if source is submit button
+        //  call game controller -> create bricks
+    }
 
-    add(mineBrickLabel);
-    add(mineBrickField);
+    public BrickCountPanel() {
+        setLayout(new GridLayout(5, 2));
+        setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.black),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        setBackground(Color.darkGray);
 
-    add(wrapperBrickLabel);
-    add(wrapperBrickField);
 
-    add(submitButton);
+        simpleBrickField = new JTextField("0", 2);
+        halfMetalBrickField = new JTextField("0", 2);
+        mineBrickField = new JTextField("0", 2);
+        wrapperBrickField = new JTextField("0", 2);
 
-  }
+        simpleBrickLabel = new JLabel("Simple Bricks");
+        halfMetalBrickLabel = new JLabel("Half Metal Bricks");
+        mineBrickLabel = new JLabel("Mine Bricks");
+        wrapperBrickLabel = new JLabel("Wrapper Bricks");
+
+        submitButton = new BBGameButton("Enter", this);
+
+        simpleBrickLabel.setForeground(Color.WHITE);
+        halfMetalBrickLabel.setForeground(Color.WHITE);
+        mineBrickLabel.setForeground(Color.WHITE);
+        wrapperBrickLabel.setForeground(Color.WHITE);
+
+        simpleBrickField.setBackground(Color.GRAY);
+        halfMetalBrickField.setBackground(Color.GRAY);
+        mineBrickField.setBackground(Color.GRAY);
+        wrapperBrickField.setBackground(Color.GRAY);
+
+        simpleBrickField.setHorizontalAlignment(0);
+        halfMetalBrickField.setHorizontalAlignment(0);
+        mineBrickField.setHorizontalAlignment(0);
+        wrapperBrickField.setHorizontalAlignment(0);
+
+//        simpleBrickLabel.setFont();
+//        halfMetalBrickLabel.setFont();
+//        mineBrickLabel.setFont();
+//        wrapperBrickLabel.setFont();
+
+        add(simpleBrickLabel);
+        add(simpleBrickField);
+
+        add(halfMetalBrickLabel);
+        add(halfMetalBrickField);
+
+        add(mineBrickLabel);
+        add(mineBrickField);
+
+        add(wrapperBrickLabel);
+        add(wrapperBrickField);
+
+        add(submitButton);
+
+    }
 
 }

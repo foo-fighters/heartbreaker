@@ -51,10 +51,17 @@ public class BuildButtonPanel extends JPanel implements ActionListener {
                     saveNames.toArray(), // Array of choices
                     saveNames.toArray()[1]); // Initial choice
 
+            GameController.getInstance().initializeGame();
             GameController.getInstance().loadGame(name);
-        } else if (e.getSource().equals(playButton)) {
             BrickingBadFrame.getInstance().showRunningModePanel();
-            Game.getInstance().play();
+        } else if (e.getSource().equals(playButton)) {
+            boolean checkedForCount = GameController.getInstance().checkBrickCount();
+
+            if (checkedForCount){
+                GameController.getInstance().startGame();
+                BrickingBadFrame.getInstance().showRunningModePanel();
+            }
+
         } else if (e.getSource().equals(quitButton)) {
             BrickingBadFrame.getInstance().showMainMenuPanel();
         } else {

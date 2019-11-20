@@ -48,7 +48,9 @@ public class GameButtonPanel extends JPanel implements ActionListener {
               saveNames.toArray(), // Array of choices
               saveNames.toArray()[1]); // Initial choice
 
+      GameController.getInstance().initializeGame();
       GameController.getInstance().loadGame(name);
+      BrickingBadFrame.getInstance().showRunningModePanel();
     } else if (e.getSource().equals(pauseButton)) {
       // TODO: perform pause action
     } else if (e.getSource().equals(quitButton)) {

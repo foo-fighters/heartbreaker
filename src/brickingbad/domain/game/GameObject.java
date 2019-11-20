@@ -1,13 +1,16 @@
 package brickingbad.domain.game;
 
 import brickingbad.domain.physics.Vector;
+import brickingbad.ui.game.BuildingModePanel;
+
+import java.util.List;
 
 public abstract class GameObject {
 
   protected Shape shape;
   protected Vector size;
   protected Vector position;
-  protected Vector velocity;
+  protected Vector velocity = new Vector(0, 0);
 
   public void updatePosition() {
     position.addVector(velocity.product(1.0 / GameConstants.calculationsPerSecond));
@@ -15,7 +18,9 @@ public abstract class GameObject {
 
   public void reflect(GameObject object) { }
 
-  public void destroy() { }
+  public void destroy() {
+    Game.getInstance().removeObject(this);
+  }
 
   public Shape getShape() {
     return shape;

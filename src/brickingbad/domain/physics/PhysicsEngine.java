@@ -52,7 +52,9 @@ public class PhysicsEngine implements Runnable {
 
   private static void updatePositions() {
     for (GameObject object: Game.getInstance().getObjects()) {
-      object.updatePosition();
+      if (object != null){
+        object.updatePosition();
+      }
     }
   }
 

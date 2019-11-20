@@ -1,16 +1,21 @@
 package brickingbad.ui.components;
 
+import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.GameObject;
+import brickingbad.domain.game.brick.Brick;
+import brickingbad.domain.physics.Vector;
 import brickingbad.ui.game.animation.Drawable;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class UIGameObject implements Drawable {
+public class UIGameObject extends Component implements Drawable, MouseListener {
 
     private Point position;
     private BufferedImage sprite;
@@ -22,11 +27,15 @@ public class UIGameObject implements Drawable {
         this.panel = panel;
         this.position = new Point();
         this.setSprite();
+        panel.addMouseListener(this);
     }
 
     @Override
     public void draw(Graphics g) {
         position.setLocation((int)gameObject.getPosition().getX(), (int)gameObject.getPosition().getY());
+        if (gameObject.getSize() == null) {
+            System.out.println(gameObject.getClass().getSimpleName());
+        }
         position.translate((int)-gameObject.getSize().getX() / 2, (int)-gameObject.getSize().getY() / 2);
         //g.drawRect(position.x, position.y, gameObject.getSize().getX(), gameObject.getSize().getY());
         g.drawImage(sprite, position.x, position.y, null);
@@ -45,4 +54,45 @@ public class UIGameObject implements Drawable {
         return object.equals(gameObject);
     }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if (e.getButton() == MouseEvent.BUTTON3){
+            if (gameObject instanceof Brick){
+                double mouseX = e.getX();
+                double mouseY = e.getY();
+
+                Vector v = gameObject.getPosition();
+
+                double brickX = v.getX();
+                double brickY = v.getY();
+
+                if (Math.abs(mouseX-brickX) <= GameConstants.rectangularBrickLength &&
+                        Math.abs(mouseY-brickY) <= GameConstants.rectangularBrickThickness){
+                    gameObject.destroy();
+                }
+
+
+            }
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 }
