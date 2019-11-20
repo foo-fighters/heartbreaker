@@ -1,5 +1,6 @@
 package brickingbad.ui.components.containers;
 
+import brickingbad.controller.GameController;
 import brickingbad.ui.components.BBGameButton;
 
 import javax.swing.*;
@@ -33,6 +34,7 @@ public class BrickCountPanel extends JPanel implements ActionListener {
             int numMineBricks = Integer.parseInt(mineBrickField.getText());
             int numWrapperBricks = Integer.parseInt(wrapperBrickField.getText());
 
+            GameController.getInstance().createBricks(numSimpleBricks,numHalfMetalBricks,numMineBricks,numWrapperBricks);
         }
 
         // if source is submit button

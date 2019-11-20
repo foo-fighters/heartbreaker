@@ -61,6 +61,7 @@ public class Game {
     public void initialize() {
         paddle = new Paddle();
         trackObject(paddle);
+
         Ball firstBall = new Ball(paddle.getBallStartPosition());
         trackObject(firstBall);
         balls.add(firstBall);
