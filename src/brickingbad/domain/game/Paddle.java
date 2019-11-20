@@ -11,7 +11,7 @@ public class Paddle extends GameObject {
 
   private ArrayList<Ball> currentBalls;
   private PaddleMoveState moveState;
-  private PaddleMoveState rotateState;
+  private PaddleRotateState rotateState;
   private double angle;
   private double angularVelocity;
   public boolean isMagnetized;
@@ -62,7 +62,7 @@ public class Paddle extends GameObject {
 
   public void updatePosition() {
     moveState.updatePosition();
-    //rotateState.updatePosition();
+    rotateState.updatePosition();
   }
 
   public void startMove(Direction direction) {
@@ -78,10 +78,20 @@ public class Paddle extends GameObject {
   }
 
 
-  public void startRotate(Direction direction){ }
+  public void startRotate(Direction direction){
+    rotateState = new ActivePaddleRotateState(this, direction);
+  }
 
-  public void endRotate(Direction direction) { }
+  public void endRotate(Direction direction) {
+    rotateState = new EndPaddleRotateState(this, direction);
+  }
 
-  public void setIdleRotate(){ }
+  public void setIdleRotate(){
+    rotateState = new IdlePaddleRotateState(this);
+  }
+
+  public double getAngle() {
+    return angle;
+  }
 
 }
