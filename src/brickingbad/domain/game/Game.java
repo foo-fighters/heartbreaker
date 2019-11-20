@@ -148,8 +148,8 @@ public class Game {
 
     public void addBrick(Brick brick) {
 
-        double x = ThreadLocalRandom.current().nextDouble(0, GameConstants.screenWidth); //will be fixed
-        double y = ThreadLocalRandom.current().nextDouble(0, GameConstants.screenHeight);
+        double x = ThreadLocalRandom.current().nextDouble(0, GameConstants.screenWidth);
+        double y = ThreadLocalRandom.current().nextDouble(30, GameConstants.screenHeight*3/4);
 
         brick.setPosition(new Vector(x, y));
 

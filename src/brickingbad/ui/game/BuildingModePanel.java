@@ -54,7 +54,8 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Act
 
         JPanel upContainer = new JPanel(new BorderLayout());
         JPanel downContainer = new JPanel(new BorderLayout());
-        upContainer.setOpaque(false);
+        upContainer.setOpaque(true);
+        upContainer.setBackground(Color.darkGray);
         downContainer.setOpaque(false);
 
         add(upContainer, BorderLayout.PAGE_START);
