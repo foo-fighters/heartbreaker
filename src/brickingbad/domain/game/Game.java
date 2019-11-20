@@ -3,6 +3,7 @@ package brickingbad.domain.game;
 import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.game.border.*;
 import brickingbad.domain.game.brick.*;
+import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
 
 import java.util.ArrayList;
@@ -59,11 +60,16 @@ public class Game {
 
     public void initialize() {
         paddle = new Paddle();
-        trackObject(paddle);
         Ball firstBall = new Ball(paddle.getBallStartPosition());
-        trackObject(firstBall);
         balls.add(firstBall);
         paddle.getCurrentBalls().add(firstBall);
+
+        trackObject(paddle);
+        trackObject(firstBall);
+        trackObject(new Wall(Direction.UP));
+        trackObject(new Wall(Direction.RIGHT));
+        trackObject(new Wall(Direction.LEFT));
+        trackObject(new Ground());
     }
 
     public void play() {
@@ -71,7 +77,7 @@ public class Game {
 
     // GETTERS & SETTERS
 
-    public List<GameObject> getObjects() {
+    public ArrayList<GameObject> getObjects() {
         return gameObjects;
     }
 

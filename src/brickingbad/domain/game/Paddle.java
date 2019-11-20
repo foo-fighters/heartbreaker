@@ -13,7 +13,6 @@ public class Paddle extends GameObject {
   private PaddleMoveState moveState;
   private PaddleRotateState rotateState;
   private double angle;
-  private double angularVelocity;
   public boolean isMagnetized;
 
   public Paddle(){
@@ -24,17 +23,20 @@ public class Paddle extends GameObject {
     size = new Vector(GameConstants.paddleLength, GameConstants.paddleThickness);
     shape = Shape.RECTANGLE;
     angle = 0.0;
-    angularVelocity = 0.0;
     isMagnetized = false;
     currentBalls = new ArrayList<>();
   }
 
-  public Vector getPosition(){
-    return position;
-  }
-
   public void setPosition(double x, double y) {
     position.setVector(x,y);
+  }
+
+  public double getAngle() {
+    return angle;
+  }
+
+  public void setAngle(double angle) {
+    this.angle = angle;
   }
 
   public List<Ball> getCurrentBalls() {
@@ -69,33 +71,34 @@ public class Paddle extends GameObject {
     moveState = new ActivePaddleMoveState(this, direction);
   }
 
-  public void endMove(Direction direction){
+  public void endMove(Direction direction) {
+    if(moveState instanceof ActivePaddleMoveState && moveState.getDirection() != direction){
+      return;
+    }
     moveState = new EndPaddleMoveState(this, direction, position.getX());
   }
 
-  public void setIdleMove(){
+  public void setIdleMove() {
     moveState = new IdlePaddleMoveState(this);
   }
 
 
   public void startRotate(Direction direction){
+    if((direction == Direction.LEFT && angle > 0.0) || (direction == Direction.RIGHT && angle < 0.0)){
+      return;
+    }
     rotateState = new ActivePaddleRotateState(this, direction);
   }
 
   public void endRotate(Direction direction) {
+    if((direction == Direction.LEFT && angle > 0.0) || (direction == Direction.RIGHT && angle < 0.0)){
+      return;
+    }
     rotateState = new EndPaddleRotateState(this, direction);
   }
 
-  public void setIdleRotate(){
+  public void setIdleRotate() {
     rotateState = new IdlePaddleRotateState(this);
-  }
-
-  public double getAngle() {
-    return angle;
-  }
-
-  public void setAngle(double angle) {
-    this.angle = angle;
   }
 
 }

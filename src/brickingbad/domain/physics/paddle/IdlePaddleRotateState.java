@@ -6,12 +6,11 @@ import brickingbad.domain.physics.Direction;
 public class IdlePaddleRotateState extends PaddleRotateState {
 
   public IdlePaddleRotateState(Paddle paddle) {
-    super(paddle, null);
+    this.paddle = paddle;
   }
 
   @Override
   public void updatePosition() {
-
   }
 
 }
