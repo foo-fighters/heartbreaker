@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class GameButtonPanel extends JPanel implements ActionListener {
 
@@ -38,8 +39,16 @@ public class GameButtonPanel extends JPanel implements ActionListener {
       String name = JOptionPane.showInputDialog("Save name: ");
       GameController.getInstance().saveGame(name);
     } else if (e.getSource().equals(loadButton)) {
-      // obtain save names
-      // show menu with all saves
+      List<String> saveNames = GameController.getInstance().getSaveNames();
+
+      String name = (String) JOptionPane.showInputDialog(null, "Choose a save: ",
+              "Load Game", JOptionPane.QUESTION_MESSAGE, null, // Use
+              // default
+              // icon
+              saveNames.toArray(), // Array of choices
+              saveNames.toArray()[1]); // Initial choice
+
+      GameController.getInstance().loadGame(name);
     } else if (e.getSource().equals(pauseButton)) {
       // TODO: perform pause action
     } else if (e.getSource().equals(quitButton)) {

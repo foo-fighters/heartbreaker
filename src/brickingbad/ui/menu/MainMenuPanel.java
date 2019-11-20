@@ -7,6 +7,7 @@ import brickingbad.ui.components.BBMenuButton;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class MainMenuPanel extends JPanel implements ActionListener {
 
@@ -46,7 +47,16 @@ public class MainMenuPanel extends JPanel implements ActionListener {
     } else if (e.getSource().equals(helpButton)) {
       bbFrame.showHelpPanel();
     } else if (e.getSource().equals(loadGameButton)) {
-      bbFrame.showLoadGamePanel();
+      List<String> saveNames = GameController.getInstance().getSaveNames();
+
+      String name = (String) JOptionPane.showInputDialog(null, "Choose a save: ",
+              "Load Game", JOptionPane.QUESTION_MESSAGE, null, // Use
+              // default
+              // icon
+              saveNames.toArray(), // Array of choices
+              saveNames.toArray()[1]); // Initial choice
+
+      GameController.getInstance().loadGame(name);
     } else if (e.getSource().equals(exitButton)) {
       System.exit(0);
     }
