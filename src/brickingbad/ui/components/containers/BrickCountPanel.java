@@ -45,6 +45,8 @@ public class BrickCountPanel extends JPanel implements ActionListener {
         setLayout(new GridLayout(5, 2));
         setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.black),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        setBackground(Color.darkGray);
+
 
         simpleBrickField = new JTextField("0", 2);
         halfMetalBrickField = new JTextField("0", 2);
@@ -57,6 +59,16 @@ public class BrickCountPanel extends JPanel implements ActionListener {
         wrapperBrickLabel = new JLabel("Wrapper Bricks");
 
         submitButton = new BBGameButton("Enter", this);
+
+        simpleBrickLabel.setForeground(Color.WHITE);
+        halfMetalBrickLabel.setForeground(Color.WHITE);
+        mineBrickLabel.setForeground(Color.WHITE);
+        wrapperBrickLabel.setForeground(Color.WHITE);
+
+//        simpleBrickLabel.setFont();
+//        halfMetalBrickLabel.setFont();
+//        mineBrickLabel.setFont();
+//        wrapperBrickLabel.setFont();
 
         add(simpleBrickLabel);
         add(simpleBrickField);

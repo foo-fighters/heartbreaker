@@ -10,6 +10,8 @@ import brickingbad.ui.menu.MainMenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,15 +33,25 @@ public class BrickingBadFrame extends JFrame {
   }
 
   private BrickingBadFrame() {
+
+    File font_file = new File("resources/fonts/ARCADECLASSIC.TTF");
+
     setTitle("Bricking Bad");
     setSize(GameConstants.screenWidth, GameConstants.screenHeight);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
     panels = new JPanel(new CardLayout());
     add(panels);
 
     setVisible(true);
     setResizable(false);
+
+    try{
+      Font font = Font.createFont(Font.TRUETYPE_FONT, font_file);
+      Font sizedFont = font.deriveFont(14f);
+      setUIFont (new javax.swing.plaf.FontUIResource(sizedFont));
+    } catch(Exception e) {
+      System.out.println("Problem importing font");
+    }
   }
 
   private static void initializePanels() {
@@ -91,6 +103,16 @@ public class BrickingBadFrame extends JFrame {
     CardLayout layout = (CardLayout) panels.getLayout();
     layout.show(panels, panel.name());
     panelsMap.get(panel).requestFocus();
+  }
+
+  public static void setUIFont (javax.swing.plaf.FontUIResource f){
+    java.util.Enumeration keys = UIManager.getDefaults().keys();
+    while (keys.hasMoreElements()) {
+      Object key = keys.nextElement();
+      Object value = UIManager.get (key);
+      if (value instanceof javax.swing.plaf.FontUIResource)
+        UIManager.put (key, f);
+    }
   }
 
 }
