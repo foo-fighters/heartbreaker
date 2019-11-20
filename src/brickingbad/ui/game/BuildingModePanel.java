@@ -1,8 +1,10 @@
 package brickingbad.ui.game;
 
+import brickingbad.domain.game.ErrorListener;
 import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.GameObjectListener;
+import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.BrickCountPanel;
 import brickingbad.ui.components.containers.BuildButtonPanel;
@@ -18,76 +20,80 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class BuildingModePanel extends JPanel implements GameObjectListener, ActionListener {
+public class BuildingModePanel extends JPanel implements GameObjectListener, ActionListener, ErrorListener {
 
-  private static BuildingModePanel instance;
+    private static BuildingModePanel instance;
 
-  private ArrayList<UIGameObject> uiObjects;
+    private ArrayList<UIGameObject> uiObjects;
 
-  private BuildButtonPanel buildButtonPanel;
-  private BrickCountPanel brickCountPanel;
+    private BuildButtonPanel buildButtonPanel;
+    private BrickCountPanel brickCountPanel;
 
-  private BufferedImage background;
+    private BufferedImage background;
 
-  private BuildingModePanel() {
-    Animator.getInstance(this).start();
-    setLayout(new BorderLayout());
-    uiObjects = new ArrayList<>();
-    initUI();
-    loadBackgroundImage();
-    Game.getInstance().addObjectListener(this);
-  }
-
-  public static BuildingModePanel getInstance(){
-    if (instance == null){
-      instance = new BuildingModePanel();
+    private BuildingModePanel() {
+        Animator.getInstance(this).start();
+        setLayout(new BorderLayout());
+        uiObjects = new ArrayList<>();
+        initUI();
+        loadBackgroundImage();
+        Game.getInstance().addObjectListener(this);
+        Game.getInstance().addErrorListener(this);
     }
-    return instance;
-  }
 
-  private void initUI() {
-    buildButtonPanel = new BuildButtonPanel();
-    brickCountPanel = new BrickCountPanel();
-
-    JPanel container = new JPanel(new BorderLayout());
-    container.setOpaque(false);
-    add(container, BorderLayout.PAGE_START);
-    container.add(buildButtonPanel, BorderLayout.LINE_START);
-    container.add(brickCountPanel, BorderLayout.LINE_END);
-  }
-
-  @Override
-  public void addObject(GameObject object) {
-    uiObjects.add(new UIGameObject(object, this));
-  }
-
-  @Override
-  public void removeObject(GameObject object) {
-    uiObjects.removeIf(uiGameObject -> uiGameObject.containsObject(object));
-  }
-
-  @Override
-  public void actionPerformed(ActionEvent e) {
-
-
-
-    // if source is submit button
-    //  call game controller -> create bricks
-  }
-
-  @Override
-  protected void paintComponent(Graphics g) {
-    super.paintComponent(g);
-    g.drawImage(background, 0, 0, null);
-    uiObjects.forEach((obj) -> obj.draw(g));
-  }
-
-  private void loadBackgroundImage() {
-    try {
-      this.background = ImageIO.read(new File("resources/sprites/background.png"));
-    } catch (IOException e) {
-      e.printStackTrace();
+    public static BuildingModePanel getInstance() {
+        if (instance == null) {
+            instance = new BuildingModePanel();
+        }
+        return instance;
     }
-  }
 
+    private void initUI() {
+        buildButtonPanel = new BuildButtonPanel();
+        brickCountPanel = new BrickCountPanel();
+
+        JPanel container = new JPanel(new BorderLayout());
+        container.setOpaque(false);
+        add(container, BorderLayout.PAGE_START);
+        container.add(buildButtonPanel, BorderLayout.LINE_START);
+        container.add(brickCountPanel, BorderLayout.LINE_END);
+    }
+
+    @Override
+    public void addObject(GameObject object) {
+        uiObjects.add(new UIGameObject(object, this));
+    }
+
+    @Override
+    public void removeObject(GameObject object) {
+        uiObjects.removeIf(uiGameObject -> uiGameObject.containsObject(object));
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+
+        // if source is submit button
+        //  call game controller -> create bricks
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(background, 0, 0, null);
+        uiObjects.forEach((obj) -> obj.draw(g));
+    }
+
+    private void loadBackgroundImage() {
+        try {
+            this.background = ImageIO.read(new File("resources/sprites/background.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void showError(String errorMessage) {
+      JOptionPane.showMessageDialog(BrickingBadFrame.getInstance(), errorMessage);
+    }
 }

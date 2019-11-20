@@ -45,8 +45,6 @@ public class BuildButtonPanel extends JPanel implements ActionListener {
             if (checkedForCount){
                 GameController.getInstance().startGame();
                 BrickingBadFrame.getInstance().showRunningModePanel();
-            }else {
-                GameController.getInstance().notEnoughBricksToStart();
             }
 
         } else if (e.getSource().equals(quitButton)) {

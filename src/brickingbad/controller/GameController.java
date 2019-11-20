@@ -96,8 +96,4 @@ public class GameController {
     public boolean checkBrickCount(){
         return Game.getInstance().checkBrickCount();
     }
-
-    public void notEnoughBricksToStart(){ //will be filled
-
-    }
 }

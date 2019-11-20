@@ -5,6 +5,7 @@ import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.game.border.*;
 import brickingbad.domain.game.brick.*;
 import brickingbad.domain.physics.Vector;
+import brickingbad.ui.game.BuildingModePanel;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,9 +32,11 @@ public class Game {
     private ArrayList<PowerUp> storedPowerUps;
 
     private ArrayList<GameObjectListener> objectListeners;
+    private ArrayList<ErrorListener> errorListeners;
 
     private Game() {
         objectListeners = new ArrayList<>();
+        errorListeners = new ArrayList<>();
         balls = new ArrayList<>();
         walls = new ArrayList<>();
         bricks = new ArrayList<>();
@@ -207,9 +210,19 @@ public class Game {
             return true;
         }else {
             warning = warning.substring(0, warning.length() - 2);
-            warning = warning + " need to be created in order to start the Game.";
-            System.out.println(warning); //will be added as a pop up?
+            warning = warning + " more are needed to start the Game.";
+            sendError(warning);
             return false;
         }
+    }
+
+    public void addErrorListener(ErrorListener err) {
+        errorListeners.add(err);
+    }
+
+    private void sendError(String err){
+        errorListeners.forEach(errorListener -> {
+            errorListener.showError(err);
+        });
     }
 }
