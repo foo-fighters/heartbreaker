@@ -65,6 +65,16 @@ public class BrickCountPanel extends JPanel implements ActionListener {
         mineBrickLabel.setForeground(Color.WHITE);
         wrapperBrickLabel.setForeground(Color.WHITE);
 
+        simpleBrickField.setBackground(Color.GRAY);
+        halfMetalBrickField.setBackground(Color.GRAY);
+        mineBrickField.setBackground(Color.GRAY);
+        wrapperBrickField.setBackground(Color.GRAY);
+
+        simpleBrickField.setHorizontalAlignment(0);
+        halfMetalBrickField.setHorizontalAlignment(0);
+        mineBrickField.setHorizontalAlignment(0);
+        wrapperBrickField.setHorizontalAlignment(0);
+
 //        simpleBrickLabel.setFont();
 //        halfMetalBrickLabel.setFont();
 //        mineBrickLabel.setFont();
