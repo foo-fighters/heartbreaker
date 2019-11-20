@@ -67,12 +67,37 @@ public class GameController {
 
     public void createBricks(int simple, int halfMetal, int mine, int wrapper) {
 
-        ArrayList<Brick> bricks = BrickFactory.getInstance().createSimpleBricks(simple);
+        ArrayList<Brick> simpleBricks = BrickFactory.getInstance().createSimpleBricks(simple);
 
-        bricks.forEach((brick -> {
+        simpleBricks.forEach((brick -> {
             Game.getInstance().addBrick(brick);
         }));
 
+//        ArrayList<Brick> halfMetalBricks = BrickFactory.getInstance().createHalfMetalBricks(halfMetal);
+//
+//        halfMetalBricks.forEach((brick -> {
+//            Game.getInstance().addBrick(brick);
+//        }));
+//
+//        ArrayList<Brick> mineBricks = BrickFactory.getInstance().createMineBricks(mine);
+//
+//        mineBricks.forEach((brick -> {
+//            Game.getInstance().addBrick(brick);
+//        }));
+//
+//        ArrayList<Brick> wrapperBricks = BrickFactory.getInstance().createWrapperBricks(wrapper);
+//
+//        wrapperBricks.forEach((brick -> {
+//            Game.getInstance().addBrick(brick);
+//        }));
+
     }
 
+    public boolean checkBrickCount(){
+        return Game.getInstance().checkBrickCount();
+    }
+
+    public void notEnoughBricksToStart(){ //will be filled
+
+    }
 }

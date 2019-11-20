@@ -1,5 +1,6 @@
 package brickingbad.ui.components.containers;
 
+import brickingbad.controller.GameController;
 import brickingbad.domain.game.Game;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.components.BBGameButton;
@@ -39,8 +40,15 @@ public class BuildButtonPanel extends JPanel implements ActionListener {
         } else if (e.getSource().equals(loadButton)) {
             // TODO: perform load action
         } else if (e.getSource().equals(playButton)) {
-            BrickingBadFrame.getInstance().showRunningModePanel();
-            Game.getInstance().play();
+            boolean checkedForCount = GameController.getInstance().checkBrickCount();
+
+            if (checkedForCount){
+                GameController.getInstance().startGame();
+                BrickingBadFrame.getInstance().showRunningModePanel();
+            }else {
+                GameController.getInstance().notEnoughBricksToStart();
+            }
+
         } else if (e.getSource().equals(quitButton)) {
             BrickingBadFrame.getInstance().showMainMenuPanel();
         } else {

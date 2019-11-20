@@ -1,5 +1,6 @@
 package brickingbad.domain.game;
 
+import brickingbad.controller.GameController;
 import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.game.border.*;
 import brickingbad.domain.game.brick.*;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Game {
 
@@ -150,5 +152,64 @@ public class Game {
 
         bricks.add(brick);
         trackObject(brick);
+    }
+
+    public boolean checkBrickCount() {
+
+        AtomicInteger simpleBrickCount = new AtomicInteger();
+        AtomicInteger halfMetalBrickCount = new AtomicInteger();
+        AtomicInteger mineBrickCount = new AtomicInteger();
+        AtomicInteger wrapperBrickCount = new AtomicInteger();
+
+        bricks.forEach(brick -> {
+            if (brick instanceof SimpleBrick) {
+                simpleBrickCount.getAndIncrement();
+            } else if (brick instanceof HalfMetalBrick) {
+                halfMetalBrickCount.getAndIncrement();
+            } else if (brick instanceof MineBrick) {
+                mineBrickCount.getAndIncrement();
+            } else if (brick instanceof WrapperBrick) {
+                wrapperBrickCount.getAndIncrement();
+            }
+        });
+
+        String warning = "";
+        boolean enoughSimpleBricks = false;
+        boolean enoughHalfMetalBricks = false;
+        boolean enoughMineBricks = false;
+        boolean enoughWrapperBricks = false;
+
+        if (simpleBrickCount.get() >= GameConstants.simpleBrickLimit) {
+            enoughSimpleBricks = true;
+        } else {
+            warning = warning + (GameConstants.simpleBrickLimit - simpleBrickCount.get()) + " Simple Bricks, ";
+        }
+
+        if (halfMetalBrickCount.get() >= GameConstants.halfMetalBrickLimit) {
+            enoughHalfMetalBricks = true;
+        } else {
+            warning = warning + (GameConstants.halfMetalBrickLimit - halfMetalBrickCount.get()) + " Half Metal Bricks, ";
+        }
+
+        if (mineBrickCount.get() >= GameConstants.mineBrickLimit) {
+            enoughMineBricks = true;
+        } else {
+            warning = warning + (GameConstants.mineBrickLimit - mineBrickCount.get()) + " Mine Bricks, ";
+        }
+
+        if (wrapperBrickCount.get() >= GameConstants.wrapperBrickLimit) {
+            enoughWrapperBricks = true;
+        } else {
+            warning = warning + (GameConstants.wrapperBrickLimit - wrapperBrickCount.get()) + " Wrapper Bricks, ";
+        }
+
+        if (enoughSimpleBricks && enoughHalfMetalBricks && enoughMineBricks && enoughWrapperBricks){
+            return true;
+        }else {
+            warning = warning.substring(0, warning.length() - 2);
+            warning = warning + " need to be created in order to start the Game.";
+            System.out.println(warning); //will be added as a pop up?
+            return false;
+        }
     }
 }

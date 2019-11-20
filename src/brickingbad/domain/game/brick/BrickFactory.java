@@ -30,15 +30,15 @@ public class BrickFactory {
         return simpleBricks;
     }
 
-    public ArrayList<HalfMetalBrick> createHalfMetalBricks(int n) {
+    public ArrayList<Brick> createHalfMetalBricks(int n) {
         return null;
     }
 
-    public ArrayList<MineBrick> createMineBricks(int n) {
+    public ArrayList<Brick> createMineBricks(int n) {
         return null;
     }
 
-    public ArrayList<WrapperBrick> createWrapperBricks(int n) {
+    public ArrayList<Brick> createWrapperBricks(int n) {
         return null;
     }
 
