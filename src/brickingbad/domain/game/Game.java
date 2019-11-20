@@ -103,4 +103,31 @@ public class Game {
         return lives;
     }
 
+    public void setPaddle(Paddle paddle) {
+        this.paddle = paddle;
+    }
+
+    public void setBalls(ArrayList<Ball> balls) {
+        this.balls = balls;
+    }
+
+    public void setBricks(ArrayList<Brick> bricks) {
+        this.bricks = bricks;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    public void setActivePowerUps(ArrayList<PowerUp> activePowerUps) {
+        this.activePowerUps = activePowerUps;
+    }
+
+    public void setStoredPowerUps(ArrayList<PowerUp> storedPowerUps) {
+        this.storedPowerUps = storedPowerUps;
+    }
 }

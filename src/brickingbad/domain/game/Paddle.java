@@ -29,7 +29,7 @@ public class Paddle extends GameObject {
     currentBalls = new ArrayList<>();
   }
 
-  public Vector getPosition() {
+  public Vector getPosition(){
     return position;
   }
 

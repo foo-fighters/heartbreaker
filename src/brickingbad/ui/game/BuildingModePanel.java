@@ -1,10 +1,8 @@
 package brickingbad.ui.game;
 
-import brickingbad.domain.game.Ball;
 import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.GameObjectListener;
-import brickingbad.ui.components.containers.BrickCountPanel;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.BuildButtonPanel;
 import brickingbad.ui.game.animation.Animator;
