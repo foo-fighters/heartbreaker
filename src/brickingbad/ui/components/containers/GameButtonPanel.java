@@ -1,5 +1,6 @@
 package brickingbad.ui.components.containers;
 
+import brickingbad.controller.GameController;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.components.BBGameButton;
 
@@ -7,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class GameButtonPanel extends JPanel implements ActionListener {
 
@@ -34,9 +36,19 @@ public class GameButtonPanel extends JPanel implements ActionListener {
   @Override
   public void actionPerformed(ActionEvent e) {
     if (e.getSource().equals(saveButton)) {
-      // TODO: perform save action
+      String name = JOptionPane.showInputDialog("Save name: ");
+      GameController.getInstance().saveGame(name);
     } else if (e.getSource().equals(loadButton)) {
-      // TODO: perform load action
+      List<String> saveNames = GameController.getInstance().getSaveNames();
+
+      String name = (String) JOptionPane.showInputDialog(null, "Choose a save: ",
+              "Load Game", JOptionPane.QUESTION_MESSAGE, null, // Use
+              // default
+              // icon
+              saveNames.toArray(), // Array of choices
+              saveNames.toArray()[1]); // Initial choice
+
+      GameController.getInstance().loadGame(name);
     } else if (e.getSource().equals(pauseButton)) {
       // TODO: perform pause action
     } else if (e.getSource().equals(quitButton)) {

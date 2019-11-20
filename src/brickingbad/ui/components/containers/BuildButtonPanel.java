@@ -9,6 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BuildButtonPanel extends JPanel implements ActionListener {
 
@@ -36,9 +39,19 @@ public class BuildButtonPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(saveButton)) {
-            // TODO: perform save action
+            String name = JOptionPane.showInputDialog("Save name: ");
+            GameController.getInstance().saveGame(name);
         } else if (e.getSource().equals(loadButton)) {
-            // TODO: perform load action
+            List<String> saveNames = GameController.getInstance().getSaveNames();
+
+            String name = (String) JOptionPane.showInputDialog(null, "Choose a save: ",
+                    "Load Game", JOptionPane.QUESTION_MESSAGE, null, // Use
+                    // default
+                    // icon
+                    saveNames.toArray(), // Array of choices
+                    saveNames.toArray()[1]); // Initial choice
+
+            GameController.getInstance().loadGame(name);
         } else if (e.getSource().equals(playButton)) {
             boolean checkedForCount = GameController.getInstance().checkBrickCount();
 

@@ -9,6 +9,8 @@ import brickingbad.domain.physics.Direction;
 import brickingbad.services.persistence.SaveRepository;
 
 import java.util.ArrayList;
+import java.util.List;
+
 
 public class GameController {
 
@@ -36,6 +38,10 @@ public class GameController {
         Save save = SaveRepository.getSaveByName(name);
         SaveAssembler.disassemble(save, game);
     }
+
+  public List<String> getSaveNames() {
+    return SaveRepository.getSaveNames();
+  }
 
     public void initializeGame() {
         Game.getInstance().initialize();
