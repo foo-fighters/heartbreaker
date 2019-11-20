@@ -27,10 +27,6 @@ public class Paddle extends GameObject {
     currentBalls = new ArrayList<>();
   }
 
-  public Vector getPosition(){
-    return position;
-  }
-
   public void setPosition(double x, double y) {
     position.setVector(x,y);
   }
@@ -76,6 +72,9 @@ public class Paddle extends GameObject {
   }
 
   public void endMove(Direction direction) {
+    if(moveState instanceof ActivePaddleMoveState && moveState.getDirection() != direction){
+      return;
+    }
     moveState = new EndPaddleMoveState(this, direction, position.getX());
   }
 
@@ -92,6 +91,9 @@ public class Paddle extends GameObject {
   }
 
   public void endRotate(Direction direction) {
+    if((direction == Direction.LEFT && angle > 0.0) || (direction == Direction.RIGHT && angle < 0.0)){
+      return;
+    }
     rotateState = new EndPaddleRotateState(this, direction);
   }
 

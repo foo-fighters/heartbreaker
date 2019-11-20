@@ -10,4 +10,7 @@ public abstract class PaddleMoveState {
 
   public abstract void updatePosition();
 
+  public Direction getDirection() {
+    return direction;
+  }
 }
