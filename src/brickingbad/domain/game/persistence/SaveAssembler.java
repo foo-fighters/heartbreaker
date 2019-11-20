@@ -21,20 +21,20 @@ public class SaveAssembler {
 
     int score = game.getScore();
     int lives = game.getLives();
-
-    int paddleX = game.getPaddle().getPosition().getX();
-    int paddleY = game.getPaddle().getPosition().getY();
+    
+    double paddleX = game.getPaddle().getPosition().getX();
+    double paddleY = game.getPaddle().getPosition().getY();
     save.paddleCoordinates.add(paddleX);
     save.paddleCoordinates.add(paddleY);
 
     ArrayList<Ball> balls = game.getBalls();
     balls.forEach((ball) -> {
-      ArrayList<Integer> tempCoordinates  = new ArrayList<>();
+      ArrayList<Double> tempCoordinates  = new ArrayList<>();
       tempCoordinates.add(ball.getPosition().getX());
       tempCoordinates.add(ball.getPosition().getY());
       save.ballCoordinates.add(tempCoordinates);
 
-      ArrayList<Integer> tempVelocities = new ArrayList<>();
+      ArrayList<Double> tempVelocities = new ArrayList<>();
       tempVelocities.add(ball.getVelocity().getX());
       tempVelocities.add(ball.getVelocity().getY());
       save.ballVelocities.add(tempVelocities);
@@ -42,7 +42,7 @@ public class SaveAssembler {
 
     ArrayList<Brick> bricks = game.getBricks();
     bricks.forEach((brick) -> {
-      ArrayList<Integer> tempCoordinates = new ArrayList<>();
+      ArrayList<Double> tempCoordinates = new ArrayList<>();
       tempCoordinates.add(brick.getPosition().getX());
       tempCoordinates.add(brick.getPosition().getY());
       save.brickCoordinates.add(tempCoordinates);
@@ -61,27 +61,27 @@ public class SaveAssembler {
 
     ArrayList<Brick> bricks = new ArrayList<>();
     save.brickCoordinates.forEach((coordinates) -> {
-      int x = coordinates.get(0);
-      int y = coordinates.get(1);
+      double x = coordinates.get(0);
+      double y = coordinates.get(1);
       Vector brickPosition = new Vector(x, y);
       bricks.add(new SimpleBrick(brickPosition));
     });
 
     ArrayList<Ball> balls = new ArrayList<>();
     save.ballCoordinates.forEach((coordinate) -> {
-      int x = coordinate.get(0);
-      int y = coordinate.get(1);
+      double x = coordinate.get(0);
+      double y = coordinate.get(1);
       Vector ballPosition = new Vector(x, y);
       balls.add(new Ball(ballPosition));
     });
     for (int i = 0; i < balls.size(); i++) {
-      int velX = save.ballVelocities.get(i).get(0);
-      int velY = save.ballVelocities.get(i).get(1);
+      double velX = save.ballVelocities.get(i).get(0);
+      double velY = save.ballVelocities.get(i).get(1);
       balls.get(i).setVelocity(new Vector(velX, velY));
     }
 
-    int paddleX = save.paddleCoordinates.get(0);
-    int paddleY = save.paddleCoordinates.get(1);
+    double paddleX = save.paddleCoordinates.get(0);
+    double paddleY = save.paddleCoordinates.get(1);
     Paddle paddle = new Paddle();
     paddle.setPosition(paddleX, paddleY);
 

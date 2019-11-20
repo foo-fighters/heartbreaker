@@ -1,9 +1,11 @@
 package brickingbad.domain.game;
 
+import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.paddle.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Paddle extends GameObject {
 
@@ -17,7 +19,7 @@ public class Paddle extends GameObject {
   public Paddle(){
     setIdleMove();
     setIdleRotate();
-    position = new Vector(GameConstants.screenWidth / 2, GameConstants.screenHeight - GameConstants.paddleHeight);
+    position = new Vector(GameConstants.screenWidth / 2.0, GameConstants.screenHeight - GameConstants.paddleHeight);
     velocity = new Vector();
     size = new Vector(GameConstants.paddleLength, GameConstants.paddleThickness);
     shape = Shape.RECTANGLE;
@@ -27,33 +29,40 @@ public class Paddle extends GameObject {
     currentBalls = new ArrayList<>();
   }
 
-  public Paddle(Vector position) {
-
-  }
-
   public Vector getPosition(){
     return position;
   }
 
-  public void setPosition(int x, int y){
+  public void setPosition(int x, int y) {
     position.setVector(x,y);
+  }
+
+  public List<Ball> getCurrentBalls() {
+    return currentBalls;
   }
 
   public void launchBalls() {
     for (Ball ball: currentBalls) {
       ball.startMovement(angle);
-      currentBalls.remove(ball);
     }
+    currentBalls.clear();
   }
 
-  private void catchBall(Ball ball){
+  private void catchBall(Ball ball) {
     currentBalls.add(ball);
     ball.stopMovement();
   }
 
+  public Vector getBallStartPosition() {
+    double distance = (GameConstants.paddleThickness + GameConstants.ballSize) / 2.0;
+    Vector offset = new Vector((int)Math.round(distance * Math.sin(angle)), -(int)Math.round(distance * Math.cos(angle)));
+    offset.addVector(this.position);
+    return offset;
+  }
+
   public void updatePosition() {
     moveState.updatePosition();
-    rotateState.updatePosition();
+    //rotateState.updatePosition();
   }
 
   public void startMove(Direction direction) {

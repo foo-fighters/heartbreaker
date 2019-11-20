@@ -1,9 +1,9 @@
 package brickingbad.domain.game;
 
-import brickingbad.domain.game.border.Ground;
-import brickingbad.domain.game.border.Wall;
-import brickingbad.domain.game.brick.Brick;
-import brickingbad.domain.game.powerup.PowerUp;
+import brickingbad.domain.game.powerup.*;
+import brickingbad.domain.game.border.*;
+import brickingbad.domain.game.brick.*;
+import brickingbad.domain.physics.Vector;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,8 +16,9 @@ public class Game {
     private Paddle paddle;
     private ArrayList<Ball> balls;
     private Ground ground;
-    private Wall wall;
+    private ArrayList<Wall> walls;
     private ArrayList<Brick> bricks;
+    private ArrayList<GameObject> gameObjects;
 
     private int score;
     private int lives;
@@ -30,6 +31,12 @@ public class Game {
 
     private Game() {
         objectListeners = new ArrayList<>();
+        balls = new ArrayList<>();
+        walls = new ArrayList<>();
+        bricks = new ArrayList<>();
+        activePowerUps = new ArrayList<>();
+        storedPowerUps = new ArrayList<>();
+        gameObjects = new ArrayList<>();
     }
 
     public static Game getInstance() {
@@ -43,15 +50,30 @@ public class Game {
         objectListeners.add(listener);
     }
 
-    public List<GameObject> getObjects() {
-        List<GameObject> objects = new ArrayList<GameObject>();
-        return objects;
+    private void trackObject(GameObject object) {
+        gameObjects.add(object);
+        for (GameObjectListener listener: objectListeners) {
+            listener.addObject(object);
+        }
+    }
+
+    public void initialize() {
+        paddle = new Paddle();
+        trackObject(paddle);
+        Ball firstBall = new Ball(paddle.getBallStartPosition());
+        trackObject(firstBall);
+        balls.add(firstBall);
+        paddle.getCurrentBalls().add(firstBall);
     }
 
     public void play() {
     }
 
     // GETTERS & SETTERS
+
+    public List<GameObject> getObjects() {
+        return gameObjects;
+    }
 
     public ArrayList<Ball> getBalls() {
         return balls;

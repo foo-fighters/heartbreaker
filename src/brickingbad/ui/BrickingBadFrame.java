@@ -90,6 +90,7 @@ public class BrickingBadFrame extends JFrame {
   private static void showPanel(Panel panel) {
     CardLayout layout = (CardLayout) panels.getLayout();
     layout.show(panels, panel.name());
+    panelsMap.get(panel).requestFocus();
   }
 
 }

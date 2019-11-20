@@ -9,7 +9,7 @@ import brickingbad.domain.physics.ball.SimpleBallState;
 public class Ball extends GameObject {
 
     private BallState ballState;
-    private int launchSpeed = GameConstants.ballLaunchSpeed;
+    private double launchSpeed = GameConstants.ballLaunchSpeed;
 
     public Ball(Vector position){
         this.shape = Shape.CIRCLE;
@@ -20,11 +20,11 @@ public class Ball extends GameObject {
     }
 
     public void startMovement(double angle){
-        this.velocity.setVector((int)Math.sin(angle), (int)Math.cos(angle));
+        this.velocity.setVector(launchSpeed * Math.sin(angle), -launchSpeed * Math.cos(angle));
     }
 
     public void stopMovement(){
-        this.velocity.setVector(0, 0);
+        this.velocity.setVector(0.0, 0.0);
     }
 
     public void setSimple(){
