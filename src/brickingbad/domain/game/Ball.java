@@ -10,13 +10,19 @@ public class Ball extends GameObject {
 
     private BallState ballState;
     private double launchSpeed = GameConstants.ballLaunchSpeed;
+    private double paddleOffset;
 
     public Ball(Vector position){
         this.shape = Shape.CIRCLE;
         this.size = new Vector(GameConstants.ballSize, GameConstants.ballSize);
         this.position = position;
         this.velocity = new Vector();
+        this.paddleOffset = 0.0;
         setSimple();
+    }
+
+    public double getPaddleOffset() {
+        return paddleOffset;
     }
 
     public void startMovement(double angle){

@@ -21,7 +21,6 @@ public class ActivePaddleMoveState extends PaddleMoveState {
   public void updatePosition() {
     if(direction == Direction.LEFT) {
       if(paddle.getPosition().getX() <= paddle.getSize().getX() / 2.0) {
-        paddle.setIdleMove();
         return;
       }
       paddle.getPosition().addVector(deltaPos.product(-1.0));
@@ -30,7 +29,6 @@ public class ActivePaddleMoveState extends PaddleMoveState {
       }
     }else{
       if(paddle.getPosition().getX() >= GameConstants. screenWidth - paddle.getSize().getX() / 2.0) {
-        paddle.setIdleMove();
         return;
       }
       paddle.getPosition().addVector(deltaPos);
