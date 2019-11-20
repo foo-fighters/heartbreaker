@@ -6,6 +6,7 @@ import brickingbad.domain.game.GameObjectListener;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.BuildButtonPanel;
+import brickingbad.ui.components.containers.GameButtonPanel;
 import brickingbad.ui.game.animation.Animator;
 
 import javax.imageio.ImageIO;
@@ -22,7 +23,7 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
 
   private ArrayList<UIGameObject> uiObjects;
 
-  private BuildButtonPanel buildButtonPanel;
+  private GameButtonPanel gameButtonPanel;
 
   private BufferedImage background;
 
@@ -45,12 +46,12 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
   }
 
   private void initUI() {
-    buildButtonPanel = new BuildButtonPanel();
+    gameButtonPanel = new GameButtonPanel();
 
     JPanel container = new JPanel(new BorderLayout());
     container.setOpaque(false);
     add(container, BorderLayout.PAGE_START);
-    container.add(buildButtonPanel, BorderLayout.LINE_START);
+    container.add(gameButtonPanel, BorderLayout.LINE_START);
   }
 
   @Override
