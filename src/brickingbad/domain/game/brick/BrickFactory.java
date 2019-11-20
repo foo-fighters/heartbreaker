@@ -1,5 +1,7 @@
 package brickingbad.domain.game.brick;
 
+import java.util.ArrayList;
+
 public class BrickFactory {
 
     private static BrickFactory instance;
@@ -17,7 +19,28 @@ public class BrickFactory {
 
     }
 
-    public
+    public ArrayList<Brick> createSimpleBricks(int n) {
+
+        ArrayList<Brick> simpleBricks = new ArrayList<>();
+
+        for (int i = 0; i<n; i++){
+            simpleBricks.add(new SimpleBrick());
+        }
+
+        return simpleBricks;
+    }
+
+    public ArrayList<HalfMetalBrick> createHalfMetalBricks(int n) {
+        return null;
+    }
+
+    public ArrayList<MineBrick> createMineBricks(int n) {
+        return null;
+    }
+
+    public ArrayList<WrapperBrick> createWrapperBricks(int n) {
+        return null;
+    }
 
 
 }

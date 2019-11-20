@@ -8,6 +8,7 @@ import brickingbad.domain.physics.Vector;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Game {
 
@@ -18,7 +19,7 @@ public class Game {
     private Ground ground;
     private ArrayList<Wall> walls;
     private ArrayList<Brick> bricks;
-    private ArrayList<GameObject> gameObjects;
+    //private ArrayList<GameObject> gameObjects;
 
     private int score;
     private int lives;
@@ -36,7 +37,7 @@ public class Game {
         bricks = new ArrayList<>();
         activePowerUps = new ArrayList<>();
         storedPowerUps = new ArrayList<>();
-        gameObjects = new ArrayList<>();
+        //gameObjects = new ArrayList<>();
     }
 
     public static Game getInstance() {
@@ -51,8 +52,8 @@ public class Game {
     }
 
     private void trackObject(GameObject object) {
-        gameObjects.add(object);
-        for (GameObjectListener listener: objectListeners) {
+        //gameObjects.add(object);
+        for (GameObjectListener listener : objectListeners) {
             listener.addObject(object);
         }
     }
@@ -72,6 +73,14 @@ public class Game {
     // GETTERS & SETTERS
 
     public List<GameObject> getObjects() {
+        List<GameObject> gameObjects = new ArrayList<>();
+
+        gameObjects.add(paddle);
+        gameObjects.addAll(bricks);
+        gameObjects.addAll(balls);
+        gameObjects.addAll(activePowerUps);
+        gameObjects.addAll(storedPowerUps);
+
         return gameObjects;
     }
 
@@ -129,5 +138,16 @@ public class Game {
 
     public void setStoredPowerUps(ArrayList<PowerUp> storedPowerUps) {
         this.storedPowerUps = storedPowerUps;
+    }
+
+    public void addBrick(Brick brick) {
+
+        double x = ThreadLocalRandom.current().nextDouble(0, GameConstants.screenWidth); //will be fixed
+        double y = ThreadLocalRandom.current().nextDouble(0, GameConstants.screenHeight);
+
+        brick.setPosition(new Vector(x, y));
+
+        bricks.add(brick);
+        trackObject(brick);
     }
 }
