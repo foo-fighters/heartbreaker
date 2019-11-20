@@ -7,6 +7,7 @@ import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.game.animation.Animator;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PhysicsEngine implements Runnable {
@@ -47,7 +48,7 @@ public class PhysicsEngine implements Runnable {
   }
 
   private static void handleCollisions() {
-
+    ArrayList<GameObject> objects = Game.getInstance().getObjects();
   }
 
   private static void updatePositions() {

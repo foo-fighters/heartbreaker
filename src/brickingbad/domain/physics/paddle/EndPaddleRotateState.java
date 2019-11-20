@@ -36,6 +36,8 @@ public class EndPaddleRotateState extends PaddleRotateState {
       paddle.setAngle(currentAngle + deltaAng);
     }else{
       if(currentAngle <= 0.0) {
+        paddle.setAngle(0.0);
+        paddle.setPosition(paddle.getPosition().getX(), defaultY);
         paddle.setIdleRotate();
       }
       paddle.setAngle(currentAngle - deltaAng);

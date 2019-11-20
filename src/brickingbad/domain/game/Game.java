@@ -77,7 +77,7 @@ public class Game {
 
     // GETTERS & SETTERS
 
-    public List<GameObject> getObjects() {
+    public ArrayList<GameObject> getObjects() {
         return gameObjects;
     }
 
