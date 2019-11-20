@@ -1,5 +1,6 @@
 package brickingbad.ui.components.containers;
 
+import brickingbad.controller.GameController;
 import brickingbad.domain.game.Game;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.components.BBGameButton;
@@ -35,7 +36,8 @@ public class BuildButtonPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(saveButton)) {
-            // TODO: perform save action
+            String name = JOptionPane.showInputDialog("Save name: ");
+            GameController.getInstance().saveGame(name);
         } else if (e.getSource().equals(loadButton)) {
             // TODO: perform load action
         } else if (e.getSource().equals(playButton)) {
