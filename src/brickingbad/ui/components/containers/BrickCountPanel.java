@@ -44,10 +44,10 @@ public class BrickCountPanel extends JPanel implements ActionListener {
         setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.black),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
-        simpleBrickField = new JTextField(2);
-        halfMetalBrickField = new JTextField(2);
-        mineBrickField = new JTextField(2);
-        wrapperBrickField = new JTextField(2);
+        simpleBrickField = new JTextField("0", 2);
+        halfMetalBrickField = new JTextField("0", 2);
+        mineBrickField = new JTextField("0", 2);
+        wrapperBrickField = new JTextField("0", 2);
 
         simpleBrickLabel = new JLabel("Simple Bricks");
         halfMetalBrickLabel = new JLabel("Half-metal Bricks");

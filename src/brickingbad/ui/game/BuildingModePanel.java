@@ -47,7 +47,7 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Act
 
   private void initUI() {
     buildButtonPanel = new BuildButtonPanel();
-    brickCountPanel = new BrickCountPanel(this);
+    brickCountPanel = new BrickCountPanel();
 
     JPanel container = new JPanel(new BorderLayout());
     container.setOpaque(false);
