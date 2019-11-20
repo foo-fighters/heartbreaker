@@ -54,7 +54,7 @@ public class BrickCountPanel extends JPanel implements ActionListener {
         wrapperBrickField = new JTextField("0", 2);
 
         simpleBrickLabel = new JLabel("Simple Bricks");
-        halfMetalBrickLabel = new JLabel("Half-metal Bricks");
+        halfMetalBrickLabel = new JLabel("Half Metal Bricks");
         mineBrickLabel = new JLabel("Mine Bricks");
         wrapperBrickLabel = new JLabel("Wrapper Bricks");
 
