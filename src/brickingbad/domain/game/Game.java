@@ -76,6 +76,16 @@ public class Game {
     public void play() {
     }
 
+    public void removeObject(GameObject object) {
+        objectListeners.forEach((listener) -> listener.removeObject(object));
+        if (object instanceof Brick) {
+            bricks.removeIf(brick -> brick.equals(object));
+        }
+        if (object instanceof Ball) {
+            bricks.removeIf(ball -> ball.equals(object));
+        }
+    }
+
     // GETTERS & SETTERS
 
     public List<GameObject> getObjects() {
