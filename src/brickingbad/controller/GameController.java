@@ -3,7 +3,7 @@ package brickingbad.controller;
 import brickingbad.domain.game.Game;
 import brickingbad.domain.game.persistence.Save;
 import brickingbad.domain.game.persistence.SaveAssembler;
-import brickingbad.domain.physics.paddle.Direction;
+import brickingbad.domain.physics.Direction;
 import brickingbad.services.persistence.SaveRepository;
 
 public class GameController {

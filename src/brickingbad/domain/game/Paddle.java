@@ -33,7 +33,7 @@ public class Paddle extends GameObject {
     return position;
   }
 
-  public void setPosition(int x, int y) {
+  public void setPosition(double x, double y) {
     position.setVector(x,y);
   }
 

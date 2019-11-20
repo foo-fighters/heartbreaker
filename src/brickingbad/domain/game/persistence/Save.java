@@ -1,5 +1,8 @@
 package brickingbad.domain.game.persistence;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Save {
 
   public String name;
