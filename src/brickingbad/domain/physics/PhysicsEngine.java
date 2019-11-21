@@ -14,23 +14,38 @@ public class PhysicsEngine implements Runnable {
   private final int SLEEP_TIME = 1000 / GameConstants.calculationsPerSecond;
 
   private static PhysicsEngine instance;
-
-  private JPanel currentPanel;
+  private static boolean running;
 
   private PhysicsEngine() {
 
   }
 
-  public static PhysicsEngine getInstance(JPanel currentPanel) {
+  public static PhysicsEngine getInstance() {
     if (instance == null) {
       instance = new PhysicsEngine();
+      running = true;
     }
-    instance.currentPanel = currentPanel;
     return instance;
   }
 
   public void start() {
     (new Thread(instance)).start();
+  }
+
+  public void togglePauseResume() {
+    if (running) {
+      System.out.println("Physics engine paused.");
+      running = false;
+    } else {
+      System.out.println("Physics engine resumed.");
+      running = true;
+    }
+  }
+
+  public void resumeIfPaused() {
+    if (!running) {
+      togglePauseResume();
+    }
   }
 
   @Override
@@ -41,8 +56,10 @@ public class PhysicsEngine implements Runnable {
       } catch (InterruptedException e) {
         System.out.println("Program interrupted.");
       }
-      handleCollisions();
-      updatePositions();
+      if (running) {
+        handleCollisions();
+        updatePositions();
+      }
     }
   }
 

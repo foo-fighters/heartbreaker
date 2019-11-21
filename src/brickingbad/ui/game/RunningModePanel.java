@@ -1,5 +1,6 @@
 package brickingbad.ui.game;
 
+import brickingbad.controller.GameController;
 import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.GameObjectListener;
@@ -29,12 +30,12 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
 
   private RunningModePanel() {
     Animator.getInstance(this).start();
-    PhysicsEngine.getInstance(this).start();
+    PhysicsEngine.getInstance().start();
     setLayout(new BorderLayout());
     uiObjects = new ArrayList<>();
     initUI();
     loadBackgroundImage();
-    Game.getInstance().addObjectListener(this);
+    GameController.getInstance().addObjectListener(this);
     this.addKeyListener(new GameKeyboardListener());
   }
 

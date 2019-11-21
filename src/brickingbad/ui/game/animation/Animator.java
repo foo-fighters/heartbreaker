@@ -3,6 +3,7 @@ package brickingbad.ui.game.animation;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.brick.Brick;
 import brickingbad.ui.BrickingBadFrame;
+import brickingbad.ui.game.GameKeyboardListener;
 
 import javax.swing.*;
 import java.util.Vector;
@@ -12,22 +13,44 @@ public class Animator implements Runnable {
   private final int SLEEP_TIME = 1000 / GameConstants.framesPerSecond;
 
   private static Animator instance;
+  private static boolean running = true;
 
-  private JPanel currentPanel;
+  private static JPanel panel;
 
   private Animator() {
-
   }
 
   public static Animator getInstance(JPanel currentPanel) {
-    if (instance == null) {
-      instance = new Animator();
-    }
-    instance.currentPanel = currentPanel;
+    instance = getInstance();
+    instance.setPanel(currentPanel);
     return instance;
   }
 
+  public static Animator getInstance() {
+    if (instance == null) {
+      instance = new Animator();
+    }
+    return instance;
+  }
+
+  public void togglePauseResume() {
+    if (running) {
+      System.out.println("Animator paused.");
+      running = false;
+    } else {
+      running = true;
+      System.out.println("Animator resumed.");
+    }
+  }
+
+  public void resumeIfPaused() {
+    if (!running) {
+      togglePauseResume();
+    }
+  }
+
   public void start() {
+    running = true;
     (new Thread(instance)).start();
   }
 
@@ -39,8 +62,18 @@ public class Animator implements Runnable {
       } catch (InterruptedException e) {
         System.out.println("Program interrupted.");
       }
-      BrickingBadFrame.getInstance().repaint();
+      if (running) {
+        BrickingBadFrame.getInstance().repaint();
+      }
     }
+  }
+
+  public void setPanel(JPanel panel) {
+    this.panel = panel;
+  }
+
+  public boolean isRunning() {
+    return running;
   }
 
 }
