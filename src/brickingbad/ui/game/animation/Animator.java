@@ -13,29 +13,32 @@ public class Animator implements Runnable {
 
   private static Animator instance;
   private static Thread thread;
-
-  private JPanel currentPanel;
+  private boolean running;
 
   private Animator() {
   }
 
-  public static Animator getInstance(JPanel currentPanel) {
+  public static Animator getInstance() {
     if (instance == null) {
       instance = new Animator();
     }
-    instance.currentPanel = currentPanel;
     return instance;
   }
 
   public void start() {
+    running = true;
     thread = new Thread(instance);
     System.out.println(thread.getState());
     thread.start();
   }
 
+  public void stop() {
+    running = false;
+  }
+
   @Override
   public void run() {
-    while (true) {
+    while (running) {
       try {
         Thread.sleep(SLEEP_TIME);
       } catch (InterruptedException e) {

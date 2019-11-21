@@ -7,6 +7,7 @@ import brickingbad.domain.game.persistence.Save;
 import brickingbad.domain.game.persistence.SaveAssembler;
 import brickingbad.domain.physics.Direction;
 import brickingbad.services.persistence.SaveRepository;
+import brickingbad.ui.BrickingBadFrame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +52,7 @@ public class GameController {
     }
 
     public void pauseGame() {
-
+        BrickingBadFrame.getInstance().stopAnimation();
     }
 
     public void launchBalls() {
