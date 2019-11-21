@@ -50,19 +50,17 @@ public class Ball extends GameObject {
     @Override
     public void reflect(GameObject object) {
         double incidenceAngle = Math.atan2(-velocity.getY(), -velocity.getX());
-        System.out.println("hey");
-        System.out.println(Math.toDegrees(incidenceAngle));
         double normalAngle;
         if (object.getShape() == Shape.CIRCLE) {
             normalAngle = Math.atan2(object.getPosition().getY() - position.getY(), object.getPosition().getX() - position.getX());
         }else if(object.getShape() == Shape.RECTANGLE) {
             normalAngle = Math.toRadians(object.getAngle() + reflectionDirection.ordinal() * 45.0);
-            System.out.println(Math.toDegrees(normalAngle));
         }else {
             normalAngle = incidenceAngle;
         }
         double reflectionAngle = 2 * normalAngle - incidenceAngle;
         double len = Math.hypot(velocity.getX(), velocity.getY());
+        System.out.println(reflectionDirection);
         velocity.setVector(Math.cos(reflectionAngle) * len, Math.sin(reflectionAngle) * len);
     }
 }

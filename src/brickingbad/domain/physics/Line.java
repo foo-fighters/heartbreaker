@@ -38,7 +38,7 @@ public class Line {
         }
     }
 
-    private boolean isVectorAbove(Vector v) {
+    public boolean isVectorAbove(Vector v) {
         if(isVertical) {
             return false;
         }else {
@@ -46,7 +46,7 @@ public class Line {
         }
     }
 
-    private boolean isVectorBelow(Vector v) {
+    public boolean isVectorBelow(Vector v) {
         if(isVertical) {
             return false;
         }else {
@@ -54,23 +54,23 @@ public class Line {
         }
     }
 
-    private boolean isVectorLeft(Vector v) {
+    public boolean isVectorLeft(Vector v) {
         if(isVertical) {
             return v.getX() < verticalX;
         }else if(slope > 0.0) {
-            return v.getY() < v.getX() * slope + offset;
-        }else {
             return v.getY() > v.getX() * slope + offset;
+        }else {
+            return v.getY() < v.getX() * slope + offset;
         }
     }
 
-    private boolean isVectorRight(Vector v) {
+    public boolean isVectorRight(Vector v) {
         if(isVertical) {
             return v.getX() > verticalX;
         }else if(slope > 0.0) {
-            return v.getY() > v.getX() * slope + offset;
-        }else {
             return v.getY() < v.getX() * slope + offset;
+        }else {
+            return v.getY() > v.getX() * slope + offset;
         }
     }
 

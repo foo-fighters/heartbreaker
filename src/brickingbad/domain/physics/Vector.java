@@ -41,4 +41,8 @@ public class Vector {
         return new Vector(xval * mul, yval * mul);
     }
 
+    @Override
+    public String toString() {
+        return String.format("Vector: (%f, %f)", xval, yval);
+    }
 }
