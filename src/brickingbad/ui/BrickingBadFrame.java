@@ -1,5 +1,6 @@
 package brickingbad.ui;
 
+import brickingbad.controller.GameController;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.ui.components.Panel;
 import brickingbad.ui.game.BuildingModePanel;
@@ -13,6 +14,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BrickingBadFrame extends JFrame {
@@ -113,6 +115,26 @@ public class BrickingBadFrame extends JFrame {
       if (value instanceof javax.swing.plaf.FontUIResource)
         UIManager.put (key, f);
     }
+  }
+
+  public void showSaveDialog() {
+    String name = JOptionPane.showInputDialog("Save name: ");
+    GameController.getInstance().saveGame(name);
+  }
+
+  public void showLoadDialog() {
+    List<String> saveNames = GameController.getInstance().getSaveNames();
+
+    String name = (String) JOptionPane.showInputDialog(null, "Choose a save: ",
+            "Load Game", JOptionPane.QUESTION_MESSAGE, null, // Use
+            // default
+            // icon
+            saveNames.toArray(), // Array of choices
+            saveNames.toArray()[1]); // Initial choice
+
+    GameController.getInstance().initializeGame();
+    GameController.getInstance().loadGame(name);
+    BrickingBadFrame.getInstance().showRunningModePanel();
   }
 
 }

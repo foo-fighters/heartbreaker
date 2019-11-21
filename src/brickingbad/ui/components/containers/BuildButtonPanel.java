@@ -39,21 +39,9 @@ public class BuildButtonPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(saveButton)) {
-            String name = JOptionPane.showInputDialog("Save name: ");
-            GameController.getInstance().saveGame(name);
+            BrickingBadFrame.getInstance().showSaveDialog();
         } else if (e.getSource().equals(loadButton)) {
-            List<String> saveNames = GameController.getInstance().getSaveNames();
-
-            String name = (String) JOptionPane.showInputDialog(null, "Choose a save: ",
-                    "Load Game", JOptionPane.QUESTION_MESSAGE, null, // Use
-                    // default
-                    // icon
-                    saveNames.toArray(), // Array of choices
-                    saveNames.toArray()[1]); // Initial choice
-
-            GameController.getInstance().initializeGame();
-            GameController.getInstance().loadGame(name);
-            BrickingBadFrame.getInstance().showRunningModePanel();
+            BrickingBadFrame.getInstance().showLoadDialog();
         } else if (e.getSource().equals(playButton)) {
             boolean checkedForCount = GameController.getInstance().checkBrickCount();
 
