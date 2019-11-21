@@ -5,6 +5,8 @@ import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.Paddle;
 import brickingbad.domain.game.brick.Brick;
 import brickingbad.domain.physics.Vector;
+import brickingbad.ui.BrickingBadFrame;
+import brickingbad.ui.game.BuildingModePanel;
 import brickingbad.ui.game.animation.Drawable;
 
 import javax.imageio.ImageIO;
@@ -31,7 +33,10 @@ public class UIGameObject extends Component implements Drawable, MouseListener {
         this.panel = panel;
         this.position = new Point();
         this.setSprite();
-        panel.addMouseListener(this);
+        panel.removeMouseListener(this);
+        if (BrickingBadFrame.getInstance().getCurrentPanel() instanceof BuildingModePanel) {
+            panel.addMouseListener(this);
+        }
     }
 
     @Override
