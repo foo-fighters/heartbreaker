@@ -50,6 +50,10 @@ public class GameController {
         Game.getInstance().play();
     }
 
+    public void pauseGame() {
+
+    }
+
     public void launchBalls() {
         Game.getInstance().getPaddle().launchBalls();
     }

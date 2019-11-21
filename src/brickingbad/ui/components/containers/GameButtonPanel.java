@@ -40,7 +40,7 @@ public class GameButtonPanel extends JPanel implements ActionListener {
     } else if (e.getSource().equals(loadButton)) {
       BrickingBadFrame.getInstance().showLoadDialog();
     } else if (e.getSource().equals(pauseButton)) {
-      // TODO: perform pause action
+      GameController.getInstance().pauseGame();
     } else if (e.getSource().equals(quitButton)) {
       BrickingBadFrame.getInstance().showMainMenuPanel();
     } else {

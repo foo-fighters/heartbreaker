@@ -12,11 +12,11 @@ public class Animator implements Runnable {
   private final int SLEEP_TIME = 1000 / GameConstants.framesPerSecond;
 
   private static Animator instance;
+  private static Thread thread;
 
   private JPanel currentPanel;
 
   private Animator() {
-
   }
 
   public static Animator getInstance(JPanel currentPanel) {
@@ -28,7 +28,9 @@ public class Animator implements Runnable {
   }
 
   public void start() {
-    (new Thread(instance)).start();
+    thread = new Thread(instance);
+    System.out.println(thread.getState());
+    thread.start();
   }
 
   @Override

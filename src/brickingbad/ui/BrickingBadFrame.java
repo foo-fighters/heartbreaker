@@ -130,7 +130,7 @@ public class BrickingBadFrame extends JFrame {
             // default
             // icon
             saveNames.toArray(), // Array of choices
-            saveNames.toArray()[1]); // Initial choice
+            saveNames.toArray()[0]); // Initial choice
 
     GameController.getInstance().initializeGame();
     GameController.getInstance().loadGame(name);
