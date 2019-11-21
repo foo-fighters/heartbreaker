@@ -3,6 +3,7 @@ package brickingbad.ui.components.containers;
 import brickingbad.controller.GameController;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.components.BBGameButton;
+import brickingbad.ui.game.animation.Animator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,9 +38,13 @@ public class GameButtonPanel extends JPanel implements ActionListener {
   @Override
   public void actionPerformed(ActionEvent e) {
     if (e.getSource().equals(saveButton)) {
-      BrickingBadFrame.getInstance().showSaveDialog();
+      if (!Animator.getInstance().isRunning()) {
+        BrickingBadFrame.getInstance().showSaveDialog();
+      }
     } else if (e.getSource().equals(loadButton)) {
-      BrickingBadFrame.getInstance().showLoadDialog();
+      if (!Animator.getInstance().isRunning()) {
+        BrickingBadFrame.getInstance().showLoadDialog();
+      }
     } else if (e.getSource().equals(pauseButton)) {
       pauseButton.toggleText("PAUSE", "RESUME");
       GameController.getInstance().togglePauseResume();

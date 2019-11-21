@@ -72,4 +72,8 @@ public class Animator implements Runnable {
     this.panel = panel;
   }
 
+  public boolean isRunning() {
+    return running;
+  }
+
 }
