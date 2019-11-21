@@ -47,18 +47,7 @@ public class MainMenuPanel extends JPanel implements ActionListener {
     } else if (e.getSource().equals(helpButton)) {
       bbFrame.showHelpPanel();
     } else if (e.getSource().equals(loadGameButton)) {
-      List<String> saveNames = GameController.getInstance().getSaveNames();
-
-      String name = (String) JOptionPane.showInputDialog(null, "Choose a save: ",
-              "Load Game", JOptionPane.QUESTION_MESSAGE, null, // Use
-              // default
-              // icon
-              saveNames.toArray(), // Array of choices
-              saveNames.toArray()[1]); // Initial choice
-
-      GameController.getInstance().initializeGame();
-      GameController.getInstance().loadGame(name);
-      BrickingBadFrame.getInstance().showRunningModePanel();
+      bbFrame.showLoadDialog();
     } else if (e.getSource().equals(exitButton)) {
       System.exit(0);
     }
