@@ -59,6 +59,11 @@ public class GameController {
         PhysicsEngine.getInstance().togglePauseResume();
     }
 
+    public void resumeGameIfPaused() {
+        Animator.getInstance().resumeIfPaused();
+        PhysicsEngine.getInstance().resumeIfPaused();
+    }
+
     public void launchBalls() {
         Game.getInstance().getPaddle().launchBalls();
     }

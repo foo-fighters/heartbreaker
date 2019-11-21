@@ -49,7 +49,7 @@ public class BuildButtonPanel extends JPanel implements ActionListener {
                 GameController.getInstance().startGame();
                 BrickingBadFrame.getInstance().showRunningModePanel();
             }
-
+            GameController.getInstance().resumeGameIfPaused();
         } else if (e.getSource().equals(quitButton)) {
             BrickingBadFrame.getInstance().showMainMenuPanel();
         } else {

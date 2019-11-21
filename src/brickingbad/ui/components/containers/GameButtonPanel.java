@@ -44,6 +44,7 @@ public class GameButtonPanel extends JPanel implements ActionListener {
       GameController.getInstance().togglePauseResume();
     } else if (e.getSource().equals(quitButton)) {
       BrickingBadFrame.getInstance().showMainMenuPanel();
+      pauseButton.setText("PAUSE");
     } else {
       throw new IllegalArgumentException();
     }

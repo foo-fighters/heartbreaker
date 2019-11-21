@@ -42,6 +42,12 @@ public class PhysicsEngine implements Runnable {
     }
   }
 
+  public void resumeIfPaused() {
+    if (!running) {
+      togglePauseResume();
+    }
+  }
+
   @Override
   public void run() {
     while (true) {

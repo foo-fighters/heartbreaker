@@ -39,8 +39,13 @@ public class Animator implements Runnable {
       running = false;
     } else {
       running = true;
-      panel.addKeyListener(new GameKeyboardListener());
       System.out.println("Animator resumed.");
+    }
+  }
+
+  public void resumeIfPaused() {
+    if (!running) {
+      togglePauseResume();
     }
   }
 
