@@ -41,6 +41,7 @@ public class UIGameObject extends Component implements Drawable, MouseListener {
 
     @Override
     public void draw(Graphics g) {
+        g.setColor(Color.GREEN);
         position.setLocation((int)gameObject.getPosition().getX(), (int)gameObject.getPosition().getY());
         if (gameObject.getSize() == null) {
             System.out.println(gameObject.getClass().getSimpleName());
@@ -79,22 +80,25 @@ public class UIGameObject extends Component implements Drawable, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON3){
-            if (gameObject instanceof Brick){
-                double mouseX = e.getX();
-                double mouseY = e.getY();
+        System.out.println(panel.getClass().getSimpleName());
+        if (panel.getClass().getSimpleName().equals("RunningModePanel")) {
+            if (e.getButton() == MouseEvent.BUTTON3){
+                if (gameObject instanceof Brick){
+                    double mouseX = e.getX();
+                    double mouseY = e.getY();
 
-                Vector v = gameObject.getPosition();
+                    Vector v = gameObject.getPosition();
 
-                double brickX = v.getX();
-                double brickY = v.getY();
+                    double brickX = v.getX();
+                    double brickY = v.getY();
 
-                if (Math.abs(mouseX-brickX) <= GameConstants.rectangularBrickLength &&
-                        Math.abs(mouseY-brickY) <= GameConstants.rectangularBrickThickness){
-                    gameObject.destroy();
+                    if (Math.abs(mouseX-brickX) <= GameConstants.rectangularBrickLength &&
+                            Math.abs(mouseY-brickY) <= GameConstants.rectangularBrickThickness){
+                        gameObject.destroy();
+                    }
+
+
                 }
-
-
             }
         }
     }

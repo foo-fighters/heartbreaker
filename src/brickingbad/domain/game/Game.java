@@ -70,6 +70,7 @@ public class Game {
     }
 
     public void initialize() {
+        gameObjects = new ArrayList<GameObject>();
         for (Brick brick : bricks) {
             removeObjectFromListeners(brick);
         }
