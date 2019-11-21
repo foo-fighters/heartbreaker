@@ -16,6 +16,10 @@ public class SaveRepository {
   private static MongoCollection<Save> savesCollection = DatabaseService.getDatabase().getCollection("games", Save.class);
 
   public static void addSave(Save save) {
+    String name = save.name;
+    if (getSaveNames().contains(name)) {
+      savesCollection.deleteOne(eq("name", name));
+    }
     savesCollection.insertOne(save);
   }
 
