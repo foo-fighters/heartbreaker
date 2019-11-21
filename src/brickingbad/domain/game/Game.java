@@ -7,6 +7,7 @@ import brickingbad.domain.game.brick.*;
 import brickingbad.domain.physics.Vector;
 import brickingbad.ui.game.BuildingModePanel;
 
+import javax.swing.text.Position;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -167,11 +168,25 @@ public class Game {
     }
 
     public void addBrick(Brick brick) {
+        boolean overlaps = true;
 
-        double x = ThreadLocalRandom.current().nextDouble(0, GameConstants.screenWidth);
-        double y = ThreadLocalRandom.current().nextDouble(30, GameConstants.screenHeight*3/4);
-
-        brick.setPosition(new Vector(x, y));
+        while (overlaps) {
+            double x = ThreadLocalRandom.current().nextDouble(0, GameConstants.screenWidth);
+            double y = ThreadLocalRandom.current().nextDouble(30, GameConstants.screenHeight*3/4);
+            for (Brick other : bricks) {
+                double otherX = other.getPosition().getX();
+                double otherY = other.getPosition().getY();
+                overlaps = Math.abs(otherX - x) <= GameConstants.rectangularBrickLength &&
+                        Math.abs(otherY - y) <= GameConstants.rectangularBrickThickness;
+                if (overlaps) {
+                    x = ThreadLocalRandom.current().nextDouble(0, GameConstants.screenWidth);
+                    y = ThreadLocalRandom.current().nextDouble(30, GameConstants.screenHeight*3/4);
+                }
+            }
+            if (!overlaps) {
+                brick.setPosition(new Vector(x, y));
+            }
+        }
 
         bricks.add(brick);
         trackObject(brick);
