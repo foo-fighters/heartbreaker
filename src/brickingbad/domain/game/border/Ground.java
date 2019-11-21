@@ -12,6 +12,7 @@ public class Ground extends GameObject {
         velocity = new Vector();
         size = new Vector(GameConstants.screenWidth, 10.0);
         shape = Shape.RECTANGLE;
+        angle = 0.0;
     }
 
     @Override

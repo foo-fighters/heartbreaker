@@ -9,7 +9,8 @@ public abstract class GameObject {
   protected Vector size;
   protected Vector position;
   protected Vector velocity;
-  private Direction reflectionDirection;
+  protected Direction reflectionDirection;
+  protected double angle;
 
   public void updatePosition() {
     position.addVector(velocity.product(1.0 / GameConstants.calculationsPerSecond));
@@ -58,5 +59,9 @@ public abstract class GameObject {
   public void setReflectionDirection(Direction direction) {
     this.reflectionDirection = direction;
   }
+
+  public double getAngle() { return angle; }
+
+  public void setAngle(double angle) { this.angle = angle; }
 
 }

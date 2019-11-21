@@ -11,6 +11,7 @@ public class Wall extends GameObject {
     public Wall(Direction direction) {
         shape = Shape.RECTANGLE;
         velocity = new Vector();
+        angle = 0.0;
         if(direction == Direction.LEFT){
             position = new Vector(-5.0, GameConstants.screenHeight / 2.0);
             size = new Vector(10.0, GameConstants.screenHeight);

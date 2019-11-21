@@ -12,7 +12,6 @@ public class Paddle extends GameObject {
   private ArrayList<Ball> currentBalls;
   private PaddleMoveState moveState;
   private PaddleRotateState rotateState;
-  private double angle;
   public boolean isMagnetized;
 
   public Paddle(){
@@ -29,14 +28,6 @@ public class Paddle extends GameObject {
 
   public void setPosition(double x, double y) {
     position.setVector(x,y);
-  }
-
-  public double getAngle() {
-    return angle;
-  }
-
-  public void setAngle(double angle) {
-    this.angle = angle;
   }
 
   public List<Ball> getCurrentBalls() {
