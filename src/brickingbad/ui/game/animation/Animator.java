@@ -57,7 +57,6 @@ public class Animator implements Runnable {
   @Override
   public void run() {
     while (true) {
-      System.out.println(BrickingBadFrame.getInstance().getFocusOwner());
       try {
         Thread.sleep(SLEEP_TIME);
       } catch (InterruptedException e) {
