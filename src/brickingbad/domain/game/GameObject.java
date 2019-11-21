@@ -1,5 +1,6 @@
 package brickingbad.domain.game;
 
+import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
 import brickingbad.ui.game.BuildingModePanel;
 
@@ -10,7 +11,9 @@ public abstract class GameObject {
   protected Shape shape;
   protected Vector size;
   protected Vector position;
-  protected Vector velocity = new Vector(0, 0);
+  protected Vector velocity;
+  protected Direction reflectionDirection;
+  protected double angle;
 
   public void updatePosition() {
     position.addVector(velocity.product(1.0 / GameConstants.calculationsPerSecond));
@@ -53,5 +56,17 @@ public abstract class GameObject {
   public void setVelocity(Vector velocity) {
     this.velocity = velocity;
   }
+
+  public Direction getReflectionDirection() {
+    return reflectionDirection;
+  }
+
+  public void setReflectionDirection(Direction direction) {
+    this.reflectionDirection = direction;
+  }
+
+  public double getAngle() { return angle; }
+
+  public void setAngle(double angle) { this.angle = angle; }
 
 }

@@ -1,5 +1,7 @@
 package brickingbad.domain.game;
 
+import java.util.Map;
+
 public class GameConstants {
 
     // Screen size

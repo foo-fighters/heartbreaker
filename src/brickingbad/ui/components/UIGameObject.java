@@ -2,6 +2,7 @@ package brickingbad.ui.components;
 
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.GameObject;
+import brickingbad.domain.game.Paddle;
 import brickingbad.domain.game.brick.Brick;
 import brickingbad.domain.physics.Vector;
 import brickingbad.ui.game.animation.Drawable;
@@ -9,6 +10,8 @@ import brickingbad.ui.game.animation.Drawable;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -21,6 +24,7 @@ public class UIGameObject extends Component implements Drawable, MouseListener {
     private BufferedImage sprite;
     private GameObject gameObject;
     private JPanel panel;
+    private boolean rotated;
 
     public UIGameObject(GameObject gameObject, JPanel panel) {
         this.gameObject = gameObject;
@@ -38,7 +42,21 @@ public class UIGameObject extends Component implements Drawable, MouseListener {
         }
         position.translate((int)-gameObject.getSize().getX() / 2, (int)-gameObject.getSize().getY() / 2);
         //g.drawRect(position.x, position.y, gameObject.getSize().getX(), gameObject.getSize().getY());
-        g.drawImage(sprite, position.x, position.y, null);
+        Graphics2D g2d = (Graphics2D) g;
+
+        if (this.gameObject instanceof Paddle) {
+            UIGameObjectHelper.angle = ((Paddle) gameObject).getAngle();
+            UIGameObjectHelper.rotateAxisX = gameObject.getPosition().getX();
+            UIGameObjectHelper.rotateAxisY = gameObject.getPosition().getY();
+            g2d.rotate(Math.toRadians(UIGameObjectHelper.angle), UIGameObjectHelper.rotateAxisX, UIGameObjectHelper.rotateAxisY);
+            UIGameObjectHelper.rotated = true;
+        } else {
+            if (UIGameObjectHelper.rotated) {
+                g2d.rotate(Math.toRadians(-UIGameObjectHelper.angle), UIGameObjectHelper.rotateAxisX, UIGameObjectHelper.rotateAxisY);
+                UIGameObjectHelper.rotated = false;
+            }
+        }
+        g2d.drawImage(sprite, position.x, position.y, null);
     }
 
     private void setSprite() {

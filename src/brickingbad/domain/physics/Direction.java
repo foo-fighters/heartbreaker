@@ -1,12 +1,12 @@
 package brickingbad.domain.physics;
 
 public enum Direction {
-  LEFT,
-  UP_LEFT,
-  UP,
+  RIGHT, // also clockwise
   UP_RIGHT,
-  RIGHT,
-  DOWN_RIGHT,
+  UP,
+  UP_LEFT,
+  LEFT, // also counter-clockwise
+  DOWN_LEFT,
   DOWN,
-  DOWN_LEFT;
+  DOWN_RIGHT;
 }

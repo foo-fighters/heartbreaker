@@ -5,15 +5,8 @@ import brickingbad.domain.physics.Direction;
 
 public abstract class PaddleRotateState {
 
-  private final Paddle paddle;
-  private final Direction direction;
-  private final int rotateSpeed;
-
-  public PaddleRotateState(Paddle paddle, Direction direction) {
-    this.paddle = paddle;
-    this.direction = direction;
-    this.rotateSpeed = 10; // TODO: get rotateSpeed from some source.
-  }
+  protected Paddle paddle;
+  protected Direction direction;
 
   public abstract void updatePosition();
 
