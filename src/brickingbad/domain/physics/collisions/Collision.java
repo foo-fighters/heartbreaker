@@ -44,9 +44,9 @@ public class Collision {
             collisionStrategy = CollisionStrategyFactory.getInstance().getCollisionStrategy("destruction");
             collisionStrategy.collide(o1, o2);
             collided = true;
-        }else if(reflected.isInstance(o1) && destroyed.isInstance(o2)) {
+        }else if(reflected.isInstance(o2) && destroyed.isInstance(o1)) {
             collisionStrategy = CollisionStrategyFactory.getInstance().getCollisionStrategy("destruction");
-            collisionStrategy.collide(o1, o2);
+            collisionStrategy.collide(o2, o1);
             collided = true;
         }
     }

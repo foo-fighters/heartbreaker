@@ -69,7 +69,7 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     g.drawImage(background, 0, 0, null);
-    uiObjects.forEach((obj) -> obj.draw(g));
+      uiObjects.forEach((obj) -> obj.draw(g));
   }
 
   private void loadBackgroundImage() {

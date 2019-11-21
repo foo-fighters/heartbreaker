@@ -24,7 +24,7 @@ public class Game {
     private Ground ground;
     private ArrayList<Wall> walls;
     private ArrayList<Brick> bricks;
-    //private ArrayList<GameObject> gameObjects;
+    private ArrayList<GameObject> gameObjects;
 
     private int score;
     private int lives;
@@ -44,7 +44,7 @@ public class Game {
         bricks = new ArrayList<>();
         activePowerUps = new ArrayList<>();
         storedPowerUps = new ArrayList<>();
-        //gameObjects = new ArrayList<>();
+        gameObjects = new ArrayList<>();
     }
 
     public static Game getInstance() {
@@ -63,7 +63,7 @@ public class Game {
     }
 
     private void trackObject(GameObject object) {
-        //gameObjects.add(object);
+        gameObjects.add(object);
         for (GameObjectListener listener : objectListeners) {
             listener.addObject(object);
         }
@@ -84,12 +84,21 @@ public class Game {
         balls.add(firstBall);
         paddle.getCurrentBalls().add(firstBall);
 
+        Wall wall1 = new Wall(Direction.UP);
+        Wall wall2 = new Wall(Direction.RIGHT);
+        Wall wall3 = new Wall(Direction.LEFT);
+        this.ground = new Ground();
+
+        walls.add(wall1);
+        walls.add(wall2);
+        walls.add(wall3);
+
         trackObject(paddle);
         trackObject(firstBall);
-        trackObject(new Wall(Direction.UP));
-        trackObject(new Wall(Direction.RIGHT));
-        trackObject(new Wall(Direction.LEFT));
-        trackObject(new Ground());
+        trackObject(wall1);
+        trackObject(wall2);
+        trackObject(wall3);
+        trackObject(this.ground);
     }
 
     public void play() {
@@ -101,6 +110,7 @@ public class Game {
 
     public void removeObject(GameObject object) {
         removeObjectFromListeners(object);
+        gameObjects.removeIf(obj -> obj.equals(object));
         if (object instanceof Brick) {
             bricks.removeIf(brick -> brick.equals(object));
         }
@@ -112,14 +122,16 @@ public class Game {
     // GETTERS & SETTERS
 
     public ArrayList<GameObject> getObjects() {
-        ArrayList<GameObject> gameObjects = new ArrayList<>();
-
-        gameObjects.add(paddle);
-        gameObjects.addAll(bricks);
-        gameObjects.addAll(balls);
-        gameObjects.addAll(activePowerUps);
-        gameObjects.addAll(storedPowerUps);
-
+//        ArrayList<GameObject> gameObjects = new ArrayList<>();
+//
+//        gameObjects.add(paddle);
+//        gameObjects.addAll(bricks);
+//        gameObjects.addAll(balls);
+//        gameObjects.addAll(activePowerUps);
+//        gameObjects.addAll(storedPowerUps);
+//        gameObjects.addAll(walls);
+//        gameObjects.add(ground);
+//
         return gameObjects;
     }
 
