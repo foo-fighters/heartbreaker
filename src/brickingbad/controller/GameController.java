@@ -1,12 +1,16 @@
 package brickingbad.controller;
 
 import brickingbad.domain.game.Game;
+import brickingbad.domain.game.GameObjectListener;
 import brickingbad.domain.game.brick.Brick;
 import brickingbad.domain.game.brick.BrickFactory;
 import brickingbad.domain.game.persistence.Save;
 import brickingbad.domain.game.persistence.SaveAssembler;
 import brickingbad.domain.physics.Direction;
+import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.services.persistence.SaveRepository;
+import brickingbad.ui.BrickingBadFrame;
+import brickingbad.ui.game.animation.Animator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +52,16 @@ public class GameController {
 
     public void startGame() {
         Game.getInstance().play();
+    }
+
+    public void togglePauseResume() {
+        Animator.getInstance().togglePauseResume();
+        PhysicsEngine.getInstance().togglePauseResume();
+    }
+
+    public void resumeGameIfPaused() {
+        Animator.getInstance().resumeIfPaused();
+        PhysicsEngine.getInstance().resumeIfPaused();
     }
 
     public void launchBalls() {
@@ -100,5 +114,9 @@ public class GameController {
 
     public boolean checkBrickCount(){
         return Game.getInstance().checkBrickCount();
+    }
+
+    public void addObjectListener(GameObjectListener listener) {
+        Game.getInstance().addObjectListener(listener);
     }
 }

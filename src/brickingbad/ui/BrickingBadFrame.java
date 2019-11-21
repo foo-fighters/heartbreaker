@@ -119,7 +119,9 @@ public class BrickingBadFrame extends JFrame {
 
   public void showSaveDialog() {
     String name = JOptionPane.showInputDialog("Save name: ");
-    GameController.getInstance().saveGame(name);
+    if (name != null) {
+      GameController.getInstance().saveGame(name);
+    }
   }
 
   public void showLoadDialog() {
@@ -130,11 +132,13 @@ public class BrickingBadFrame extends JFrame {
             // default
             // icon
             saveNames.toArray(), // Array of choices
-            saveNames.toArray()[1]); // Initial choice
+            saveNames.toArray()[0]); // Initial choice
 
-    GameController.getInstance().initializeGame();
-    GameController.getInstance().loadGame(name);
-    BrickingBadFrame.getInstance().showRunningModePanel();
+    if (name != null) {
+      GameController.getInstance().initializeGame();
+      GameController.getInstance().loadGame(name);
+      BrickingBadFrame.getInstance().showRunningModePanel();
+    }
   }
 
 }

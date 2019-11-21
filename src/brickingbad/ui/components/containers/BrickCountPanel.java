@@ -24,23 +24,6 @@ public class BrickCountPanel extends JPanel implements ActionListener {
 
     private BBGameButton submitButton;
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        if (e.getSource().equals(submitButton)) {
-
-            int numSimpleBricks = Integer.parseInt(simpleBrickField.getText());
-            int numHalfMetalBricks = Integer.parseInt(halfMetalBrickField.getText());
-            int numMineBricks = Integer.parseInt(mineBrickField.getText());
-            int numWrapperBricks = Integer.parseInt(wrapperBrickField.getText());
-
-            GameController.getInstance().createBricks(numSimpleBricks,numHalfMetalBricks,numMineBricks,numWrapperBricks);
-        }
-
-        // if source is submit button
-        //  call game controller -> create bricks
-    }
-
     public BrickCountPanel() {
         setLayout(new GridLayout(5, 2));
         setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.black),
@@ -94,6 +77,22 @@ public class BrickCountPanel extends JPanel implements ActionListener {
 
         add(submitButton);
 
+        setFocusable(false);
+
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource().equals(submitButton)) {
+
+            int numSimpleBricks = Integer.parseInt(simpleBrickField.getText());
+            int numHalfMetalBricks = Integer.parseInt(halfMetalBrickField.getText());
+            int numMineBricks = Integer.parseInt(mineBrickField.getText());
+            int numWrapperBricks = Integer.parseInt(wrapperBrickField.getText());
+
+            GameController.getInstance().createBricks(numSimpleBricks,numHalfMetalBricks,numMineBricks,numWrapperBricks);
+        }
+    }
+
 
 }

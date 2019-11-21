@@ -44,10 +44,12 @@ public class MainMenuPanel extends JPanel implements ActionListener {
     if (e.getSource().equals(newGameButton)) {
       bbFrame.showBuildingModePanel();
       GameController.getInstance().initializeGame();
+      GameController.getInstance().resumeGameIfPaused();
     } else if (e.getSource().equals(helpButton)) {
       bbFrame.showHelpPanel();
     } else if (e.getSource().equals(loadGameButton)) {
       bbFrame.showLoadDialog();
+      GameController.getInstance().resumeGameIfPaused();
     } else if (e.getSource().equals(exitButton)) {
       System.exit(0);
     }
