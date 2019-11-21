@@ -1,5 +1,6 @@
 package brickingbad.ui.components.containers;
 
+import brickingbad.controller.GameController;
 import brickingbad.domain.game.Game;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.components.BBGameButton;
@@ -8,6 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BuildButtonPanel extends JPanel implements ActionListener {
 
@@ -30,17 +34,23 @@ public class BuildButtonPanel extends JPanel implements ActionListener {
         add(quitButton);
 
         setOpaque(false);
+        setFocusable(false);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(saveButton)) {
-            // TODO: perform save action
+            BrickingBadFrame.getInstance().showSaveDialog();
         } else if (e.getSource().equals(loadButton)) {
-            // TODO: perform load action
+            BrickingBadFrame.getInstance().showLoadDialog();
         } else if (e.getSource().equals(playButton)) {
-            BrickingBadFrame.getInstance().showRunningModePanel();
-            Game.getInstance().play();
+            boolean checkedForCount = GameController.getInstance().checkBrickCount();
+
+            if (checkedForCount){
+                GameController.getInstance().startGame();
+                BrickingBadFrame.getInstance().showRunningModePanel();
+            }
+            GameController.getInstance().resumeGameIfPaused();
         } else if (e.getSource().equals(quitButton)) {
             BrickingBadFrame.getInstance().showMainMenuPanel();
         } else {

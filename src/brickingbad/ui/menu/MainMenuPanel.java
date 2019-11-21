@@ -7,6 +7,7 @@ import brickingbad.ui.components.BBMenuButton;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class MainMenuPanel extends JPanel implements ActionListener {
 
@@ -43,10 +44,12 @@ public class MainMenuPanel extends JPanel implements ActionListener {
     if (e.getSource().equals(newGameButton)) {
       bbFrame.showBuildingModePanel();
       GameController.getInstance().initializeGame();
+      GameController.getInstance().resumeGameIfPaused();
     } else if (e.getSource().equals(helpButton)) {
       bbFrame.showHelpPanel();
     } else if (e.getSource().equals(loadGameButton)) {
-      bbFrame.showLoadGamePanel();
+      bbFrame.showLoadDialog();
+      GameController.getInstance().resumeGameIfPaused();
     } else if (e.getSource().equals(exitButton)) {
       System.exit(0);
     }

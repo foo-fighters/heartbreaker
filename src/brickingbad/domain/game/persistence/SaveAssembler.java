@@ -55,7 +55,7 @@ public class SaveAssembler {
     return save;
   }
 
-  public static void disassemble(Save save, Game game) {
+  public static void disassemble(Save save) {
     int score = save.score;
     int lives = save.lives;
 
@@ -80,16 +80,21 @@ public class SaveAssembler {
       balls.get(i).setVelocity(new Vector(velX, velY));
     }
 
-    double paddleX = save.paddleCoordinates.get(0);
-    double paddleY = save.paddleCoordinates.get(1);
     Paddle paddle = new Paddle();
-    paddle.setPosition(paddleX, paddleY);
+    if (save.paddleCoordinates != null) {
+      double paddleX = save.paddleCoordinates.get(0);
+      double paddleY = save.paddleCoordinates.get(1);
+      paddle.setPosition(paddleX, paddleY);
+    }
 
-    game.setScore(score);
-    game.setLives(lives);
-    game.setBricks(bricks);
-    game.setPaddle(paddle);
-    game.setBalls(balls);
+    Game.getInstance().setScore(score);
+    Game.getInstance().setLives(lives);
+    bricks.forEach(brick -> Game.getInstance().addBrick(brick));
+//    Game.getInstance().setPaddle(paddle);
+
+//    balls.forEach(ball ->  {
+//      Game.getInstance().addBall(ball);
+//    });
   }
 
 }

@@ -35,10 +35,10 @@ public class GameConstants {
     public final static double mineBrickMovementRadius = paddleLength * 1.5;
 
     // Building mode
-    public final static int simpleBrickLimit = 75;
-    public final static int halfMetalBrickLimit = 10;
-    public final static int mineBrickLimit = 5;
-    public final static int wrapperBrickLimit = 10;
+    public final static int simpleBrickLimit = 75; //change to 75 in phase 2
+    public final static int halfMetalBrickLimit = 0; //change to 10 in phase 2
+    public final static int mineBrickLimit = 0; //change to 5 in phase 2
+    public final static int wrapperBrickLimit = 0; //change to 10 in phase 2
 
     // Power-ups
     public final static int powerupFallSpeed = paddleLength * 4;

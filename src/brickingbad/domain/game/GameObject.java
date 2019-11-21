@@ -2,6 +2,9 @@ package brickingbad.domain.game;
 
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
+import brickingbad.ui.game.BuildingModePanel;
+
+import java.util.List;
 
 public abstract class GameObject {
 
@@ -18,7 +21,9 @@ public abstract class GameObject {
 
   public void reflect(GameObject object) { }
 
-  public void destroy() { }
+  public void destroy() {
+    Game.getInstance().removeObject(this);
+  }
 
   public Shape getShape() {
     return shape;

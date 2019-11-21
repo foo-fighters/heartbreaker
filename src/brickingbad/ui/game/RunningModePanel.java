@@ -1,11 +1,13 @@
 package brickingbad.ui.game;
 
+import brickingbad.controller.GameController;
 import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.GameObjectListener;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.BuildButtonPanel;
+import brickingbad.ui.components.containers.GameButtonPanel;
 import brickingbad.ui.game.animation.Animator;
 
 import javax.imageio.ImageIO;
@@ -22,18 +24,18 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
 
   private ArrayList<UIGameObject> uiObjects;
 
-  private BuildButtonPanel buildButtonPanel;
+  private GameButtonPanel gameButtonPanel;
 
   private BufferedImage background;
 
   private RunningModePanel() {
     Animator.getInstance(this).start();
-    PhysicsEngine.getInstance(this).start();
+    PhysicsEngine.getInstance().start();
     setLayout(new BorderLayout());
     uiObjects = new ArrayList<>();
     initUI();
     loadBackgroundImage();
-    Game.getInstance().addObjectListener(this);
+    GameController.getInstance().addObjectListener(this);
     this.addKeyListener(new GameKeyboardListener());
   }
 
@@ -45,12 +47,12 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
   }
 
   private void initUI() {
-    buildButtonPanel = new BuildButtonPanel();
+    gameButtonPanel = new GameButtonPanel();
 
     JPanel container = new JPanel(new BorderLayout());
     container.setOpaque(false);
     add(container, BorderLayout.PAGE_START);
-    container.add(buildButtonPanel, BorderLayout.LINE_START);
+    container.add(gameButtonPanel, BorderLayout.LINE_START);
   }
 
   @Override

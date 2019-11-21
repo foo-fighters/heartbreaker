@@ -17,8 +17,8 @@ public class PhysicsEngine implements Runnable {
     private final int SLEEP_TIME = 1000 / GameConstants.calculationsPerSecond;
 
     private static PhysicsEngine instance;
-
     private JPanel currentPanel;
+    private static boolean running;
 
     private PhysicsEngine() {
 
@@ -32,21 +32,46 @@ public class PhysicsEngine implements Runnable {
         return instance;
     }
 
-    public void start() {
-        (new Thread(instance)).start();
+  public static PhysicsEngine getInstance() {
+    if (instance == null) {
+      instance = new PhysicsEngine();
+      running = true;
     }
+    return instance;
+  }
 
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                Thread.sleep(SLEEP_TIME);
-            } catch (InterruptedException e) {
-                System.out.println("Program interrupted.");
-            }
-            handleCollisions();
-            updatePositions();
-        }
+  public void start() {
+    (new Thread(instance)).start();
+  }
+
+  public void togglePauseResume() {
+    if (running) {
+      System.out.println("Physics engine paused.");
+      running = false;
+    } else {
+      System.out.println("Physics engine resumed.");
+      running = true;
+    }
+  }
+
+  public void resumeIfPaused() {
+    if (!running) {
+      togglePauseResume();
+    }
+  }
+
+  @Override
+  public void run() {
+    while (true) {
+      try {
+        Thread.sleep(SLEEP_TIME);
+      } catch (InterruptedException e) {
+        System.out.println("Program interrupted.");
+      }
+      if (running) {
+        handleCollisions();
+        updatePositions();
+      }
     }
 
     private static void handleCollisions() {
@@ -55,11 +80,11 @@ public class PhysicsEngine implements Runnable {
         performCollisions(collisions);
     }
 
-    private static void updatePositions() {
-        ArrayList<GameObject> objects = Game.getInstance().getObjects();
-        for (GameObject object : objects) {
-            object.updatePosition();
-        }
+  private static void updatePositions() {
+    for (GameObject object: Game.getInstance().getObjects()) {
+      if (object != null){
+        object.updatePosition();
+      }
     }
 
     private static boolean areColliding(GameObject o1, GameObject o2) {

@@ -1,5 +1,6 @@
 package brickingbad.ui;
 
+import brickingbad.controller.GameController;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.ui.components.Panel;
 import brickingbad.ui.game.BuildingModePanel;
@@ -10,7 +11,10 @@ import brickingbad.ui.menu.MainMenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BrickingBadFrame extends JFrame {
@@ -31,15 +35,25 @@ public class BrickingBadFrame extends JFrame {
   }
 
   private BrickingBadFrame() {
+
+    File font_file = new File("resources/fonts/ARCADECLASSIC.TTF");
+
     setTitle("Bricking Bad");
     setSize(GameConstants.screenWidth, GameConstants.screenHeight);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
     panels = new JPanel(new CardLayout());
     add(panels);
 
     setVisible(true);
     setResizable(false);
+
+    try{
+      Font font = Font.createFont(Font.TRUETYPE_FONT, font_file);
+      Font sizedFont = font.deriveFont(14f);
+      setUIFont (new javax.swing.plaf.FontUIResource(sizedFont));
+    } catch(Exception e) {
+      System.out.println("Problem importing font");
+    }
   }
 
   private static void initializePanels() {
@@ -91,6 +105,40 @@ public class BrickingBadFrame extends JFrame {
     CardLayout layout = (CardLayout) panels.getLayout();
     layout.show(panels, panel.name());
     panelsMap.get(panel).requestFocus();
+  }
+
+  public static void setUIFont (javax.swing.plaf.FontUIResource f){
+    java.util.Enumeration keys = UIManager.getDefaults().keys();
+    while (keys.hasMoreElements()) {
+      Object key = keys.nextElement();
+      Object value = UIManager.get (key);
+      if (value instanceof javax.swing.plaf.FontUIResource)
+        UIManager.put (key, f);
+    }
+  }
+
+  public void showSaveDialog() {
+    String name = JOptionPane.showInputDialog("Save name: ");
+    if (name != null) {
+      GameController.getInstance().saveGame(name);
+    }
+  }
+
+  public void showLoadDialog() {
+    List<String> saveNames = GameController.getInstance().getSaveNames();
+
+    String name = (String) JOptionPane.showInputDialog(null, "Choose a save: ",
+            "Load Game", JOptionPane.QUESTION_MESSAGE, null, // Use
+            // default
+            // icon
+            saveNames.toArray(), // Array of choices
+            saveNames.toArray()[0]); // Initial choice
+
+    if (name != null) {
+      GameController.getInstance().initializeGame();
+      GameController.getInstance().loadGame(name);
+      BrickingBadFrame.getInstance().showRunningModePanel();
+    }
   }
 
 }
