@@ -179,11 +179,10 @@ public class Game {
                 for (Brick other : bricks) {
                     double otherX = other.getPosition().getX();
                     double otherY = other.getPosition().getY();
-                    overlaps = Math.abs(otherX - x) <= GameConstants.rectangularBrickLength &&
-                            Math.abs(otherY - y) <= GameConstants.rectangularBrickThickness;
+                    overlaps = Math.abs(otherX - x) < GameConstants.rectangularBrickLength + 1 &&
+                            Math.abs(otherY - y) < GameConstants.rectangularBrickThickness + 1;
                     if (overlaps) {
-                        x = ThreadLocalRandom.current().nextDouble(0, GameConstants.screenWidth);
-                        y = ThreadLocalRandom.current().nextDouble(30, GameConstants.screenHeight*3/4);
+                        break;
                     }
                 }
             }
