@@ -10,6 +10,7 @@ public class BBGameButton extends BBButton {
     this.setBackground(Color.darkGray);
     this.setForeground(Color.WHITE);
     this.setBorderPainted(false);
+    setFocusable(false);
   }
 
   public void toggleText(String text1, String text2) {

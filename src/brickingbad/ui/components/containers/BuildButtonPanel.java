@@ -34,6 +34,7 @@ public class BuildButtonPanel extends JPanel implements ActionListener {
         add(quitButton);
 
         setOpaque(false);
+        setFocusable(false);
     }
 
     @Override

@@ -37,7 +37,6 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
     loadBackgroundImage();
     GameController.getInstance().addObjectListener(this);
     this.addKeyListener(new GameKeyboardListener());
-    setFocusable(true);
   }
 
   public static RunningModePanel getInstance() {
