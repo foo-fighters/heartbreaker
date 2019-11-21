@@ -110,8 +110,8 @@ public class Game {
 
     // GETTERS & SETTERS
 
-    public List<GameObject> getObjects() {
-        List<GameObject> gameObjects = new ArrayList<>();
+    public ArrayList<GameObject> getObjects() {
+        ArrayList<GameObject> gameObjects = new ArrayList<>();
 
         gameObjects.add(paddle);
         gameObjects.addAll(bricks);
