@@ -48,7 +48,7 @@ public class Paddle extends GameObject {
 
   public Vector getBallStartPosition() {
     double distance = (GameConstants.paddleThickness + GameConstants.ballSize) / 2.0;
-    Vector offset = new Vector((int)Math.round(distance * Math.sin(angle)), -(int)Math.round(distance * Math.cos(angle)));
+    Vector offset = new Vector(-Math.round(distance * Math.sin(angle)), -Math.round(distance * Math.cos(angle)));
     offset.addVector(this.position);
     return offset;
   }
@@ -75,14 +75,14 @@ public class Paddle extends GameObject {
 
 
   public void startRotate(Direction direction){
-    if((direction == Direction.LEFT && angle > 0.0) || (direction == Direction.RIGHT && angle < 0.0)){
+    if((direction == Direction.LEFT && angle < 0.0) || (direction == Direction.RIGHT && angle > 0.0)){
       return;
     }
     rotateState = new ActivePaddleRotateState(this, direction);
   }
 
   public void endRotate(Direction direction) {
-    if((direction == Direction.LEFT && angle > 0.0) || (direction == Direction.RIGHT && angle < 0.0)){
+    if((direction == Direction.LEFT && angle < 0.0) || (direction == Direction.RIGHT && angle > 0.0)){
       return;
     }
     rotateState = new EndPaddleRotateState(this, direction);

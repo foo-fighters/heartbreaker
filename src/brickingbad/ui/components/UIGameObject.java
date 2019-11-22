@@ -54,11 +54,11 @@ public class UIGameObject extends Component implements Drawable, MouseListener {
             UIGameObjectHelper.angle = ((Paddle) gameObject).getAngle();
             UIGameObjectHelper.rotateAxisX = gameObject.getPosition().getX();
             UIGameObjectHelper.rotateAxisY = gameObject.getPosition().getY();
-            g2d.rotate(Math.toRadians(UIGameObjectHelper.angle), UIGameObjectHelper.rotateAxisX, UIGameObjectHelper.rotateAxisY);
+            g2d.rotate(Math.toRadians(-UIGameObjectHelper.angle), UIGameObjectHelper.rotateAxisX, UIGameObjectHelper.rotateAxisY);
             UIGameObjectHelper.rotated = true;
         } else {
             if (UIGameObjectHelper.rotated) {
-                g2d.rotate(Math.toRadians(-UIGameObjectHelper.angle), UIGameObjectHelper.rotateAxisX, UIGameObjectHelper.rotateAxisY);
+                g2d.rotate(Math.toRadians(UIGameObjectHelper.angle), UIGameObjectHelper.rotateAxisX, UIGameObjectHelper.rotateAxisY);
                 UIGameObjectHelper.rotated = false;
             }
         }

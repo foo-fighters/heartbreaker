@@ -27,29 +27,30 @@ public class EndPaddleRotateState extends PaddleRotateState {
   private void updateRotation() {
     double currentAngle = paddle.getAngle();
     if(direction == Direction.LEFT) {
-      if(currentAngle >= 0.0) {
-        paddle.setAngle(0.0);
-        paddle.setPosition(paddle.getPosition().getX(), defaultY);
-        paddle.setIdleRotate();
-        return;
-      }
-      paddle.setAngle(currentAngle + deltaAng);
-    }else{
       if(currentAngle <= 0.0) {
         paddle.setAngle(0.0);
         paddle.setPosition(paddle.getPosition().getX(), defaultY);
         paddle.setIdleRotate();
+      }else {
+        paddle.setAngle(currentAngle - deltaAng);
       }
-      paddle.setAngle(currentAngle - deltaAng);
+    }else{
+      if(currentAngle >= 0.0) {
+        paddle.setAngle(0.0);
+        paddle.setPosition(paddle.getPosition().getX(), defaultY);
+        paddle.setIdleRotate();
+      }else {
+        paddle.setAngle(currentAngle + deltaAng);
+      }
     }
   }
 
   private void setNewPositions() {
     double newAngle = Math.toRadians(paddle.getAngle());
-    paddle.setPosition(paddle.getPosition().getX(), defaultY - Math.cos(Math.PI / 2.0 - Math.abs(newAngle)) * GameConstants.paddleLength / 2.0);
+    paddle.setPosition(paddle.getPosition().getX(), defaultY - Math.sin(Math.abs(newAngle)) * GameConstants.paddleLength / 2.0);
     for(Ball ball: paddle.getCurrentBalls()) {
-      double ballX = paddle.getPosition().getX() - Math.signum(newAngle) * Math.cos(newAngle) * ball.getPaddleOffset() + Math.sin(newAngle) * ballHeightOffset;
-      double ballY = paddle.getPosition().getY() - Math.sin(Math.abs(newAngle)) * ball.getPaddleOffset() - Math.cos(newAngle) * ballHeightOffset;
+      double ballX = paddle.getPosition().getX() + Math.cos(newAngle) * ball.getPaddleOffset() - Math.sin(newAngle) * ballHeightOffset;
+      double ballY = paddle.getPosition().getY() - Math.sin(newAngle) * ball.getPaddleOffset() - Math.cos(newAngle) * ballHeightOffset;
       ball.getPosition().setVector(ballX, ballY);
     }
   }

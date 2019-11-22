@@ -28,7 +28,7 @@ public class Ball extends GameObject {
     }
 
     public void startMovement(double angle){
-        this.velocity.setVector(launchSpeed * Math.sin(Math.toRadians(angle)), -launchSpeed * Math.cos(Math.toRadians(angle)));
+        this.velocity.setVector(-launchSpeed * Math.sin(Math.toRadians(angle)), -launchSpeed * Math.cos(Math.toRadians(angle)));
     }
 
     public void stopMovement(){
@@ -49,7 +49,7 @@ public class Ball extends GameObject {
 
     @Override
     public void reflect(GameObject object) {
-        double incidenceAngle = Math.atan2(-velocity.getY(), -velocity.getX());
+        double incidenceAngle = Math.atan2(velocity.getY(), -velocity.getX());
         double normalAngle;
         if (object.getShape() == Shape.CIRCLE) {
             normalAngle = Math.atan2(object.getPosition().getY() - position.getY(), object.getPosition().getX() - position.getX());
@@ -60,7 +60,6 @@ public class Ball extends GameObject {
         }
         double reflectionAngle = 2 * normalAngle - incidenceAngle;
         double len = Math.hypot(velocity.getX(), velocity.getY());
-        System.out.println(reflectionDirection);
-        velocity.setVector(Math.cos(reflectionAngle) * len, Math.sin(reflectionAngle) * len);
+        velocity.setVector(Math.cos(reflectionAngle) * len, -Math.sin(reflectionAngle) * len);
     }
 }

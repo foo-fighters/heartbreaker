@@ -11,7 +11,7 @@ public class Main {
     SwingUtilities.invokeLater(() ->
       BrickingBadFrame.getInstance());
     try {
-      UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+      //UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
     } catch (Exception e) {
       e.printStackTrace();
     }
