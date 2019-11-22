@@ -44,7 +44,7 @@ public class UIGameObject extends Component implements Drawable, MouseListener {
         g.setColor(Color.GREEN);
         position.setLocation((int)gameObject.getPosition().getX(), (int)gameObject.getPosition().getY());
         if (gameObject.getSize() == null) {
-            System.out.println(gameObject.getClass().getSimpleName());
+            //System.out.println(gameObject.getClass().getSimpleName());
         }
         position.translate((int)-gameObject.getSize().getX() / 2, (int)-gameObject.getSize().getY() / 2);
         //g.drawRect(position.x, position.y, gameObject.getSize().getX(), gameObject.getSize().getY());

@@ -49,6 +49,7 @@ public class Ball extends GameObject {
 
     @Override
     public void reflect(GameObject object) {
+        System.out.println(reflectionDirection);
         double incidenceAngle = Math.atan2(velocity.getY(), -velocity.getX());
         double normalAngle;
         if (object.getShape() == Shape.CIRCLE) {
