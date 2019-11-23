@@ -12,8 +12,11 @@ public abstract class GameObject {
   protected Vector size;
   protected Vector position;
   protected Vector velocity;
-  protected Direction reflectionDirection;
   protected double angle;
+
+  protected boolean colliding;
+  protected GameObject collidedObject;
+  protected Direction reflectionDirection;
 
   public void updatePosition() {
     position.addVector(velocity.product(1.0 / GameConstants.calculationsPerSecond));
@@ -64,6 +67,14 @@ public abstract class GameObject {
   public void setReflectionDirection(Direction direction) {
     this.reflectionDirection = direction;
   }
+
+  public GameObject getCollidedObject() { return collidedObject; }
+
+  public void setCollidedObject(GameObject collidedObject) { this.collidedObject = collidedObject; }
+
+  public boolean isColliding() { return colliding; }
+
+  public void setColliding(boolean colliding) { this.colliding = colliding; }
 
   public double getAngle() { return angle; }
 

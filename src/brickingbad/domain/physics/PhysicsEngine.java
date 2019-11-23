@@ -11,6 +11,7 @@ import brickingbad.ui.game.animation.Animator;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PhysicsEngine implements Runnable {
 
@@ -129,13 +130,6 @@ public class PhysicsEngine implements Runnable {
       Vector point_x1y2 = line_x1.intersection(line_y2);
       Vector point_x2y1 = line_x2.intersection(line_y1);
       Vector point_x2y2 = line_x2.intersection(line_y2);
-      if(rect_angle != 0.0){
-        System.out.println("hey");
-        System.out.println(point_x1y1);
-        System.out.println(point_x1y2);
-        System.out.println(point_x2y1);
-        System.out.println(point_x2y2);
-      }
 
       if (line_x1.isVectorLeft(circle.getPosition())) {
         if (line_y1.isVectorBelow(circle.getPosition())) {
@@ -191,11 +185,25 @@ public class PhysicsEngine implements Runnable {
 
     private static ArrayList<Collision> checkCollisions (ArrayList<GameObject> objects) {
       ArrayList<Collision> collisions = new ArrayList<>();
+      objects.forEach(obj -> obj.setColliding(false));
+      GameObject o1;
+      GameObject o2;
       for (int i = 0; i < objects.size(); i++) {
+        o1 = objects.get(i);
         for (int j = i + 1; j < objects.size(); j++) {
-          if (areColliding(objects.get(i), objects.get(j))) {
-            collisions.add(new Collision(objects.get(i), objects.get(j)));
+          o2 = objects.get(j);
+          if (areColliding(o1, o2)) {
+            o1.setColliding(true);
+            o2.setColliding(true);
+            if(!Objects.equals(o1.getCollidedObject(), o2) && !Objects.equals(o2.getCollidedObject(), o1)){
+              collisions.add(new Collision(o1, o2));
+              o1.setCollidedObject(o2);
+              o2.setCollidedObject(o1);
+            }
           }
+        }
+        if(!o1.isColliding()) {
+          o1.setCollidedObject(null);
         }
       }
       return collisions;
