@@ -7,6 +7,7 @@ public class GameConstants {
     // Screen size
     public final static int screenHeight = 720;
     public final static int screenWidth = 1280;
+    public final static double brickAreaHeight = screenHeight * 0.7;
 
     // Object sizes
     public final static int ballSize = 17;

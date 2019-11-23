@@ -48,7 +48,7 @@ public class Paddle extends GameObject {
 
   public Vector getBallStartPosition() {
     double distance = (GameConstants.paddleThickness + GameConstants.ballSize) / 2.0;
-    Vector offset = new Vector(-Math.round(distance * Math.sin(angle)), -Math.round(distance * Math.cos(angle)));
+    Vector offset = new Vector(-distance * Math.sin(angle), -distance * Math.cos(angle) - 1.0);
     offset.addVector(this.position);
     return offset;
   }

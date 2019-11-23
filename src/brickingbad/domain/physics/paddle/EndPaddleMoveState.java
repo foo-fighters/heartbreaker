@@ -26,6 +26,7 @@ public class EndPaddleMoveState extends PaddleMoveState{
       paddle.setIdleMove();
     }else if(direction == Direction.LEFT) {
       if(paddle.getPosition().getX() <= paddle.getSize().getX() / 2.0) {
+        paddle.setPosition(paddle.getSize().getX() / 2.0, paddle.getPosition().getY());
         paddle.setIdleMove();
         return;
       }
@@ -35,6 +36,7 @@ public class EndPaddleMoveState extends PaddleMoveState{
       }
     }else{
       if(paddle.getPosition().getX() >= GameConstants.screenWidth - paddle.getSize().getX() / 2.0) {
+        paddle.setPosition(GameConstants. screenWidth - paddle.getSize().getX() / 2.0, paddle.getPosition().getY());
         paddle.setIdleMove();
         return;
       }

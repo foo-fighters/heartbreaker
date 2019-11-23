@@ -189,8 +189,9 @@ public class Game {
         boolean overlaps = true;
 
         while (overlaps) {
-            double x = ThreadLocalRandom.current().nextDouble(0, GameConstants.screenWidth);
-            double y = ThreadLocalRandom.current().nextDouble(30, GameConstants.screenHeight*3/4);
+            double x = ThreadLocalRandom.current().nextDouble(GameConstants.rectangularBrickLength,
+                    GameConstants.screenWidth - GameConstants.rectangularBrickLength);
+            double y = ThreadLocalRandom.current().nextDouble(30, GameConstants.brickAreaHeight);
             if (bricks.size() == 0){
                 overlaps = false;
             } else {
