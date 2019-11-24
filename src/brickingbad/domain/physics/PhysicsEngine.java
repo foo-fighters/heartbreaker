@@ -193,9 +193,6 @@ public class PhysicsEngine implements Runnable {
         for (int j = i + 1; j < objects.size(); j++) {
           o2 = objects.get(j);
           if (areColliding(o1, o2)) {
-            System.out.println("hey");
-            System.out.println(o1.getClass().getSimpleName());
-            System.out.println(o2.getClass().getSimpleName());
             o1.setColliding(true);
             o2.setColliding(true);
             if(!Objects.equals(o1.getCollidedObject(), o2) && !Objects.equals(o2.getCollidedObject(), o1)){

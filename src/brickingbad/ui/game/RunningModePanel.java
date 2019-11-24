@@ -1,12 +1,10 @@
 package brickingbad.ui.game;
 
 import brickingbad.controller.GameController;
-import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.GameObjectListener;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.ui.components.UIGameObject;
-import brickingbad.ui.components.containers.BuildButtonPanel;
 import brickingbad.ui.components.containers.GameButtonPanel;
 import brickingbad.ui.game.animation.Animator;
 
@@ -69,7 +67,7 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     g.drawImage(background, 0, 0, null);
-      uiObjects.forEach((obj) -> obj.draw(g));
+    uiObjects.forEach((obj) -> obj.paintComponent(g));
   }
 
   private void loadBackgroundImage() {
