@@ -19,7 +19,7 @@ public class Wall extends GameObject {
             position = new Vector(GameConstants.screenWidth + 5.0, GameConstants.screenHeight / 2.0);
             size = new Vector(10.0, GameConstants.screenHeight);
         }else if (direction == Direction.UP){
-            position = new Vector(GameConstants.screenWidth / 2.0, - 5.0);
+            position = new Vector(GameConstants.screenWidth / 2.0, GameConstants.menuAreaHeight - 5.0);
             size = new Vector(GameConstants.screenWidth, 10.0);
         }
     }

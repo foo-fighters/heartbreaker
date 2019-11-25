@@ -1,6 +1,7 @@
 package brickingbad.ui.components.containers;
 
 import brickingbad.controller.GameController;
+import brickingbad.domain.game.GameConstants;
 import brickingbad.ui.components.BBGameButton;
 
 import javax.swing.*;
@@ -29,7 +30,6 @@ public class BrickCountPanel extends JPanel implements ActionListener {
         setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.black),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         setBackground(Color.darkGray);
-
 
         simpleBrickField = new JTextField("0", 2);
         halfMetalBrickField = new JTextField("0", 2);

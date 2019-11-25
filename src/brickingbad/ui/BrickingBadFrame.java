@@ -39,7 +39,8 @@ public class BrickingBadFrame extends JFrame {
     File font_file = new File("resources/fonts/ARCADECLASSIC.TTF");
 
     setTitle("Bricking Bad");
-    setSize(GameConstants.screenWidth, GameConstants.screenHeight);
+    getContentPane().setPreferredSize(new Dimension(GameConstants.screenWidth, GameConstants.screenHeight));
+    pack();
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     panels = new JPanel(new CardLayout());
     add(panels);

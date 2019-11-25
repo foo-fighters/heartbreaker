@@ -23,7 +23,7 @@ public class UIGameObject extends JLabel implements MouseListener {
     private BufferedImage sprite;
     private GameObject gameObject;
     private JPanel panel;
-    private AffineTransform defaultScaleTransform;
+    private AffineTransform defaultFrameTransform;
 
     public UIGameObject(GameObject gameObject, JPanel panel) {
         this.gameObject = gameObject;
@@ -34,7 +34,7 @@ public class UIGameObject extends JLabel implements MouseListener {
         if (BrickingBadFrame.getInstance().getCurrentPanel() instanceof BuildingModePanel) {
             panel.addMouseListener(this);
         }
-        this.defaultScaleTransform = BrickingBadFrame.getInstance().getGraphicsConfiguration().getDefaultTransform();
+        this.defaultFrameTransform = BrickingBadFrame.getInstance().getGraphicsConfiguration().getDefaultTransform();
     }
 
     @Override
@@ -43,7 +43,7 @@ public class UIGameObject extends JLabel implements MouseListener {
         position.y = (int)(gameObject.getPosition().getY() - gameObject.getSize().getY() / 2.0);
         Graphics2D g2d = (Graphics2D) g.create();
         AffineTransform at = new AffineTransform();
-        at.scale(defaultScaleTransform.getScaleX(), defaultScaleTransform.getScaleY());
+        at.scale(defaultFrameTransform.getScaleX(), defaultFrameTransform.getScaleY());
         at.rotate(-Math.toRadians(gameObject.getAngle()), gameObject.getPosition().getX(), gameObject.getPosition().getY());
         at.translate(position.x, position.y);
         at.scale(gameObject.getSize().getX() / sprite.getWidth(), gameObject.getSize().getY() / sprite.getHeight());
