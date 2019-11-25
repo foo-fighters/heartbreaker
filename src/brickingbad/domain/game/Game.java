@@ -26,6 +26,8 @@ public class Game {
     private ArrayList<Brick> bricks;
     private ArrayList<GameObject> gameObjects;
 
+    private boolean[][] brickGrid;
+
     private int score;
     private int lives;
     private Date time;
@@ -78,6 +80,10 @@ public class Game {
             removeObjectFromListeners(ball);
         }
         bricks = new ArrayList<>();
+
+        int gridX = GameConstants.screenWidth / GameConstants.rectangularBrickLength;
+        int gridY = (int)GameConstants.brickAreaHeight / GameConstants.rectangularBrickThickness;
+        brickGrid = new boolean[gridX][gridY];
 
         removeObjectFromListeners(paddle);
         paddle = new Paddle();
@@ -185,7 +191,7 @@ public class Game {
         this.storedPowerUps = storedPowerUps;
     }
 
-    public void addBrick(Brick brick) {
+    /*public void addBrick(Brick brick) {
         boolean overlaps = true;
 
         while (overlaps) {
@@ -208,6 +214,28 @@ public class Game {
             }
             if (!overlaps) {
                 brick.setPosition(new Vector(x, y));
+            }
+        }
+
+        bricks.add(brick);
+        trackObject(brick);
+    }*/
+
+    public void addBrick(Brick brick) {
+        boolean overlaps = true;
+
+        while (overlaps) {
+            int x = ThreadLocalRandom.current().nextInt(brickGrid.length);
+            int y = ThreadLocalRandom.current().nextInt(brickGrid[0].length);
+            if (bricks.size() == 0) {
+                overlaps = false;
+            } else {
+                overlaps = brickGrid[x][y];
+            }
+            if (!overlaps) {
+                brickGrid[x][y] = true;
+                brick.setPosition(new Vector((x + 0.5) * GameConstants.rectangularBrickLength,
+                        GameConstants.menuAreaHeight + (y + 0.5) * GameConstants.rectangularBrickThickness));
             }
         }
 
