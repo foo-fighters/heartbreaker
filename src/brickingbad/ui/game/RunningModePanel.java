@@ -1,12 +1,11 @@
 package brickingbad.ui.game;
 
 import brickingbad.controller.GameController;
-import brickingbad.domain.game.Game;
+import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.GameObjectListener;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.ui.components.UIGameObject;
-import brickingbad.ui.components.containers.BuildButtonPanel;
 import brickingbad.ui.components.containers.GameButtonPanel;
 import brickingbad.ui.game.animation.Animator;
 
@@ -31,7 +30,7 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
   private RunningModePanel() {
     Animator.getInstance(this).start();
     PhysicsEngine.getInstance().start();
-    setLayout(new BorderLayout());
+    setLayout(null);
     uiObjects = new ArrayList<>();
     initUI();
     loadBackgroundImage();
@@ -50,8 +49,10 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
     gameButtonPanel = new GameButtonPanel();
 
     JPanel container = new JPanel(new BorderLayout());
-    container.setOpaque(false);
-    add(container, BorderLayout.PAGE_START);
+    container.setSize(GameConstants.screenWidth, (int)GameConstants.menuAreaHeight);
+    container.setOpaque(true);
+    container.setBackground(Color.darkGray);
+    add(container);
     container.add(gameButtonPanel, BorderLayout.LINE_START);
   }
 
@@ -69,7 +70,7 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     g.drawImage(background, 0, 0, null);
-      uiObjects.forEach((obj) -> obj.draw(g));
+    uiObjects.forEach((obj) -> obj.paintComponent(g));
   }
 
   private void loadBackgroundImage() {

@@ -7,15 +7,16 @@ import brickingbad.domain.physics.Vector;
 public class SimpleBrick extends Brick {
 
     public SimpleBrick() {
+        this.position = new Vector();
         this.shape = Shape.RECTANGLE;
         this.size = new Vector(GameConstants.rectangularBrickLength, GameConstants.rectangularBrickThickness);
-        this.velocity = new Vector(0,0);
+        this.velocity = new Vector();
+        this.angle = 0.0;
     }
 
     public SimpleBrick(Vector position) {
+        this();
         this.position = position;
-        this.size = new Vector(GameConstants.rectangularBrickLength, GameConstants.rectangularBrickThickness);
-        this.velocity = new Vector(0,0);
     }
 
 }

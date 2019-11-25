@@ -11,6 +11,7 @@ import brickingbad.ui.game.animation.Animator;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PhysicsEngine implements Runnable {
 
@@ -111,6 +112,7 @@ public class PhysicsEngine implements Runnable {
     private static boolean mixedColliding (GameObject circle, GameObject rect){
       double circle_x = circle.getPosition().getX();
       double circle_y = circle.getPosition().getY();
+      double radius = circle.getSize().getX() / 2.0;
       double rect_x = rect.getPosition().getX();
       double rect_y = rect.getPosition().getY();
       double rect_angle = Math.toRadians(rect.getAngle());
@@ -118,27 +120,26 @@ public class PhysicsEngine implements Runnable {
       double rect_half_y = rect.getSize().getY() / 2.0;
       Vector rect_x1 = new Vector(rect_x - Math.cos(rect_angle) * rect_half_x, rect_y + Math.sin(rect_angle) * rect_half_x);
       Vector rect_x2 = new Vector(rect_x + Math.cos(rect_angle) * rect_half_x, rect_y - Math.sin(rect_angle) * rect_half_x);
-      Vector rect_y1 = new Vector(rect_x + Math.sin(rect_angle) * rect_half_y, rect_y - Math.cos(rect_angle) * rect_half_y);
-      Vector rect_y2 = new Vector(rect_x - Math.sin(rect_angle) * rect_half_y, rect_y + Math.cos(rect_angle) * rect_half_y);
-      Line line_x1 = new Line(rect_x1, Math.PI / 2.0 - rect_angle);
-      Line line_x2 = new Line(rect_x2, Math.PI / 2.0 - rect_angle);
-      Line line_y1 = new Line(rect_y1, -rect_angle);
-      Line line_y2 = new Line(rect_y2, -rect_angle);
+      Vector rect_y1 = new Vector(rect_x + Math.sin(rect_angle) * rect_half_y, rect_y + Math.cos(rect_angle) * rect_half_y);
+      Vector rect_y2 = new Vector(rect_x - Math.sin(rect_angle) * rect_half_y, rect_y - Math.cos(rect_angle) * rect_half_y);
+      Line line_x1 = new Line(rect_x1, Math.PI / 2.0 + rect_angle);
+      Line line_x2 = new Line(rect_x2, Math.PI / 2.0 + rect_angle);
+      Line line_y1 = new Line(rect_y1, rect_angle);
+      Line line_y2 = new Line(rect_y2, rect_angle);
       Vector point_x1y1 = line_x1.intersection(line_y1);
       Vector point_x1y2 = line_x1.intersection(line_y2);
       Vector point_x2y1 = line_x2.intersection(line_y1);
       Vector point_x2y2 = line_x2.intersection(line_y2);
 
-      double radius = circle.getSize().getX() / 2.0;
       if (line_x1.isVectorLeft(circle.getPosition())) {
         if (line_y1.isVectorBelow(circle.getPosition())) {
           if (Math.hypot(circle_x - point_x1y1.getX(), circle_y - point_x1y1.getY()) < radius) {
-            circle.setReflectionDirection(Direction.UP_LEFT);
+            circle.setReflectionDirection(Direction.DOWN_LEFT);
             return true;
           } else return false;
         } else if (line_y2.isVectorAbove(circle.getPosition())) {
           if (Math.hypot(circle_x - point_x1y2.getX(), circle_y - point_x1y2.getY()) < radius) {
-            circle.setReflectionDirection(Direction.UP);
+            circle.setReflectionDirection(Direction.UP_LEFT);
             return true;
           } else return false;
         } else {
@@ -150,12 +151,12 @@ public class PhysicsEngine implements Runnable {
       } else if (line_x2.isVectorRight(circle.getPosition())) {
         if (line_y1.isVectorBelow(circle.getPosition())) {
           if (Math.hypot(circle_x - point_x2y1.getX(), circle_y - point_x2y1.getY()) < radius) {
-            circle.setReflectionDirection(Direction.UP_RIGHT);
+            circle.setReflectionDirection(Direction.DOWN_RIGHT);
             return true;
           } else return false;
         } else if (line_y2.isVectorAbove(circle.getPosition())) {
           if (Math.hypot(circle_x - point_x2y2.getX(), circle_y - point_x2y2.getY()) < radius) {
-            circle.setReflectionDirection(Direction.DOWN_RIGHT);
+            circle.setReflectionDirection(Direction.UP_RIGHT);
             return true;
           } else return false;
         } else {
@@ -167,12 +168,12 @@ public class PhysicsEngine implements Runnable {
       } else {
         if (line_y1.isVectorBelow(circle.getPosition())) {
           if (line_y1.distanceToLine(circle.getPosition()) < radius) {
-            circle.setReflectionDirection(Direction.UP);
+            circle.setReflectionDirection(Direction.DOWN);
             return true;
           } else return false;
         } else if (line_y2.isVectorAbove(circle.getPosition())) {
           if (line_y2.distanceToLine(circle.getPosition()) < radius) {
-            circle.setReflectionDirection(Direction.DOWN);
+            circle.setReflectionDirection(Direction.UP);
             return true;
           } else return false;
         } else {
@@ -184,11 +185,25 @@ public class PhysicsEngine implements Runnable {
 
     private static ArrayList<Collision> checkCollisions (ArrayList<GameObject> objects) {
       ArrayList<Collision> collisions = new ArrayList<>();
+      objects.forEach(obj -> obj.setColliding(false));
+      GameObject o1;
+      GameObject o2;
       for (int i = 0; i < objects.size(); i++) {
+        o1 = objects.get(i);
         for (int j = i + 1; j < objects.size(); j++) {
-          if (areColliding(objects.get(i), objects.get(j))) {
-            collisions.add(new Collision(objects.get(i), objects.get(j)));
+          o2 = objects.get(j);
+          if (areColliding(o1, o2)) {
+            o1.setColliding(true);
+            o2.setColliding(true);
+            if(!Objects.equals(o1.getCollidedObject(), o2) && !Objects.equals(o2.getCollidedObject(), o1)){
+              collisions.add(new Collision(o1, o2));
+              o1.setCollidedObject(o2);
+              o2.setCollidedObject(o1);
+            }
           }
+        }
+        if(!o1.isColliding()) {
+          o1.setCollidedObject(null);
         }
       }
       return collisions;

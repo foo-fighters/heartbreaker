@@ -21,7 +21,7 @@ public class BuildButtonPanel extends JPanel implements ActionListener {
     private BBGameButton quitButton;
 
     public BuildButtonPanel() {
-        setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
         saveButton = new BBGameButton("SAVE", this);
         loadButton = new BBGameButton("LOAD", this);

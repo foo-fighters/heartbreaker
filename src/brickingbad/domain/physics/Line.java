@@ -18,7 +18,7 @@ public class Line {
             this.verticalX = v.getX();
         }else {
             this.slope = Math.tan(angle);
-            this.offset = v.getY() - v.getX() * slope;
+            this.offset = v.getY() + v.getX() * slope;
         }
     }
 
@@ -42,7 +42,7 @@ public class Line {
         if(isVertical) {
             return false;
         }else {
-            return v.getY() > v.getX() * slope + offset;
+            return v.getY() < - v.getX() * slope + offset;
         }
     }
 
@@ -50,7 +50,7 @@ public class Line {
         if(isVertical) {
             return false;
         }else {
-            return v.getY() < v.getX() * slope + offset;
+            return v.getY() > - v.getX() * slope + offset;
         }
     }
 
@@ -58,9 +58,9 @@ public class Line {
         if(isVertical) {
             return v.getX() < verticalX;
         }else if(slope > 0.0) {
-            return v.getY() > v.getX() * slope + offset;
+            return v.getY() < - v.getX() * slope + offset;
         }else {
-            return v.getY() < v.getX() * slope + offset;
+            return v.getY() > - v.getX() * slope + offset;
         }
     }
 
@@ -68,9 +68,9 @@ public class Line {
         if(isVertical) {
             return v.getX() > verticalX;
         }else if(slope > 0.0) {
-            return v.getY() < v.getX() * slope + offset;
+            return v.getY() > - v.getX() * slope + offset;
         }else {
-            return v.getY() > v.getX() * slope + offset;
+            return v.getY() < - v.getX() * slope + offset;
         }
     }
 
@@ -78,20 +78,20 @@ public class Line {
         if(isVertical) {
             return Math.abs(v.getX() - verticalX);
         }else {
-            return Math.abs(slope * v.getX() - v.getY() + offset) / Math.sqrt(Math.pow(slope, 2.0) + 1);
+            return Math.abs(- slope * v.getX() - v.getY() + offset) / Math.sqrt(Math.pow(slope, 2.0) + 1);
         }
     }
 
     public Vector intersection(Line l2){
         if(isVertical) {
             if(l2.isVertical) return null;
-            return new Vector(verticalX, l2.slope * verticalX + l2.offset);
+            return new Vector(verticalX, - l2.slope * verticalX + l2.offset);
         }
         if(l2.isVertical) {
-            return new Vector(l2.verticalX, this.slope * l2.verticalX + this.offset);
+            return new Vector(l2.verticalX, - this.slope * l2.verticalX + this.offset);
         }
         double x = (l2.offset - this.offset) / (l2.slope - this.slope);
-        double y = slope * x + offset;
-        return new Vector();
+        double y = - slope * x + offset;
+        return new Vector(x, y);
     }
 }

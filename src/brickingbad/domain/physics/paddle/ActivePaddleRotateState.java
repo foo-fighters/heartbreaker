@@ -27,24 +27,26 @@ public class ActivePaddleRotateState extends PaddleRotateState {
   private void updateRotation() {
     double currentAngle = paddle.getAngle();
     if(direction == Direction.LEFT) {
-      if(currentAngle <= -GameConstants.paddleRotationLimit) {
-        return;
-      }
-      paddle.setAngle(currentAngle - deltaAng);
-    }else{
       if(currentAngle >= GameConstants.paddleRotationLimit) {
+        paddle.setAngle(GameConstants.paddleRotationLimit);
         return;
       }
       paddle.setAngle(currentAngle + deltaAng);
+    }else{
+      if(currentAngle <= -GameConstants.paddleRotationLimit) {
+        paddle.setAngle(-GameConstants.paddleRotationLimit);
+        return;
+      }
+      paddle.setAngle(currentAngle - deltaAng);
     }
   }
 
   private void setNewPositions() {
     double newAngle = Math.toRadians(paddle.getAngle());
-    paddle.setPosition(paddle.getPosition().getX(), defaultY - Math.cos(Math.PI / 2.0 - Math.abs(newAngle)) * GameConstants.paddleLength / 2.0);
+    paddle.setPosition(paddle.getPosition().getX(), defaultY - Math.sin(Math.abs(newAngle)) * GameConstants.paddleLength / 2.0);
     for(Ball ball: paddle.getCurrentBalls()) {
-      double ballX = paddle.getPosition().getX() - Math.cos(newAngle) * ball.getPaddleOffset() + Math.sin(newAngle) * ballHeightOffset;
-      double ballY = paddle.getPosition().getY() - Math.sin(Math.abs(newAngle)) * ball.getPaddleOffset() - Math.cos(newAngle) * ballHeightOffset;
+      double ballX = paddle.getPosition().getX() + Math.cos(newAngle) * ball.getPaddleOffset() - Math.sin(newAngle) * ballHeightOffset;
+      double ballY = paddle.getPosition().getY() - Math.sin(newAngle) * ball.getPaddleOffset() - Math.cos(newAngle) * ballHeightOffset - 1.0;
       ball.getPosition().setVector(ballX, ballY);
     }
   }

@@ -7,6 +7,10 @@ public class GameConstants {
     // Screen size
     public final static int screenHeight = 720;
     public final static int screenWidth = 1280;
+    public final static double menuAreaHeight = screenHeight * 0.05;
+    public final static double brickAreaHeight = screenHeight * 0.5;
+    public final static double alienAreaHeight = screenHeight * 0.2;
+    public final static double paddleAreaHeight = screenHeight * 0.25;
 
     // Object sizes
     public final static int ballSize = 17;
@@ -19,7 +23,7 @@ public class GameConstants {
     public final static int powerupSize = 20;
 
     // Ball movement
-    public final static double ballLaunchSpeed = screenHeight * 0.5;
+    public final static double ballLaunchSpeed = screenHeight * 0.4;
 
     // Paddle movement
     public final static double regularPaddleMovementSpeed = paddleLength * 2.0;

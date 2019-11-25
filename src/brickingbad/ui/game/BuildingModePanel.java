@@ -1,9 +1,6 @@
 package brickingbad.ui.game;
 
-import brickingbad.domain.game.ErrorListener;
-import brickingbad.domain.game.Game;
-import brickingbad.domain.game.GameObject;
-import brickingbad.domain.game.GameObjectListener;
+import brickingbad.domain.game.*;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.BrickCountPanel;
@@ -13,9 +10,6 @@ import brickingbad.ui.game.animation.Animator;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +28,7 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Err
 
     private BuildingModePanel() {
         Animator.getInstance(this).start();
-        setLayout(new BorderLayout());
+        setLayout(null);
         uiObjects = new ArrayList<>();
         initUI();
         loadBackgroundImage();
@@ -52,16 +46,20 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Err
     private void initUI() {
         buildButtonPanel = new BuildButtonPanel();
         brickCountPanel = new BrickCountPanel();
+        brickCountPanel.setSize(GameConstants.screenWidth, (int)GameConstants.paddleAreaHeight);
 
         JPanel upContainer = new JPanel(new BorderLayout());
-        JPanel downContainer = new JPanel(new BorderLayout());
+        upContainer.setSize(GameConstants.screenWidth, (int)GameConstants.menuAreaHeight);
         upContainer.setOpaque(true);
         upContainer.setBackground(Color.darkGray);
-        downContainer.setOpaque(false);
-        downContainer.setBackground(Color.darkGray);
 
-        add(upContainer, BorderLayout.PAGE_START);
-        add(downContainer, BorderLayout.PAGE_END);
+        JPanel downContainer = new JPanel(new BorderLayout());
+        downContainer.setSize(GameConstants.screenWidth, (int)GameConstants.paddleAreaHeight);
+        downContainer.setLocation(0, (int)(GameConstants.screenHeight - GameConstants.paddleAreaHeight));
+        downContainer.setOpaque(false);
+
+        add(upContainer);
+        add(downContainer);
         upContainer.add(buildButtonPanel, BorderLayout.LINE_START);
         downContainer.add(brickCountPanel, BorderLayout.LINE_END);
     }
@@ -81,7 +79,7 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Err
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(background, 0, 0, null);
-        uiObjects.forEach((obj) -> obj.draw(g));
+        uiObjects.forEach((obj) -> obj.paintComponent(g));
     }
 
     private void loadBackgroundImage() {
