@@ -16,12 +16,18 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class RunningModePanel extends JPanel implements GameObjectListener {
 
   private static RunningModePanel instance;
 
-  private ArrayList<UIGameObject> uiObjects;
+  // a CopyOnArrayList generates a new copy of the ArrayList when there is a write operation, making it thread-safe
+  // this is more costly but since the number of traversals heavily outnumber the number or writes in our case,
+  //    and we are working with multiple threads, it is a logical choice.
+  private CopyOnWriteArrayList<UIGameObject> uiObjects;
 
   private GameButtonPanel gameButtonPanel;
 
@@ -31,7 +37,7 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
     Animator.getInstance(this).start();
     PhysicsEngine.getInstance().start();
     setLayout(null);
-    uiObjects = new ArrayList<>();
+    uiObjects = new CopyOnWriteArrayList<>();
     initUI();
     loadBackgroundImage();
     GameController.getInstance().addObjectListener(this);
@@ -67,10 +73,13 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
   }
 
   @Override
-  protected void paintComponent(Graphics g) {
+  protected void paintComponent(Graphics g) throws ConcurrentModificationException {
     super.paintComponent(g);
     g.drawImage(background, 0, 0, null);
-    uiObjects.forEach((obj) -> obj.paintComponent(g));
+    for (Iterator<UIGameObject> iterator = uiObjects.iterator(); iterator.hasNext(); ) {
+      UIGameObject object = iterator.next();
+      object.paintComponent(g);
+    }
   }
 
   private void loadBackgroundImage() {
