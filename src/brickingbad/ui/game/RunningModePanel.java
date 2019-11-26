@@ -73,7 +73,7 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
   }
 
   @Override
-  protected void paintComponent(Graphics g) throws ConcurrentModificationException {
+  protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     g.drawImage(background, 0, 0, null);
     for (Iterator<UIGameObject> iterator = uiObjects.iterator(); iterator.hasNext(); ) {
