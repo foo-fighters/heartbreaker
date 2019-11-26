@@ -55,7 +55,8 @@ public class GameConstants {
 
     // Extras
     public final static double mineBrickExplosionRadius = paddleLength; // * 2 later
-    public final static int paddleHeight = screenHeight / 10;
+    public final static double fireBallDestructionRadius = paddleLength * 0.5;
+    public final static int paddleHeightOnScreen = screenHeight / 10;
     public static int framesPerSecond = 60;
     public static int calculationsPerSecond = 100;
 }

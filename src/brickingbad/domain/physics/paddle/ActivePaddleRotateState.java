@@ -10,7 +10,7 @@ public class ActivePaddleRotateState extends PaddleRotateState {
 
   private final double rotateSpeed = GameConstants.regularPaddleRotationSpeed;
   private final double deltaAng = rotateSpeed / GameConstants.calculationsPerSecond;
-  private final double defaultY = GameConstants.screenHeight - GameConstants.paddleHeight;
+  private final double defaultY = GameConstants.screenHeight - GameConstants.paddleHeightOnScreen;
   private final double ballHeightOffset = (GameConstants.paddleThickness + GameConstants.ballSize) / 2.0;
 
   public ActivePaddleRotateState(Paddle paddle, Direction direction) {

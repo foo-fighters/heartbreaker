@@ -9,6 +9,7 @@ import brickingbad.domain.physics.Vector;
 import brickingbad.ui.game.BuildingModePanel;
 
 import javax.swing.text.Position;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -220,6 +221,21 @@ public class Game {
         bricks.add(brick);
         trackObject(brick);
     }*/
+
+    public void destroyBricksInRadius(Vector center, double radius) {
+        ArrayList<GameObject> objectList = new ArrayList<>(gameObjects);
+        double xdist;
+        double ydist;
+        for (GameObject object: objectList) {
+            if(object instanceof Brick) {
+                xdist = center.getX() - object.getPosition().getX();
+                ydist = center.getY() - object.getPosition().getY();
+                if(Math.hypot(xdist, ydist) < radius) {
+                    object.destroy();
+                }
+            }
+        }
+    }
 
     public void addBrick(Brick brick) {
         boolean overlaps = true;
