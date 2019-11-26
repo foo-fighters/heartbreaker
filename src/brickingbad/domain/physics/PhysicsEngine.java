@@ -101,7 +101,7 @@ public class PhysicsEngine implements Runnable {
       if (o1.getShape() == Shape.RECTANGLE && o2.getShape() == Shape.RECTANGLE) {
         return Math.abs(o1_posx - o2_posx) < distx && Math.abs(o1_posy - o2_posy) < disty;
       } else if (o1.getShape() == Shape.CIRCLE && o2.getShape() == Shape.CIRCLE) {
-        return Math.hypot(o1_posx - o1_posy, o1_posy - o2_posy) < 2 * distx;
+        return Math.hypot(o1_posx - o2_posx, o1_posy - o2_posy) < distx;
       } else if (o1.getShape() == Shape.CIRCLE) {
         return mixedColliding(o1, o2);
       } else {

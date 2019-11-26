@@ -20,13 +20,10 @@ public class BrickFactory {
     }
 
     public ArrayList<Brick> createSimpleBricks(int n) {
-
         ArrayList<Brick> simpleBricks = new ArrayList<>();
-
         for (int i = 0; i<n; i++){
             simpleBricks.add(new SimpleBrick());
         }
-
         return simpleBricks;
     }
 
@@ -35,7 +32,11 @@ public class BrickFactory {
     }
 
     public ArrayList<Brick> createMineBricks(int n) {
-        return null;
+        ArrayList<Brick> mineBricks = new ArrayList<>();
+        for (int i = 0; i<n; i++) {
+            mineBricks.add(new MineBrick());
+        }
+        return mineBricks;
     }
 
     public ArrayList<Brick> createWrapperBricks(int n) {

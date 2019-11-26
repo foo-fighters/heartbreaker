@@ -98,11 +98,11 @@ public class GameController {
 //            Game.getInstance().addBrick(brick);
 //        }));
 //
-//        ArrayList<Brick> mineBricks = BrickFactory.getInstance().createMineBricks(mine);
-//
-//        mineBricks.forEach((brick -> {
-//            Game.getInstance().addBrick(brick);
-//        }));
+        ArrayList<Brick> mineBricks = BrickFactory.getInstance().createMineBricks(mine);
+
+        mineBricks.forEach((brick -> {
+            Game.getInstance().addBrick(brick);
+        }));
 //
 //        ArrayList<Brick> wrapperBricks = BrickFactory.getInstance().createWrapperBricks(wrapper);
 //
