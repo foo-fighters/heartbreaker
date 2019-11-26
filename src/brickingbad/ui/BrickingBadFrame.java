@@ -102,6 +102,10 @@ public class BrickingBadFrame extends JFrame {
     return panelsMap.get(currentPanelName);
   }
 
+  public Panel getCurrentPanelName() {
+    return currentPanelName;
+  }
+
   private static void showPanel(Panel panel) {
     CardLayout layout = (CardLayout) panels.getLayout();
     layout.show(panels, panel.name());

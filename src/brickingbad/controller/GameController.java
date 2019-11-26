@@ -10,6 +10,7 @@ import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.services.persistence.SaveRepository;
 import brickingbad.ui.BrickingBadFrame;
+import brickingbad.ui.components.Panel;
 import brickingbad.ui.game.animation.Animator;
 
 import java.util.ArrayList;
@@ -28,6 +29,11 @@ public class GameController {
             instance = new GameController();
         }
         return instance;
+    }
+
+    public boolean inRunningMode() {
+        Panel panel = BrickingBadFrame.getInstance().getCurrentPanelName();
+        return panel == Panel.RUNNING_MODE;
     }
 
     public void saveGame(String name) {

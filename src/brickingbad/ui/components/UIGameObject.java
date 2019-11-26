@@ -68,7 +68,6 @@ public class UIGameObject extends JLabel implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println(panel.getClass().getSimpleName());
         if (panel.getClass().getSimpleName().equals("RunningModePanel")) {
             if (e.getButton() == MouseEvent.BUTTON3){
                 if (gameObject instanceof Brick){
