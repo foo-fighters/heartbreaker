@@ -23,6 +23,7 @@ public class RepairingAlien extends Alien {
         this.velocity = new Vector();
         this.angle = 0.0;
         this.size = new Vector(GameConstants.alienSize, GameConstants.alienSize);
+
     }
 
     public RepairingAlien(int repairCooldown) {
