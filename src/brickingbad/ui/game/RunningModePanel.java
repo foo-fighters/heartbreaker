@@ -33,7 +33,7 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
     setLayout(null);
     uiObjects = new ArrayList<>();
     initUI();
-    loadBackgroundImage();
+    loadBackgroundImage("resources/sprites/background.png");
     GameController.getInstance().addObjectListener(this);
     this.addKeyListener(new GameKeyboardListener());
   }
@@ -73,16 +73,16 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
     uiObjects.forEach((obj) -> obj.paintComponent(g));
   }
 
-  private void loadBackgroundImage() {
+  private void loadBackgroundImage(String path) {
     try {
-      this.background = ImageIO.read(new File("resources/sprites/background.png"));
+      this.background = ImageIO.read(new File(path));
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
   public void invokeGodMode() {
-
+    loadBackgroundImage("resources/sprites/godmode.png");
   }
 
 }
