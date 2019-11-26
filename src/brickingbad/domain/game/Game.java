@@ -1,18 +1,14 @@
 package brickingbad.domain.game;
 
-import brickingbad.controller.GameController;
 import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.game.border.*;
 import brickingbad.domain.game.brick.*;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
-import brickingbad.ui.game.BuildingModePanel;
 
-import javax.swing.text.Position;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -33,8 +29,12 @@ public class Game {
     private int lives;
     private Date time;
 
-    private ArrayList<PowerUp> activePowerUps;
-    private ArrayList<PowerUp> storedPowerUps;
+    private ArrayList<WrapperContent> wrapperContentList;
+    private ArrayList<WrapperContent> storedPowerUps;
+    private ArrayList<WrapperContent> activePowerUps;
+    private ArrayList<WrapperContent> activeAliens;
+
+    private static final Random random = new Random();
 
     private ArrayList<GameObjectListener> objectListeners;
     private ArrayList<ErrorListener> errorListeners;
@@ -73,7 +73,7 @@ public class Game {
     }
 
     public void initialize() {
-        gameObjects = new ArrayList<GameObject>();
+        gameObjects = new ArrayList<>();
         for (Brick brick : bricks) {
             removeObjectFromListeners(brick);
         }
@@ -155,11 +155,11 @@ public class Game {
         return bricks;
     }
 
-    public ArrayList<PowerUp> getActivePowerUps() {
+    public ArrayList<WrapperContent> getActivePowerUps() {
         return activePowerUps;
     }
 
-    public ArrayList<PowerUp> getStoredPowerUps() {
+    public ArrayList<WrapperContent> getStoredPowerUps() {
         return storedPowerUps;
     }
 
@@ -183,44 +183,6 @@ public class Game {
     public void setLives(int lives) {
         this.lives = lives;
     }
-
-    public void setActivePowerUps(ArrayList<PowerUp> activePowerUps) {
-        this.activePowerUps = activePowerUps;
-    }
-
-    public void setStoredPowerUps(ArrayList<PowerUp> storedPowerUps) {
-        this.storedPowerUps = storedPowerUps;
-    }
-
-    /*public void addBrick(Brick brick) {
-        boolean overlaps = true;
-
-        while (overlaps) {
-            double x = ThreadLocalRandom.current().nextDouble(brick.getSize().getX() / 2.0,
-                    GameConstants.screenWidth - brick.getSize().getX() / 2.0);
-            double y = ThreadLocalRandom.current().nextDouble(GameConstants.menuAreaHeight + brick.getSize().getY() / 2.0,
-                    GameConstants.brickAreaHeight);
-            if (bricks.size() == 0){
-                overlaps = false;
-            } else {
-                for (Brick other : bricks) {
-                    double otherX = other.getPosition().getX();
-                    double otherY = other.getPosition().getY();
-                    overlaps = Math.abs(otherX - x) < GameConstants.rectangularBrickLength + 1 &&
-                            Math.abs(otherY - y) < GameConstants.rectangularBrickThickness + 1;
-                    if (overlaps) {
-                        break;
-                    }
-                }
-            }
-            if (!overlaps) {
-                brick.setPosition(new Vector(x, y));
-            }
-        }
-
-        bricks.add(brick);
-        trackObject(brick);
-    }*/
 
     public void destroyBricksInRadius(Vector center, double radius) {
         ArrayList<GameObject> objectList = new ArrayList<>(gameObjects);
@@ -265,7 +227,6 @@ public class Game {
     }
 
     public boolean checkBrickCount() {
-
         AtomicInteger simpleBrickCount = new AtomicInteger();
         AtomicInteger halfMetalBrickCount = new AtomicInteger();
         AtomicInteger mineBrickCount = new AtomicInteger();
@@ -327,5 +288,59 @@ public class Game {
         errorListeners.forEach(errorListener -> {
             errorListener.showError(err);
         });
+    }
+
+    public void addWrapperContent() {
+        if(wrapperContentList.size() < WrapperContent.values().length) {
+            wrapperContentList.add(WrapperContent.values()[wrapperContentList.size()]);
+        }else {
+            wrapperContentList.add(WrapperContent.values()[random.nextInt(WrapperContent.values().length)]);
+        }
+    }
+
+    public void revealWrapperContent(Vector revealPosition) {
+        WrapperContent content = wrapperContentList.remove(random.nextInt(wrapperContentList.size()));
+        if(storedPowerUps.contains(content) || activeAliens.contains(content)) {
+            return;
+        }
+        if(content.ordinal() < 6) {
+            spawnPowerup(content, revealPosition);
+        }else {
+            spawnAlien(content);
+        }
+    }
+
+    private void spawnPowerup(WrapperContent content, Vector revealPosition) {
+        switch (content) {
+            case FIREBALL:
+                trackObject(new Fireball(revealPosition));
+                break;
+            case CHEMICAL_BALL:
+                trackObject(new ChemicalBall(revealPosition));
+                break;
+            case DESTRUCTIVE_LASER_GUN:
+                trackObject(new DestructiveLaserGun(revealPosition));
+                break;
+            case MAGNET:
+                trackObject(new Magnet(revealPosition));
+                break;
+            case TALLER_PADDLE:
+                trackObject(new TallerPaddle(revealPosition));
+                break;
+            case GANG_OF_BALLS:
+                spawnGangOfBalls(revealPosition);
+                break;
+            default:
+                return;
+        }
+        return;
+    }
+
+    private void spawnAlien(WrapperContent content) {
+
+    }
+
+    private void spawnGangOfBalls(Vector revealPosition) {
+
     }
 }

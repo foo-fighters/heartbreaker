@@ -20,7 +20,7 @@ public class GameConstants {
     public final static int rectangularBrickThickness = 20;
     public final static int circularBrickSize = 20;
     public final static int alienSize = 50;
-    public final static int powerupSize = 20;
+    public final static int powerupSize = paddleLength / 4;
 
     // Ball movement
     public final static double ballLaunchSpeed = screenHeight * 0.4;
