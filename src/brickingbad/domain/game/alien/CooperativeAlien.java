@@ -8,7 +8,7 @@ public class CooperativeAlien extends Alien {
 
     public CooperativeAlien() {
         this.position= new Vector();
-        this.shape= Shape.RECTANGLE;
+        this.shape= Shape.CIRCLE;
         this.velocity=new Vector();
         this.angle = 0.0;
         this.size = new Vector(GameConstants.alienSize, GameConstants.alienSize);
