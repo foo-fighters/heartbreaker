@@ -28,7 +28,11 @@ public class BrickFactory {
     }
 
     public ArrayList<Brick> createHalfMetalBricks(int n) {
-        return null;
+        ArrayList<Brick> halfMetalBricks = new ArrayList<>();
+        for (int i = 0; i<n; i++) {
+            halfMetalBricks.add(new HalfMetalBrick());
+        }
+        return halfMetalBricks;
     }
 
     public ArrayList<Brick> createMineBricks(int n) {

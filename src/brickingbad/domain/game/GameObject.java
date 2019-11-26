@@ -19,7 +19,7 @@ public abstract class GameObject {
     position.addVector(velocity.product(1.0 / GameConstants.calculationsPerSecond));
   }
 
-  public void reflect(GameObject object) { }
+  public void collide(GameObject object) { }
 
   public void destroy() {
     Game.getInstance().removeObject(this);

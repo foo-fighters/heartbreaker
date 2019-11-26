@@ -1,5 +1,6 @@
 package brickingbad.domain.game;
 
+import brickingbad.domain.game.brick.HalfMetalBrick;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.ball.BallState;
@@ -43,16 +44,14 @@ public class Ball extends GameObject {
         ballState = new FireBallState(this);
     }
 
-    public void setChemical(){
-        ballState = new ChemicalBallState(this);
-    }
+    public void setChemical(){ ballState = new ChemicalBallState(this); }
 
-    @Override
     public void reflect(GameObject object) {
         double incidenceAngle = Math.atan2(velocity.getY(), -velocity.getX());
         double normalAngle;
         if (object.getShape() == Shape.CIRCLE) {
-            normalAngle = Math.atan2(object.getPosition().getY() - position.getY(), position.getX() - object.getPosition().getX());
+            normalAngle = Math.atan2(object.getPosition().getY() - position.getY(),
+                    position.getX() - object.getPosition().getX());
         }else if(object.getShape() == Shape.RECTANGLE) {
             normalAngle = Math.toRadians(object.getAngle() + reflectionDirection.ordinal() * 45.0);
         }else {
@@ -66,5 +65,10 @@ public class Ball extends GameObject {
         if(-difference >= Math.PI / 2.0) reflectionAngle += Math.PI / 2.0;
         double len = Math.hypot(velocity.getX(), velocity.getY());
         velocity.setVector(Math.cos(reflectionAngle) * len, -Math.sin(reflectionAngle) * len);
+    }
+
+    @Override
+    public void collide(GameObject object) {
+        ballState.collide(object);
     }
 }

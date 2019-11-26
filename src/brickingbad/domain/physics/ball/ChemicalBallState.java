@@ -11,8 +11,7 @@ public class ChemicalBallState extends BallState {
         this.ball = ball;
     }
 
-    public void reflect(GameObject object) {
-
+    public void collide(GameObject object) {
     }
 
 }

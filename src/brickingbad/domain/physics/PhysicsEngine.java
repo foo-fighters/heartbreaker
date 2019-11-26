@@ -5,14 +5,9 @@ import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.Shape;
-import brickingbad.domain.physics.collisions.Collision;
-import brickingbad.ui.BrickingBadFrame;
-import brickingbad.ui.game.animation.Animator;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class PhysicsEngine implements Runnable {
 
@@ -81,8 +76,18 @@ public class PhysicsEngine implements Runnable {
 
     private static void handleCollisions () {
       ArrayList<GameObject> objects = Game.getInstance().getObjects();
-      ArrayList<Collision> collisions = checkCollisions(objects);
-      performCollisions(collisions);
+      GameObject o1;
+      GameObject o2;
+      for (int i = 0; i < objects.size(); i++) {
+        o1 = objects.get(i);
+        for (int j = i + 1; j < objects.size(); j++) {
+          o2 = objects.get(j);
+          if (areColliding(o1, o2)) {
+            o1.collide(o2);
+            o2.collide(o1);
+          }
+        }
+      }
     }
 
     private static void updatePositions () {
@@ -183,38 +188,6 @@ public class PhysicsEngine implements Runnable {
           circle.setReflectionDirection(Direction.DOWN);
           return true;
         }
-      }
-    }
-
-    private static ArrayList<Collision> checkCollisions (ArrayList<GameObject> objects) {
-      ArrayList<Collision> collisions = new ArrayList<>();
-      objects.forEach(obj -> obj.setColliding(false));
-      GameObject o1;
-      GameObject o2;
-      for (int i = 0; i < objects.size(); i++) {
-        o1 = objects.get(i);
-        for (int j = i + 1; j < objects.size(); j++) {
-          o2 = objects.get(j);
-          if (areColliding(o1, o2)) {
-            o1.setColliding(true);
-            o2.setColliding(true);
-            if(!Objects.equals(o1.getCollidedObject(), o2) && !Objects.equals(o2.getCollidedObject(), o1)){
-              collisions.add(new Collision(o1, o2));
-              o1.setCollidedObject(o2);
-              o2.setCollidedObject(o1);
-            }
-          }
-        }
-        if(!o1.isColliding()) {
-          o1.setCollidedObject(null);
-        }
-      }
-      return collisions;
-    }
-
-    private static void performCollisions (List < Collision > collisions) {
-      for (Collision collision : collisions) {
-        collision.collideObjects();
       }
     }
 

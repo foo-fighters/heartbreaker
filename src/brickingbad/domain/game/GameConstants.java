@@ -40,8 +40,8 @@ public class GameConstants {
 
     // Building mode
     public final static int simpleBrickLimit = 75; //change to 75 in phase 2
-    public final static int halfMetalBrickLimit = 0; //change to 10 in phase 2
-    public final static int mineBrickLimit = 0; //change to 5 in phase 2
+    public final static int halfMetalBrickLimit = 10; //change to 10 in phase 2
+    public final static int mineBrickLimit = 5; //change to 5 in phase 2
     public final static int wrapperBrickLimit = 0; //change to 10 in phase 2
 
     // Power-ups
