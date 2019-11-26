@@ -1,5 +1,6 @@
 package brickingbad.domain.physics;
 
+import brickingbad.controller.GameController;
 import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.GameObject;
@@ -70,8 +71,10 @@ public class PhysicsEngine implements Runnable {
         System.out.println("Program interrupted.");
       }
       if (running) {
-        handleCollisions();
-        updatePositions();
+        if (GameController.getInstance().inRunningMode()) {
+          handleCollisions();
+          updatePositions();
+        }
       }
     }
   }
