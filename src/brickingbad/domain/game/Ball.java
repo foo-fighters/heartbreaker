@@ -52,7 +52,7 @@ public class Ball extends GameObject {
         double incidenceAngle = Math.atan2(velocity.getY(), -velocity.getX());
         double normalAngle;
         if (object.getShape() == Shape.CIRCLE) {
-            normalAngle = Math.atan2(object.getPosition().getY() - position.getY(), object.getPosition().getX() - position.getX());
+            normalAngle = Math.atan2(object.getPosition().getY() - position.getY(), position.getX() - object.getPosition().getX());
         }else if(object.getShape() == Shape.RECTANGLE) {
             normalAngle = Math.toRadians(object.getAngle() + reflectionDirection.ordinal() * 45.0);
         }else {

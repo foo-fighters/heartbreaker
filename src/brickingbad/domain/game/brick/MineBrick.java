@@ -22,7 +22,8 @@ public class MineBrick extends Brick {
     @Override
     public void destroy() {
         super.destroy();
-        ArrayList<GameObject> objects = Game.getInstance().getObjects();
+        ArrayList<GameObject> objects = new ArrayList<GameObject>(Game.getInstance().getObjects());
+        ArrayList<GameObject> destroyed = Game.getInstance().getObjects();
         double xdist;
         double ydist;
         for (GameObject object: objects) {

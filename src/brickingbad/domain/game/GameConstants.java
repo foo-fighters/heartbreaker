@@ -54,7 +54,7 @@ public class GameConstants {
     public final static int tallerPaddleMultiplier = 2;
 
     // Extras
-    public final static int mineBrickExplosionRadius = paddleLength; // * 2 later
+    public final static double mineBrickExplosionRadius = paddleLength; // * 2 later
     public final static int paddleHeight = screenHeight / 10;
     public static int framesPerSecond = 60;
     public static int calculationsPerSecond = 100;
