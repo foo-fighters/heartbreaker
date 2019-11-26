@@ -56,6 +56,13 @@ public class Paddle extends GameObject {
   public void updatePosition() {
     moveState.updatePosition();
     rotateState.updatePosition();
+    Game game = Game.getInstance();
+    ArrayList<Ball> balls = game.getBalls();
+    balls.forEach((ball) -> {
+      if (Math.abs(ball.getPosition().getY() - position.getY()) < 50) {
+        setPosition(ball.getPosition().getX(), position.getY());
+      }
+    });
   }
 
   public void startMove(Direction direction) {
