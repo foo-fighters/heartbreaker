@@ -81,4 +81,8 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
     }
   }
 
+  public void invokeGodMode() {
+
+  }
+
 }

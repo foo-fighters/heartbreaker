@@ -10,6 +10,7 @@ import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.services.persistence.SaveRepository;
 import brickingbad.ui.BrickingBadFrame;
+import brickingbad.ui.game.RunningModePanel;
 import brickingbad.ui.game.animation.Animator;
 
 import java.util.ArrayList;
@@ -119,4 +120,10 @@ public class GameController {
     public void addObjectListener(GameObjectListener listener) {
         Game.getInstance().addObjectListener(listener);
     }
+
+    public void invokeGodMode() {
+        RunningModePanel.getInstance().invokeGodMode();
+        Game.getInstance().invokeGodMode();
+    }
+
 }

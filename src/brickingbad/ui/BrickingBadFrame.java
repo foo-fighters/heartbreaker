@@ -142,4 +142,13 @@ public class BrickingBadFrame extends JFrame {
     }
   }
 
+  public void showGodModeDialog() {
+    String answer = (String) JOptionPane.showInputDialog("What is the answer?");
+    if (answer.equals("42")) {
+      GameController.getInstance().invokeGodMode();
+    } else {
+      JOptionPane.showMessageDialog(getInstance(), "NO!");
+    }
+  }
+
 }

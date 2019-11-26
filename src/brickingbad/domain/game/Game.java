@@ -312,4 +312,9 @@ public class Game {
             errorListener.showError(err);
         });
     }
+
+    public void invokeGodMode() {
+        paddle.god();
+    }
+
 }
