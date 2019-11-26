@@ -31,8 +31,6 @@ public class SimpleBallState extends BallState {
             }
         }
         ball.reflect(object);
-
-
     }
 
 }
