@@ -80,7 +80,7 @@ public class PhysicsEngine implements Runnable {
         for (int j = i + 1; j < objects.size(); j++) {
           o2 = objects.get(j);
           if (areColliding(o1, o2)) {
-            if(o1.getCollidedObjects().contains(o2) || o2.getCollidedObjects().contains(o1)) break;
+            if(o1.getCollidedObjects().contains(o2) && o2.getCollidedObjects().contains(o1)) break;
             o1.addCollidedObject(o2);
             o2.addCollidedObject(o1);
             o1.collide(o2);

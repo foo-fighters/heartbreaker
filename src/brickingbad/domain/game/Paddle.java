@@ -45,7 +45,10 @@ public class Paddle extends GameObject {
   private void catchBall(Ball ball) {
     currentBalls.add(ball);
     ball.stopMovement();
-    ball.setPaddleOffset(0.0);
+    double ballHeightOffset = (GameConstants.paddleThickness + GameConstants.ballSize) / 2.0;
+    double distX = ball.getPosition().getX() + ballHeightOffset * Math.sin(Math.toRadians(angle)) - position.getX();
+    double distY = ball.getPosition().getY() + ballHeightOffset * Math.cos(Math.toRadians(angle)) - position.getY();
+    ball.setPaddleOffset(Math.hypot(distX, distY) * Math.signum(distX));
   }
 
   public Vector getBallStartPosition() {
@@ -60,8 +63,11 @@ public class Paddle extends GameObject {
     if(object instanceof PowerUp) {
       Game.getInstance().storePowerUp((PowerUp) object);
     }
-    if(object instanceof Ball && isMagnetized) {
-      catchBall((Ball) object);
+    if(object instanceof Ball) {
+      if((object.getReflectionDirection() == Direction.UP || object.getReflectionDirection() == Direction.UP_LEFT
+              || object.getReflectionDirection() == Direction.UP_RIGHT) && isMagnetized) {
+        catchBall((Ball) object);
+      }
     }
   }
 

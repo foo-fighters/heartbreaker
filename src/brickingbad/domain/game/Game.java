@@ -305,6 +305,7 @@ public class Game {
         if(wrapperContentList.size() > 0) {
             WrapperContent content = wrapperContentList.remove(random.nextInt(wrapperContentList.size()));
             if(storedPowerUps.stream().map(PowerUp::getName).collect(Collectors.toList()).contains(content)
+                    || activePowerUps.stream().map(PowerUp::getName).collect(Collectors.toList()).contains(content)
                     || activeAliens.contains(content)) {
                 return;
             }
@@ -337,9 +338,7 @@ public class Game {
                 spawnGangOfBalls(revealPosition);
                 break;
             default:
-                return;
         }
-        return;
     }
 
     private void spawnAlien(WrapperContent content) {
@@ -362,8 +361,6 @@ public class Game {
         if(minimumDistance < GameConstants.rectangularBrickLength + GameConstants.ballSize) {
             for(int i = 0; i < GameConstants.gangOfBallsMultiplier; i++) {
                 Ball ball = new Ball(revealPosition);
-                double speed = ((Ball)closestBall).getSpeed();
-                double angle = (360.0 / GameConstants.gangOfBallsMultiplier) * i;
                 ball.startMovement((360.0 / GameConstants.gangOfBallsMultiplier) * i, ((Ball)closestBall).getSpeed());
                 trackObject(ball);
             }

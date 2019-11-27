@@ -23,11 +23,6 @@ public class Ball extends GameObject {
         setSimple();
     }
 
-    public void updatePosition() {
-        if(velocity.getY() < 1.0 && velocity.getY() > -1.0) velocity.addVector(new Vector(0, 2.0));
-        super.updatePosition();
-    }
-
     public double getPaddleOffset() {
         return paddleOffset;
     }
