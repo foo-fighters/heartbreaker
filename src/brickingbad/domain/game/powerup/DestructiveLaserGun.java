@@ -15,7 +15,7 @@ public class DestructiveLaserGun extends PowerUp {
     }
 
     @Override
-    void usePowerUp() {
+    public void activate() {
 
     }
 }

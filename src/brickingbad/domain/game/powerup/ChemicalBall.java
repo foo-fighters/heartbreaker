@@ -15,7 +15,7 @@ public class ChemicalBall extends PowerUp {
     }
 
     @Override
-    void usePowerUp() {
+    public void activate() {
 
     }
 }

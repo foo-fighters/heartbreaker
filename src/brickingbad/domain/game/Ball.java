@@ -23,8 +23,17 @@ public class Ball extends GameObject {
         setSimple();
     }
 
+    public void updatePosition() {
+        if(velocity.getY() < 1.0 && velocity.getY() > -1.0) velocity.addVector(new Vector(0, 2.0));
+        super.updatePosition();
+    }
+
     public double getPaddleOffset() {
         return paddleOffset;
+    }
+
+    public void setPaddleOffset(double paddleOffset) {
+        this.paddleOffset = paddleOffset;
     }
 
     public void startMovement(double angle, double speed){
@@ -66,6 +75,7 @@ public class Ball extends GameObject {
         double reflectionAngle = normalAngle + difference;
         if(difference >= Math.PI / 2.0) reflectionAngle -= Math.PI / 2.0;
         if(-difference >= Math.PI / 2.0) reflectionAngle += Math.PI / 2.0;
+        this.angle = reflectionAngle;
         double len = Math.hypot(velocity.getX(), velocity.getY());
         velocity.setVector(Math.cos(reflectionAngle) * len, -Math.sin(reflectionAngle) * len);
     }

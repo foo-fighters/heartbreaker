@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class Game {
 
@@ -30,8 +31,8 @@ public class Game {
     private Date time;
 
     private ArrayList<WrapperContent> wrapperContentList;
-    private ArrayList<WrapperContent> storedPowerUps;
-    private ArrayList<WrapperContent> activePowerUps;
+    private ArrayList<PowerUp> storedPowerUps;
+    private ArrayList<PowerUp> activePowerUps;
     private ArrayList<WrapperContent> activeAliens;
 
     private static final Random random = new Random();
@@ -157,11 +158,11 @@ public class Game {
         return bricks;
     }
 
-    public ArrayList<WrapperContent> getActivePowerUps() {
+    public ArrayList<PowerUp> getActivePowerUps() {
         return activePowerUps;
     }
 
-    public ArrayList<WrapperContent> getStoredPowerUps() {
+    public ArrayList<PowerUp> getStoredPowerUps() {
         return storedPowerUps;
     }
 
@@ -303,7 +304,8 @@ public class Game {
     public void revealWrapperContent(Vector revealPosition) {
         if(wrapperContentList.size() > 0) {
             WrapperContent content = wrapperContentList.remove(random.nextInt(wrapperContentList.size()));
-            if(storedPowerUps.contains(content) || activeAliens.contains(content)) {
+            if(storedPowerUps.stream().map(PowerUp::getName).collect(Collectors.toList()).contains(content)
+                    || activeAliens.contains(content)) {
                 return;
             }
             if(content.ordinal() < 6) {
@@ -326,7 +328,7 @@ public class Game {
                 //trackObject(new DestructiveLaserGun(revealPosition));
                 break;
             case MAGNET:
-                //trackObject(new Magnet(revealPosition));
+                trackObject(new Magnet(revealPosition));
                 break;
             case TALLER_PADDLE:
                 //trackObject(new TallerPaddle(revealPosition));
@@ -366,6 +368,25 @@ public class Game {
                 trackObject(ball);
             }
             removeObject(closestBall);
+        }
+    }
+
+    public void storePowerUp(PowerUp powerup) {
+        storedPowerUps.add(powerup);
+        powerup.velocity.setVector(0.0, 0.0);
+        int posX = 10 + GameConstants.powerupSize / 2 + (10 + GameConstants.powerupSize) * powerup.getName().ordinal();
+        int posY = GameConstants.screenHeight - GameConstants.powerupSize / 2 - 10;
+        powerup.position.setVector(posX, posY);
+    }
+
+    public void usePowerUp(WrapperContent name) {
+        ArrayList<PowerUp> storedPowerUpsCopy = new ArrayList<>(storedPowerUps);
+        for(PowerUp powerup: storedPowerUpsCopy) {
+            if(powerup.getName() == name) {
+                storedPowerUps.remove(powerup);
+                activePowerUps.add(powerup);
+                powerup.activate();
+            }
         }
     }
 }

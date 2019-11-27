@@ -15,7 +15,7 @@ public class TallerPaddle extends PowerUp {
     }
 
     @Override
-    void usePowerUp() {
+    public void activate() {
 
     }
 }

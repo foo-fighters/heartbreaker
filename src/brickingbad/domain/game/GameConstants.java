@@ -45,7 +45,7 @@ public class GameConstants {
     public final static int wrapperBrickLimit = 0; //change to 10 in phase 2
 
     // Power-ups
-    public final static int powerupFallSpeed = paddleLength * 4;
+    public final static int powerupFallSpeed = paddleLength;
     public final static int gangOfBallsMultiplier = 10;
     public final static int laserGunCharges = 5;
     public final static int chemicalBallDuration = 60;

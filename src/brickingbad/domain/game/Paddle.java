@@ -1,5 +1,6 @@
 package brickingbad.domain.game;
 
+import brickingbad.domain.game.powerup.PowerUp;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.paddle.*;
@@ -12,7 +13,7 @@ public class Paddle extends GameObject {
   private ArrayList<Ball> currentBalls;
   private PaddleMoveState moveState;
   private PaddleRotateState rotateState;
-  public boolean isMagnetized;
+  private boolean isMagnetized;
 
   public Paddle(){
     setIdleMove();
@@ -44,6 +45,7 @@ public class Paddle extends GameObject {
   private void catchBall(Ball ball) {
     currentBalls.add(ball);
     ball.stopMovement();
+    ball.setPaddleOffset(0.0);
   }
 
   public Vector getBallStartPosition() {
@@ -51,6 +53,16 @@ public class Paddle extends GameObject {
     Vector offset = new Vector(-distance * Math.sin(angle), -distance * Math.cos(angle) - 1.0);
     offset.addVector(this.position);
     return offset;
+  }
+
+  @Override
+  public void collide(GameObject object) {
+    if(object instanceof PowerUp) {
+      Game.getInstance().storePowerUp((PowerUp) object);
+    }
+    if(object instanceof Ball && isMagnetized) {
+      catchBall((Ball) object);
+    }
   }
 
   public void updatePosition() {
@@ -92,4 +104,11 @@ public class Paddle extends GameObject {
     rotateState = new IdlePaddleRotateState(this);
   }
 
+  public boolean isMagnetized() {
+    return isMagnetized;
+  }
+
+  public void setMagnetized(boolean magnetized) {
+    isMagnetized = magnetized;
+  }
 }

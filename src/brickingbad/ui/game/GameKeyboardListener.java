@@ -1,6 +1,7 @@
 package brickingbad.ui.game;
 
 import brickingbad.controller.GameController;
+import brickingbad.domain.game.WrapperContent;
 import brickingbad.domain.physics.Direction;
 
 import java.awt.event.KeyEvent;
@@ -30,6 +31,21 @@ public class GameKeyboardListener implements KeyListener {
         }
         if(key == KeyEvent.VK_W){
             GameController.getInstance().launchBalls();
+        }
+        if(key == KeyEvent.VK_F){
+            GameController.getInstance().usePowerUp(WrapperContent.FIREBALL);
+        }
+        if(key == KeyEvent.VK_C){
+            GameController.getInstance().usePowerUp(WrapperContent.CHEMICAL_BALL);
+        }
+        if(key == KeyEvent.VK_D){
+            GameController.getInstance().usePowerUp(WrapperContent.DESTRUCTIVE_LASER_GUN);
+        }
+        if(key == KeyEvent.VK_M){
+            GameController.getInstance().usePowerUp(WrapperContent.MAGNET);
+        }
+        if(key == KeyEvent.VK_T){
+            GameController.getInstance().usePowerUp(WrapperContent.TALLER_PADDLE);
         }
     }
 

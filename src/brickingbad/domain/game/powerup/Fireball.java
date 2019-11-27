@@ -15,7 +15,7 @@ public class Fireball extends PowerUp {
     }
 
     @Override
-    void usePowerUp() {
+    public void activate() {
 
     }
 }

@@ -1,10 +1,14 @@
 package brickingbad.domain.game.powerup;
 
+import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.Shape;
+import brickingbad.domain.game.WrapperContent;
 import brickingbad.domain.physics.Vector;
 
 public class Magnet extends PowerUp {
+
+    private int startTime;
 
     public Magnet(Vector revealPosition) {
         this.position = new Vector(revealPosition.getX(), revealPosition.getY());
@@ -12,10 +16,17 @@ public class Magnet extends PowerUp {
         this.size = new Vector(GameConstants.powerupSize, GameConstants.powerupSize);
         this.velocity = new Vector(0, GameConstants.powerupFallSpeed);
         this.angle = 0.0;
+        this.name = WrapperContent.MAGNET;
+        this.startTime = 0;
     }
 
     @Override
-    void usePowerUp() {
+    public void updatePosition() {
+        super.updatePosition();
+    }
 
+    @Override
+    public void activate() {
+        Game.getInstance().getPaddle().setMagnetized(true);
     }
 }

@@ -2,6 +2,7 @@ package brickingbad.controller;
 
 import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameObjectListener;
+import brickingbad.domain.game.WrapperContent;
 import brickingbad.domain.game.brick.Brick;
 import brickingbad.domain.game.brick.BrickFactory;
 import brickingbad.domain.game.persistence.Save;
@@ -124,5 +125,9 @@ public class GameController {
 
     public void addObjectListener(GameObjectListener listener) {
         Game.getInstance().addObjectListener(listener);
+    }
+
+    public void usePowerUp(WrapperContent name) {
+        Game.getInstance().usePowerUp(name);
     }
 }
