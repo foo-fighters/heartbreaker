@@ -64,8 +64,12 @@ public class Paddle extends GameObject {
       balls.forEach((ball) -> {
         if (Math.abs(ball.getPosition().getY() - position.getY()) < 50) {
           setPosition(ball.getPosition().getX(), position.getY());
+          setAngle(0);
+        } else {
+          setAngle((getAngle() + 5) % 180);
         }
       });
+
     }
   }
 
