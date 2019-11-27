@@ -11,7 +11,6 @@ import brickingbad.domain.physics.ball.SimpleBallState;
 public class Ball extends GameObject {
 
     private BallState ballState;
-    private double launchSpeed = GameConstants.ballLaunchSpeed;
     private double paddleOffset;
 
     public Ball(Vector position){
@@ -28,8 +27,12 @@ public class Ball extends GameObject {
         return paddleOffset;
     }
 
-    public void startMovement(double angle){
-        this.velocity.setVector(-launchSpeed * Math.sin(Math.toRadians(angle)), -launchSpeed * Math.cos(Math.toRadians(angle)));
+    public void startMovement(double angle, double speed){
+        velocity.setVector(-speed * Math.sin(Math.toRadians(angle)), -speed * Math.cos(Math.toRadians(angle)));
+    }
+
+    public double getSpeed() {
+        return Math.hypot(velocity.getX(), velocity.getY());
     }
 
     public void stopMovement(){

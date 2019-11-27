@@ -1,10 +1,7 @@
 package brickingbad.domain.physics;
 
 import brickingbad.controller.GameController;
-import brickingbad.domain.game.Game;
-import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.GameObject;
-import brickingbad.domain.game.Shape;
+import brickingbad.domain.game.*;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -83,8 +80,14 @@ public class PhysicsEngine implements Runnable {
         for (int j = i + 1; j < objects.size(); j++) {
           o2 = objects.get(j);
           if (areColliding(o1, o2)) {
+            if(o1.getCollidedObjects().contains(o2) || o2.getCollidedObjects().contains(o1)) break;
+            o1.addCollidedObject(o2);
+            o2.addCollidedObject(o1);
             o1.collide(o2);
             o2.collide(o1);
+          }else {
+            o1.removeCollidedObject(o2);
+            o2.removeCollidedObject(o1);
           }
         }
       }

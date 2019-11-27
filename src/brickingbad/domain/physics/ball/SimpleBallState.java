@@ -6,6 +6,7 @@ import brickingbad.domain.game.Shape;
 import brickingbad.domain.game.alien.Alien;
 import brickingbad.domain.game.brick.Brick;
 import brickingbad.domain.game.brick.HalfMetalBrick;
+import brickingbad.domain.game.powerup.PowerUp;
 import brickingbad.domain.physics.Direction;
 
 public class SimpleBallState extends BallState {
@@ -17,6 +18,7 @@ public class SimpleBallState extends BallState {
     }
 
     public void collide(GameObject object) {
+        if(object instanceof Ball || object instanceof PowerUp) return;
         if(object instanceof Brick || object instanceof Alien) {
             if(object instanceof HalfMetalBrick) {
                 Direction dir = ball.getReflectionDirection();

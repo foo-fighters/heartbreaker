@@ -48,6 +48,8 @@ public class Game {
         activePowerUps = new ArrayList<>();
         storedPowerUps = new ArrayList<>();
         gameObjects = new ArrayList<>();
+        wrapperContentList = new ArrayList<>();
+        activeAliens = new ArrayList<>();
     }
 
     public static Game getInstance() {
@@ -299,33 +301,35 @@ public class Game {
     }
 
     public void revealWrapperContent(Vector revealPosition) {
-        WrapperContent content = wrapperContentList.remove(random.nextInt(wrapperContentList.size()));
-        if(storedPowerUps.contains(content) || activeAliens.contains(content)) {
-            return;
-        }
-        if(content.ordinal() < 6) {
-            spawnPowerup(content, revealPosition);
-        }else {
-            spawnAlien(content);
+        if(wrapperContentList.size() > 0) {
+            WrapperContent content = wrapperContentList.remove(random.nextInt(wrapperContentList.size()));
+            if(storedPowerUps.contains(content) || activeAliens.contains(content)) {
+                return;
+            }
+            if(content.ordinal() < 6) {
+                spawnPowerup(content, revealPosition);
+            }else {
+                spawnAlien(content);
+            }
         }
     }
 
     private void spawnPowerup(WrapperContent content, Vector revealPosition) {
         switch (content) {
             case FIREBALL:
-                trackObject(new Fireball(revealPosition));
+                //trackObject(new Fireball(revealPosition));
                 break;
             case CHEMICAL_BALL:
-                trackObject(new ChemicalBall(revealPosition));
+                //trackObject(new ChemicalBall(revealPosition));
                 break;
             case DESTRUCTIVE_LASER_GUN:
-                trackObject(new DestructiveLaserGun(revealPosition));
+                //trackObject(new DestructiveLaserGun(revealPosition));
                 break;
             case MAGNET:
-                trackObject(new Magnet(revealPosition));
+                //trackObject(new Magnet(revealPosition));
                 break;
             case TALLER_PADDLE:
-                trackObject(new TallerPaddle(revealPosition));
+                //trackObject(new TallerPaddle(revealPosition));
                 break;
             case GANG_OF_BALLS:
                 spawnGangOfBalls(revealPosition);
@@ -341,6 +345,27 @@ public class Game {
     }
 
     private void spawnGangOfBalls(Vector revealPosition) {
-
+        double minimumDistance = GameConstants.screenWidth;
+        GameObject closestBall = null;
+        for (GameObject object: gameObjects) {
+            if(object instanceof Ball) {
+                double ballDistance = Math.hypot(object.getPosition().getX() - revealPosition.getX(),
+                        object.getPosition().getY() - revealPosition.getY());
+                if(ballDistance < minimumDistance) {
+                    minimumDistance = ballDistance;
+                    closestBall = object;
+                }
+            }
+        }
+        if(minimumDistance < GameConstants.rectangularBrickLength + GameConstants.ballSize) {
+            for(int i = 0; i < GameConstants.gangOfBallsMultiplier; i++) {
+                Ball ball = new Ball(revealPosition);
+                double speed = ((Ball)closestBall).getSpeed();
+                double angle = (360.0 / GameConstants.gangOfBallsMultiplier) * i;
+                ball.startMovement((360.0 / GameConstants.gangOfBallsMultiplier) * i, ((Ball)closestBall).getSpeed());
+                trackObject(ball);
+            }
+            removeObject(closestBall);
+        }
     }
 }

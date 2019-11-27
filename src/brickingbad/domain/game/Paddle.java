@@ -36,7 +36,7 @@ public class Paddle extends GameObject {
 
   public void launchBalls() {
     for (Ball ball: currentBalls) {
-      ball.startMovement(angle);
+      ball.startMovement(angle, GameConstants.ballLaunchSpeed);
     }
     currentBalls.clear();
   }

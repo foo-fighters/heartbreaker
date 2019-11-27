@@ -3,21 +3,20 @@ package brickingbad.domain.game;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
 
+import java.util.ArrayList;
+
 public abstract class GameObject {
 
   protected Shape shape;
   protected Vector size;
   protected Vector position;
   protected Vector velocity;
-  protected double angle;
+  protected double angle = 0.0;
 
-  protected boolean colliding;
-  protected GameObject collidedObject;
+  protected ArrayList<GameObject> collidedObjects = new ArrayList<>();
   protected Direction reflectionDirection;
 
-  public void updatePosition() {
-    position.addVector(velocity.product(1.0 / GameConstants.calculationsPerSecond));
-  }
+  public void updatePosition() { position = position.sum(velocity.product(1.0 / GameConstants.calculationsPerSecond)); }
 
   public void collide(GameObject object) { }
 
@@ -65,13 +64,11 @@ public abstract class GameObject {
     this.reflectionDirection = direction;
   }
 
-  public GameObject getCollidedObject() { return collidedObject; }
+  public ArrayList<GameObject> getCollidedObjects() { return collidedObjects; }
 
-  public void setCollidedObject(GameObject collidedObject) { this.collidedObject = collidedObject; }
+  public void addCollidedObject(GameObject collidedObject) { collidedObjects.add(collidedObject); }
 
-  public boolean isColliding() { return colliding; }
-
-  public void setColliding(boolean colliding) { this.colliding = colliding; }
+  public void removeCollidedObject(GameObject collidedObject) { collidedObjects.remove(collidedObject); }
 
   public double getAngle() { return angle; }
 
