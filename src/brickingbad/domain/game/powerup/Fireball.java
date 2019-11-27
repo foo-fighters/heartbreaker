@@ -1,7 +1,6 @@
 package brickingbad.domain.game.powerup;
 
-import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.Shape;
+import brickingbad.domain.game.*;
 import brickingbad.domain.physics.Vector;
 
 public class Fireball extends PowerUp {
@@ -12,10 +11,15 @@ public class Fireball extends PowerUp {
         this.size = new Vector(GameConstants.powerupSize, GameConstants.powerupSize);
         this.velocity = new Vector(0, GameConstants.powerupFallSpeed);
         this.angle = 0.0;
+        this.name = WrapperContent.FIREBALL;
     }
 
     @Override
     public void activate() {
-
+        for(GameObject object: Game.getInstance().getObjects()) {
+            if(object instanceof Ball) {
+                ((Ball) object).setFireball();
+            }
+        }
     }
 }

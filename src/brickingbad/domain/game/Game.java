@@ -320,19 +320,19 @@ public class Game {
     private void spawnPowerup(WrapperContent content, Vector revealPosition) {
         switch (content) {
             case FIREBALL:
-                //trackObject(new Fireball(revealPosition));
+                trackObject(new Fireball(revealPosition));
                 break;
             case CHEMICAL_BALL:
-                //trackObject(new ChemicalBall(revealPosition));
+                trackObject(new ChemicalBall(revealPosition));
                 break;
             case DESTRUCTIVE_LASER_GUN:
-                //trackObject(new DestructiveLaserGun(revealPosition));
+                trackObject(new DestructiveLaserGun(revealPosition));
                 break;
             case MAGNET:
                 trackObject(new Magnet(revealPosition));
                 break;
             case TALLER_PADDLE:
-                //trackObject(new TallerPaddle(revealPosition));
+                trackObject(new TallerPaddle(revealPosition));
                 break;
             case GANG_OF_BALLS:
                 spawnGangOfBalls(revealPosition);
