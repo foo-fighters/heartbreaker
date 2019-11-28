@@ -15,7 +15,6 @@ public class GameKeyboardListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-//        System.out.println("KEY PRESSED");
         int key = e.getKeyCode();
         if(key == KeyEvent.VK_LEFT){
             GameController.getInstance().startPaddleMove(Direction.LEFT);
