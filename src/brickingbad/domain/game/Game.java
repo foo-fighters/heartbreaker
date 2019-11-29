@@ -70,6 +70,7 @@ public class Game {
 
     private void trackObject(GameObject object) {
         gameObjects.add(object);
+        gameObjects.sort(GameObject::compareTo);
         for (GameObjectListener listener : objectListeners) {
             listener.addObject(object);
         }
@@ -128,63 +129,6 @@ public class Game {
         if (object instanceof Ball) {
             bricks.removeIf(ball -> ball.equals(object));
         }
-    }
-
-    // GETTERS & SETTERS
-
-    public ArrayList<GameObject> getObjects() {
-//        ArrayList<GameObject> gameObjects = new ArrayList<>();
-//
-//        gameObjects.add(paddle);
-//        gameObjects.addAll(bricks);
-//        gameObjects.addAll(balls);
-//        gameObjects.addAll(activePowerUps);
-//        gameObjects.addAll(storedPowerUps);
-//        gameObjects.addAll(walls);
-//        gameObjects.add(ground);
-//
-        return gameObjects;
-    }
-
-    public ArrayList<Ball> getBalls() {
-        return balls;
-    }
-
-    public Paddle getPaddle() {
-        return paddle;
-    }
-
-    public ArrayList<Brick> getBricks() {
-        return bricks;
-    }
-
-    public ArrayList<PowerUp> getActivePowerUps() {
-        return activePowerUps;
-    }
-
-    public ArrayList<PowerUp> getStoredPowerUps() {
-        return storedPowerUps;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public int getLives() {
-        return lives;
-    }
-
-    public void setPaddle(Paddle paddle) {
-        this.paddle = paddle;
-        trackObject(paddle);
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public void setLives(int lives) {
-        this.lives = lives;
     }
 
     public void destroyBricksInRadius(Vector center, double radius) {
@@ -386,4 +330,70 @@ public class Game {
             }
         }
     }
+
+    // GETTERS & SETTERS
+
+    public ArrayList<GameObject> getObjects() {
+//        ArrayList<GameObject> gameObjects = new ArrayList<>();
+//
+//        gameObjects.add(paddle);
+//        gameObjects.addAll(bricks);
+//        gameObjects.addAll(balls);
+//        gameObjects.addAll(activePowerUps);
+//        gameObjects.addAll(storedPowerUps);
+//        gameObjects.addAll(walls);
+//        gameObjects.add(ground);
+//
+        return gameObjects;
+    }
+
+    public ArrayList<Ball> getBalls() {
+        return balls;
+    }
+
+    public Paddle getPaddle() {
+        return paddle;
+    }
+
+    public ArrayList<Brick> getBricks() {
+        return bricks;
+    }
+
+    public ArrayList<PowerUp> getActivePowerUps() {
+        return activePowerUps;
+    }
+
+    public ArrayList<PowerUp> getStoredPowerUps() {
+        return storedPowerUps;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void setPaddle(Paddle paddle) {
+        this.paddle = paddle;
+        trackObject(paddle);
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    public ArrayList<Wall> getWalls() {
+        return walls;
+    }
+
+    public Ground getGround() {
+        return ground;
+    }
+
 }

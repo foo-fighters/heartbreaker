@@ -73,23 +73,42 @@ public class PhysicsEngine implements Runnable {
 
     private static void handleCollisions () {
       ArrayList<GameObject> objects = Game.getInstance().getObjects();
-      GameObject o1;
-      GameObject o2;
+      objects.sort(GameObject::compareTo);
+
       for (int i = 0; i < objects.size(); i++) {
-        o1 = objects.get(i);
-        for (int j = i + 1; j < objects.size(); j++) {
-          o2 = objects.get(j);
+        ArrayList<GameObject> collideables = new ArrayList<>();
+        Game game = Game.getInstance();
+        collideables.addAll(game.getWalls());
+        collideables.add(game.getGround());
+        collideables.add(game.getPaddle());
+        for (int j = 1; j <= 7; j++) {
+          try {
+            collideables.add(objects.get(i + j));
+          } catch (IndexOutOfBoundsException e) {
+
+          }
+          try {
+            collideables.add(objects.get(i - j));
+          } catch (IndexOutOfBoundsException e) {
+
+          }
+        }
+
+        final GameObject o1 = objects.get(i);
+
+        collideables.forEach((o2) -> {
           if (areColliding(o1, o2)) {
-            if(o1.getCollidedObjects().contains(o2) && o2.getCollidedObjects().contains(o1)) break;
-            o1.addCollidedObject(o2);
-            o2.addCollidedObject(o1);
-            o1.collide(o2);
-            o2.collide(o1);
-          }else {
+            if (!o1.getCollidedObjects().contains(o2) || !o2.getCollidedObjects().contains(o1)) {
+              o1.addCollidedObject(o2);
+              o2.addCollidedObject(o1);
+              o1.collide(o2);
+              o2.collide(o1);
+            }
+          } else {
             o1.removeCollidedObject(o2);
             o2.removeCollidedObject(o1);
           }
-        }
+        });
       }
     }
 

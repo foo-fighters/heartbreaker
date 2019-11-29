@@ -5,7 +5,7 @@ import brickingbad.domain.physics.Vector;
 
 import java.util.ArrayList;
 
-public abstract class GameObject {
+public abstract class GameObject implements Comparable {
 
   protected Shape shape;
   protected Vector size;
@@ -73,5 +73,13 @@ public abstract class GameObject {
   public double getAngle() { return angle; }
 
   public void setAngle(double angle) { this.angle = angle; }
+
+  @Override
+  public int compareTo(Object obj) {
+    double distance = Math.pow(position.getX(), 2) + Math.pow(position.getY(), 2);
+    GameObject object = (GameObject) obj;
+    double compareDistance = Math.pow(object.getPosition().getX(), 2) + Math.pow(object.getPosition().getY(), 2);
+    return Double.compare(distance, compareDistance);
+  }
 
 }
