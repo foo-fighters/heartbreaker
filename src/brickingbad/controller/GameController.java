@@ -130,4 +130,17 @@ public class GameController {
     public void usePowerUp(WrapperContent name) {
         Game.getInstance().usePowerUp(name);
     }
+
+    public void lifeLost() {
+        Game.getInstance().lostLife();
+    }
+
+    public void stopAnimator() {
+        Animator.getInstance().stop();
+    }
+  
+    public void showDeadDialog(){
+        BrickingBadFrame.getInstance().showYouAreDeadDialog();
+    }
+      
 }

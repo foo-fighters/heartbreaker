@@ -60,3 +60,5 @@ public class GameConstants {
     public static int framesPerSecond = 60;
     public static int calculationsPerSecond = 100;
 }
+
+
