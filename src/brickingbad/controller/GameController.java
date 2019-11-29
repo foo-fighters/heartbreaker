@@ -1,4 +1,5 @@
-package brickingbad.controller;
+package
+        brickingbad.controller;
 
 import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameObjectListener;
