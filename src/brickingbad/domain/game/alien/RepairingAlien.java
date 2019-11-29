@@ -63,7 +63,6 @@ public class RepairingAlien extends Alien implements AlienStrategy {
             if (object instanceof RepairingAlien) {
 
                 if (!(object instanceof RepairingAlien)) {
-
                     myTimer.cancel();
                 }
             }
@@ -72,7 +71,7 @@ public class RepairingAlien extends Alien implements AlienStrategy {
 
     @Override
     public void doSelection() {
-        
+
     }
 }
 

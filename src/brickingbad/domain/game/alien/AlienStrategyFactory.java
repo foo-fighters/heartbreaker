@@ -15,13 +15,21 @@ public class AlienStrategyFactory {
     }
 
     public AlienStrategy getStrategy() {
-            if (startCount * 0.7 <= brickCount) {
+        if (startCount * 0.7 <= brickCount) {
             return new CooperativeAlien();
+        } else if (startCount * 0.3 >= brickCount) {
+            return new CombinedTwoAliens();
+        } else if (startCount * 0.5 >= brickCount && startCount * 0.4 <= brickCount) {
+            return new ProtectingAlien();
+        } else if (startCount * 0.6 >= brickCount && startCount * 0.5 <= brickCount) {
+            return new RepairingAlien();
+        } else if
+            ((startCount * 0.4 >= brickCount && startCount * 0.3 <= brickCount) || (startCount * 0.7 >= brickCount && startCount * 0.6 <= brickCount))
+        {
+            return new DrunkAlien();
         }
-            else if(startCount*0.3 >= brickCount){
-                return new RepairingAlien()
-            }
-
-
+        else{
+            return new DefaultAlienStrategy();
+        }
     }
 }
