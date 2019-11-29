@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class RepairingAlien extends Alien {
+public class RepairingAlien extends Alien implements AlienStrategy {
 
     public RepairingAlien() {
         this.position = new Vector();
@@ -68,6 +68,11 @@ public class RepairingAlien extends Alien {
                 }
             }
         }
+    }
+
+    @Override
+    public void doSelection() {
+        
     }
 }
 

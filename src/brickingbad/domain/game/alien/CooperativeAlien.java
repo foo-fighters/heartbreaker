@@ -10,7 +10,7 @@ import brickingbad.domain.physics.Vector;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class CooperativeAlien extends Alien {
+public class CooperativeAlien extends Alien implements AlienStrategy{
 private Random rand;
 private double h;
 private double h_up;
@@ -49,6 +49,11 @@ private boolean isDissappeared;
             return true;
         }
     return false;
+    }
+
+    @Override
+    public void doSelection() {
+        this.performAction();
     }
 }
 

@@ -5,7 +5,7 @@ import brickingbad.domain.game.Shape;
 import brickingbad.domain.game.alien.Alien;
 import brickingbad.domain.physics.Vector;
 
-public class ProtectingAlien extends Alien {
+public class ProtectingAlien extends Alien implements AlienStrategy {
 
     public ProtectingAlien() {
         this.position= new Vector();
@@ -22,5 +22,8 @@ public class ProtectingAlien extends Alien {
     }
 
 
+    @Override
+    public void doSelection() {
 
+    }
 }
