@@ -253,14 +253,13 @@ public class Game {
     }
 
     public int getBrickCount(){
+
         AtomicInteger brickCount = new AtomicInteger();
         bricks.forEach(brick -> {
             brickCount.getAndIncrement();
         });
     return brickCount.get();
     }
-
-
 
     public boolean checkBrickCount() {
 
