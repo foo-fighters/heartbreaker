@@ -81,7 +81,7 @@ public class PhysicsEngine implements Runnable {
         collideables.addAll(game.getWalls());
         collideables.add(game.getGround());
         collideables.add(game.getPaddle());
-        for (int j = 1; j <= 7; j++) {
+        for (int j = 1; j <= 12; j++) {
           try {
             collideables.add(objects.get(i + j));
           } catch (IndexOutOfBoundsException e) {
