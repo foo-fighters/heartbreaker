@@ -125,4 +125,16 @@ public class GameController {
     public void addObjectListener(GameObjectListener listener) {
         Game.getInstance().addObjectListener(listener);
     }
+
+    public void lifeLost() {
+        Game.getInstance().lostLife();
+
+    }
+
+    public void stopAnimator() {
+        Animator.getInstance().stop();
+    }
+    public void showDeadDialog(){
+        BrickingBadFrame.getInstance().showYouAreDeadDialog();
+    }
 }

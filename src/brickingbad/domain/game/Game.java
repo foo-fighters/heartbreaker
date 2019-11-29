@@ -7,6 +7,7 @@ import brickingbad.domain.game.brick.*;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
 import brickingbad.ui.game.BuildingModePanel;
+import brickingbad.ui.game.animation.Animator;
 
 import javax.swing.text.Position;
 import java.util.ArrayList;
@@ -72,6 +73,7 @@ public class Game {
     }
 
     public void initialize() {
+        lives = 3;
         gameObjects = new ArrayList<GameObject>();
         for (Brick brick : bricks) {
             removeObjectFromListeners(brick);
@@ -80,6 +82,7 @@ public class Game {
             removeObjectFromListeners(ball);
         }
         bricks = new ArrayList<>();
+        balls = new ArrayList<>();
 
         int gridX = GameConstants.screenWidth / GameConstants.rectangularBrickLength;
         int gridY = (int)GameConstants.brickAreaHeight / GameConstants.rectangularBrickThickness;
@@ -108,6 +111,15 @@ public class Game {
         trackObject(this.ground);
     }
 
+    public void resetBall() {
+        Ball firstBall = new Ball(paddle.getBallStartPosition());
+        balls.add(firstBall);
+        paddle.getCurrentBalls().add(firstBall);
+        trackObject(firstBall);
+    }
+
+
+
     public void play() {
     }
 
@@ -122,7 +134,7 @@ public class Game {
             bricks.removeIf(brick -> brick.equals(object));
         }
         if (object instanceof Ball) {
-            bricks.removeIf(ball -> ball.equals(object));
+            balls.removeIf(ball -> ball.equals(object));
         }
     }
 
@@ -311,5 +323,21 @@ public class Game {
         errorListeners.forEach(errorListener -> {
             errorListener.showError(err);
         });
+    }
+
+    public void lostLife() {
+        if (lives != 1){
+            lives = lives - 1;
+            resetBall();
+        }else{
+            GameController.getInstance().stopAnimator();
+            GameController.getInstance().showDeadDialog();
+        }
+    }
+
+    public void anyBallLeft() {
+        if (balls.isEmpty()){
+            lostLife();
+        }
     }
 }

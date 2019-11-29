@@ -23,6 +23,10 @@ public abstract class GameObject {
 
   public void destroy() {
     Game.getInstance().removeObject(this);
+    if (this instanceof Ball){
+      Game.getInstance().anyBallLeft();
+    }
+
   }
 
   public Shape getShape() {

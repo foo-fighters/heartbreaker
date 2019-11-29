@@ -122,6 +122,11 @@ public class BrickingBadFrame extends JFrame {
     }
   }
 
+
+  public void showYouAreDeadDialog() {
+    JOptionPane.showMessageDialog(this, "All lives are lost!");
+  }
+
   public void showSaveDialog() {
     String name = JOptionPane.showInputDialog("Save name: ");
     if (name != null) {
