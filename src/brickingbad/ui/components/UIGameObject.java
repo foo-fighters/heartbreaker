@@ -24,6 +24,7 @@ public class UIGameObject extends JLabel implements MouseListener {
     private GameObject gameObject;
     private JPanel panel;
     private AffineTransform defaultFrameTransform;
+    private boolean firstTime = true;
 
     public UIGameObject(GameObject gameObject, JPanel panel) {
         this.gameObject = gameObject;
@@ -39,17 +40,23 @@ public class UIGameObject extends JLabel implements MouseListener {
 
     @Override
     public void paintComponent(Graphics g) {
-        position.x = (int)(gameObject.getPosition().getX() - gameObject.getSize().getX() / 2.0);
-        position.y = (int)(gameObject.getPosition().getY() - gameObject.getSize().getY() / 2.0);
-        Graphics2D g2d = (Graphics2D) g.create();
-        AffineTransform at = new AffineTransform();
-        at.scale(defaultFrameTransform.getScaleX(), defaultFrameTransform.getScaleY());
-        at.rotate(-Math.toRadians(gameObject.getAngle()), gameObject.getPosition().getX(), gameObject.getPosition().getY());
-        at.translate(position.x, position.y);
-        at.scale(gameObject.getSize().getX() / sprite.getWidth(), gameObject.getSize().getY() / sprite.getHeight());
-        g2d.setTransform(at);
-        g2d.drawImage(sprite, 0, 0, null);
-        g2d.dispose();
+        int newX = (int) (gameObject.getPosition().getX() - gameObject.getSize().getX() / 2.0);
+        int newY = (int) (gameObject.getPosition().getY() - gameObject.getSize().getY() / 2.0);
+        boolean willRedraw = (newX != position.x) || (newY != position.y);
+//        if (willRedraw || firstTime) {
+            position.x = newX;
+            position.y = newY;
+            Graphics2D g2d = (Graphics2D) g.create();
+            AffineTransform at = new AffineTransform();
+            at.scale(defaultFrameTransform.getScaleX(), defaultFrameTransform.getScaleY());
+            at.rotate(-Math.toRadians(gameObject.getAngle()), gameObject.getPosition().getX(), gameObject.getPosition().getY());
+            at.translate(position.x, position.y);
+            at.scale(gameObject.getSize().getX() / sprite.getWidth(), gameObject.getSize().getY() / sprite.getHeight());
+            g2d.setTransform(at);
+            g2d.drawImage(sprite, 0, 0, null);
+            g2d.dispose();
+            firstTime = false;
+//        }
     }
 
     private void setSprite() {
