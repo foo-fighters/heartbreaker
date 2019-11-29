@@ -1,19 +1,21 @@
 package brickingbad.domain.game;
 
 import brickingbad.controller.GameController;
+import brickingbad.domain.game.alien.CooperativeAlien;
+import brickingbad.domain.game.alien.ProtectingAlien;
+import brickingbad.domain.game.alien.RepairingAlien;
 import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.game.border.*;
 import brickingbad.domain.game.brick.*;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
-import brickingbad.ui.game.BuildingModePanel;
 
-import javax.swing.text.Position;
+import java.time.Clock;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class Game {
 
@@ -30,10 +32,14 @@ public class Game {
 
     private int score;
     private int lives;
-    private Date time;
+    private Clock gameClock;
 
-    private ArrayList<PowerUp> activePowerUps;
+    private ArrayList<WrapperContent> wrapperContentList;
     private ArrayList<PowerUp> storedPowerUps;
+    private ArrayList<PowerUp> activePowerUps;
+    private ArrayList<WrapperContent> activeAliens;
+
+    private static final Random random = new Random();
 
     private ArrayList<GameObjectListener> objectListeners;
     private ArrayList<ErrorListener> errorListeners;
@@ -47,6 +53,9 @@ public class Game {
         activePowerUps = new ArrayList<>();
         storedPowerUps = new ArrayList<>();
         gameObjects = new ArrayList<>();
+        wrapperContentList = new ArrayList<>();
+        activeAliens = new ArrayList<>();
+        gameClock = Clock.systemDefaultZone();
     }
 
     public static Game getInstance() {
@@ -66,13 +75,16 @@ public class Game {
 
     private void trackObject(GameObject object) {
         gameObjects.add(object);
+        gameObjects.sort(GameObject::compareTo);
         for (GameObjectListener listener : objectListeners) {
             listener.addObject(object);
         }
     }
 
     public void initialize() {
-        gameObjects = new ArrayList<GameObject>();
+        gameObjects = new ArrayList<>();
+        lives = 3;
+
         for (Brick brick : bricks) {
             removeObjectFromListeners(brick);
         }
@@ -80,6 +92,7 @@ public class Game {
             removeObjectFromListeners(ball);
         }
         bricks = new ArrayList<>();
+        balls = new ArrayList<>();
 
         int gridX = GameConstants.screenWidth / GameConstants.rectangularBrickLength;
         int gridY = (int)GameConstants.brickAreaHeight / GameConstants.rectangularBrickThickness;
@@ -108,6 +121,15 @@ public class Game {
         trackObject(this.ground);
     }
 
+    public void resetBall() {
+        Ball firstBall = new Ball(paddle.getBallStartPosition());
+        balls.add(firstBall);
+        paddle.getCurrentBalls().add(firstBall);
+        trackObject(firstBall);
+    }
+
+
+
     public void play() {
     }
 
@@ -122,104 +144,24 @@ public class Game {
             bricks.removeIf(brick -> brick.equals(object));
         }
         if (object instanceof Ball) {
-            bricks.removeIf(ball -> ball.equals(object));
+            balls.removeIf(ball -> ball.equals(object));
         }
     }
 
-    // GETTERS & SETTERS
-
-    public ArrayList<GameObject> getObjects() {
-//        ArrayList<GameObject> gameObjects = new ArrayList<>();
-//
-//        gameObjects.add(paddle);
-//        gameObjects.addAll(bricks);
-//        gameObjects.addAll(balls);
-//        gameObjects.addAll(activePowerUps);
-//        gameObjects.addAll(storedPowerUps);
-//        gameObjects.addAll(walls);
-//        gameObjects.add(ground);
-//
-        return gameObjects;
-    }
-
-    public ArrayList<Ball> getBalls() {
-        return balls;
-    }
-
-    public Paddle getPaddle() {
-        return paddle;
-    }
-
-    public ArrayList<Brick> getBricks() {
-        return bricks;
-    }
-
-    public ArrayList<PowerUp> getActivePowerUps() {
-        return activePowerUps;
-    }
-
-    public ArrayList<PowerUp> getStoredPowerUps() {
-        return storedPowerUps;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public int getLives() {
-        return lives;
-    }
-
-    public void setPaddle(Paddle paddle) {
-        this.paddle = paddle;
-        trackObject(paddle);
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public void setLives(int lives) {
-        this.lives = lives;
-    }
-
-    public void setActivePowerUps(ArrayList<PowerUp> activePowerUps) {
-        this.activePowerUps = activePowerUps;
-    }
-
-    public void setStoredPowerUps(ArrayList<PowerUp> storedPowerUps) {
-        this.storedPowerUps = storedPowerUps;
-    }
-
-    /*public void addBrick(Brick brick) {
-        boolean overlaps = true;
-
-        while (overlaps) {
-            double x = ThreadLocalRandom.current().nextDouble(brick.getSize().getX() / 2.0,
-                    GameConstants.screenWidth - brick.getSize().getX() / 2.0);
-            double y = ThreadLocalRandom.current().nextDouble(GameConstants.menuAreaHeight + brick.getSize().getY() / 2.0,
-                    GameConstants.brickAreaHeight);
-            if (bricks.size() == 0){
-                overlaps = false;
-            } else {
-                for (Brick other : bricks) {
-                    double otherX = other.getPosition().getX();
-                    double otherY = other.getPosition().getY();
-                    overlaps = Math.abs(otherX - x) < GameConstants.rectangularBrickLength + 1 &&
-                            Math.abs(otherY - y) < GameConstants.rectangularBrickThickness + 1;
-                    if (overlaps) {
-                        break;
-                    }
+    public void destroyBricksInRadius(Vector center, double radius) {
+        ArrayList<GameObject> objectList = new ArrayList<>(gameObjects);
+        double xdist;
+        double ydist;
+        for (GameObject object: objectList) {
+            if(object instanceof Brick) {
+                xdist = center.getX() - object.getPosition().getX();
+                ydist = center.getY() - object.getPosition().getY();
+                if(Math.hypot(xdist, ydist) < radius) {
+                    object.destroy();
                 }
             }
-            if (!overlaps) {
-                brick.setPosition(new Vector(x, y));
-            }
         }
-
-        bricks.add(brick);
-        trackObject(brick);
-    }*/
+    }
 
     public void addBrick(Brick brick) {
         boolean overlaps = true;
@@ -249,7 +191,6 @@ public class Game {
     }
 
     public boolean checkBrickCount() {
-
         AtomicInteger simpleBrickCount = new AtomicInteger();
         AtomicInteger halfMetalBrickCount = new AtomicInteger();
         AtomicInteger mineBrickCount = new AtomicInteger();
@@ -315,6 +256,196 @@ public class Game {
 
     public void invokeGodMode() {
         paddle.god();
+    } 
+
+    public void addWrapperContent() {
+        if(wrapperContentList.size() < WrapperContent.values().length) {
+            wrapperContentList.add(WrapperContent.values()[wrapperContentList.size()]);
+        }else {
+            wrapperContentList.add(WrapperContent.values()[random.nextInt(WrapperContent.values().length)]);
+        }
+    }
+
+    public void revealWrapperContent(Vector revealPosition) {
+        if(wrapperContentList.size() > 0) {
+            WrapperContent content = wrapperContentList.remove(random.nextInt(wrapperContentList.size()));
+            if(storedPowerUps.stream().map(PowerUp::getName).collect(Collectors.toList()).contains(content)
+                    || activePowerUps.stream().map(PowerUp::getName).collect(Collectors.toList()).contains(content)
+                    || activeAliens.contains(content)) {
+                return;
+            }
+            if(content.ordinal() < 6) {
+                spawnPowerup(content, revealPosition);
+            }else {
+                spawnAlien(content);
+            }
+        }
+    }
+
+    private void spawnPowerup(WrapperContent content, Vector revealPosition) {
+        switch (content) {
+            case FIREBALL:
+                trackObject(new Fireball(revealPosition));
+                break;
+            case CHEMICAL_BALL:
+                trackObject(new ChemicalBall(revealPosition));
+                break;
+            case DESTRUCTIVE_LASER_GUN:
+                trackObject(new DestructiveLaserGun(revealPosition));
+                break;
+            case MAGNET:
+                trackObject(new Magnet(revealPosition));
+                break;
+            case TALLER_PADDLE:
+                trackObject(new TallerPaddle(revealPosition));
+                break;
+            case GANG_OF_BALLS:
+                spawnGangOfBalls(revealPosition);
+                break;
+            default:
+        }
+    }
+
+    private void spawnAlien(WrapperContent content) {
+        switch (content) {
+            case COOPERATIVE_ALIEN:
+                trackObject(new CooperativeAlien());
+                break;
+            case PROTECTING_ALIEN:
+                trackObject(new ProtectingAlien());
+                break;
+            case REPAIRING_ALIEN:
+                trackObject(new RepairingAlien());
+                break;
+            default:
+        }
+    }
+
+    private void spawnGangOfBalls(Vector revealPosition) {
+        double minimumDistance = GameConstants.screenWidth;
+        GameObject closestBall = null;
+        for (GameObject object: gameObjects) {
+            if(object instanceof Ball) {
+                double ballDistance = Math.hypot(object.getPosition().getX() - revealPosition.getX(),
+                        object.getPosition().getY() - revealPosition.getY());
+                if(ballDistance < minimumDistance) {
+                    minimumDistance = ballDistance;
+                    closestBall = object;
+                }
+            }
+        }
+        if(minimumDistance < GameConstants.rectangularBrickLength + GameConstants.ballSize) {
+            for(int i = 0; i < GameConstants.gangOfBallsMultiplier; i++) {
+                Ball ball = new Ball(revealPosition);
+                ball.startMovement((360.0 / GameConstants.gangOfBallsMultiplier) * i, ((Ball)closestBall).getSpeed());
+                trackObject(ball);
+            }
+            removeObject(closestBall);
+        }
+    }
+
+    public void storePowerUp(PowerUp powerup) {
+        storedPowerUps.add(powerup);
+        powerup.velocity.setVector(0.0, 0.0);
+        int posX = 10 + GameConstants.powerupSize / 2 + (10 + GameConstants.powerupSize) * powerup.getName().ordinal();
+        int posY = GameConstants.screenHeight - GameConstants.powerupSize / 2 - 10;
+        powerup.position.setVector(posX, posY);
+    }
+
+    public void usePowerUp(WrapperContent name) {
+        ArrayList<PowerUp> storedPowerUpsCopy = new ArrayList<>(storedPowerUps);
+        for(PowerUp powerup: storedPowerUpsCopy) {
+            if(powerup.getName() == name) {
+                storedPowerUps.remove(powerup);
+                activePowerUps.add(powerup);
+                powerup.activate();
+            }
+        }
+    }
+
+    // GETTERS & SETTERS
+
+    public long getTime() {
+        return gameClock.millis();
+    }
+
+    public ArrayList<GameObject> getObjects() {
+//        ArrayList<GameObject> gameObjects = new ArrayList<>();
+//
+//        gameObjects.add(paddle);
+//        gameObjects.addAll(bricks);
+//        gameObjects.addAll(balls);
+//        gameObjects.addAll(activePowerUps);
+//        gameObjects.addAll(storedPowerUps);
+//        gameObjects.addAll(walls);
+//        gameObjects.add(ground);
+//
+        return gameObjects;
+    }
+
+    public ArrayList<Ball> getBalls() {
+        return balls;
+    }
+
+    public Paddle getPaddle() {
+        return paddle;
+    }
+
+    public ArrayList<Brick> getBricks() {
+        return bricks;
+    }
+
+    public ArrayList<PowerUp> getActivePowerUps() {
+        return activePowerUps;
+    }
+
+    public ArrayList<PowerUp> getStoredPowerUps() {
+        return storedPowerUps;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void setPaddle(Paddle paddle) {
+        this.paddle = paddle;
+        trackObject(paddle);
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    public ArrayList<Wall> getWalls() {
+        return walls;
+    }
+
+    public Ground getGround() {
+        return ground;
+    }
+
+    public void lostLife() {
+        if (lives != 1){
+            lives = lives - 1;
+            resetBall();
+        }else{
+            GameController.getInstance().stopAnimator();
+            GameController.getInstance().showDeadDialog();
+        }
+    }
+
+    public void anyBallLeft() {
+        if (balls.isEmpty()){
+            lostLife();
+        }
     }
 
 }

@@ -4,6 +4,6 @@ import brickingbad.domain.game.GameObject;
 
 public abstract class BallState {
 
-    public abstract void reflect(GameObject object);
+    public abstract void collide(GameObject object);
 
 }

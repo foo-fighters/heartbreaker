@@ -1,5 +1,6 @@
 package brickingbad.domain.game;
 
+import brickingbad.domain.game.powerup.PowerUp;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.paddle.*;
@@ -19,7 +20,7 @@ public class Paddle extends GameObject {
   public Paddle(){
     setIdleMove();
     setIdleRotate();
-    position = new Vector(GameConstants.screenWidth / 2.0, GameConstants.screenHeight - GameConstants.paddleHeight);
+    position = new Vector(GameConstants.screenWidth / 2.0, GameConstants.screenHeight - GameConstants.paddleHeightOnScreen);
     velocity = new Vector();
     size = new Vector(GameConstants.paddleLength, GameConstants.paddleThickness);
     shape = Shape.RECTANGLE;
@@ -38,7 +39,7 @@ public class Paddle extends GameObject {
 
   public void launchBalls() {
     for (Ball ball: currentBalls) {
-      ball.startMovement(angle);
+      ball.startMovement(angle, GameConstants.ballLaunchSpeed);
     }
     currentBalls.clear();
   }
@@ -46,6 +47,10 @@ public class Paddle extends GameObject {
   private void catchBall(Ball ball) {
     currentBalls.add(ball);
     ball.stopMovement();
+    double ballHeightOffset = (GameConstants.paddleThickness + GameConstants.ballSize) / 2.0;
+    double distX = ball.getPosition().getX() + ballHeightOffset * Math.sin(Math.toRadians(angle)) - position.getX();
+    double distY = ball.getPosition().getY() + ballHeightOffset * Math.cos(Math.toRadians(angle)) - position.getY();
+    ball.setPaddleOffset(Math.hypot(distX, distY) * Math.signum(distX));
   }
 
   public Vector getBallStartPosition() {
@@ -53,6 +58,19 @@ public class Paddle extends GameObject {
     Vector offset = new Vector(-distance * Math.sin(angle), -distance * Math.cos(angle) - 1.0);
     offset.addVector(this.position);
     return offset;
+  }
+
+  @Override
+  public void collide(GameObject object) {
+    if(object instanceof PowerUp) {
+      Game.getInstance().storePowerUp((PowerUp) object);
+    }
+    if(object instanceof Ball) {
+      if((object.getReflectionDirection() == Direction.UP || object.getReflectionDirection() == Direction.UP_LEFT
+              || object.getReflectionDirection() == Direction.UP_RIGHT) && isMagnetized) {
+        catchBall((Ball) object);
+      }
+    }
   }
 
   public void updatePosition() {
@@ -109,6 +127,14 @@ public class Paddle extends GameObject {
 
   public void god() {
     isGod = true;
+  }
+
+  public boolean isMagnetized() {
+    return isMagnetized;
+  }
+
+  public void setMagnetized(boolean magnetized) {
+    isMagnetized = magnetized;
   }
 
 }

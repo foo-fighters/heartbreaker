@@ -102,6 +102,10 @@ public class BrickingBadFrame extends JFrame {
     return panelsMap.get(currentPanelName);
   }
 
+  public Panel getCurrentPanelName() {
+    return currentPanelName;
+  }
+
   private static void showPanel(Panel panel) {
     CardLayout layout = (CardLayout) panels.getLayout();
     layout.show(panels, panel.name());
@@ -116,6 +120,11 @@ public class BrickingBadFrame extends JFrame {
       if (value instanceof javax.swing.plaf.FontUIResource)
         UIManager.put (key, f);
     }
+  }
+
+
+  public void showYouAreDeadDialog() {
+    JOptionPane.showMessageDialog(this, "All lives are lost!");
   }
 
   public void showSaveDialog() {

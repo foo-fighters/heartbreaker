@@ -10,7 +10,7 @@ public class EndPaddleRotateState extends PaddleRotateState {
 
   private final double rotateSpeed = GameConstants.fastPaddleRotationSpeed;
   private final double deltaAng = rotateSpeed / GameConstants.calculationsPerSecond;
-  private final double defaultY = GameConstants.screenHeight - GameConstants.paddleHeight;
+  private final double defaultY = GameConstants.screenHeight - GameConstants.paddleHeightOnScreen;
   private final double ballHeightOffset = (GameConstants.paddleThickness + GameConstants.ballSize) / 2.0;
 
   public EndPaddleRotateState(Paddle paddle, Direction direction) {
@@ -47,7 +47,7 @@ public class EndPaddleRotateState extends PaddleRotateState {
 
   private void setNewPositions() {
     double newAngle = Math.toRadians(paddle.getAngle());
-    paddle.setPosition(paddle.getPosition().getX(), defaultY - Math.sin(Math.abs(newAngle)) * GameConstants.paddleLength / 2.0);
+    paddle.setPosition(paddle.getPosition().getX(), defaultY - Math.sin(Math.abs(newAngle)) * paddle.getSize().getX() / 2.0);
     for(Ball ball: paddle.getCurrentBalls()) {
       double ballX = paddle.getPosition().getX() + Math.cos(newAngle) * ball.getPaddleOffset() - Math.sin(newAngle) * ballHeightOffset;
       double ballY = paddle.getPosition().getY() - Math.sin(newAngle) * ball.getPaddleOffset() - Math.cos(newAngle) * ballHeightOffset - 1.0;

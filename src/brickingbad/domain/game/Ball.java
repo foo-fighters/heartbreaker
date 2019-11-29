@@ -1,5 +1,6 @@
 package brickingbad.domain.game;
 
+import brickingbad.domain.game.brick.HalfMetalBrick;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.ball.BallState;
@@ -10,7 +11,6 @@ import brickingbad.domain.physics.ball.SimpleBallState;
 public class Ball extends GameObject {
 
     private BallState ballState;
-    private double launchSpeed = GameConstants.ballLaunchSpeed;
     private double paddleOffset;
 
     public Ball(Vector position){
@@ -23,12 +23,24 @@ public class Ball extends GameObject {
         setSimple();
     }
 
+    public BallState getBallState() {
+        return ballState;
+    }
+
     public double getPaddleOffset() {
         return paddleOffset;
     }
 
-    public void startMovement(double angle){
-        this.velocity.setVector(-launchSpeed * Math.sin(Math.toRadians(angle)), -launchSpeed * Math.cos(Math.toRadians(angle)));
+    public void setPaddleOffset(double paddleOffset) {
+        this.paddleOffset = paddleOffset;
+    }
+
+    public void startMovement(double angle, double speed){
+        velocity.setVector(-speed * Math.sin(Math.toRadians(angle)), -speed * Math.cos(Math.toRadians(angle)));
+    }
+
+    public double getSpeed() {
+        return Math.hypot(velocity.getX(), velocity.getY());
     }
 
     public void stopMovement(){
@@ -43,16 +55,14 @@ public class Ball extends GameObject {
         ballState = new FireBallState(this);
     }
 
-    public void setChemical(){
-        ballState = new ChemicalBallState(this);
-    }
+    public void setChemical(){ ballState = new ChemicalBallState(this); }
 
-    @Override
     public void reflect(GameObject object) {
         double incidenceAngle = Math.atan2(velocity.getY(), -velocity.getX());
         double normalAngle;
         if (object.getShape() == Shape.CIRCLE) {
-            normalAngle = Math.atan2(object.getPosition().getY() - position.getY(), object.getPosition().getX() - position.getX());
+            normalAngle = Math.atan2(object.getPosition().getY() - position.getY(),
+                    position.getX() - object.getPosition().getX());
         }else if(object.getShape() == Shape.RECTANGLE) {
             normalAngle = Math.toRadians(object.getAngle() + reflectionDirection.ordinal() * 45.0);
         }else {
@@ -64,7 +74,13 @@ public class Ball extends GameObject {
         double reflectionAngle = normalAngle + difference;
         if(difference >= Math.PI / 2.0) reflectionAngle -= Math.PI / 2.0;
         if(-difference >= Math.PI / 2.0) reflectionAngle += Math.PI / 2.0;
+        this.angle = reflectionAngle;
         double len = Math.hypot(velocity.getX(), velocity.getY());
         velocity.setVector(Math.cos(reflectionAngle) * len, -Math.sin(reflectionAngle) * len);
+    }
+
+    @Override
+    public void collide(GameObject object) {
+        ballState.collide(object);
     }
 }

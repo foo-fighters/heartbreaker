@@ -43,6 +43,12 @@ public class Animator implements Runnable {
     }
   }
 
+  public void stop(){
+    if (running){
+      running = false;
+    }
+  }
+
   public void resumeIfPaused() {
     if (!running) {
       togglePauseResume();
@@ -63,7 +69,7 @@ public class Animator implements Runnable {
         System.out.println("Program interrupted.");
       }
       if (running) {
-        BrickingBadFrame.getInstance().repaint();
+        BrickingBadFrame.getInstance().getCurrentPanel().repaint();
       }
     }
   }

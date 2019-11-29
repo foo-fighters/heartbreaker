@@ -1,13 +1,21 @@
 package brickingbad.domain.game.brick;
 
-import brickingbad.domain.game.brick.Brick;
+import brickingbad.domain.game.GameConstants;
+import brickingbad.domain.game.Shape;
+import brickingbad.domain.physics.Vector;
 
 public class HalfMetalBrick extends Brick {
 
-    public HalfMetalBrick() {
-    }
+    private boolean isCracked;
 
-    private boolean isCracked = false;
+    public HalfMetalBrick() {
+        this.position = new Vector();
+        this.shape = Shape.RECTANGLE;
+        this.size = new Vector(GameConstants.rectangularBrickLength, GameConstants.rectangularBrickThickness);
+        this.velocity = new Vector();
+        this.angle = 0.0;
+        this.isCracked = false;
+    }
 
     public boolean isCracked() {
         return isCracked;

@@ -20,26 +20,35 @@ public class BrickFactory {
     }
 
     public ArrayList<Brick> createSimpleBricks(int n) {
-
         ArrayList<Brick> simpleBricks = new ArrayList<>();
-
         for (int i = 0; i<n; i++){
             simpleBricks.add(new SimpleBrick());
         }
-
         return simpleBricks;
     }
 
     public ArrayList<Brick> createHalfMetalBricks(int n) {
-        return null;
+        ArrayList<Brick> halfMetalBricks = new ArrayList<>();
+        for (int i = 0; i<n; i++) {
+            halfMetalBricks.add(new HalfMetalBrick());
+        }
+        return halfMetalBricks;
     }
 
     public ArrayList<Brick> createMineBricks(int n) {
-        return null;
+        ArrayList<Brick> mineBricks = new ArrayList<>();
+        for (int i = 0; i<n; i++) {
+            mineBricks.add(new MineBrick());
+        }
+        return mineBricks;
     }
 
     public ArrayList<Brick> createWrapperBricks(int n) {
-        return null;
+        ArrayList<Brick> wrapperBricks = new ArrayList<>();
+        for (int i = 0; i<n; i++) {
+            wrapperBricks.add(new WrapperBrick());
+        }
+        return wrapperBricks;
     }
 
 

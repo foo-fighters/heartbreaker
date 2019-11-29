@@ -2,6 +2,7 @@ package brickingbad.controller;
 
 import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameObjectListener;
+import brickingbad.domain.game.WrapperContent;
 import brickingbad.domain.game.brick.Brick;
 import brickingbad.domain.game.brick.BrickFactory;
 import brickingbad.domain.game.persistence.Save;
@@ -11,6 +12,8 @@ import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.services.persistence.SaveRepository;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.game.RunningModePanel;
+import brickingbad.ui.components.Panel;
+
 import brickingbad.ui.game.animation.Animator;
 
 import java.util.ArrayList;
@@ -29,6 +32,11 @@ public class GameController {
             instance = new GameController();
         }
         return instance;
+    }
+
+    public boolean inRunningMode() {
+        Panel panel = BrickingBadFrame.getInstance().getCurrentPanelName();
+        return panel == Panel.RUNNING_MODE;
     }
 
     public void saveGame(String name) {
@@ -93,23 +101,23 @@ public class GameController {
             Game.getInstance().addBrick(brick);
         }));
 
-//        ArrayList<Brick> halfMetalBricks = BrickFactory.getInstance().createHalfMetalBricks(halfMetal);
-//
-//        halfMetalBricks.forEach((brick -> {
-//            Game.getInstance().addBrick(brick);
-//        }));
-//
-//        ArrayList<Brick> mineBricks = BrickFactory.getInstance().createMineBricks(mine);
-//
-//        mineBricks.forEach((brick -> {
-//            Game.getInstance().addBrick(brick);
-//        }));
-//
-//        ArrayList<Brick> wrapperBricks = BrickFactory.getInstance().createWrapperBricks(wrapper);
-//
-//        wrapperBricks.forEach((brick -> {
-//            Game.getInstance().addBrick(brick);
-//        }));
+        ArrayList<Brick> halfMetalBricks = BrickFactory.getInstance().createHalfMetalBricks(halfMetal);
+
+        halfMetalBricks.forEach((brick -> {
+            Game.getInstance().addBrick(brick);
+        }));
+
+        ArrayList<Brick> mineBricks = BrickFactory.getInstance().createMineBricks(mine);
+
+        mineBricks.forEach((brick -> {
+            Game.getInstance().addBrick(brick);
+        }));
+
+        ArrayList<Brick> wrapperBricks = BrickFactory.getInstance().createWrapperBricks(wrapper);
+
+        wrapperBricks.forEach((brick -> {
+            Game.getInstance().addBrick(brick);
+        }));
 
     }
 
@@ -126,4 +134,20 @@ public class GameController {
         Game.getInstance().invokeGodMode();
     }
 
+    public void usePowerUp(WrapperContent name) {
+        Game.getInstance().usePowerUp(name);
+    }
+
+    public void lifeLost() {
+        Game.getInstance().lostLife();
+    }
+
+    public void stopAnimator() {
+        Animator.getInstance().stop();
+    }
+  
+    public void showDeadDialog(){
+        BrickingBadFrame.getInstance().showYouAreDeadDialog();
+    }
+      
 }
