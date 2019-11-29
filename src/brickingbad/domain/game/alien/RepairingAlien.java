@@ -4,12 +4,18 @@ import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.Shape;
-import brickingbad.domain.game.alien.Alien;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.game.brick.BrickFactory;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import brickingbad.domain.game.brick.BrickFactory;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Timer;
@@ -41,6 +47,7 @@ public class RepairingAlien extends Alien {
 
     @Override
     void performAction() {
+
         Date currentTime = new Date();
         Timer myTimer = new Timer();
         TimerTask task = new TimerTask() {
@@ -53,7 +60,11 @@ public class RepairingAlien extends Alien {
         ArrayList<GameObject> objects = new ArrayList<>(Game.getInstance().getObjects());
         for (GameObject object : objects) {
             if (object instanceof RepairingAlien) {
-                myTimer.cancel();
+
+                if (!(object instanceof RepairingAlien)) {
+
+                    myTimer.cancel();
+                }
             }
         }
     }
