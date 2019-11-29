@@ -6,8 +6,10 @@ import brickingbad.domain.game.brick.*;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
 
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -28,7 +30,7 @@ public class Game {
 
     private int score;
     private int lives;
-    private Date time;
+    private Clock gameClock;
 
     private ArrayList<WrapperContent> wrapperContentList;
     private ArrayList<PowerUp> storedPowerUps;
@@ -51,6 +53,7 @@ public class Game {
         gameObjects = new ArrayList<>();
         wrapperContentList = new ArrayList<>();
         activeAliens = new ArrayList<>();
+        gameClock = Clock.systemDefaultZone();
     }
 
     public static Game getInstance() {
@@ -144,6 +147,10 @@ public class Game {
 //        gameObjects.add(ground);
 //
         return gameObjects;
+    }
+
+    public long getTime() {
+        return gameClock.millis();
     }
 
     public ArrayList<Ball> getBalls() {

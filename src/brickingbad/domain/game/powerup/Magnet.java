@@ -17,7 +17,7 @@ public class Magnet extends PowerUp {
         this.velocity = new Vector(0, GameConstants.powerupFallSpeed);
         this.angle = 0.0;
         this.name = WrapperContent.MAGNET;
-        this.startTime = 0;
+        this.duration = GameConstants.magnetDuration;
     }
 
     @Override
@@ -27,6 +27,13 @@ public class Magnet extends PowerUp {
 
     @Override
     public void activate() {
+        super.activate();
         Game.getInstance().getPaddle().setMagnetized(true);
+    }
+
+    @Override
+    public void deactivate() {
+        Game.getInstance().getPaddle().setMagnetized(false);
+        destroy();
     }
 }

@@ -94,7 +94,8 @@ public class PhysicsEngine implements Runnable {
     }
 
     private static void updatePositions () {
-      for (GameObject object : Game.getInstance().getObjects()) {
+      ArrayList<GameObject> objectsCopy = new ArrayList<>(Game.getInstance().getObjects());
+      for (GameObject object : objectsCopy) {
         if (object != null) {
           object.updatePosition();
         }
