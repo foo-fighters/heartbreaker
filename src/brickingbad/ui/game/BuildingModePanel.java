@@ -78,7 +78,7 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Err
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(background, 0, 0, null);
+        g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
         uiObjects.forEach((obj) -> obj.paintComponent(g));
     }
 

@@ -75,7 +75,7 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
   @Override
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
-    g.drawImage(background, 0, 0, null);
+    g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
     for (Iterator<UIGameObject> iterator = uiObjects.iterator(); iterator.hasNext(); ) {
       UIGameObject object = iterator.next();
       object.paintComponent(g);
