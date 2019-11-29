@@ -10,6 +10,7 @@ public class ProtectingAlien extends Alien {
     public ProtectingAlien() {
         this.position= new Vector();
         this.shape= Shape.CIRCLE;
+        this.shape= Shape.RECTANGLE;
         this.velocity=new Vector();
         this.angle = 0.0;
         this.size = new Vector(GameConstants.alienSize, GameConstants.alienSize);

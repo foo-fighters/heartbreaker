@@ -32,6 +32,9 @@ public class Game {
     private int lives;
     private Date time;
 
+
+    public int startBrickCount;
+
     private ArrayList<PowerUp> activePowerUps;
     private ArrayList<PowerUp> storedPowerUps;
 
@@ -109,6 +112,7 @@ public class Game {
     }
 
     public void play() {
+    startBrickCount = getBrickCount();
     }
 
     private void removeObjectFromListeners(GameObject object) {
@@ -247,6 +251,16 @@ public class Game {
         paddle.getCurrentBalls().add(ball);
         trackObject(ball);
     }
+
+    public int getBrickCount(){
+        AtomicInteger brickCount = new AtomicInteger();
+        bricks.forEach(brick -> {
+            brickCount.getAndIncrement();
+        });
+    return brickCount.get();
+    }
+
+
 
     public boolean checkBrickCount() {
 
