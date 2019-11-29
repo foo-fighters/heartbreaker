@@ -254,6 +254,10 @@ public class Game {
         });
     }
 
+    public void invokeGodMode() {
+        paddle.god();
+    } 
+
     public void addWrapperContent() {
         if(wrapperContentList.size() < WrapperContent.values().length) {
             wrapperContentList.add(WrapperContent.values()[wrapperContentList.size()]);

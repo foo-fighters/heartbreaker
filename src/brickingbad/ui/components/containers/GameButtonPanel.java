@@ -17,6 +17,7 @@ public class GameButtonPanel extends JPanel implements ActionListener {
   private BBGameButton loadButton;
   private BBGameButton pauseButton;
   private BBGameButton quitButton;
+  private BBGameButton godModeButton;
 
   public GameButtonPanel() {
     setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -25,11 +26,13 @@ public class GameButtonPanel extends JPanel implements ActionListener {
     loadButton = new BBGameButton("LOAD", this);
     pauseButton = new BBGameButton("PAUSE", this);
     quitButton = new BBGameButton("QUIT", this);
+    godModeButton = new BBGameButton("GOD MODE", this);
 
     add(saveButton);
     add(loadButton);
     add(pauseButton);
     add(quitButton);
+    add(godModeButton);
 
     setOpaque(false);
     setFocusable(false);
@@ -51,6 +54,8 @@ public class GameButtonPanel extends JPanel implements ActionListener {
     } else if (e.getSource().equals(quitButton)) {
       BrickingBadFrame.getInstance().showMainMenuPanel();
       pauseButton.setText("PAUSE");
+    } else if (e.getSource().equals(godModeButton)) {
+      BrickingBadFrame.getInstance().showGodModeDialog();
     } else {
       throw new IllegalArgumentException();
     }
