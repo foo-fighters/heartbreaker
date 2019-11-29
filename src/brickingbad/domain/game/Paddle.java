@@ -5,6 +5,7 @@ import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.paddle.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,8 @@ public class Paddle extends GameObject {
   private ArrayList<Ball> currentBalls;
   private PaddleMoveState moveState;
   private PaddleRotateState rotateState;
-  private boolean isMagnetized;
+  public boolean isMagnetized;
+  public boolean isGod;
 
   public Paddle(){
     setIdleMove();
@@ -74,6 +76,19 @@ public class Paddle extends GameObject {
   public void updatePosition() {
     moveState.updatePosition();
     rotateState.updatePosition();
+    if (isGod) {
+      Game game = Game.getInstance();
+      ArrayList<Ball> balls = game.getBalls();
+      balls.forEach((ball) -> {
+        if (Math.abs(ball.getPosition().getY() - position.getY()) < 50) {
+          setPosition(ball.getPosition().getX(), position.getY());
+          setAngle(0);
+        } else {
+          setAngle((getAngle() + 5) % 180);
+        }
+      });
+
+    }
   }
 
   public void startMove(Direction direction) {
@@ -110,6 +125,10 @@ public class Paddle extends GameObject {
     rotateState = new IdlePaddleRotateState(this);
   }
 
+  public void god() {
+    isGod = true;
+  }
+
   public boolean isMagnetized() {
     return isMagnetized;
   }
@@ -117,4 +136,5 @@ public class Paddle extends GameObject {
   public void setMagnetized(boolean magnetized) {
     isMagnetized = magnetized;
   }
+
 }

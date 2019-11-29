@@ -151,4 +151,13 @@ public class BrickingBadFrame extends JFrame {
     }
   }
 
+  public void showGodModeDialog() {
+    String answer = (String) JOptionPane.showInputDialog("What is the answer to life, universe and everything?");
+    if (answer.equals("42")) {
+      GameController.getInstance().invokeGodMode();
+    } else {
+      JOptionPane.showMessageDialog(getInstance(), "NO!");
+    }
+  }
+
 }
