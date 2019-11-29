@@ -20,7 +20,7 @@ public class GameConstants {
     public final static int rectangularBrickThickness = 20;
     public final static int circularBrickSize = 20;
     public final static int alienSize = 50;
-    public final static int powerupSize = 20;
+    public final static int powerupSize = paddleLength / 4;
 
     // Ball movement
     public final static double ballLaunchSpeed = screenHeight * 0.4;
@@ -45,7 +45,7 @@ public class GameConstants {
     public final static int wrapperBrickLimit = 0; //change to 10 in phase 2
 
     // Power-ups
-    public final static int powerupFallSpeed = paddleLength * 4;
+    public final static int powerupFallSpeed = paddleLength;
     public final static int gangOfBallsMultiplier = 10;
     public final static int laserGunCharges = 5;
     public final static int chemicalBallDuration = 60;
@@ -55,7 +55,8 @@ public class GameConstants {
 
     // Extras
     public final static double mineBrickExplosionRadius = paddleLength; // * 2 later
-    public final static int paddleHeight = screenHeight / 10;
+    public final static double fireBallDestructionRadius = paddleLength * 0.5;
+    public final static int paddleHeightOnScreen = screenHeight / 10;
     public static int framesPerSecond = 60;
     public static int calculationsPerSecond = 100;
 }

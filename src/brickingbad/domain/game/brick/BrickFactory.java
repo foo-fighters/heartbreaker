@@ -44,7 +44,11 @@ public class BrickFactory {
     }
 
     public ArrayList<Brick> createWrapperBricks(int n) {
-        return null;
+        ArrayList<Brick> wrapperBricks = new ArrayList<>();
+        for (int i = 0; i<n; i++) {
+            wrapperBricks.add(new WrapperBrick());
+        }
+        return wrapperBricks;
     }
 
 

@@ -3,21 +3,20 @@ package brickingbad.domain.game;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
 
-public abstract class GameObject {
+import java.util.ArrayList;
+
+public abstract class GameObject implements Comparable {
 
   protected Shape shape;
   protected Vector size;
   protected Vector position;
   protected Vector velocity;
-  protected double angle;
+  protected double angle = 0.0;
 
-  protected boolean colliding;
-  protected GameObject collidedObject;
+  protected ArrayList<GameObject> collidedObjects = new ArrayList<>();
   protected Direction reflectionDirection;
 
-  public void updatePosition() {
-    position.addVector(velocity.product(1.0 / GameConstants.calculationsPerSecond));
-  }
+  public void updatePosition() { position = position.sum(velocity.product(1.0 / GameConstants.calculationsPerSecond)); }
 
   public void collide(GameObject object) { }
 
@@ -69,16 +68,22 @@ public abstract class GameObject {
     this.reflectionDirection = direction;
   }
 
-  public GameObject getCollidedObject() { return collidedObject; }
+  public ArrayList<GameObject> getCollidedObjects() { return collidedObjects; }
 
-  public void setCollidedObject(GameObject collidedObject) { this.collidedObject = collidedObject; }
+  public void addCollidedObject(GameObject collidedObject) { collidedObjects.add(collidedObject); }
 
-  public boolean isColliding() { return colliding; }
-
-  public void setColliding(boolean colliding) { this.colliding = colliding; }
+  public void removeCollidedObject(GameObject collidedObject) { collidedObjects.remove(collidedObject); }
 
   public double getAngle() { return angle; }
 
   public void setAngle(double angle) { this.angle = angle; }
+
+  @Override
+  public int compareTo(Object obj) {
+    double distance = Math.pow(position.getX(), 2) + Math.pow(position.getY(), 2);
+    GameObject object = (GameObject) obj;
+    double compareDistance = Math.pow(object.getPosition().getX(), 2) + Math.pow(object.getPosition().getY(), 2);
+    return Double.compare(distance, compareDistance);
+  }
 
 }

@@ -69,7 +69,7 @@ public class Animator implements Runnable {
         System.out.println("Program interrupted.");
       }
       if (running) {
-        BrickingBadFrame.getInstance().repaint();
+        BrickingBadFrame.getInstance().getCurrentPanel().repaint();
       }
     }
   }

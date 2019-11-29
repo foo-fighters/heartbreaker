@@ -2,6 +2,7 @@ package brickingbad.controller;
 
 import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameObjectListener;
+import brickingbad.domain.game.WrapperContent;
 import brickingbad.domain.game.brick.Brick;
 import brickingbad.domain.game.brick.BrickFactory;
 import brickingbad.domain.game.persistence.Save;
@@ -109,12 +110,12 @@ public class GameController {
         mineBricks.forEach((brick -> {
             Game.getInstance().addBrick(brick);
         }));
-//
-//        ArrayList<Brick> wrapperBricks = BrickFactory.getInstance().createWrapperBricks(wrapper);
-//
-//        wrapperBricks.forEach((brick -> {
-//            Game.getInstance().addBrick(brick);
-//        }));
+
+        ArrayList<Brick> wrapperBricks = BrickFactory.getInstance().createWrapperBricks(wrapper);
+
+        wrapperBricks.forEach((brick -> {
+            Game.getInstance().addBrick(brick);
+        }));
 
     }
 
@@ -126,15 +127,20 @@ public class GameController {
         Game.getInstance().addObjectListener(listener);
     }
 
+    public void usePowerUp(WrapperContent name) {
+        Game.getInstance().usePowerUp(name);
+    }
+
     public void lifeLost() {
         Game.getInstance().lostLife();
-
     }
 
     public void stopAnimator() {
         Animator.getInstance().stop();
     }
+  
     public void showDeadDialog(){
         BrickingBadFrame.getInstance().showYouAreDeadDialog();
     }
+      
 }

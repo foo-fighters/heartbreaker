@@ -1,10 +1,9 @@
 package brickingbad.domain.physics;
 
 import brickingbad.controller.GameController;
-import brickingbad.domain.game.Game;
-import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.GameObject;
-import brickingbad.domain.game.Shape;
+import brickingbad.domain.game.*;
+import brickingbad.domain.game.border.Ground;
+import brickingbad.domain.game.border.Wall;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -76,22 +75,54 @@ public class PhysicsEngine implements Runnable {
 
     private static void handleCollisions () {
       ArrayList<GameObject> objects = Game.getInstance().getObjects();
-      GameObject o1;
-      GameObject o2;
+      objects.sort(GameObject::compareTo);
+
       for (int i = 0; i < objects.size(); i++) {
-        o1 = objects.get(i);
-        for (int j = i + 1; j < objects.size(); j++) {
-          o2 = objects.get(j);
-          if (areColliding(o1, o2)) {
-            o1.collide(o2);
-            o2.collide(o1);
+        ArrayList<GameObject> collideables = new ArrayList<>();
+        Game game = Game.getInstance();
+        collideables.addAll(game.getWalls());
+        collideables.add(game.getGround());
+        collideables.add(game.getPaddle());
+        for (int j = 1; j <= 12; j++) {
+          try {
+            GameObject object = objects.get(i + j);
+            if (!(object instanceof Wall || object instanceof Paddle || object instanceof Ground)) {
+              collideables.add(object);
+            }
+          } catch (IndexOutOfBoundsException e) {
+
+          }
+          try {
+            GameObject object = objects.get(i - j);
+            if (!(object instanceof Wall || object instanceof Paddle || object instanceof Ground)) {
+              collideables.add(object);
+            }
+          } catch (IndexOutOfBoundsException e) {
+
           }
         }
+
+        final GameObject o1 = objects.get(i);
+
+        collideables.forEach((o2) -> {
+          if (areColliding(o1, o2)) {
+            if (!o1.getCollidedObjects().contains(o2) || !o2.getCollidedObjects().contains(o1)) {
+              o1.addCollidedObject(o2);
+              o2.addCollidedObject(o1);
+              o1.collide(o2);
+              o2.collide(o1);
+            }
+          } else {
+            o1.removeCollidedObject(o2);
+            o2.removeCollidedObject(o1);
+          }
+        });
       }
     }
 
     private static void updatePositions () {
-      for (GameObject object : Game.getInstance().getObjects()) {
+      ArrayList<GameObject> objectsCopy = new ArrayList<>(Game.getInstance().getObjects());
+      for (GameObject object : objectsCopy) {
         if (object != null) {
           object.updatePosition();
         }
