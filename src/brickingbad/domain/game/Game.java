@@ -1,16 +1,16 @@
 package brickingbad.domain.game;
 
+import brickingbad.controller.GameController;
+import brickingbad.domain.game.alien.CooperativeAlien;
+import brickingbad.domain.game.alien.ProtectingAlien;
+import brickingbad.domain.game.alien.RepairingAlien;
 import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.game.border.*;
 import brickingbad.domain.game.brick.*;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
-import brickingbad.ui.game.BuildingModePanel;
-import brickingbad.ui.game.animation.Animator;
 
 import java.time.Clock;
-import java.time.Instant;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -303,7 +303,18 @@ public class Game {
     }
 
     private void spawnAlien(WrapperContent content) {
-
+        switch (content) {
+            case COOPERATIVE_ALIEN:
+                trackObject(new CooperativeAlien());
+                break;
+            case PROTECTING_ALIEN:
+                trackObject(new ProtectingAlien());
+                break;
+            case REPAIRING_ALIEN:
+                trackObject(new RepairingAlien());
+                break;
+            default:
+        }
     }
 
     private void spawnGangOfBalls(Vector revealPosition) {
@@ -349,6 +360,10 @@ public class Game {
     }
 
     // GETTERS & SETTERS
+
+    public long getTime() {
+        return gameClock.millis();
+    }
 
     public ArrayList<GameObject> getObjects() {
 //        ArrayList<GameObject> gameObjects = new ArrayList<>();

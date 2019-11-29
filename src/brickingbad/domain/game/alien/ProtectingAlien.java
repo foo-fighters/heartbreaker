@@ -6,6 +6,7 @@ import brickingbad.domain.game.alien.Alien;
 import brickingbad.domain.physics.Vector;
 
 public class ProtectingAlien extends Alien {
+
     public ProtectingAlien() {
         this.position= new Vector();
         this.shape= Shape.RECTANGLE;
