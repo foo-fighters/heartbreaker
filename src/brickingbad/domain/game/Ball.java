@@ -23,6 +23,10 @@ public class Ball extends GameObject {
         setSimple();
     }
 
+    public BallState getBallState() {
+        return ballState;
+    }
+
     public double getPaddleOffset() {
         return paddleOffset;
     }

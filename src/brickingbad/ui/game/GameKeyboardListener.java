@@ -37,7 +37,7 @@ public class GameKeyboardListener implements KeyListener {
         if(key == KeyEvent.VK_C){
             GameController.getInstance().usePowerUp(WrapperContent.CHEMICAL_BALL);
         }
-        if(key == KeyEvent.VK_D){
+        if(key == KeyEvent.VK_L){
             GameController.getInstance().usePowerUp(WrapperContent.DESTRUCTIVE_LASER_GUN);
         }
         if(key == KeyEvent.VK_M){

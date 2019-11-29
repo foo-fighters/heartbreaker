@@ -21,5 +21,11 @@ public class Fireball extends PowerUp {
                 ((Ball) object).setFireball();
             }
         }
+        destroy();
+    }
+
+    @Override
+    public void updatePosition() {
+        position = position.sum(velocity.product(1.0 / GameConstants.calculationsPerSecond));
     }
 }

@@ -18,6 +18,6 @@ public class DestructiveLaserGun extends PowerUp {
 
     @Override
     public void activate() {
-
+        //super.activate();
     }
 }
