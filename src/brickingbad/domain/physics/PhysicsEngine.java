@@ -2,6 +2,8 @@ package brickingbad.domain.physics;
 
 import brickingbad.controller.GameController;
 import brickingbad.domain.game.*;
+import brickingbad.domain.game.border.Ground;
+import brickingbad.domain.game.border.Wall;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -83,12 +85,18 @@ public class PhysicsEngine implements Runnable {
         collideables.add(game.getPaddle());
         for (int j = 1; j <= 12; j++) {
           try {
-            collideables.add(objects.get(i + j));
+            GameObject object = objects.get(i + j);
+            if (!(object instanceof Wall || object instanceof Paddle || object instanceof Ground)) {
+              collideables.add(object);
+            }
           } catch (IndexOutOfBoundsException e) {
 
           }
           try {
-            collideables.add(objects.get(i - j));
+            GameObject object = objects.get(i - j);
+            if (!(object instanceof Wall || object instanceof Paddle || object instanceof Ground)) {
+              collideables.add(object);
+            }
           } catch (IndexOutOfBoundsException e) {
 
           }
