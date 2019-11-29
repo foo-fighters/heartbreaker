@@ -6,6 +6,8 @@ import brickingbad.domain.game.brick.Brick;
 import brickingbad.domain.physics.Vector;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.game.BuildingModePanel;
+import brickingbad.ui.game.effects.EffectsStrategy;
+import brickingbad.ui.game.effects.EffectsStrategyFactory;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -24,7 +26,7 @@ public class UIGameObject extends JLabel implements MouseListener {
     private GameObject gameObject;
     private JPanel panel;
     private AffineTransform defaultFrameTransform;
-    private boolean firstTime = true;
+    private EffectsStrategy effectsStrategy;
 
     public UIGameObject(GameObject gameObject, JPanel panel) {
         this.gameObject = gameObject;
@@ -36,27 +38,26 @@ public class UIGameObject extends JLabel implements MouseListener {
             panel.addMouseListener(this);
         }
         this.defaultFrameTransform = BrickingBadFrame.getInstance().getGraphicsConfiguration().getDefaultTransform();
+        effectsStrategy = EffectsStrategyFactory.getInstance().getStrategy(this);
     }
 
     @Override
     public void paintComponent(Graphics g) {
         int newX = (int) (gameObject.getPosition().getX() - gameObject.getSize().getX() / 2.0);
         int newY = (int) (gameObject.getPosition().getY() - gameObject.getSize().getY() / 2.0);
-        boolean willRedraw = (newX != position.x) || (newY != position.y);
-//        if (willRedraw || firstTime) {
-            position.x = newX;
-            position.y = newY;
-            Graphics2D g2d = (Graphics2D) g.create();
-            AffineTransform at = new AffineTransform();
-            at.scale(defaultFrameTransform.getScaleX(), defaultFrameTransform.getScaleY());
-            at.rotate(-Math.toRadians(gameObject.getAngle()), gameObject.getPosition().getX(), gameObject.getPosition().getY());
-            at.translate(position.x, position.y);
-            at.scale(gameObject.getSize().getX() / sprite.getWidth(), gameObject.getSize().getY() / sprite.getHeight());
-            g2d.setTransform(at);
-            g2d.drawImage(sprite, 0, 0, null);
-            g2d.dispose();
-            firstTime = false;
-//        }
+        position.x = newX;
+        position.y = newY;
+        Graphics2D g2d = (Graphics2D) g.create();
+        AffineTransform at = new AffineTransform();
+        at.scale(defaultFrameTransform.getScaleX(), defaultFrameTransform.getScaleY());
+        at.rotate(-Math.toRadians(gameObject.getAngle()), gameObject.getPosition().getX(), gameObject.getPosition().getY());
+        at.translate(position.x, position.y);
+        at.scale(gameObject.getSize().getX() / sprite.getWidth(), gameObject.getSize().getY() / sprite.getHeight());
+        g2d.setTransform(at);
+        g2d.drawImage(sprite, 0, 0, null);
+        g2d.dispose();
+
+        effectsStrategy.showEffect(position, g);
     }
 
     private void setSprite() {
@@ -90,8 +91,6 @@ public class UIGameObject extends JLabel implements MouseListener {
                             Math.abs(mouseY-brickY) <= GameConstants.rectangularBrickThickness){
                         gameObject.destroy();
                     }
-
-
                 }
             }
         }
@@ -116,4 +115,9 @@ public class UIGameObject extends JLabel implements MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
+
+    public GameObject getGameObject() {
+        return gameObject;
+    }
+
 }
