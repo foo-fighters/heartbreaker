@@ -136,7 +136,7 @@ public class Game {
         double xdist;
         double ydist;
         for (GameObject object: objectList) {
-            if(object instanceof Brick) {
+            if(object instanceof SimpleBrick) {
                 xdist = center.getX() - object.getPosition().getX();
                 ydist = center.getY() - object.getPosition().getY();
                 if(Math.hypot(xdist, ydist) < radius) {

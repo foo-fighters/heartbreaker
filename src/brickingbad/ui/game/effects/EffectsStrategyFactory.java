@@ -22,7 +22,6 @@ public class EffectsStrategyFactory {
     } else {
       return new DefaultEffect();
     }
-
   }
 
 }

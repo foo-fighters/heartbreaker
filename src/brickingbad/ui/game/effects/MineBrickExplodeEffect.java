@@ -8,10 +8,12 @@ public class MineBrickExplodeEffect implements EffectsStrategy {
 
   @Override
   public void showEffect(Point position, Graphics g) {
-    g.fillOval((int) position.getX(),
-               (int) position.getY(),
-               (int) GameConstants.mineBrickExplosionRadius,
-               (int) GameConstants.mineBrickExplosionRadius);
+    int radius = (int) GameConstants.mineBrickExplosionRadius;
+    g.setColor(Color.orange);
+    g.fillOval((int) position.getX() - (radius - GameConstants.circularBrickSize)/2,
+               (int) position.getY() - (radius - GameConstants.circularBrickSize)/2,
+                  radius,
+                  radius);
   }
 
 

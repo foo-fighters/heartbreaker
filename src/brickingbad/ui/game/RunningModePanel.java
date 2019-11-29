@@ -89,4 +89,8 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
     }
   }
 
+  public CopyOnWriteArrayList<UIGameObject> getUIObjects() {
+    return uiObjects;
+  }
+
 }

@@ -26,6 +26,8 @@ public class UIGameObject extends JLabel implements MouseListener {
     private GameObject gameObject;
     private JPanel panel;
     private AffineTransform defaultFrameTransform;
+
+    private boolean effectActive;
     private EffectsStrategy effectsStrategy;
 
     public UIGameObject(GameObject gameObject, JPanel panel) {
@@ -43,10 +45,13 @@ public class UIGameObject extends JLabel implements MouseListener {
 
     @Override
     public void paintComponent(Graphics g) {
-        int newX = (int) (gameObject.getPosition().getX() - gameObject.getSize().getX() / 2.0);
-        int newY = (int) (gameObject.getPosition().getY() - gameObject.getSize().getY() / 2.0);
-        position.x = newX;
-        position.y = newY;
+        position.x = (int) (gameObject.getPosition().getX() - gameObject.getSize().getX() / 2.0);
+        position.y = (int) (gameObject.getPosition().getY() - gameObject.getSize().getY() / 2.0);
+
+        if (effectActive) {
+            effectsStrategy.showEffect(position, g);
+        }
+
         Graphics2D g2d = (Graphics2D) g.create();
         AffineTransform at = new AffineTransform();
         at.scale(defaultFrameTransform.getScaleX(), defaultFrameTransform.getScaleY());
@@ -56,8 +61,6 @@ public class UIGameObject extends JLabel implements MouseListener {
         g2d.setTransform(at);
         g2d.drawImage(sprite, 0, 0, null);
         g2d.dispose();
-
-        effectsStrategy.showEffect(position, g);
     }
 
     private void setSprite() {
@@ -118,6 +121,14 @@ public class UIGameObject extends JLabel implements MouseListener {
 
     public GameObject getGameObject() {
         return gameObject;
+    }
+
+    public void activateEffect() {
+        effectActive = true;
+    }
+
+    public void deactivateEffect() {
+        effectActive = false;
     }
 
 }
