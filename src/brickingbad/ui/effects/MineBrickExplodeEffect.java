@@ -10,12 +10,12 @@ import java.awt.geom.Ellipse2D;
 
 public class MineBrickExplodeEffect extends Effect {
 
-  private final int radius = (int) GameConstants.mineBrickExplosionRadius;
   private final Ellipse2D explosionCircle;
 
   public MineBrickExplodeEffect(double x, double y) {
     super(x, y);
     active = true;
+    int radius = (int) GameConstants.mineBrickExplosionRadius;
     explosionCircle = new Ellipse2D.Double((int) position.getX() - (radius - GameConstants.circularBrickSize)/2.0,
                                            (int) position.getY() - (radius - GameConstants.circularBrickSize)/2.0,
                                               radius,
