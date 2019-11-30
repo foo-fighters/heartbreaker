@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -32,7 +33,7 @@ public class RunningModePanel extends JPanel implements GameListener, AnimationL
   //    and we are working with multiple threads, it is a logical choice.
   private CopyOnWriteArrayList<UIGameObject> uiObjects;
 
-  private ArrayList<Effect> effects;
+  private CopyOnWriteArrayList<Effect> effects;
 
   private GameButtonPanel gameButtonPanel;
   private JLabel scoreLabel;
@@ -48,7 +49,7 @@ public class RunningModePanel extends JPanel implements GameListener, AnimationL
     PhysicsEngine.getInstance().start();
     setLayout(null);
     uiObjects = new CopyOnWriteArrayList<>();
-    effects = new ArrayList<>();
+    effects = new CopyOnWriteArrayList<>();
     setLayout(null);
     initUI();
     loadBackgroundImage("resources/sprites/background.png");
@@ -89,6 +90,10 @@ public class RunningModePanel extends JPanel implements GameListener, AnimationL
   @Override
   public void removeObject(GameObject object) {
     uiObjects.removeIf(uiGameObject -> uiGameObject.containsObject(object));
+  }
+
+  public void addEffect(Effect effect) {
+    effects.add(effect);
   }
 
   @Override
