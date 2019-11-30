@@ -9,6 +9,7 @@ import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.GameButtonPanel;
 import brickingbad.ui.game.animation.Animator;
+import brickingbad.ui.effects.Effect;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -30,6 +31,8 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
   //    and we are working with multiple threads, it is a logical choice.
   private CopyOnWriteArrayList<UIGameObject> uiObjects;
 
+  private ArrayList<Effect> effects;
+
   private GameButtonPanel gameButtonPanel;
   private JLabel scoreLabel;
   private BufferedImage background;
@@ -43,6 +46,8 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
     PhysicsEngine.getInstance().start();
     setLayout(null);
     uiObjects = new CopyOnWriteArrayList<>();
+    effects = new ArrayList<>();
+    setLayout(null);
     initUI();
     loadBackgroundImage("resources/sprites/background.png");
     loadHeartImage("resources/sprites/heart.png");
@@ -86,15 +91,14 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
   protected void paintComponent(Graphics g) {
 
     super.paintComponent(g);
-    g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
-
-
-
-    for (Iterator<UIGameObject> iterator = uiObjects.iterator(); iterator.hasNext(); ) {
-      UIGameObject object = iterator.next();
+    g.drawImage(background, 0, 0, null);
+    for (UIGameObject object : uiObjects) {
       object.paintComponent(g);
     }
     drawHearts(g, Game.getInstance().getLives());
+    for (Effect effect : effects) {
+      effect.activate(g);
+    }
   }
 
 
