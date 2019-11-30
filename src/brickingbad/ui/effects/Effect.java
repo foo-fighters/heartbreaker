@@ -5,13 +5,18 @@ import java.awt.*;
 public abstract class Effect {
 
   Point position;
+  boolean active;
 
-  public Effect(int x, int y) {
-    position = new Point(x, y);
+  public Effect(double x, double y) {
+    position = new Point((int) x, (int) y);
   }
 
   public void activate(Graphics g) {
 
+  }
+
+  public boolean active() {
+    return active;
   }
 
 }

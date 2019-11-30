@@ -1,5 +1,6 @@
 package brickingbad.domain.game.brick;
 
+import brickingbad.controller.EffectsController;
 import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.GameObject;
@@ -23,6 +24,7 @@ public class MineBrick extends Brick {
     public void destroy() {
         super.destroy();
         Game.getInstance().destroyBricksInRadius(position, GameConstants.mineBrickExplosionRadius);
+        EffectsController.getInstance().showMineBrickExplodeEffect(position.getX(), position.getY());
     }
 
 }

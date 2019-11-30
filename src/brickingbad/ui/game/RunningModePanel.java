@@ -30,7 +30,7 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
   //    and we are working with multiple threads, it is a logical choice.
   private CopyOnWriteArrayList<UIGameObject> uiObjects;
 
-  private ArrayList<Effect> effects;
+  private CopyOnWriteArrayList<Effect> effects;
 
   private GameButtonPanel gameButtonPanel;
 
@@ -40,7 +40,7 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
     Animator.getInstance(this).start();
     PhysicsEngine.getInstance().start();
     uiObjects = new CopyOnWriteArrayList<>();
-    effects = new ArrayList<>();
+    effects = new CopyOnWriteArrayList<>();
     setLayout(null);
     initUI();
     loadBackgroundImage("resources/sprites/background.png");
@@ -76,6 +76,10 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
     uiObjects.removeIf(uiGameObject -> uiGameObject.containsObject(object));
   }
 
+  public void addEffect(Effect effect) {
+    effects.add(effect);
+  }
+
   @Override
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
@@ -84,7 +88,11 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
       object.paintComponent(g);
     }
     for (Effect effect : effects) {
-      effect.activate(g);
+      if (effect.active()) {
+        effect.activate(g);
+      } else {
+        effects.remove(effect);
+      }
     }
   }
 
