@@ -1,5 +1,8 @@
 package brickingbad.controller;
 
+import brickingbad.ui.effects.MineBrickExplodeEffect;
+import brickingbad.ui.game.RunningModePanel;
+
 import brickingbad.services.sound.AudioPlayer;
 import brickingbad.ui.effects.MineBrickExplodeEffect;
 import brickingbad.ui.game.RunningModePanel;

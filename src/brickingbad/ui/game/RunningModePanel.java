@@ -35,8 +35,6 @@ public class RunningModePanel extends JPanel implements GameListener, AnimationL
 
   private CopyOnWriteArrayList<Effect> effects;
 
-  private ArrayList<Effect> effects;
-
   private GameButtonPanel gameButtonPanel;
   private JLabel scoreLabel;
   private BufferedImage background;
