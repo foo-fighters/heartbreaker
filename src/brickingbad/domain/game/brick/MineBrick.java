@@ -24,4 +24,5 @@ public class MineBrick extends Brick {
         super.destroy();
         Game.getInstance().destroyBricksInRadius(position, GameConstants.mineBrickExplosionRadius);
     }
+
 }

@@ -13,8 +13,8 @@ public abstract class GameObject implements Comparable {
   protected Vector velocity;
   protected double angle = 0.0;
 
-  protected ArrayList<GameObject> collidedObjects = new ArrayList<>();
-  protected Direction reflectionDirection;
+  private ArrayList<GameObject> collidedObjects = new ArrayList<>();
+  Direction reflectionDirection;
 
   public void updatePosition() { position = position.sum(velocity.product(1.0 / GameConstants.calculationsPerSecond)); }
 
@@ -25,7 +25,6 @@ public abstract class GameObject implements Comparable {
     if (this instanceof Ball){
       Game.getInstance().anyBallLeft();
     }
-
   }
 
   public Shape getShape() {
