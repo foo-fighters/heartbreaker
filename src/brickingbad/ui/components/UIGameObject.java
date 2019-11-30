@@ -103,8 +103,6 @@ public class UIGameObject extends JLabel implements MouseListener, GameObjectLis
                             Math.abs(mouseY-brickY) <= GameConstants.rectangularBrickThickness){
                         gameObject.destroy();
                     }
-
-
                 }
             }
         }
