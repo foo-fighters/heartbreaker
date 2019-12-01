@@ -100,31 +100,31 @@ public class GameController {
     }
 
     public void createBricks(int simple, int halfMetal, int mine, int wrapper) {
+        if (Game.getInstance().getBricks().size() + simple + halfMetal + mine + wrapper < 919){
+            ArrayList<Brick> simpleBricks = BrickFactory.getInstance().createSimpleBricks(simple);
 
-        ArrayList<Brick> simpleBricks = BrickFactory.getInstance().createSimpleBricks(simple);
+            simpleBricks.forEach((brick -> {
+                Game.getInstance().addBrick(brick);
+            }));
 
-        simpleBricks.forEach((brick -> {
-            Game.getInstance().addBrick(brick);
-        }));
+            ArrayList<Brick> halfMetalBricks = BrickFactory.getInstance().createHalfMetalBricks(halfMetal);
 
-        ArrayList<Brick> halfMetalBricks = BrickFactory.getInstance().createHalfMetalBricks(halfMetal);
+            halfMetalBricks.forEach((brick -> {
+                Game.getInstance().addBrick(brick);
+            }));
 
-        halfMetalBricks.forEach((brick -> {
-            Game.getInstance().addBrick(brick);
-        }));
+            ArrayList<Brick> mineBricks = BrickFactory.getInstance().createMineBricks(mine);
 
-        ArrayList<Brick> mineBricks = BrickFactory.getInstance().createMineBricks(mine);
+            mineBricks.forEach((brick -> {
+                Game.getInstance().addBrick(brick);
+            }));
 
-        mineBricks.forEach((brick -> {
-            Game.getInstance().addBrick(brick);
-        }));
+            ArrayList<Brick> wrapperBricks = BrickFactory.getInstance().createWrapperBricks(wrapper);
 
-        ArrayList<Brick> wrapperBricks = BrickFactory.getInstance().createWrapperBricks(wrapper);
-
-        wrapperBricks.forEach((brick -> {
-            Game.getInstance().addBrick(brick);
-        }));
-
+            wrapperBricks.forEach((brick -> {
+                Game.getInstance().addBrick(brick);
+            }));
+        }
     }
 
     public boolean checkBrickCount(){
