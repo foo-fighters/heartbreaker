@@ -160,4 +160,7 @@ public class BrickingBadFrame extends JFrame {
     }
   }
 
+    public void showWonDialog() {
+      JOptionPane.showMessageDialog(this, "Congratz YOU HAVE WON");
+    }
 }

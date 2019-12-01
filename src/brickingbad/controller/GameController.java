@@ -149,5 +149,8 @@ public class GameController {
     public void showDeadDialog(){
         BrickingBadFrame.getInstance().showYouAreDeadDialog();
     }
-      
+
+    public void showWinDialog() {
+        BrickingBadFrame.getInstance().showWonDialog();
+    }
 }

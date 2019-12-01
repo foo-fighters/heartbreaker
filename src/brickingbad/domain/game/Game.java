@@ -38,7 +38,7 @@ public class Game {
     private ArrayList<PowerUp> storedPowerUps;
     private ArrayList<PowerUp> activePowerUps;
     private ArrayList<WrapperContent> activeAliens;
-
+    private boolean alreadyWon = false;
     private static final Random random = new Random();
 
     private ArrayList<GameObjectListener> objectListeners;
@@ -448,4 +448,18 @@ public class Game {
         }
     }
 
+    public void anyBricksLeft(){
+        if (bricks.isEmpty()){
+            winGame();
+        }
+    }
+
+    private void winGame() {
+        if (!alreadyWon){
+            GameController.getInstance().stopAnimator();
+            GameController.getInstance().showWinDialog();
+            alreadyWon = true;
+        }
+
+    }
 }
