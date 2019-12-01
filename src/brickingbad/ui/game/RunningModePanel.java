@@ -119,6 +119,10 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
     }
   }
 
+  public void reset(){
+
+  }
+
   public void invokeGodMode() {
     loadBackgroundImage("resources/sprites/godmode.png");
   }
@@ -134,5 +138,9 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
       g.drawImage(heart_empty,getWidth()-150 + iteration,getHeight()-50, GameConstants.heartSize,GameConstants.heartSize,null);
       iteration += GameConstants.heartSize + 10;
     }
+  }
+
+  public void resetUI() {
+    uiObjects = new CopyOnWriteArrayList<>();
   }
 }

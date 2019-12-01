@@ -80,6 +80,14 @@ public class Ball extends GameObject {
     }
 
     @Override
+    public void destroy() {
+        super.destroy();
+        Game.getInstance().removeObject(this);
+        Game.getInstance().anyBallLeft();
+        System.out.println(Game.getInstance().getBalls().size());
+    }
+
+    @Override
     public void collide(GameObject object) {
         ballState.collide(object);
     }

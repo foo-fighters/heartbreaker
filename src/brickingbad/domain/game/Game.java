@@ -38,7 +38,7 @@ public class Game {
     private ArrayList<PowerUp> storedPowerUps;
     private ArrayList<PowerUp> activePowerUps;
     private ArrayList<WrapperContent> activeAliens;
-
+    private boolean alreadyWon;
     private static final Random random = new Random();
 
     private ArrayList<GameObjectListener> objectListeners;
@@ -84,6 +84,7 @@ public class Game {
     public void initialize() {
         gameObjects = new ArrayList<>();
         lives = 3;
+        alreadyWon = false;
 
         for (Brick brick : bricks) {
             removeObjectFromListeners(brick);
@@ -91,8 +92,20 @@ public class Game {
         for (Ball ball : balls) {
             removeObjectFromListeners(ball);
         }
+        for (Ball ball : balls) {
+            removeObjectFromListeners(ball);
+        }
+        for (PowerUp powerup : storedPowerUps) {
+            removeObjectFromListeners(powerup);
+        }
+        for (PowerUp powerup : activePowerUps) {
+            removeObjectFromListeners(powerup);
+        }
+
         bricks = new ArrayList<>();
         balls = new ArrayList<>();
+        activePowerUps = new ArrayList<>();
+        storedPowerUps = new ArrayList<>();
 
         int gridX = GameConstants.screenWidth / GameConstants.rectangularBrickLength;
         int gridY = (int)GameConstants.brickAreaHeight / GameConstants.rectangularBrickThickness;
@@ -339,6 +352,7 @@ public class Game {
                 Ball ball = new Ball(revealPosition);
                 ball.startMovement((360.0 / GameConstants.gangOfBallsMultiplier) * i, ((Ball)closestBall).getSpeed());
                 trackObject(ball);
+                balls.add(ball);
             }
             removeObject(closestBall);
         }
@@ -448,4 +462,18 @@ public class Game {
         }
     }
 
+    public void anyBricksLeft(){
+        if (bricks.isEmpty()){
+            winGame();
+        }
+    }
+
+    private void winGame() {
+        if (!alreadyWon){
+            GameController.getInstance().stopAnimator();
+            GameController.getInstance().showWinDialog();
+            alreadyWon = true;
+        }
+
+    }
 }
