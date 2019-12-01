@@ -339,6 +339,7 @@ public class Game {
                 Ball ball = new Ball(revealPosition);
                 ball.startMovement((360.0 / GameConstants.gangOfBallsMultiplier) * i, ((Ball)closestBall).getSpeed());
                 trackObject(ball);
+                balls.add(ball);
             }
             removeObject(closestBall);
         }
