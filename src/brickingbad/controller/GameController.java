@@ -11,6 +11,7 @@ import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.services.persistence.SaveRepository;
 import brickingbad.ui.BrickingBadFrame;
+import brickingbad.ui.game.BuildingModePanel;
 import brickingbad.ui.game.RunningModePanel;
 import brickingbad.ui.components.Panel;
 
@@ -32,6 +33,11 @@ public class GameController {
             instance = new GameController();
         }
         return instance;
+    }
+
+    public static void resetUI() {
+        RunningModePanel.getInstance().resetUI();
+        BuildingModePanel.getInstance().resetUI();
     }
 
     public boolean inRunningMode() {

@@ -1,6 +1,7 @@
 package brickingbad.ui.components.containers;
 
 import brickingbad.controller.GameController;
+import brickingbad.domain.game.brick.Brick;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.components.BBGameButton;
 import brickingbad.ui.game.animation.Animator;
@@ -52,6 +53,7 @@ public class GameButtonPanel extends JPanel implements ActionListener {
       pauseButton.toggleText("PAUSE", "RESUME");
       GameController.getInstance().togglePauseResume();
     } else if (e.getSource().equals(quitButton)) {
+      GameController.getInstance().resetUI();
       BrickingBadFrame.getInstance().showMainMenuPanel();
       pauseButton.setText("PAUSE");
     } else if (e.getSource().equals(godModeButton)) {

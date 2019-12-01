@@ -94,4 +94,8 @@ public class BuildingModePanel extends JPanel implements GameObjectListener, Err
     public void showError(String errorMessage) {
       JOptionPane.showMessageDialog(BrickingBadFrame.getInstance(), errorMessage);
     }
+
+    public void resetUI() {
+        uiObjects = new ArrayList<>();
+    }
 }
