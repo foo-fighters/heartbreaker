@@ -15,7 +15,7 @@ public abstract class Effect {
 
   }
 
-  public boolean active() {
+  public boolean isActive() {
     return active;
   }
 

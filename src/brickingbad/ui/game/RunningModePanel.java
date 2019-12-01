@@ -88,7 +88,7 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
       object.paintComponent(g);
     }
     for (Effect effect : effects) {
-      if (effect.active()) {
+      if (effect.isActive()) {
         effect.activate(g);
       } else {
         effects.remove(effect);

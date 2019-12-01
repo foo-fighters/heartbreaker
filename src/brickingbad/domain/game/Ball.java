@@ -1,5 +1,6 @@
 package brickingbad.domain.game;
 
+import brickingbad.controller.EffectsController;
 import brickingbad.domain.game.brick.HalfMetalBrick;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
@@ -55,7 +56,10 @@ public class Ball extends GameObject {
         ballState = new FireBallState(this);
     }
 
-    public void setChemical(){ ballState = new ChemicalBallState(this); }
+    public void setChemical(){
+        ballState = new ChemicalBallState(this);
+        EffectsController.getInstance().activateChemicalBallTrailEffect();
+    }
 
     public void reflect(GameObject object) {
         double incidenceAngle = Math.atan2(velocity.getY(), -velocity.getX());

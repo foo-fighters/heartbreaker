@@ -1,5 +1,6 @@
 package brickingbad.controller;
 
+import brickingbad.domain.game.Ball;
 import brickingbad.ui.effects.MineBrickExplodeEffect;
 import brickingbad.ui.game.RunningModePanel;
 
@@ -21,6 +22,10 @@ public class EffectsController {
   public void showMineBrickExplodeEffect(double x, double y) {
     MineBrickExplodeEffect effect = new MineBrickExplodeEffect(x, y);
     RunningModePanel.getInstance().addEffect(effect);
+  }
+
+  public void activateChemicalBallTrailEffect() {
+
   }
 
 }
