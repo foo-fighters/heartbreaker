@@ -4,7 +4,7 @@ import brickingbad.domain.game.persistence.Save;
 
 import java.util.List;
 
-public class LocalAdapter implements IPersistenceAdapter {
+public class LocalPersistenceAdapter implements IPersistenceAdapter {
 
   @Override
   public Save getSaveByName(String name) {

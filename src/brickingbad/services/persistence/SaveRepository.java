@@ -1,11 +1,7 @@
 package brickingbad.services.persistence;
 
 import brickingbad.domain.game.persistence.Save;
-import brickingbad.services.MongoDBService;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
@@ -14,7 +10,7 @@ import static com.mongodb.client.model.Filters.eq;
 public class SaveRepository {
 
   // set default adapter to use in case methods are called before setting an adapter explicitly
-  IPersistenceAdapter adapter = new LocalAdapter();
+  IPersistenceAdapter adapter = new LocalPersistenceAdapter();
 
   private static SaveRepository instance;
 
@@ -46,11 +42,11 @@ public class SaveRepository {
   // ADAPTER CONTROLS
 
   public void adaptMongoDB() {
-    this.adapter = new MongoDBAdapter();
+    this.adapter = new MongoDBPersistenceAdapter();
   }
 
   public void adaptLocal() {
-    this.adapter = new LocalAdapter();
+    this.adapter = new LocalPersistenceAdapter();
   }
 
   public IPersistenceAdapter getAdapter() {

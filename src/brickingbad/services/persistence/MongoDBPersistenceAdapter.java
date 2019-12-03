@@ -10,7 +10,7 @@ import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
 
-public class MongoDBAdapter implements IPersistenceAdapter {
+public class MongoDBPersistenceAdapter implements IPersistenceAdapter {
 
   private static MongoCollection<Save> savesCollection = MongoDBService.getDatabase().getCollection("games", Save.class);
 
