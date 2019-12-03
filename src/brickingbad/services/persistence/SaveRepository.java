@@ -1,7 +1,7 @@
 package brickingbad.services.persistence;
 
 import brickingbad.domain.game.persistence.Save;
-import brickingbad.services.DatabaseService;
+import brickingbad.services.MongoDBService;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 
@@ -13,35 +13,49 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class SaveRepository {
 
-  private static MongoCollection<Save> savesCollection = DatabaseService.getDatabase().getCollection("games", Save.class);
+  // set default adapter to use in case methods are called before setting an adapter explicitly
+  IPersistenceAdapter adapter = new LocalAdapter();
 
-  public static void addSave(Save save) {
-    String name = save.name;
-    if (getSaveNames().contains(name)) {
-      savesCollection.deleteOne(eq("name", name));
+  private static SaveRepository instance;
+
+  private SaveRepository() {
+
+  }
+
+  public static SaveRepository getInstance() {
+    if (instance == null) {
+      instance = new SaveRepository();
     }
-    savesCollection.insertOne(save);
+    return instance;
   }
 
-  public static List<String> getSaveNames() {
-    List<String> names = new ArrayList<>();
-    MongoCursor<Save> cursor = savesCollection.find().iterator();
-    try {
-      while (cursor.hasNext()) {
-        names.add(cursor.next().name);
-      }
-    } finally {
-      cursor.close();
-    }
-    return names;
+  // READ/WRITE METHODS
+
+  public Save getSaveByName(String name) {
+    return adapter.getSaveByName(name);
   }
 
-  public static Save getSaveByName(String name) {
-    return savesCollection.find(eq("name", name)).first();
+  public void save(Save save) {
+    adapter.save(save);
   }
 
-  public static void deleteSaveByName(String name) {
-    savesCollection.deleteOne(eq("name", name));
+  public List<String> getSaveNames() {
+    return adapter.getSaveNames();
   }
+
+  // ADAPTER CONTROLS
+
+  public void adaptMongoDB() {
+    this.adapter = new MongoDBAdapter();
+  }
+
+  public void adaptLocal() {
+    this.adapter = new LocalAdapter();
+  }
+
+  public IPersistenceAdapter getAdapter() {
+    return adapter;
+  }
+
 
 }
