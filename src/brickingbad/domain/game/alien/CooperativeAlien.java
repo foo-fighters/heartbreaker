@@ -19,9 +19,4 @@ public class CooperativeAlien extends Alien {
 
     }
 
-    @Override
-    public String getTypeName() {
-        return "Cooperative" + super.getTypeName();
-    }
-
 }

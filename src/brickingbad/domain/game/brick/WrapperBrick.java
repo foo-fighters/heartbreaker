@@ -21,9 +21,4 @@ public class WrapperBrick extends Brick {
         Game.getInstance().revealWrapperContent(position);
     }
 
-    @Override
-    public String getTypeName() {
-        return "Wrapper" + super.getTypeName();
-    }
-
 }

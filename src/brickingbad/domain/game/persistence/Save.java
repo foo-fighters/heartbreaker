@@ -7,23 +7,23 @@ public class Save {
 
   public String name;
 
-  int score;
-  int lives;
+  public int score;
+  public int lives;
 
-  List<Double> paddleCoordinates;
+  public List<Double> paddleCoordinates;
 
-  List<List<Double>> brickCoordinates;
-  List<String> brickTypes;
+  public List<List<Double>> brickCoordinates;
+  public List<String> brickTypes;
 
-  List<Boolean> ballOnPaddle;
-  List<List<Double>> ballCoordinates;
-  List<List<Double>> ballVelocities;
+  public List<Boolean> ballOnPaddle;
+  public List<List<Double>> ballCoordinates;
+  public List<List<Double>> ballVelocities;
 
-  List<String> activePowerUps;
-  List<String> storedPowerUps;
+  public List<String> activePowerUps;
+  public List<String> storedPowerUps;
 
-  List<List<Double>> alienCoordinates;
-  List<String> alienTypes;
+  public List<List<Double>> alienCoordinates;
+  public List<String> alienTypes;
 
   public Save() {
     paddleCoordinates = new ArrayList<>();

@@ -10,7 +10,4 @@ public abstract class Brick extends GameObject {
         super.destroy();
     }
 
-    public String getTypeName() {
-        return "Brick";
-    }
 }

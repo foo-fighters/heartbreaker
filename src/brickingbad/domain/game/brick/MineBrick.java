@@ -25,8 +25,4 @@ public class MineBrick extends Brick {
         Game.getInstance().destroyBricksInRadius(position, GameConstants.mineBrickExplosionRadius);
     }
 
-    @Override
-    public String getTypeName() {
-        return "Mine" + super.getTypeName();
-    }
 }

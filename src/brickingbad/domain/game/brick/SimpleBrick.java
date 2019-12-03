@@ -19,9 +19,4 @@ public class SimpleBrick extends Brick {
         this.position = position;
     }
 
-    @Override
-    public String getTypeName() {
-        return "Simple" + super.getTypeName();
-    }
-
 }

@@ -59,6 +59,10 @@ public class Game {
         activeAliens = new ArrayList<>();
         aliens = new ArrayList<>();
         gameClock = Clock.systemDefaultZone();
+
+        int gridX = GameConstants.screenWidth / GameConstants.rectangularBrickLength;
+        int gridY = (int)GameConstants.brickAreaHeight / GameConstants.rectangularBrickThickness;
+        brickGrid = new boolean[gridX][gridY];
     }
 
     public static Game getInstance() {
@@ -86,7 +90,7 @@ public class Game {
 
     public void initialize() {
         gameObjects = new ArrayList<>();
-        lives = 3;
+//        lives = 3;
         alreadyWon = false;
 
         for (Brick brick : bricks) {
@@ -111,15 +115,11 @@ public class Game {
         activePowerUps = new ArrayList<>();
         storedPowerUps = new ArrayList<>();
 
-        int gridX = GameConstants.screenWidth / GameConstants.rectangularBrickLength;
-        int gridY = (int)GameConstants.brickAreaHeight / GameConstants.rectangularBrickThickness;
-        brickGrid = new boolean[gridX][gridY];
-
         removeObjectFromListeners(paddle);
-        paddle = new Paddle();
-        Ball firstBall = new Ball(paddle.getBallStartPosition());
-        balls.add(firstBall);
-        paddle.getCurrentBalls().add(firstBall);
+//        paddle = new Paddle();
+//        Ball firstBall = new Ball(paddle.getBallStartPosition());
+//        balls.add(firstBall);
+//        paddle.getCurrentBalls().add(firstBall);
 
         Wall wall1 = new Wall(Direction.UP);
         Wall wall2 = new Wall(Direction.RIGHT);
@@ -130,8 +130,8 @@ public class Game {
         walls.add(wall2);
         walls.add(wall3);
 
-        trackObject(paddle);
-        trackObject(firstBall);
+//        trackObject(paddle);
+//        trackObject(firstBall);
         trackObject(wall1);
         trackObject(wall2);
         trackObject(wall3);

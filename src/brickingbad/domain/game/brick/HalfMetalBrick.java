@@ -25,8 +25,4 @@ public class HalfMetalBrick extends Brick {
         isCracked = cracked;
     }
 
-    @Override
-    public String getTypeName() {
-        return "HalfMetal" + super.getTypeName();
-    }
 }

@@ -20,9 +20,4 @@ public class ProtectingAlien extends Alien {
 
     }
 
-    @Override
-    public String getTypeName() {
-        return "Protecting" + super.getTypeName();
-    }
-
 }

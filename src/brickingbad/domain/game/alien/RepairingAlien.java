@@ -34,9 +34,4 @@ public class RepairingAlien extends Alien {
 
     }
 
-    @Override
-    public String getTypeName() {
-        return "Repairing" + super.getTypeName();
-    }
-
 }
