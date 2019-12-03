@@ -145,7 +145,7 @@ public class BrickingBadFrame extends JFrame {
             saveNames.toArray()[0]); // Initial choice
 
     if (name != null) {
-      GameController.getInstance().initializeGame();
+      GameController.getInstance().initializeGame(true);
       GameController.getInstance().loadGame(name);
       BrickingBadFrame.getInstance().showRunningModePanel();
     }

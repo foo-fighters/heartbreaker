@@ -63,8 +63,8 @@ public class GameController {
       return saveRepository.getSaveNames();
     }
 
-    public void initializeGame() {
-        Game.getInstance().initialize();
+    public void initializeGame(boolean fromSave) {
+        Game.getInstance().initialize(fromSave);
     }
 
     public void startGame() {

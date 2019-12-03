@@ -88,9 +88,9 @@ public class Game {
         }
     }
 
-    public void initialize() {
+    public void initialize(boolean fromSave) {
         gameObjects = new ArrayList<>();
-//        lives = 3;
+
         alreadyWon = false;
 
         for (Brick brick : bricks) {
@@ -116,10 +116,6 @@ public class Game {
         storedPowerUps = new ArrayList<>();
 
         removeObjectFromListeners(paddle);
-//        paddle = new Paddle();
-//        Ball firstBall = new Ball(paddle.getBallStartPosition());
-//        balls.add(firstBall);
-//        paddle.getCurrentBalls().add(firstBall);
 
         Wall wall1 = new Wall(Direction.UP);
         Wall wall2 = new Wall(Direction.RIGHT);
@@ -130,8 +126,18 @@ public class Game {
         walls.add(wall2);
         walls.add(wall3);
 
-//        trackObject(paddle);
-//        trackObject(firstBall);
+        if (!fromSave) {
+            lives = 3;
+
+            paddle = new Paddle();
+            Ball firstBall = new Ball(paddle.getBallStartPosition());
+            balls.add(firstBall);
+            paddle.getCurrentBalls().add(firstBall);
+
+            trackObject(paddle);
+            trackObject(firstBall);
+        }
+
         trackObject(wall1);
         trackObject(wall2);
         trackObject(wall3);
