@@ -1,4 +1,4 @@
 package brickingbad.services.persistence;
 
-public class LocalAuthenticationAdapter {
+public class LocalAuthenticationAdapter implements IAuthenticationAdapter {
 }

@@ -1,4 +1,4 @@
 package brickingbad.services.persistence;
 
-public class MongoDBAuthenticationAdapter {
+public class MongoDBAuthenticationAdapter implements IAuthenticationAdapter {
 }
