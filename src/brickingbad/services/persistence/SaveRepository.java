@@ -41,12 +41,14 @@ public class SaveRepository {
 
   // ADAPTER CONTROLS
 
-  public void adaptMongoDB() {
+  public SaveRepository adaptMongoDB() {
     this.adapter = new MongoDBPersistenceAdapter();
+    return this;
   }
 
-  public void adaptLocal() {
+  public SaveRepository adaptLocal() {
     this.adapter = new LocalPersistenceAdapter();
+    return this;
   }
 
   public IPersistenceAdapter getAdapter() {

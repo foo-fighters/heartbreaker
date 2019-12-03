@@ -24,8 +24,10 @@ import java.util.List;
 public class GameController {
 
     private static GameController instance;
+    private static SaveRepository saveRepository;
 
     private GameController() {
+        saveRepository = SaveRepository.getInstance().adaptMongoDB();
     }
 
     public static GameController getInstance() {
@@ -48,17 +50,17 @@ public class GameController {
     public void saveGame(String name) {
         Game game = Game.getInstance();
         Save save = SaveAssembler.assemble(game, name);
-        SaveRepository.addSave(save);
+        saveRepository.save(save);
     }
 
     public void loadGame(String name) {
-        Save save = SaveRepository.getSaveByName(name);
+        Save save = saveRepository.getSaveByName(name);
         SaveAssembler.disassemble(save);
         Game.getInstance().play();
     }
 
     public List<String> getSaveNames() {
-      return SaveRepository.getSaveNames();
+      return saveRepository.getSaveNames();
     }
 
     public void initializeGame() {

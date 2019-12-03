@@ -1,6 +1,7 @@
 package brickingbad.domain.game;
 
 import brickingbad.controller.GameController;
+import brickingbad.domain.game.alien.Alien;
 import brickingbad.domain.game.alien.CooperativeAlien;
 import brickingbad.domain.game.alien.ProtectingAlien;
 import brickingbad.domain.game.alien.RepairingAlien;
@@ -26,6 +27,7 @@ public class Game {
     private Ground ground;
     private ArrayList<Wall> walls;
     private ArrayList<Brick> bricks;
+    private ArrayList<Alien> aliens;
     private ArrayList<GameObject> gameObjects;
 
     private boolean[][] brickGrid;
@@ -55,6 +57,7 @@ public class Game {
         gameObjects = new ArrayList<>();
         wrapperContentList = new ArrayList<>();
         activeAliens = new ArrayList<>();
+        aliens = new ArrayList<>();
         gameClock = Clock.systemDefaultZone();
     }
 
@@ -104,6 +107,7 @@ public class Game {
 
         bricks = new ArrayList<>();
         balls = new ArrayList<>();
+        aliens = new ArrayList<>();
         activePowerUps = new ArrayList<>();
         storedPowerUps = new ArrayList<>();
 
@@ -140,8 +144,6 @@ public class Game {
         paddle.getCurrentBalls().add(firstBall);
         trackObject(firstBall);
     }
-
-
 
     public void play() {
     }
@@ -320,18 +322,21 @@ public class Game {
     }
 
     private void spawnAlien(WrapperContent content) {
+        Alien alien = null;
         switch (content) {
             case COOPERATIVE_ALIEN:
-                trackObject(new CooperativeAlien());
+                alien = new CooperativeAlien();
                 break;
             case PROTECTING_ALIEN:
-                trackObject(new ProtectingAlien());
+                alien = new ProtectingAlien();
                 break;
             case REPAIRING_ALIEN:
-                trackObject(new RepairingAlien());
+                alien = new RepairingAlien();
                 break;
             default:
         }
+        aliens.add(alien);
+        trackObject(alien);
     }
 
     private void spawnGangOfBalls(Vector revealPosition) {
@@ -399,6 +404,15 @@ public class Game {
 
     public ArrayList<Ball> getBalls() {
         return balls;
+    }
+
+    public ArrayList<Alien> getAliens() {
+        return aliens;
+    }
+
+    public void addAlien(Alien alien) {
+        aliens.add(alien);
+        trackObject(alien);
     }
 
     public Paddle getPaddle() {

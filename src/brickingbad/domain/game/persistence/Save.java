@@ -15,16 +15,17 @@ public class Save {
   List<List<Double>> brickCoordinates;
   List<String> brickTypes;
 
+  List<Boolean> ballOnPaddle;
   List<List<Double>> ballCoordinates;
   List<List<Double>> ballVelocities;
 
-  List<Boolean> activePowerUps;
-  List<Boolean> storedPowerUps;
+  List<String> activePowerUps;
+  List<String> storedPowerUps;
 
   List<List<Double>> alienCoordinates;
   List<String> alienTypes;
 
-  Save() {
+  public Save() {
     paddleCoordinates = new ArrayList<>();
     brickCoordinates = new ArrayList<>();
     ballCoordinates = new ArrayList<>();
@@ -34,6 +35,7 @@ public class Save {
     brickTypes = new ArrayList<>();
     alienCoordinates = new ArrayList<>();
     alienTypes = new ArrayList<>();
+    ballOnPaddle = new ArrayList<>();
   }
 
 }

@@ -9,4 +9,8 @@ public abstract class Brick extends GameObject {
         Game.getInstance().anyBricksLeft();
         super.destroy();
     }
+
+    public String getTypeName() {
+        return "Brick";
+    }
 }

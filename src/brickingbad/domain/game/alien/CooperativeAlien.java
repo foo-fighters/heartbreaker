@@ -18,4 +18,10 @@ public class CooperativeAlien extends Alien {
     void performAction() {
 
     }
+
+    @Override
+    public String getTypeName() {
+        return "Cooperative" + super.getTypeName();
+    }
+
 }

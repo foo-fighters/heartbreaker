@@ -1,5 +1,6 @@
 package brickingbad.domain.game.brick;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class BrickFactory {
@@ -49,6 +50,20 @@ public class BrickFactory {
             wrapperBricks.add(new WrapperBrick());
         }
         return wrapperBricks;
+    }
+
+    public Brick createBrick(String className) {
+        Brick brick;
+        try {
+            brick = (Brick) Class.forName(className).getDeclaredConstructor().newInstance();
+        } catch (ClassNotFoundException |
+                NoSuchMethodException |
+                InstantiationException |
+                IllegalAccessException |
+                InvocationTargetException e){
+            return new SimpleBrick();
+        }
+        return brick;
     }
 
 
