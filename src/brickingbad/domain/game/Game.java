@@ -207,7 +207,7 @@ public class Game {
     }
 
     public void addBall(Ball ball) {
-        paddle.getCurrentBalls().add(ball);
+        balls.add(ball);
         trackObject(ball);
     }
 
