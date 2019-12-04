@@ -40,7 +40,7 @@ public class LocalAuthenticationAdapter implements IAuthenticationAdapter {
   @Override
   public User findUserByName(String name) throws IllegalArgumentException {
     List<String> names = getNames()
-                              .stream().map((userName) -> Decoder.decodeString(userName))
+                              .stream().map(Decoder::decodeString)
                               .collect(Collectors.toList());
     if (!names.contains(name)) {
       throw new IllegalArgumentException("A user with that name doesn't exist.");
@@ -48,8 +48,7 @@ public class LocalAuthenticationAdapter implements IAuthenticationAdapter {
       try {
         String encodedPassword = Files.readString(Paths.get(usersPath + Encoder.encodeString(name) + ".txt"), StandardCharsets.US_ASCII);
         String decodedPassword = Decoder.decodeString(encodedPassword);
-        User user = new User(name, decodedPassword);
-        return user;
+        return new User(name, decodedPassword);
       } catch (IOException e) {
         e.printStackTrace();
       }

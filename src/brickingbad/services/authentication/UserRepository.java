@@ -22,22 +22,12 @@ public class UserRepository {
 
   // READ/WRITE METHODS
 
-  public void addUser(User user) {
-    try {
-      adapter.addUser(user);
-    } catch (IllegalArgumentException e) {
-      // TODO: handle
-    }
+  public void addUser(User user) throws IllegalArgumentException {
+    adapter.addUser(user);
   }
 
-  public User findUserByName(String name) {
-    try {
-      User user = adapter.findUserByName(name);
-      return user;
-    } catch (IllegalArgumentException e) {
-      // TODO: handle
-      return null;
-    }
+  public User findUserByName(String name) throws IllegalArgumentException {
+    return adapter.findUserByName(name);
   }
 
   // ADAPTER CONTROLS
