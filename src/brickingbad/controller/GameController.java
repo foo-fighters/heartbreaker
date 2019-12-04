@@ -13,6 +13,7 @@ import brickingbad.services.Adapter;
 import brickingbad.services.persistence.SaveRepository;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.components.containers.GameButtonPanel;
+import brickingbad.ui.effects.Effect;
 import brickingbad.ui.game.BuildingModePanel;
 import brickingbad.ui.game.RunningModePanel;
 import brickingbad.ui.components.Panel;
@@ -79,6 +80,7 @@ public class GameController {
     }
 
     public void startGame() {
+        EffectsController.getInstance().playAudio("start");
         Game.getInstance().play();
     }
 

@@ -33,20 +33,22 @@ public class EffectsController {
     RunningModePanel.getInstance().addEffect(effect);
   }
 
-  public void playBrickBrokenAudio()  {
+  public void playAudio(String name)  {
 
     try {
-      AudioPlayer sound = new AudioPlayer("resources/sounds/brickBroke.wav");
+      AudioPlayer sound = new AudioPlayer("resources/sounds/"+name+".wav");
     } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
       e.printStackTrace();
     }
-
-
   }
+
 
   public void load(){
 
     initiateAudio("resources/sounds/brickBroke.wav");
+    initiateAudio("resources/sounds/start.wav");
+    initiateAudio("resources/sounds/lifeLost.wav");
+    initiateAudio("resources/sounds/closeGame.wav");
 
   }
 

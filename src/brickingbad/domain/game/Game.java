@@ -1,5 +1,6 @@
 package brickingbad.domain.game;
 
+import brickingbad.controller.EffectsController;
 import brickingbad.controller.GameController;
 import brickingbad.domain.game.alien.Alien;
 import brickingbad.domain.game.alien.CooperativeAlien;
@@ -469,6 +470,7 @@ public class Game {
 
     public void lostLife() {
         if (lives != 1){
+            EffectsController.getInstance().playAudio("lifeLost");
             lives = lives - 1;
             resetBall();
         }else{
