@@ -3,7 +3,6 @@ package brickingbad.ui;
 import brickingbad.controller.EffectsController;
 import brickingbad.controller.GameController;
 import brickingbad.controller.SaveController;
-import brickingbad.controller.SaveController;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.services.Adapter;
 import brickingbad.services.AdapterHandler;
@@ -18,7 +17,6 @@ import brickingbad.ui.menu.MainMenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -49,7 +47,7 @@ public class BrickingBadFrame extends JFrame {
     setTitle("Bricking Bad");
     getContentPane().setPreferredSize(new Dimension(GameConstants.screenWidth, GameConstants.screenHeight));
     pack();
-    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     panels = new JPanel(new CardLayout());
     add(panels);
 
@@ -65,26 +63,6 @@ public class BrickingBadFrame extends JFrame {
     }
 
     EffectsController.getInstance().load();
-
-
-    addWindowListener(new java.awt.event.WindowAdapter() {
-      @Override
-      public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-        if (JOptionPane.showConfirmDialog(instance,
-                "Are you sure you want to close this window?", "Close Window?",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
-          EffectsController.getInstance().playAudio("closeGame(old)");
-
-          try {
-            Thread.sleep(800);
-          } catch (InterruptedException e) {
-            e.printStackTrace();
-          }
-          System.exit(0);
-        }
-      }
-    });
   }
 
   private static void initializePanels() {

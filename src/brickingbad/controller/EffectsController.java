@@ -1,11 +1,18 @@
 package brickingbad.controller;
 
+import brickingbad.services.sound.AudioPlayer;
 import brickingbad.ui.effects.MineBrickExplodeEffect;
 import brickingbad.ui.game.RunningModePanel;
+
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
 
 public class EffectsController {
 
   private static EffectsController instance;
+
+
 
   private EffectsController() {
 
@@ -23,4 +30,38 @@ public class EffectsController {
     RunningModePanel.getInstance().addEffect(effect);
   }
 
+  public void playBrickBrokenAudio()  {
+
+    try {
+      AudioPlayer sound = new AudioPlayer("resources/sounds/brickBroke.wav");
+    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+      e.printStackTrace();
+    }
+
+
+  }
+
+  public void load(){
+
+    initiateAudio("resources/sounds/brickBroke.wav");
+
+  }
+
+  public void initiateAudio(String path){
+
+    Clip clip = null;
+    AudioInputStream audio;
+    try {
+
+      audio =
+              AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
+      clip = AudioSystem.getClip();
+      clip.open(audio);
+
+
+
+    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+      e.printStackTrace();
+    }
+  }
 }

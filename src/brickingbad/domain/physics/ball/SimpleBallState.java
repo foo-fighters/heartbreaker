@@ -1,6 +1,5 @@
 package brickingbad.domain.physics.ball;
 
-import brickingbad.controller.EffectsController;
 import brickingbad.domain.game.Ball;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.Shape;
@@ -29,8 +28,6 @@ public class SimpleBallState extends BallState {
                 }else if((dir == Direction.LEFT || dir == Direction.RIGHT)
                         && ball.getPosition().getY() < object.getPosition().getY()) {
                     object.destroy(true);
-                }else {
-                    EffectsController.getInstance().playAudio("halfMetalBrick");
                 }
             }else if(object instanceof ProtectingAlien) {
                 Direction dir = ball.getReflectionDirection();
