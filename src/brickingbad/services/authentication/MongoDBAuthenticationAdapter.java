@@ -1,14 +1,11 @@
-package brickingbad.services.persistence;
+package brickingbad.services.authentication;
 
-import brickingbad.domain.game.Paddle;
 import brickingbad.domain.game.authentication.User;
 import brickingbad.services.MongoDBService;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
 
