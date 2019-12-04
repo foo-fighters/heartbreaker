@@ -8,6 +8,7 @@ import brickingbad.ui.game.BuildingModePanel;
 import brickingbad.ui.game.animation.Animator;
 import brickingbad.ui.menu.HelpPanel;
 import brickingbad.ui.game.RunningModePanel;
+import brickingbad.ui.menu.LandingPanel;
 import brickingbad.ui.menu.LoadPanel;
 import brickingbad.ui.menu.MainMenuPanel;
 
@@ -67,12 +68,13 @@ public class BrickingBadFrame extends JFrame {
     panelsMap.put(Panel.RUNNING_MODE, RunningModePanel.getInstance());
     panelsMap.put(Panel.LOAD_GAME, LoadPanel.getInstance());
     panelsMap.put(Panel.HELP, HelpPanel.getInstance());
+    panelsMap.put(Panel.LANDING, LandingPanel.getInstance());
 
     panelsMap.forEach((panelEnum, panel) -> {
       panels.add(panel, panelEnum.name());
     });
 
-    showPanel(Panel.MAIN_MENU);
+    showPanel(Panel.LANDING);
   }
 
   public void showBuildingModePanel() {
@@ -193,6 +195,14 @@ public class BrickingBadFrame extends JFrame {
             saveLocations, // Array of choices
             saveLocations); // Initial choice
     return adapterName;
+  }
+
+  public void showRegisterDialog() {
+    // TODO: add ui
+  }
+
+  public void showLoginDialog() {
+    // TODO: add ui
   }
 
 }
