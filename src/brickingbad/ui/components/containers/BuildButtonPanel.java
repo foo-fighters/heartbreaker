@@ -1,5 +1,6 @@
 package brickingbad.ui.components.containers;
 
+import brickingbad.controller.EffectsController;
 import brickingbad.controller.GameController;
 import brickingbad.domain.game.Game;
 import brickingbad.ui.BrickingBadFrame;
@@ -52,6 +53,7 @@ public class BuildButtonPanel extends JPanel implements ActionListener {
             }
             GameController.getInstance().resumeGameIfPaused();
         } else if (e.getSource().equals(quitButton)) {
+            EffectsController.getInstance().stopHeartBeat();
             BrickingBadFrame.getInstance().showMainMenuPanel();
         } else {
             throw new IllegalArgumentException();

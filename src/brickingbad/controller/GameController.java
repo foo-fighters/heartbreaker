@@ -168,10 +168,12 @@ public class GameController {
     }
   
     public void showDeadDialog(){
+        EffectsController.getInstance().playAudio("endLaugh");
         BrickingBadFrame.getInstance().showYouAreDeadDialog();
     }
 
     public void showWinDialog() {
+        EffectsController.getInstance().playAudio("congratz");
         BrickingBadFrame.getInstance().showWonDialog();
     }
 

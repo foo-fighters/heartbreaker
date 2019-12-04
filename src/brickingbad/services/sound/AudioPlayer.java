@@ -6,11 +6,8 @@ import java.io.IOException;
 
 public class AudioPlayer {
 
-    Long currentFrame;
-
-    String status;
     AudioInputStream audioInputStream;
-    static String filePath;
+    Clip clip;
 
     public AudioPlayer(String filePath)
             throws UnsupportedAudioFileException,
@@ -23,7 +20,7 @@ public class AudioPlayer {
                 AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
         long f2 = System.currentTimeMillis();
         // create clip reference
-        Clip clip = AudioSystem.getClip();
+        clip = AudioSystem.getClip();
         long f3 = System.currentTimeMillis();
         // open audioInputStream to the clip
         clip.open(audioInputStream);
@@ -35,6 +32,11 @@ public class AudioPlayer {
         System.out.println("second = " + (f3-f2));
         System.out.println("third = " + (f4-f3));
         System.out.println("fourth = " + (f5-f4));
+    }
+
+
+    public Clip getClip(){
+        return clip;
     }
 
 }

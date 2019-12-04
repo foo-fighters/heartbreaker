@@ -473,7 +473,13 @@ public class Game {
             EffectsController.getInstance().playAudio("lifeLost");
             lives = lives - 1;
             resetBall();
+
+            if (lives == 1){
+                EffectsController.getInstance().startHeartBeat();
+            }
+
         }else{
+            EffectsController.getInstance().stopHeartBeat();
             GameController.getInstance().stopAnimator();
             GameController.getInstance().showDeadDialog();
         }
