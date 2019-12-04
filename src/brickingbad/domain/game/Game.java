@@ -638,6 +638,35 @@ public class Game {
         this.lives = lives;
     }
 
+    public ArrayList<Wall> getWalls() {
+        return walls;
+    }
+
+    public Ground getGround() {
+        return ground;
+    }
+
+    public void lostLife() {
+        if (lives != 1){
+            EffectsController.getInstance().playAudio("lifeLost");
+            lives = lives - 1;
+            resetBall();
+
+            if (lives == 1){
+                EffectsController.getInstance().startHeartBeat();
+            }
+
+        }else{
+            EffectsController.getInstance().stopHeartBeat();
+            GameController.getInstance().stopAnimator();
+            GameController.getInstance().showDeadDialog();
+        }
+    }
+
+    public void anyBallLeft() {
+        if (balls.isEmpty()){
+            lostLife();
+        }
     public int getGridSize() {
         return gridX * gridY;
     }
