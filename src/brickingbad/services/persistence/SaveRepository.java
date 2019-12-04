@@ -1,11 +1,9 @@
 package brickingbad.services.persistence;
 
 import brickingbad.domain.game.persistence.Save;
+import brickingbad.services.Adapter;
 
 import java.util.List;
-
-import static com.mongodb.client.model.Filters.eq;
-
 
 public class SaveRepository {
 
@@ -41,19 +39,29 @@ public class SaveRepository {
 
   // ADAPTER CONTROLS
 
-  public SaveRepository adaptMongoDB() {
+  public IPersistenceAdapter getAdapter() {
+    return adapter;
+  }
+
+  public void adapt(Adapter adapter) {
+    if (adapter.equals(Adapter.MONGODB)) {
+      adaptMongoDB();
+    } else if (adapter.equals(Adapter.LOCAL)) {
+      adaptLocal();
+    }
+  }
+
+  private SaveRepository adaptMongoDB() {
     this.adapter = new MongoDBPersistenceAdapter();
     return this;
   }
 
-  public SaveRepository adaptLocal() {
+  private SaveRepository adaptLocal() {
     this.adapter = new LocalPersistenceAdapter();
     return this;
   }
 
-  public IPersistenceAdapter getAdapter() {
-    return adapter;
-  }
+
 
 
 }

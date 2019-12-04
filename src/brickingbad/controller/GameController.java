@@ -9,6 +9,7 @@ import brickingbad.domain.game.persistence.Save;
 import brickingbad.domain.game.persistence.SaveAssembler;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.PhysicsEngine;
+import brickingbad.services.Adapter;
 import brickingbad.services.persistence.SaveRepository;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.game.BuildingModePanel;
@@ -27,7 +28,7 @@ public class GameController {
     private static SaveRepository saveRepository;
 
     private GameController() {
-        saveRepository = SaveRepository.getInstance().adaptLocal();
+        saveRepository = SaveRepository.getInstance();
     }
 
     public static GameController getInstance() {
@@ -47,14 +48,16 @@ public class GameController {
         return panel == Panel.RUNNING_MODE;
     }
 
-    public void saveGame(String name, boolean inRunningMode) {
+    public void saveGame(String name, boolean inRunningMode, Adapter adapter) {
+        saveRepository.adapt(adapter);
         Game game = Game.getInstance();
         Save save = SaveAssembler.assemble(game, name);
         save.inRunningMode = inRunningMode;
         saveRepository.save(save);
     }
 
-    public void loadGame(String name) {
+    public void loadGame(String name, Adapter adapter) {
+        saveRepository.adapt(adapter);
         Save save = saveRepository.getSaveByName(name);
         if (save.inRunningMode) {
             BrickingBadFrame.getInstance().showRunningModePanel();
@@ -65,7 +68,8 @@ public class GameController {
         Game.getInstance().play();
     }
 
-    public List<String> getSaveNames() {
+    public List<String> getSaveNames(Adapter adapter) {
+      saveRepository.adapt(adapter);
       return saveRepository.getSaveNames();
     }
 
