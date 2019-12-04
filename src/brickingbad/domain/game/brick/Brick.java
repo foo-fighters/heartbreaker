@@ -7,6 +7,7 @@ public abstract class Brick extends GameObject {
     @Override
     public void destroy() {
         Game.getInstance().anyBricksLeft();
+        Game.getInstance().brickDestroyed();
         super.destroy();
     }
 }
