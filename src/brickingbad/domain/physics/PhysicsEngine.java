@@ -12,8 +12,7 @@ public class PhysicsEngine implements Runnable {
 
     private final int SLEEP_TIME = 1000 / GameConstants.calculationsPerSecond;
 
-
-  private int timePassed = 0;
+    private int timePassed = 0;
 
     private static PhysicsEngine instance;
     private JPanel currentPanel;
@@ -72,6 +71,7 @@ public class PhysicsEngine implements Runnable {
           handleCollisions();
           updatePositions();
           timePassed += SLEEP_TIME;
+          System.out.println(timePassed);
         }
       }
     }
@@ -142,22 +142,25 @@ public class PhysicsEngine implements Runnable {
     }
 
     private static boolean areColliding (GameObject o1, GameObject o2){
-      double o1_posx = o1.getPosition().getX();
-      double o1_posy = o1.getPosition().getY();
-      double o2_posx = o2.getPosition().getX();
-      double o2_posy = o2.getPosition().getY();
-      double distx = (o1.getSize().getX() + o2.getSize().getX()) / 2.0;
-      double disty = (o1.getSize().getY() + o2.getSize().getY()) / 2.0;
+      if (o2 != null) {
+        double o1_posx = o1.getPosition().getX();
+        double o1_posy = o1.getPosition().getY();
+        double o2_posx = o2.getPosition().getX();
+        double o2_posy = o2.getPosition().getY();
+        double distx = (o1.getSize().getX() + o2.getSize().getX()) / 2.0;
+        double disty = (o1.getSize().getY() + o2.getSize().getY()) / 2.0;
 
-      if (o1.getShape() == Shape.RECTANGLE && o2.getShape() == Shape.RECTANGLE) {
-        return Math.abs(o1_posx - o2_posx) < distx && Math.abs(o1_posy - o2_posy) < disty;
-      } else if (o1.getShape() == Shape.CIRCLE && o2.getShape() == Shape.CIRCLE) {
-        return Math.hypot(o1_posx - o2_posx, o1_posy - o2_posy) < distx;
-      } else if (o1.getShape() == Shape.CIRCLE) {
-        return mixedColliding(o1, o2);
-      } else {
-        return mixedColliding(o2, o1);
+        if (o1.getShape() == Shape.RECTANGLE && o2.getShape() == Shape.RECTANGLE) {
+          return Math.abs(o1_posx - o2_posx) < distx && Math.abs(o1_posy - o2_posy) < disty;
+        } else if (o1.getShape() == Shape.CIRCLE && o2.getShape() == Shape.CIRCLE) {
+          return Math.hypot(o1_posx - o2_posx, o1_posy - o2_posy) < distx;
+        } else if (o1.getShape() == Shape.CIRCLE) {
+          return mixedColliding(o1, o2);
+        } else {
+          return mixedColliding(o2, o1);
+        }
       }
+      return false;
     }
 
     private static boolean mixedColliding (GameObject circle, GameObject rect){

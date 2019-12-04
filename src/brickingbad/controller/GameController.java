@@ -26,10 +26,8 @@ import java.util.List;
 public class GameController {
 
     private static GameController instance;
-    private static SaveRepository saveRepository;
 
     private GameController() {
-        saveRepository = SaveRepository.getInstance();
     }
 
     public static GameController getInstance() {
@@ -47,31 +45,6 @@ public class GameController {
     public boolean inRunningMode() {
         Panel panel = BrickingBadFrame.getInstance().getCurrentPanelName();
         return panel == Panel.RUNNING_MODE;
-    }
-
-    public void saveGame(String name, boolean inRunningMode, Adapter adapter) {
-        saveRepository.adapt(adapter);
-        Game game = Game.getInstance();
-        Save save = SaveAssembler.assemble(game, name);
-        save.inRunningMode = inRunningMode;
-        saveRepository.save(save);
-    }
-
-    public void loadGame(String name, Adapter adapter) {
-        saveRepository.adapt(adapter);
-        Save save = saveRepository.getSaveByName(name);
-        if (save.inRunningMode) {
-            BrickingBadFrame.getInstance().showRunningModePanel();
-        } else {
-            BrickingBadFrame.getInstance().showBuildingModePanel();
-        }
-        SaveAssembler.disassemble(save);
-        Game.getInstance().play();
-    }
-
-    public List<String> getSaveNames(Adapter adapter) {
-      saveRepository.adapt(adapter);
-      return saveRepository.getSaveNames();
     }
 
     public void initializeGame(boolean fromSave) {
