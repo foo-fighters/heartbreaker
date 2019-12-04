@@ -224,12 +224,4 @@ public class BrickingBadFrame extends JFrame {
     return adapterName;
   }
 
-  public void showRegisterDialog() {
-    // TODO: add ui
-  }
-
-  public void showLoginDialog() {
-    // TODO: add ui
-  }
-
 }
