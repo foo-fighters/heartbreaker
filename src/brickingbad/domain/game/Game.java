@@ -179,7 +179,7 @@ public class Game {
                 xdist = center.getX() - object.getPosition().getX();
                 ydist = center.getY() - object.getPosition().getY();
                 if(Math.hypot(xdist, ydist) < radius) {
-                    object.destroy();
+                    object.destroy(false);
                 }
             }
         }

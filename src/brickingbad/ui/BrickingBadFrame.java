@@ -1,5 +1,6 @@
 package brickingbad.ui;
 
+import brickingbad.controller.EffectsController;
 import brickingbad.controller.GameController;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.services.Adapter;
@@ -57,6 +58,8 @@ public class BrickingBadFrame extends JFrame {
     } catch(Exception e) {
       System.out.println("Problem importing font");
     }
+
+    EffectsController.getInstance().load();
   }
 
   private static void initializePanels() {

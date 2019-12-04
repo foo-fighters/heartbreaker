@@ -24,6 +24,10 @@ public abstract class GameObject implements Comparable {
     Game.getInstance().removeObject(this);
   }
 
+  public void destroy(boolean destroyedByBall) {
+    Game.getInstance().removeObject(this);
+  }
+
   public Shape getShape() {
     return shape;
   }

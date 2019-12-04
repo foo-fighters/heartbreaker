@@ -23,13 +23,13 @@ public class SimpleBallState extends BallState {
             if(object instanceof HalfMetalBrick) {
                 Direction dir = ball.getReflectionDirection();
                 if(dir == Direction.UP_LEFT || dir == Direction.UP || dir == Direction.UP_RIGHT) {
-                    object.destroy();
+                    object.destroy(true);
                 }else if((dir == Direction.LEFT || dir == Direction.RIGHT)
                         && ball.getPosition().getY() < object.getPosition().getY()) {
-                    object.destroy();
+                    object.destroy(true);
                 }
             }else{
-                object.destroy();
+                object.destroy(true);
             }
         }
         ball.reflect(object);
