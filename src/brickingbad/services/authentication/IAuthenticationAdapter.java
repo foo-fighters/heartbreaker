@@ -1,4 +1,4 @@
-package brickingbad.services.persistence;
+package brickingbad.services.authentication;
 
 import brickingbad.domain.game.authentication.User;
 

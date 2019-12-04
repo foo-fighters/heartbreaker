@@ -1,9 +1,8 @@
-package brickingbad.services.persistence;
+package brickingbad.services.authentication;
 
 import brickingbad.domain.game.authentication.User;
 import brickingbad.services.encryption.Decoder;
 import brickingbad.services.encryption.Encoder;
-import com.google.gson.Gson;
 
 import java.io.BufferedWriter;
 import java.io.File;
