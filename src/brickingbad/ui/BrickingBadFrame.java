@@ -1,6 +1,7 @@
 package brickingbad.ui;
 
 import brickingbad.controller.GameController;
+import brickingbad.controller.SaveController;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.services.Adapter;
 import brickingbad.ui.components.Panel;
@@ -82,6 +83,7 @@ public class BrickingBadFrame extends JFrame {
 
   public void showRunningModePanel() {
     currentPanelName = Panel.RUNNING_MODE;
+    GameController.getInstance().resumeGameIfPaused();
     showPanel(currentPanelName);
   }
 
@@ -139,7 +141,7 @@ public class BrickingBadFrame extends JFrame {
       System.out.println(name);
       if (name != null) {
         boolean inRunningMode = getCurrentPanelName().equals(Panel.RUNNING_MODE);
-        GameController.getInstance().saveGame(name, inRunningMode, adapter);
+        SaveController.getInstance().adapt(adapter).saveGame(name, inRunningMode);
       }
     }
   }
@@ -151,7 +153,7 @@ public class BrickingBadFrame extends JFrame {
     } else {
       Adapter adapter = showAdapterSelection();
 
-      List<String> saveNames = GameController.getInstance().getSaveNames(adapter);
+      List<String> saveNames = SaveController.getInstance().adapt(adapter).getSaveNames();
 
       String name = (String) JOptionPane.showInputDialog(null, "Choose a save: ",
               "Load Game", JOptionPane.QUESTION_MESSAGE, null, // Use
@@ -162,7 +164,7 @@ public class BrickingBadFrame extends JFrame {
 
       if (name != null) {
         GameController.getInstance().initializeGame(true);
-        GameController.getInstance().loadGame(name, adapter);
+        SaveController.getInstance().adapt(adapter).loadGame(name);
       }
     }
   }

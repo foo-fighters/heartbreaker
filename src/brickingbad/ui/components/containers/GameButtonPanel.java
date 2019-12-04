@@ -32,7 +32,6 @@ public class GameButtonPanel extends JPanel implements ActionListener {
     quitButton = new BBGameButton("QUIT", this);
     godModeButton = new BBGameButton("GOD MODE", this);
     scoreLabel = new JLabel();
-    scoreLabel.setText("0");
     scoreLabel.setForeground(Color.white);
     scoreLabel.setBounds(getWidth()-250,getHeight()-50, GameConstants.heartSize,GameConstants.heartSize);
 
