@@ -5,5 +5,6 @@ public enum Panel {
   RUNNING_MODE,
   MAIN_MENU,
   LOAD_GAME,
+  LANDING,
   HELP;
 }

@@ -12,7 +12,7 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class MongoDBPersistenceAdapter implements IPersistenceAdapter {
 
-  private static MongoCollection<Save> savesCollection = MongoDBService.getDatabase().getCollection("games", Save.class);
+  private static final MongoCollection<Save> savesCollection = MongoDBService.getDatabase().getCollection("games", Save.class);
 
   @Override
   public void save(Save save) {
@@ -38,9 +38,8 @@ public class MongoDBPersistenceAdapter implements IPersistenceAdapter {
   }
 
   @Override
-    public Save getSaveByName(String name) {
+  public Save getSaveByName(String name) {
     return savesCollection.find(eq("name", name)).first();
   }
-
 
 }
