@@ -27,7 +27,7 @@ public class GameController {
     private static SaveRepository saveRepository;
 
     private GameController() {
-        saveRepository = SaveRepository.getInstance().adaptMongoDB();
+        saveRepository = SaveRepository.getInstance().adaptLocal();
     }
 
     public static GameController getInstance() {

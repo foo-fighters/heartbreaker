@@ -81,7 +81,6 @@ public class SaveAssembler {
     save.score = score;
     save.lives = lives;
 
-    System.out.println(save.toString());
     return save;
   }
 
