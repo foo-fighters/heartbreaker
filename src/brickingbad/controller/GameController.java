@@ -159,9 +159,6 @@ public class GameController {
         Game.getInstance().usePowerUp(name);
     }
 
-    public void lifeLost() {
-        Game.getInstance().lostLife();
-    }
 
     public void stopAnimator() {
         Animator.getInstance().stop();
