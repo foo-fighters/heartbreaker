@@ -8,6 +8,9 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
+import brickingbad.ui.effects.MineBrickExplodeEffect;
+import brickingbad.ui.game.RunningModePanel;
+
 public class EffectsController {
 
   private static EffectsController instance;

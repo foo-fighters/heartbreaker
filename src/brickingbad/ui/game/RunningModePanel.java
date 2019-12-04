@@ -8,6 +8,7 @@ import brickingbad.domain.game.GameObjectListener;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.GameButtonPanel;
+import brickingbad.ui.effects.Effect;
 import brickingbad.ui.game.animation.Animator;
 import brickingbad.ui.effects.Effect;
 
