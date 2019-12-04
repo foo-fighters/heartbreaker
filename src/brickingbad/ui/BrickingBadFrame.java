@@ -141,7 +141,7 @@ public class BrickingBadFrame extends JFrame {
       System.out.println(name);
       if (name != null) {
         boolean inRunningMode = getCurrentPanelName().equals(Panel.RUNNING_MODE);
-        SaveController.getInstance().saveGame(name, inRunningMode, adapter);
+        SaveController.getInstance().adapt(adapter).saveGame(name, inRunningMode);
       }
     }
   }
@@ -153,7 +153,7 @@ public class BrickingBadFrame extends JFrame {
     } else {
       Adapter adapter = showAdapterSelection();
 
-      List<String> saveNames = SaveController.getInstance().getSaveNames(adapter);
+      List<String> saveNames = SaveController.getInstance().adapt(adapter).getSaveNames();
 
       String name = (String) JOptionPane.showInputDialog(null, "Choose a save: ",
               "Load Game", JOptionPane.QUESTION_MESSAGE, null, // Use
@@ -164,7 +164,7 @@ public class BrickingBadFrame extends JFrame {
 
       if (name != null) {
         GameController.getInstance().initializeGame(true);
-        SaveController.getInstance().loadGame(name, adapter);
+        SaveController.getInstance().adapt(adapter).loadGame(name);
       }
     }
   }

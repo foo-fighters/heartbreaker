@@ -25,16 +25,14 @@ public class SaveController {
     return instance;
   }
 
-  public void saveGame(String name, boolean inRunningMode, Adapter adapter) {
-    saveRepository.adapt(adapter);
+  public void saveGame(String name, boolean inRunningMode) {
     Game game = Game.getInstance();
     Save save = SaveAssembler.assemble(game, name);
     save.inRunningMode = inRunningMode;
     saveRepository.save(save);
   }
 
-  public void loadGame(String name, Adapter adapter) {
-    saveRepository.adapt(adapter);
+  public void loadGame(String name) {
     Save save = saveRepository.getSaveByName(name);
     if (save.inRunningMode) {
       BrickingBadFrame.getInstance().showRunningModePanel();
@@ -45,9 +43,13 @@ public class SaveController {
     Game.getInstance().play();
   }
 
-  public List<String> getSaveNames(Adapter adapter) {
-    saveRepository.adapt(adapter);
+  public List<String> getSaveNames() {
     return saveRepository.getSaveNames();
+  }
+
+  public SaveController adapt(Adapter adapter) {
+    saveRepository.adapt(adapter);
+    return this;
   }
 
 }
