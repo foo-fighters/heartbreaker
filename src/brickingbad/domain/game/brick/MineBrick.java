@@ -45,6 +45,9 @@ public class MineBrick extends Brick {
 
     @Override
     public void destroy(boolean destroyedByBall) {
+        if (destroyedByBall){
+            EffectsController.getInstance().playAudio("mineBrick");
+        }
         super.destroy();
         Game.getInstance().destroyBricksInRadius(position, GameConstants.mineBrickExplosionRadius);
         EffectsController.getInstance().showMineBrickExplodeEffect(position.getX(), position.getY());
