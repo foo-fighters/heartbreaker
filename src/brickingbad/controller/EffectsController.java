@@ -49,7 +49,9 @@ public class EffectsController {
     initiateAudio("resources/sounds/start.wav");
     initiateAudio("resources/sounds/lifeLost.wav");
     initiateAudio("resources/sounds/closeGame.wav");
-
+    initiateAudio("resources/sounds/button.wav");
+    initiateAudio("resources/sounds/mineBrick.wav");
+    initiateAudio("resources/sounds/halfMetalBrick.wav");
   }
 
   public void initiateAudio(String path){
