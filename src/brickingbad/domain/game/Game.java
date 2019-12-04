@@ -8,6 +8,7 @@ import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.game.border.*;
 import brickingbad.domain.game.brick.*;
 import brickingbad.domain.physics.Direction;
+import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.domain.physics.Vector;
 
 import java.time.Clock;
@@ -475,5 +476,11 @@ public class Game {
             alreadyWon = true;
         }
 
+    }
+
+    public void brickDestroyed() {
+        score += 300/(PhysicsEngine.getInstance().getTimePassed()/1000);
+        System.out.println(score); //integer
+        GameController.getInstance().setUIScore(score);
     }
 }

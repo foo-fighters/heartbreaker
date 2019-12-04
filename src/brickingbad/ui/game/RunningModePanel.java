@@ -31,7 +31,7 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
   private CopyOnWriteArrayList<UIGameObject> uiObjects;
 
   private GameButtonPanel gameButtonPanel;
-
+  private JLabel scoreLabel;
   private BufferedImage background;
 
   private BufferedImage heart;
@@ -47,9 +47,12 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
     loadBackgroundImage("resources/sprites/background.png");
     loadHeartImage("resources/sprites/heart.png");
     loadHeartEmptyImage("resources/sprites/heart_empty.png");
-
     GameController.getInstance().addObjectListener(this);
     this.addKeyListener(new GameKeyboardListener());
+
+    scoreLabel = new JLabel();
+    scoreLabel.setText("0");
+    scoreLabel.setForeground(Color.white);
   }
 
   public static RunningModePanel getInstance() {
@@ -142,5 +145,9 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
 
   public void resetUI() {
     uiObjects = new CopyOnWriteArrayList<>();
+  }
+
+  public void setScore(int score) {
+    gameButtonPanel.setUIScore(score);
   }
 }

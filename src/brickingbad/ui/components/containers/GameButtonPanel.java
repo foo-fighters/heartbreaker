@@ -1,6 +1,8 @@
 package brickingbad.ui.components.containers;
 
 import brickingbad.controller.GameController;
+import brickingbad.domain.game.Game;
+import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.brick.Brick;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.components.BBGameButton;
@@ -19,6 +21,7 @@ public class GameButtonPanel extends JPanel implements ActionListener {
   private BBGameButton pauseButton;
   private BBGameButton quitButton;
   private BBGameButton godModeButton;
+  private JLabel scoreLabel;
 
   public GameButtonPanel() {
     setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -28,12 +31,17 @@ public class GameButtonPanel extends JPanel implements ActionListener {
     pauseButton = new BBGameButton("PAUSE", this);
     quitButton = new BBGameButton("QUIT", this);
     godModeButton = new BBGameButton("GOD MODE", this);
+    scoreLabel = new JLabel();
+    scoreLabel.setText("0");
+    scoreLabel.setForeground(Color.white);
+    scoreLabel.setBounds(getWidth()-250,getHeight()-50, GameConstants.heartSize,GameConstants.heartSize);
 
     add(saveButton);
     add(loadButton);
     add(pauseButton);
     add(quitButton);
     add(godModeButton);
+    add(scoreLabel);
 
     setOpaque(false);
     setFocusable(false);
@@ -54,6 +62,7 @@ public class GameButtonPanel extends JPanel implements ActionListener {
       GameController.getInstance().togglePauseResume();
     } else if (e.getSource().equals(quitButton)) {
       GameController.getInstance().resetUI();
+      GameController.getInstance().resetScore();
       BrickingBadFrame.getInstance().showMainMenuPanel();
       pauseButton.setText("PAUSE");
     } else if (e.getSource().equals(godModeButton)) {
@@ -61,6 +70,10 @@ public class GameButtonPanel extends JPanel implements ActionListener {
     } else {
       throw new IllegalArgumentException();
     }
+  }
+
+  public void setUIScore(int score){
+    scoreLabel.setText(Integer.toString(score));
   }
 
 }

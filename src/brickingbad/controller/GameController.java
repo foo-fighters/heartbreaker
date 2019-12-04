@@ -11,6 +11,7 @@ import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.services.persistence.SaveRepository;
 import brickingbad.ui.BrickingBadFrame;
+import brickingbad.ui.components.containers.GameButtonPanel;
 import brickingbad.ui.game.BuildingModePanel;
 import brickingbad.ui.game.RunningModePanel;
 import brickingbad.ui.components.Panel;
@@ -158,5 +159,14 @@ public class GameController {
 
     public void showWinDialog() {
         BrickingBadFrame.getInstance().showWonDialog();
+    }
+
+    public void resetScore() {
+        PhysicsEngine.getInstance().resetTimePassed();
+        Game.getInstance().setScore(0);
+        setUIScore(0);
+    }
+    public void setUIScore(int score){
+        RunningModePanel.getInstance().setScore(score);
     }
 }
