@@ -130,6 +130,7 @@ public class Game {
 
         if (!fromSave) {
             lives = 3;
+            score = 0;
 
             paddle = new Paddle();
             Ball firstBall = new Ball(paddle.getBallStartPosition());
@@ -140,6 +141,7 @@ public class Game {
             trackObject(firstBall);
         }
 
+        GameController.getInstance().setUIScore(score);
         trackObject(wall1);
         trackObject(wall2);
         trackObject(wall3);
@@ -397,16 +399,6 @@ public class Game {
     }
 
     public ArrayList<GameObject> getObjects() {
-//        ArrayList<GameObject> gameObjects = new ArrayList<>();
-//
-//        gameObjects.add(paddle);
-//        gameObjects.addAll(bricks);
-//        gameObjects.addAll(balls);
-//        gameObjects.addAll(activePowerUps);
-//        gameObjects.addAll(storedPowerUps);
-//        gameObjects.addAll(walls);
-//        gameObjects.add(ground);
-//
         return gameObjects;
     }
 
@@ -508,7 +500,6 @@ public class Game {
 
     public void brickDestroyed() {
         score += 300/(PhysicsEngine.getInstance().getTimePassed()/1000);
-        System.out.println(score); //integer
         GameController.getInstance().setUIScore(score);
     }
 }
