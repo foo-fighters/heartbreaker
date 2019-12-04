@@ -130,7 +130,8 @@ public class BrickingBadFrame extends JFrame {
   public void showSaveDialog() {
     String name = JOptionPane.showInputDialog("Save name: ");
     if (name != null) {
-      GameController.getInstance().saveGame(name);
+      boolean inRunningMode = getCurrentPanelName().equals(Panel.RUNNING_MODE);
+      GameController.getInstance().saveGame(name, inRunningMode);
     }
   }
 
@@ -147,7 +148,6 @@ public class BrickingBadFrame extends JFrame {
     if (name != null) {
       GameController.getInstance().initializeGame(true);
       GameController.getInstance().loadGame(name);
-      BrickingBadFrame.getInstance().showRunningModePanel();
     }
   }
 

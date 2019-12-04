@@ -47,14 +47,20 @@ public class GameController {
         return panel == Panel.RUNNING_MODE;
     }
 
-    public void saveGame(String name) {
+    public void saveGame(String name, boolean inRunningMode) {
         Game game = Game.getInstance();
         Save save = SaveAssembler.assemble(game, name);
+        save.inRunningMode = inRunningMode;
         saveRepository.save(save);
     }
 
     public void loadGame(String name) {
         Save save = saveRepository.getSaveByName(name);
+        if (save.inRunningMode) {
+            BrickingBadFrame.getInstance().showRunningModePanel();
+        } else {
+            BrickingBadFrame.getInstance().showBuildingModePanel();
+        }
         SaveAssembler.disassemble(save);
         Game.getInstance().play();
     }

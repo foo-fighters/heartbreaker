@@ -7,6 +7,8 @@ public class Save {
 
   public String name;
 
+  public boolean inRunningMode;
+
   public int score;
   public int lives;
 
