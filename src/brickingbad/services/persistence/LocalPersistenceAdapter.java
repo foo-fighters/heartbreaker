@@ -2,6 +2,8 @@ package brickingbad.services.persistence;
 
 import brickingbad.domain.game.persistence.Save;
 import brickingbad.domain.game.persistence.SaveAssembler;
+import brickingbad.services.encryption.Decoder;
+import brickingbad.services.encryption.Encoder;
 import com.google.gson.Gson;
 
 import java.io.*;
@@ -19,7 +21,8 @@ public class LocalPersistenceAdapter implements IPersistenceAdapter {
   public Save getSaveByName(String name) {
     Save save = null;
     try {
-      String json = Files.readString(Paths.get(savePath + name + ".json"), StandardCharsets.US_ASCII);
+      String json = Files.readString(Paths.get(savePath + name + ".txt"), StandardCharsets.US_ASCII);
+      json = Decoder.decodeString(json);
       Gson gson = new Gson();
       save = gson.fromJson(json, Save.class);
     } catch (IOException e) {
@@ -32,8 +35,9 @@ public class LocalPersistenceAdapter implements IPersistenceAdapter {
   public void save(Save save) {
     Gson gson = new Gson();
     String json = gson.toJson(save);
+    json = Encoder.encodeString(json);
     try {
-      BufferedWriter writer = new BufferedWriter(new FileWriter(savePath + save.name + ".json"));
+      BufferedWriter writer = new BufferedWriter(new FileWriter(savePath + save.name + ".txt"));
       writer.write(json);
       writer.close();
     } catch (IOException e) {
