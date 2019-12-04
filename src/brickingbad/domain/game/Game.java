@@ -1,5 +1,6 @@
 package brickingbad.domain.game;
 
+import brickingbad.controller.EffectsController;
 import brickingbad.controller.GameController;
 import brickingbad.domain.game.alien.*;
 import brickingbad.domain.game.listeners.AnimationListener;
@@ -71,6 +72,9 @@ public class Game {
         activeAliens = new ArrayList<>();
         aliens = new ArrayList<>();
         gameClock = Clock.systemDefaultZone();
+
+        int gridX = GameConstants.screenWidth / GameConstants.rectangularBrickLength;
+        int gridY = (int)GameConstants.brickAreaHeight / GameConstants.rectangularBrickThickness;
         brickGrid = new boolean[gridX][gridY];
     }
 

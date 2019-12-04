@@ -52,12 +52,13 @@ public class MainMenuPanel extends JPanel implements ActionListener {
       bbFrame.showHelpPanel();
     } else if (e.getSource().equals(loadGameButton)) {
       bbFrame.showLoadDialog();
+      GameController.getInstance().resumeGameIfPaused();
     } else if (e.getSource().equals(exitButton)) {
       if (JOptionPane.showConfirmDialog(instance,
               "Are you sure you want to close this window?", "Close Window?",
               JOptionPane.YES_NO_OPTION,
               JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
-        EffectsController.getInstance().playAudio("closeGame(old)");
+        EffectsController.getInstance().playAudio("closeGame");
 
         try {
           Thread.sleep(1000);

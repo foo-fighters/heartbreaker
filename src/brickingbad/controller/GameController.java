@@ -45,6 +45,7 @@ public class GameController {
     }
 
     public void startGame() {
+        EffectsController.getInstance().playAudio("start");
         Game.getInstance().play();
     }
 

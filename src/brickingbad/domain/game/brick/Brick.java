@@ -14,7 +14,7 @@ public abstract class Brick extends GameObject {
     @Override
     public void destroy(boolean destroyedByBall) {
         if (destroyedByBall) {
-            EffectsController.getInstance().playBrickBrokenAudio();
+            EffectsController.getInstance().playAudio("brickBroke");
         }
 
         Game.getInstance().anyBricksLeft();
