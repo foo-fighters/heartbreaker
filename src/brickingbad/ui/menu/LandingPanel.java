@@ -70,7 +70,11 @@ public class LandingPanel extends JPanel implements ActionListener {
       AuthenticationController.getInstance().adapt(Adapter.valueOf(adapter)).addUser(user);
     } else if (e.getSource().equals(loginButton)) {
       boolean auth = AuthenticationController.getInstance().adapt(Adapter.valueOf(adapter)).authenticate(name, password);
-      System.out.println(auth);
+      if (auth) {
+        bbFrame.showMainMenuPanel();
+      } else {
+        JOptionPane.showMessageDialog(this, "Wrong username and/or password.");
+      }
     }
   }
 
