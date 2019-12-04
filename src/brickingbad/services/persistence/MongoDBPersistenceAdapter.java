@@ -38,9 +38,8 @@ public class MongoDBPersistenceAdapter implements IPersistenceAdapter {
   }
 
   @Override
-    public Save getSaveByName(String name) {
+  public Save getSaveByName(String name) {
     return savesCollection.find(eq("name", name)).first();
   }
-
 
 }
