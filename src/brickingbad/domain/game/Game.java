@@ -1,6 +1,7 @@
 package brickingbad.domain.game;
 
 import brickingbad.controller.GameController;
+import brickingbad.domain.game.alien.Alien;
 import brickingbad.domain.game.alien.CooperativeAlien;
 import brickingbad.domain.game.alien.ProtectingAlien;
 import brickingbad.domain.game.alien.RepairingAlien;
@@ -27,6 +28,7 @@ public class Game {
     private Ground ground;
     private ArrayList<Wall> walls;
     private ArrayList<Brick> bricks;
+    private ArrayList<Alien> aliens;
     private ArrayList<GameObject> gameObjects;
 
     private boolean[][] brickGrid;
@@ -56,7 +58,12 @@ public class Game {
         gameObjects = new ArrayList<>();
         wrapperContentList = new ArrayList<>();
         activeAliens = new ArrayList<>();
+        aliens = new ArrayList<>();
         gameClock = Clock.systemDefaultZone();
+
+        int gridX = GameConstants.screenWidth / GameConstants.rectangularBrickLength;
+        int gridY = (int)GameConstants.brickAreaHeight / GameConstants.rectangularBrickThickness;
+        brickGrid = new boolean[gridX][gridY];
     }
 
     public static Game getInstance() {
@@ -82,9 +89,9 @@ public class Game {
         }
     }
 
-    public void initialize() {
+    public void initialize(boolean fromSave) {
         gameObjects = new ArrayList<>();
-        lives = 3;
+
         alreadyWon = false;
 
         for (Brick brick : bricks) {
@@ -105,18 +112,11 @@ public class Game {
 
         bricks = new ArrayList<>();
         balls = new ArrayList<>();
+        aliens = new ArrayList<>();
         activePowerUps = new ArrayList<>();
         storedPowerUps = new ArrayList<>();
 
-        int gridX = GameConstants.screenWidth / GameConstants.rectangularBrickLength;
-        int gridY = (int)GameConstants.brickAreaHeight / GameConstants.rectangularBrickThickness;
-        brickGrid = new boolean[gridX][gridY];
-
         removeObjectFromListeners(paddle);
-        paddle = new Paddle();
-        Ball firstBall = new Ball(paddle.getBallStartPosition());
-        balls.add(firstBall);
-        paddle.getCurrentBalls().add(firstBall);
 
         Wall wall1 = new Wall(Direction.UP);
         Wall wall2 = new Wall(Direction.RIGHT);
@@ -127,8 +127,18 @@ public class Game {
         walls.add(wall2);
         walls.add(wall3);
 
-        trackObject(paddle);
-        trackObject(firstBall);
+        if (!fromSave) {
+            lives = 3;
+
+            paddle = new Paddle();
+            Ball firstBall = new Ball(paddle.getBallStartPosition());
+            balls.add(firstBall);
+            paddle.getCurrentBalls().add(firstBall);
+
+            trackObject(paddle);
+            trackObject(firstBall);
+        }
+
         trackObject(wall1);
         trackObject(wall2);
         trackObject(wall3);
@@ -141,8 +151,6 @@ public class Game {
         paddle.getCurrentBalls().add(firstBall);
         trackObject(firstBall);
     }
-
-
 
     public void play() {
     }
@@ -200,7 +208,7 @@ public class Game {
     }
 
     public void addBall(Ball ball) {
-        paddle.getCurrentBalls().add(ball);
+        balls.add(ball);
         trackObject(ball);
     }
 
@@ -321,18 +329,21 @@ public class Game {
     }
 
     private void spawnAlien(WrapperContent content) {
+        Alien alien = null;
         switch (content) {
             case COOPERATIVE_ALIEN:
-                trackObject(new CooperativeAlien());
+                alien = new CooperativeAlien();
                 break;
             case PROTECTING_ALIEN:
-                trackObject(new ProtectingAlien());
+                alien = new ProtectingAlien();
                 break;
             case REPAIRING_ALIEN:
-                trackObject(new RepairingAlien());
+                alien = new RepairingAlien();
                 break;
             default:
         }
+        aliens.add(alien);
+        trackObject(alien);
     }
 
     private void spawnGangOfBalls(Vector revealPosition) {
@@ -400,6 +411,15 @@ public class Game {
 
     public ArrayList<Ball> getBalls() {
         return balls;
+    }
+
+    public ArrayList<Alien> getAliens() {
+        return aliens;
+    }
+
+    public void addAlien(Alien alien) {
+        aliens.add(alien);
+        trackObject(alien);
     }
 
     public Paddle getPaddle() {

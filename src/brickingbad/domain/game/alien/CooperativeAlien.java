@@ -18,4 +18,5 @@ public class CooperativeAlien extends Alien {
     void performAction() {
 
     }
+
 }

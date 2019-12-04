@@ -82,4 +82,8 @@ public abstract class GameObject implements Comparable {
     return Double.compare(distance, compareDistance);
   }
 
+  public String getTypeName() {
+    return this.getClass().getName();
+  }
+
 }

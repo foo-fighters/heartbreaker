@@ -10,4 +10,5 @@ public abstract class Brick extends GameObject {
         Game.getInstance().brickDestroyed();
         super.destroy();
     }
+
 }

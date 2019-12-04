@@ -2,8 +2,10 @@ package brickingbad.ui;
 
 import brickingbad.controller.GameController;
 import brickingbad.domain.game.GameConstants;
+import brickingbad.services.Adapter;
 import brickingbad.ui.components.Panel;
 import brickingbad.ui.game.BuildingModePanel;
+import brickingbad.ui.game.animation.Animator;
 import brickingbad.ui.menu.HelpPanel;
 import brickingbad.ui.game.RunningModePanel;
 import brickingbad.ui.menu.LoadPanel;
@@ -128,26 +130,40 @@ public class BrickingBadFrame extends JFrame {
   }
 
   public void showSaveDialog() {
-    String name = JOptionPane.showInputDialog("Save name: ");
-    if (name != null) {
-      GameController.getInstance().saveGame(name);
+    if (Animator.getInstance().isRunning() &&
+        getCurrentPanelName().equals(Panel.RUNNING_MODE)) {
+      showPauseWarning();
+    } else {
+      Adapter adapter = showAdapterSelection();
+      String name = JOptionPane.showInputDialog("Save name: ");
+      System.out.println(name);
+      if (name != null) {
+        boolean inRunningMode = getCurrentPanelName().equals(Panel.RUNNING_MODE);
+        GameController.getInstance().saveGame(name, inRunningMode, adapter);
+      }
     }
   }
 
   public void showLoadDialog() {
-    List<String> saveNames = GameController.getInstance().getSaveNames();
+    if (Animator.getInstance().isRunning() &&
+        getCurrentPanelName().equals(Panel.RUNNING_MODE)) {
+      showPauseWarning();
+    } else {
+      Adapter adapter = showAdapterSelection();
 
-    String name = (String) JOptionPane.showInputDialog(null, "Choose a save: ",
-            "Load Game", JOptionPane.QUESTION_MESSAGE, null, // Use
-            // default
-            // icon
-            saveNames.toArray(), // Array of choices
-            saveNames.toArray()[0]); // Initial choice
+      List<String> saveNames = GameController.getInstance().getSaveNames(adapter);
 
-    if (name != null) {
-      GameController.getInstance().initializeGame();
-      GameController.getInstance().loadGame(name);
-      BrickingBadFrame.getInstance().showRunningModePanel();
+      String name = (String) JOptionPane.showInputDialog(null, "Choose a save: ",
+              "Load Game", JOptionPane.QUESTION_MESSAGE, null, // Use
+              // default
+              // icon
+              saveNames.toArray(), // Array of choices
+              saveNames.toArray()[0]); // Initial choice
+
+      if (name != null) {
+        GameController.getInstance().initializeGame(true);
+        GameController.getInstance().loadGame(name, adapter);
+      }
     }
   }
 
@@ -160,8 +176,23 @@ public class BrickingBadFrame extends JFrame {
     }
   }
 
-    public void showWonDialog() {
+  public void showWonDialog() {
       JOptionPane.showMessageDialog(this, "Congratz YOU HAVE WON");
     }
+
+  private void showPauseWarning() {
+    JOptionPane.showMessageDialog(this, "The game should be paused for save/load. ");
+  }
+
+  private Adapter showAdapterSelection() {
+    Adapter[] saveLocations = Adapter.values();
+    Adapter adapterName = (Adapter) JOptionPane.showInputDialog(null, "Choose save location: ",
+            "Save Game", JOptionPane.QUESTION_MESSAGE, null, // Use
+            // default
+            // icon
+            saveLocations, // Array of choices
+            saveLocations); // Initial choice
+    return adapterName;
+  }
 
 }
