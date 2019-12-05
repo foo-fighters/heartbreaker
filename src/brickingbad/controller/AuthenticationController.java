@@ -27,12 +27,15 @@ public class AuthenticationController {
     try {
       User user = userRepository.findUserByName(name);
       if (user.password.equals(password)) {
+        System.out.println("Successful login: " + user.name);
         currentUser = user;
         return true;
       } else {
+        System.out.println("Wrong password for: " + user.name);
         return false;
       }
     } catch (IllegalArgumentException e) {
+      System.out.println("User doesn't exist: " + name);
       // TODO: handle (show UI message - failed login)
       return false;
     }
@@ -40,8 +43,10 @@ public class AuthenticationController {
 
   public void addUser(User user) {
     try {
+      System.out.println("Created new account: " + user.name);
       userRepository.addUser(user);
     } catch (IllegalArgumentException e) {
+      System.out.println("User with name exists: " + user.name);
       // TODO: handle (show UI message)
     }
   }

@@ -71,7 +71,6 @@ public class PhysicsEngine implements Runnable {
           handleCollisions();
           updatePositions();
           timePassed += SLEEP_TIME;
-          System.out.println(timePassed);
         }
       }
     }
