@@ -10,6 +10,8 @@ public class AuthenticationController {
 
   private UserRepository userRepository;
 
+  private User currentUser;
+
   private AuthenticationController() {
     userRepository = UserRepository.getInstance();
   }
@@ -24,8 +26,16 @@ public class AuthenticationController {
   public boolean authenticate(String name, String password) {
     try {
       User user = userRepository.findUserByName(name);
-      return user.password.equals(password);
+      if (user.password.equals(password)) {
+        System.out.println("Successful login: " + user.name);
+        currentUser = user;
+        return true;
+      } else {
+        System.out.println("Wrong password for: " + user.name);
+        return false;
+      }
     } catch (IllegalArgumentException e) {
+      System.out.println("User doesn't exist: " + name);
       // TODO: handle (show UI message - failed login)
       return false;
     }
@@ -33,8 +43,10 @@ public class AuthenticationController {
 
   public void addUser(User user) {
     try {
+      System.out.println("Created new account: " + user.name);
       userRepository.addUser(user);
     } catch (IllegalArgumentException e) {
+      System.out.println("User with name exists: " + user.name);
       // TODO: handle (show UI message)
     }
   }
@@ -42,6 +54,10 @@ public class AuthenticationController {
   public AuthenticationController adapt(Adapter adapter) {
     userRepository.adapt(adapter);
     return this;
+  }
+
+  public User getCurrentUser() {
+    return currentUser;
   }
 
 }

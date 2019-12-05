@@ -9,6 +9,8 @@ public class Save {
 
   public boolean inRunningMode;
 
+  public String username;
+
   public int score;
   public int lives;
 
