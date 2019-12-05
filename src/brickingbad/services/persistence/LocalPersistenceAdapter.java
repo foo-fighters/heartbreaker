@@ -39,7 +39,7 @@ public class LocalPersistenceAdapter implements IPersistenceAdapter {
     String json = gson.toJson(save);
     json = Encoder.encodeString(json);
     try {
-      BufferedWriter writer = new BufferedWriter(new FileWriter(savePath + save.name + ".txt"));
+      BufferedWriter writer = new BufferedWriter(new FileWriter(getUserSavePath(user) + save.name + ".txt"));
       writer.write(json);
       writer.close();
     } catch (IOException e) {
