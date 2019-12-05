@@ -70,10 +70,10 @@ public class BrickingBadFrame extends JFrame {
                 "Are you sure you want to close this window?", "Close Window?",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
-          EffectsController.getInstance().playAudio("closeGame");
+          EffectsController.getInstance().playAudio("closeGame(old)");
 
           try {
-            Thread.sleep(1000);
+            Thread.sleep(800);
           } catch (InterruptedException e) {
             e.printStackTrace();
           }
@@ -187,6 +187,7 @@ public class BrickingBadFrame extends JFrame {
       if (name != null) {
         GameController.getInstance().initializeGame(true);
         GameController.getInstance().loadGame(name, adapter);
+        GameController.getInstance().resumeGameIfPaused();
       }
     }
   }

@@ -73,7 +73,7 @@ public class EffectsController {
     initiateAudio("resources/sounds/brickBroke.wav");
     initiateAudio("resources/sounds/start.wav");
     initiateAudio("resources/sounds/lifeLost.wav");
-    initiateAudio("resources/sounds/closeGame.wav");
+    initiateAudio("resources/sounds/closeGame(old).wav");
     initiateAudio("resources/sounds/button.wav");
     initiateAudio("resources/sounds/mineBrick.wav");
     initiateAudio("resources/sounds/halfMetalBrick.wav");
@@ -99,5 +99,8 @@ public class EffectsController {
     } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
       e.printStackTrace();
     }
+  }
+
+  public void activateChemicalBallTrailEffect() {
   }
 }
