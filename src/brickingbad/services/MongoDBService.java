@@ -11,8 +11,9 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 public class MongoDBService {
 
-  private static MongoClientURI uri = new MongoClientURI(
-          "mongodb+srv://admin:comp302@bricking-bad-lw1qn.mongodb.net/test?retryWrites=true&w=majority");
+  private static final String clientURI = "mongodb+srv://admin:comp302@bricking-bad-lw1qn.mongodb.net/test?retryWrites=true&w=majority";
+
+  private static MongoClientURI uri = new MongoClientURI(clientURI);
 
   private static CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
           fromProviders(PojoCodecProvider.builder().automatic(true).build()));
