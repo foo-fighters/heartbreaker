@@ -16,7 +16,7 @@ public class WrapperBrick extends Brick {
         Game.getInstance().addWrapperContent();
     }
 
-    public void destroy() {
+    public void destroy(boolean destroyedByBall) {
         super.destroy();
         Game.getInstance().revealWrapperContent(position);
     }

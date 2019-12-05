@@ -12,6 +12,9 @@ public class PhysicsEngine implements Runnable {
 
     private final int SLEEP_TIME = 1000 / GameConstants.calculationsPerSecond;
 
+
+  private int timePassed = 0;
+
     private static PhysicsEngine instance;
     private JPanel currentPanel;
     private static boolean running;
@@ -68,9 +71,18 @@ public class PhysicsEngine implements Runnable {
         if (GameController.getInstance().inRunningMode()) {
           handleCollisions();
           updatePositions();
+          timePassed += SLEEP_TIME;
         }
       }
     }
+  }
+
+  public int getTimePassed() {
+    return timePassed;
+  }
+
+  public void resetTimePassed() {
+    this.timePassed = 0;
   }
 
     private static void handleCollisions () {

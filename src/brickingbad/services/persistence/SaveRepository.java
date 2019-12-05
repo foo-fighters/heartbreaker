@@ -1,47 +1,67 @@
 package brickingbad.services.persistence;
 
 import brickingbad.domain.game.persistence.Save;
-import brickingbad.services.DatabaseService;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
+import brickingbad.services.Adapter;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static com.mongodb.client.model.Filters.eq;
-
 
 public class SaveRepository {
 
-  private static MongoCollection<Save> savesCollection = DatabaseService.getDatabase().getCollection("games", Save.class);
+  // set default adapter to use in case methods are called before setting an adapter explicitly
+  IPersistenceAdapter adapter = new LocalPersistenceAdapter();
 
-  public static void addSave(Save save) {
-    String name = save.name;
-    if (getSaveNames().contains(name)) {
-      savesCollection.deleteOne(eq("name", name));
+  private static SaveRepository instance;
+
+  private SaveRepository() {
+
+  }
+
+  public static SaveRepository getInstance() {
+    if (instance == null) {
+      instance = new SaveRepository();
     }
-    savesCollection.insertOne(save);
+    return instance;
   }
 
-  public static List<String> getSaveNames() {
-    List<String> names = new ArrayList<>();
-    MongoCursor<Save> cursor = savesCollection.find().iterator();
-    try {
-      while (cursor.hasNext()) {
-        names.add(cursor.next().name);
-      }
-    } finally {
-      cursor.close();
+  // READ/WRITE METHODS
+
+  public Save getSaveByName(String name) {
+    return adapter.getSaveByName(name);
+  }
+
+  public void save(Save save) {
+    adapter.save(save);
+  }
+
+  public List<String> getSaveNames() {
+    return adapter.getSaveNames();
+  }
+
+  // ADAPTER CONTROLS
+
+  public IPersistenceAdapter getAdapter() {
+    return adapter;
+  }
+
+  public void adapt(Adapter adapter) {
+    if (adapter.equals(Adapter.MONGODB)) {
+      adaptMongoDB();
+    } else if (adapter.equals(Adapter.LOCAL)) {
+      adaptLocal();
     }
-    return names;
   }
 
-  public static Save getSaveByName(String name) {
-    return savesCollection.find(eq("name", name)).first();
+  private SaveRepository adaptMongoDB() {
+    this.adapter = new MongoDBPersistenceAdapter();
+    return this;
   }
 
-  public static void deleteSaveByName(String name) {
-    savesCollection.deleteOne(eq("name", name));
+  private SaveRepository adaptLocal() {
+    this.adapter = new LocalPersistenceAdapter();
+    return this;
   }
+
+
+
 
 }

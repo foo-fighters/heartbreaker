@@ -59,6 +59,7 @@ public class GameConstants {
     public final static int paddleHeightOnScreen = screenHeight / 10;
     public static int framesPerSecond = 60;
     public static int calculationsPerSecond = 100;
+    public final static int heartSize = powerupSize;
 }
 
 

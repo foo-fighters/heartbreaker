@@ -9,8 +9,12 @@ import brickingbad.domain.game.persistence.Save;
 import brickingbad.domain.game.persistence.SaveAssembler;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.PhysicsEngine;
+import brickingbad.services.Adapter;
 import brickingbad.services.persistence.SaveRepository;
 import brickingbad.ui.BrickingBadFrame;
+import brickingbad.ui.components.containers.GameButtonPanel;
+import brickingbad.ui.effects.Effect;
+import brickingbad.ui.game.BuildingModePanel;
 import brickingbad.ui.game.RunningModePanel;
 import brickingbad.ui.components.Panel;
 
@@ -23,8 +27,10 @@ import java.util.List;
 public class GameController {
 
     private static GameController instance;
+    private static SaveRepository saveRepository;
 
     private GameController() {
+        saveRepository = SaveRepository.getInstance();
     }
 
     public static GameController getInstance() {
@@ -34,32 +40,47 @@ public class GameController {
         return instance;
     }
 
+    public static void resetUI() {
+        RunningModePanel.getInstance().resetUI();
+        BuildingModePanel.getInstance().resetUI();
+    }
+
     public boolean inRunningMode() {
         Panel panel = BrickingBadFrame.getInstance().getCurrentPanelName();
         return panel == Panel.RUNNING_MODE;
     }
 
-    public void saveGame(String name) {
+    public void saveGame(String name, boolean inRunningMode, Adapter adapter) {
+        saveRepository.adapt(adapter);
         Game game = Game.getInstance();
         Save save = SaveAssembler.assemble(game, name);
-        SaveRepository.addSave(save);
+        save.inRunningMode = inRunningMode;
+        saveRepository.save(save);
     }
 
-    public void loadGame(String name) {
-        Save save = SaveRepository.getSaveByName(name);
+    public void loadGame(String name, Adapter adapter) {
+        saveRepository.adapt(adapter);
+        Save save = saveRepository.getSaveByName(name);
+        if (save.inRunningMode) {
+            BrickingBadFrame.getInstance().showRunningModePanel();
+        } else {
+            BrickingBadFrame.getInstance().showBuildingModePanel();
+        }
         SaveAssembler.disassemble(save);
         Game.getInstance().play();
     }
 
-    public List<String> getSaveNames() {
-      return SaveRepository.getSaveNames();
+    public List<String> getSaveNames(Adapter adapter) {
+      saveRepository.adapt(adapter);
+      return saveRepository.getSaveNames();
     }
 
-    public void initializeGame() {
-        Game.getInstance().initialize();
+    public void initializeGame(boolean fromSave) {
+        Game.getInstance().initialize(fromSave);
     }
 
     public void startGame() {
+        EffectsController.getInstance().playAudio("start");
         Game.getInstance().play();
     }
 
@@ -94,31 +115,31 @@ public class GameController {
     }
 
     public void createBricks(int simple, int halfMetal, int mine, int wrapper) {
+        if (Game.getInstance().getBricks().size() + simple + halfMetal + mine + wrapper < 919){
+            ArrayList<Brick> simpleBricks = BrickFactory.getInstance().createSimpleBricks(simple);
 
-        ArrayList<Brick> simpleBricks = BrickFactory.getInstance().createSimpleBricks(simple);
+            simpleBricks.forEach((brick -> {
+                Game.getInstance().addBrick(brick);
+            }));
 
-        simpleBricks.forEach((brick -> {
-            Game.getInstance().addBrick(brick);
-        }));
+            ArrayList<Brick> halfMetalBricks = BrickFactory.getInstance().createHalfMetalBricks(halfMetal);
 
-        ArrayList<Brick> halfMetalBricks = BrickFactory.getInstance().createHalfMetalBricks(halfMetal);
+            halfMetalBricks.forEach((brick -> {
+                Game.getInstance().addBrick(brick);
+            }));
 
-        halfMetalBricks.forEach((brick -> {
-            Game.getInstance().addBrick(brick);
-        }));
+            ArrayList<Brick> mineBricks = BrickFactory.getInstance().createMineBricks(mine);
 
-        ArrayList<Brick> mineBricks = BrickFactory.getInstance().createMineBricks(mine);
+            mineBricks.forEach((brick -> {
+                Game.getInstance().addBrick(brick);
+            }));
 
-        mineBricks.forEach((brick -> {
-            Game.getInstance().addBrick(brick);
-        }));
+            ArrayList<Brick> wrapperBricks = BrickFactory.getInstance().createWrapperBricks(wrapper);
 
-        ArrayList<Brick> wrapperBricks = BrickFactory.getInstance().createWrapperBricks(wrapper);
-
-        wrapperBricks.forEach((brick -> {
-            Game.getInstance().addBrick(brick);
-        }));
-
+            wrapperBricks.forEach((brick -> {
+                Game.getInstance().addBrick(brick);
+            }));
+        }
     }
 
     public boolean checkBrickCount(){
@@ -138,16 +159,27 @@ public class GameController {
         Game.getInstance().usePowerUp(name);
     }
 
-    public void lifeLost() {
-        Game.getInstance().lostLife();
-    }
 
     public void stopAnimator() {
         Animator.getInstance().stop();
     }
   
     public void showDeadDialog(){
+        EffectsController.getInstance().playAudio("endLaugh");
         BrickingBadFrame.getInstance().showYouAreDeadDialog();
     }
-      
+
+    public void showWinDialog() {
+        EffectsController.getInstance().playAudio("congratz");
+        BrickingBadFrame.getInstance().showWonDialog();
+    }
+
+    public void resetScore() {
+        PhysicsEngine.getInstance().resetTimePassed();
+        Game.getInstance().setScore(0);
+        setUIScore(0);
+    }
+    public void setUIScore(int score){
+        RunningModePanel.getInstance().setScore(score);
+    }
 }

@@ -1,6 +1,8 @@
 package brickingbad.domain.game;
 
+import brickingbad.controller.EffectsController;
 import brickingbad.controller.GameController;
+import brickingbad.domain.game.alien.Alien;
 import brickingbad.domain.game.alien.CooperativeAlien;
 import brickingbad.domain.game.alien.ProtectingAlien;
 import brickingbad.domain.game.alien.RepairingAlien;
@@ -8,6 +10,7 @@ import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.game.border.*;
 import brickingbad.domain.game.brick.*;
 import brickingbad.domain.physics.Direction;
+import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.domain.physics.Vector;
 
 import java.time.Clock;
@@ -26,6 +29,7 @@ public class Game {
     private Ground ground;
     private ArrayList<Wall> walls;
     private ArrayList<Brick> bricks;
+    private ArrayList<Alien> aliens;
     private ArrayList<GameObject> gameObjects;
 
     private boolean[][] brickGrid;
@@ -38,7 +42,7 @@ public class Game {
     private ArrayList<PowerUp> storedPowerUps;
     private ArrayList<PowerUp> activePowerUps;
     private ArrayList<WrapperContent> activeAliens;
-
+    private boolean alreadyWon;
     private static final Random random = new Random();
 
     private ArrayList<GameObjectListener> objectListeners;
@@ -55,7 +59,12 @@ public class Game {
         gameObjects = new ArrayList<>();
         wrapperContentList = new ArrayList<>();
         activeAliens = new ArrayList<>();
+        aliens = new ArrayList<>();
         gameClock = Clock.systemDefaultZone();
+
+        int gridX = GameConstants.screenWidth / GameConstants.rectangularBrickLength;
+        int gridY = (int)GameConstants.brickAreaHeight / GameConstants.rectangularBrickThickness;
+        brickGrid = new boolean[gridX][gridY];
     }
 
     public static Game getInstance() {
@@ -81,9 +90,10 @@ public class Game {
         }
     }
 
-    public void initialize() {
+    public void initialize(boolean fromSave) {
         gameObjects = new ArrayList<>();
-        lives = 3;
+
+        alreadyWon = false;
 
         for (Brick brick : bricks) {
             removeObjectFromListeners(brick);
@@ -91,18 +101,23 @@ public class Game {
         for (Ball ball : balls) {
             removeObjectFromListeners(ball);
         }
+        for (Ball ball : balls) {
+            removeObjectFromListeners(ball);
+        }
+        for (PowerUp powerup : storedPowerUps) {
+            removeObjectFromListeners(powerup);
+        }
+        for (PowerUp powerup : activePowerUps) {
+            removeObjectFromListeners(powerup);
+        }
+
         bricks = new ArrayList<>();
         balls = new ArrayList<>();
-
-        int gridX = GameConstants.screenWidth / GameConstants.rectangularBrickLength;
-        int gridY = (int)GameConstants.brickAreaHeight / GameConstants.rectangularBrickThickness;
-        brickGrid = new boolean[gridX][gridY];
+        aliens = new ArrayList<>();
+        activePowerUps = new ArrayList<>();
+        storedPowerUps = new ArrayList<>();
 
         removeObjectFromListeners(paddle);
-        paddle = new Paddle();
-        Ball firstBall = new Ball(paddle.getBallStartPosition());
-        balls.add(firstBall);
-        paddle.getCurrentBalls().add(firstBall);
 
         Wall wall1 = new Wall(Direction.UP);
         Wall wall2 = new Wall(Direction.RIGHT);
@@ -113,8 +128,18 @@ public class Game {
         walls.add(wall2);
         walls.add(wall3);
 
-        trackObject(paddle);
-        trackObject(firstBall);
+        if (!fromSave) {
+            lives = 3;
+
+            paddle = new Paddle();
+            Ball firstBall = new Ball(paddle.getBallStartPosition());
+            balls.add(firstBall);
+            paddle.getCurrentBalls().add(firstBall);
+
+            trackObject(paddle);
+            trackObject(firstBall);
+        }
+
         trackObject(wall1);
         trackObject(wall2);
         trackObject(wall3);
@@ -127,8 +152,6 @@ public class Game {
         paddle.getCurrentBalls().add(firstBall);
         trackObject(firstBall);
     }
-
-
 
     public void play() {
     }
@@ -157,7 +180,7 @@ public class Game {
                 xdist = center.getX() - object.getPosition().getX();
                 ydist = center.getY() - object.getPosition().getY();
                 if(Math.hypot(xdist, ydist) < radius) {
-                    object.destroy();
+                    object.destroy(false);
                 }
             }
         }
@@ -186,7 +209,7 @@ public class Game {
     }
 
     public void addBall(Ball ball) {
-        paddle.getCurrentBalls().add(ball);
+        balls.add(ball);
         trackObject(ball);
     }
 
@@ -307,18 +330,21 @@ public class Game {
     }
 
     private void spawnAlien(WrapperContent content) {
+        Alien alien = null;
         switch (content) {
             case COOPERATIVE_ALIEN:
-                trackObject(new CooperativeAlien());
+                alien = new CooperativeAlien();
                 break;
             case PROTECTING_ALIEN:
-                trackObject(new ProtectingAlien());
+                alien = new ProtectingAlien();
                 break;
             case REPAIRING_ALIEN:
-                trackObject(new RepairingAlien());
+                alien = new RepairingAlien();
                 break;
             default:
         }
+        aliens.add(alien);
+        trackObject(alien);
     }
 
     private void spawnGangOfBalls(Vector revealPosition) {
@@ -339,6 +365,7 @@ public class Game {
                 Ball ball = new Ball(revealPosition);
                 ball.startMovement((360.0 / GameConstants.gangOfBallsMultiplier) * i, ((Ball)closestBall).getSpeed());
                 trackObject(ball);
+                balls.add(ball);
             }
             removeObject(closestBall);
         }
@@ -385,6 +412,15 @@ public class Game {
 
     public ArrayList<Ball> getBalls() {
         return balls;
+    }
+
+    public ArrayList<Alien> getAliens() {
+        return aliens;
+    }
+
+    public void addAlien(Alien alien) {
+        aliens.add(alien);
+        trackObject(alien);
     }
 
     public Paddle getPaddle() {
@@ -434,9 +470,16 @@ public class Game {
 
     public void lostLife() {
         if (lives != 1){
+            EffectsController.getInstance().playAudio("lifeLost");
             lives = lives - 1;
             resetBall();
+
+            if (lives == 1){
+                EffectsController.getInstance().startHeartBeat();
+            }
+
         }else{
+            EffectsController.getInstance().stopHeartBeat();
             GameController.getInstance().stopAnimator();
             GameController.getInstance().showDeadDialog();
         }
@@ -448,4 +491,24 @@ public class Game {
         }
     }
 
+    public void anyBricksLeft(){
+        if (bricks.isEmpty()){
+            winGame();
+        }
+    }
+
+    private void winGame() {
+        if (!alreadyWon){
+            GameController.getInstance().stopAnimator();
+            GameController.getInstance().showWinDialog();
+            alreadyWon = true;
+        }
+
+    }
+
+    public void brickDestroyed() {
+        score += 300/(PhysicsEngine.getInstance().getTimePassed()/1000);
+        System.out.println(score); //integer
+        GameController.getInstance().setUIScore(score);
+    }
 }

@@ -1,5 +1,6 @@
 package brickingbad.ui.menu;
 
+import brickingbad.controller.EffectsController;
 import brickingbad.controller.GameController;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.components.BBMenuButton;
@@ -7,6 +8,8 @@ import brickingbad.ui.components.BBMenuButton;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.List;
 
 public class MainMenuPanel extends JPanel implements ActionListener {
@@ -43,7 +46,7 @@ public class MainMenuPanel extends JPanel implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     if (e.getSource().equals(newGameButton)) {
       bbFrame.showBuildingModePanel();
-      GameController.getInstance().initializeGame();
+      GameController.getInstance().initializeGame(false);
       GameController.getInstance().resumeGameIfPaused();
     } else if (e.getSource().equals(helpButton)) {
       bbFrame.showHelpPanel();
@@ -51,7 +54,19 @@ public class MainMenuPanel extends JPanel implements ActionListener {
       bbFrame.showLoadDialog();
       GameController.getInstance().resumeGameIfPaused();
     } else if (e.getSource().equals(exitButton)) {
-      System.exit(0);
+      if (JOptionPane.showConfirmDialog(instance,
+              "Are you sure you want to close this window?", "Close Window?",
+              JOptionPane.YES_NO_OPTION,
+              JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+        EffectsController.getInstance().playAudio("closeGame");
+
+        try {
+          Thread.sleep(1000);
+        } catch (InterruptedException d) {
+          d.printStackTrace();
+        }
+        System.exit(0);
+      }
     }
   }
 

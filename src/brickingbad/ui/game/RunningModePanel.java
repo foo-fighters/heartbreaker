@@ -1,6 +1,7 @@
 package brickingbad.ui.game;
 
 import brickingbad.controller.GameController;
+import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.GameObjectListener;
@@ -9,6 +10,7 @@ import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.GameButtonPanel;
 import brickingbad.ui.effects.Effect;
 import brickingbad.ui.game.animation.Animator;
+import brickingbad.ui.effects.Effect;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -33,19 +35,30 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
   private CopyOnWriteArrayList<Effect> effects;
 
   private GameButtonPanel gameButtonPanel;
-
+  private JLabel scoreLabel;
   private BufferedImage background;
+
+  private BufferedImage heart;
+  private BufferedImage heart_empty;
+
 
   private RunningModePanel() {
     Animator.getInstance(this).start();
     PhysicsEngine.getInstance().start();
+    setLayout(null);
     uiObjects = new CopyOnWriteArrayList<>();
     effects = new CopyOnWriteArrayList<>();
     setLayout(null);
     initUI();
     loadBackgroundImage("resources/sprites/background.png");
+    loadHeartImage("resources/sprites/heart.png");
+    loadHeartEmptyImage("resources/sprites/heart_empty.png");
     GameController.getInstance().addObjectListener(this);
     this.addKeyListener(new GameKeyboardListener());
+
+    scoreLabel = new JLabel();
+    scoreLabel.setText("0");
+    scoreLabel.setForeground(Color.white);
   }
 
   public static RunningModePanel getInstance() {
@@ -57,7 +70,6 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
 
   private void initUI() {
     gameButtonPanel = new GameButtonPanel();
-
     JPanel container = new JPanel(new BorderLayout());
     container.setSize(GameConstants.screenWidth, (int)GameConstants.menuAreaHeight);
     container.setOpaque(true);
@@ -82,11 +94,13 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
 
   @Override
   protected void paintComponent(Graphics g) {
+
     super.paintComponent(g);
     g.drawImage(background, 0, 0, null);
     for (UIGameObject object : uiObjects) {
       object.paintComponent(g);
     }
+    drawHearts(g, Game.getInstance().getLives());
     for (Effect effect : effects) {
       if (effect.isActive()) {
         effect.activate(g);
@@ -96,6 +110,7 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
     }
   }
 
+
   private void loadBackgroundImage(String path) {
     try {
       this.background = ImageIO.read(new File(path));
@@ -104,8 +119,48 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
     }
   }
 
+  private void loadHeartImage(String path) {
+    try {
+      this.heart = ImageIO.read(new File(path));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private void loadHeartEmptyImage(String path) {
+    try {
+      this.heart_empty = ImageIO.read(new File(path));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void reset(){
+
+  }
+
   public void invokeGodMode() {
     loadBackgroundImage("resources/sprites/godmode.png");
   }
 
+  public void drawHearts(Graphics g, int livesLeft){
+    int iteration = 0;
+
+    for (int i = 0; i < livesLeft; i++){
+      g.drawImage(heart,getWidth()-150 + iteration,getHeight()-50, GameConstants.heartSize,GameConstants.heartSize,null);
+      iteration += GameConstants.heartSize + 10;
+    }
+    for (int i = 0; i < (3-livesLeft); i++){
+      g.drawImage(heart_empty,getWidth()-150 + iteration,getHeight()-50, GameConstants.heartSize,GameConstants.heartSize,null);
+      iteration += GameConstants.heartSize + 10;
+    }
+  }
+
+  public void resetUI() {
+    uiObjects = new CopyOnWriteArrayList<>();
+  }
+
+  public void setScore(int score) {
+    gameButtonPanel.setUIScore(score);
+  }
 }

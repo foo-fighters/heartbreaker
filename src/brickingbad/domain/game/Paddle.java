@@ -44,7 +44,7 @@ public class Paddle extends GameObject {
     currentBalls.clear();
   }
 
-  private void catchBall(Ball ball) {
+  public void catchBall(Ball ball) {
     currentBalls.add(ball);
     ball.stopMovement();
     double ballHeightOffset = (GameConstants.paddleThickness + GameConstants.ballSize) / 2.0;
