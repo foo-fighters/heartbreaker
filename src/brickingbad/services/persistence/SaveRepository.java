@@ -8,7 +8,6 @@ import java.util.List;
 
 public class SaveRepository {
 
-  // set default adapter to use in case methods are called before setting an adapter explicitly
   IPersistenceAdapter adapter = new LocalPersistenceAdapter();
 
   private static SaveRepository instance;
@@ -61,8 +60,5 @@ public class SaveRepository {
     this.adapter = new LocalPersistenceAdapter();
     return this;
   }
-
-
-
 
 }

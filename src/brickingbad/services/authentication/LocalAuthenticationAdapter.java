@@ -61,6 +61,7 @@ public class LocalAuthenticationAdapter implements IAuthenticationAdapter {
     ArrayList<String> names = new ArrayList<>();
     File folder = new File(usersPath);
     File[] listOfFiles = folder.listFiles();
+    assert listOfFiles != null;
     for (File file : listOfFiles) {
       String fullName = file.getName();
       String[] tokens = fullName.split("[.]");

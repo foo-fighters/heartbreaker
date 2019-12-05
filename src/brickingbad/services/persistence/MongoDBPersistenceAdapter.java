@@ -28,16 +28,13 @@ public class MongoDBPersistenceAdapter implements IPersistenceAdapter {
   @Override
   public List<String> getSaveNames(User user) {
     List<String> names = new ArrayList<>();
-    MongoCursor<Save> cursor = savesCollection.find().iterator();
-    try {
+    try (MongoCursor<Save> cursor = savesCollection.find().iterator()) {
       while (cursor.hasNext()) {
         Save save = cursor.next();
-        if (save.name.equals(user.name)) {
+        if (save.username.equals(user.name)) {
           names.add(save.name);
         }
       }
-    } finally {
-      cursor.close();
     }
     return names;
   }

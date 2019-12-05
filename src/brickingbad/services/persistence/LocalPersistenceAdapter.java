@@ -52,6 +52,7 @@ public class LocalPersistenceAdapter implements IPersistenceAdapter {
     ArrayList<String> names = new ArrayList<>();
     File folder = new File(getUserSavePath(user));
     File[] listOfFiles = folder.listFiles();
+    assert listOfFiles != null;
     for (File file : listOfFiles) {
       String fullName = file.getName();
       String[] tokens = fullName.split("[.]");

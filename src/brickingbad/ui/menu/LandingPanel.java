@@ -29,7 +29,6 @@ public class LandingPanel extends JPanel implements ActionListener {
   private static BBMenuButton loginButton;
 
   private LandingPanel() {
-//    setLayout(new GridLayout(3, 5));
     setSize(GameConstants.screenWidth / 2, GameConstants.screenHeight / 2);
 
     usernameLabel = new JLabel("USERNAME");
