@@ -1,5 +1,6 @@
 package brickingbad.services.persistence;
 
+import brickingbad.domain.game.authentication.User;
 import brickingbad.domain.game.persistence.Save;
 import brickingbad.services.Adapter;
 
@@ -25,16 +26,16 @@ public class SaveRepository {
 
   // READ/WRITE METHODS
 
-  public Save getSaveByName(String name) {
-    return adapter.getSaveByName(name);
+  public Save getSaveByName(String name, User user) {
+    return adapter.getSaveByName(name, user);
   }
 
-  public void save(Save save) {
-    adapter.save(save);
+  public void save(Save save, User user) {
+    adapter.save(save, user);
   }
 
-  public List<String> getSaveNames() {
-    return adapter.getSaveNames();
+  public List<String> getSaveNames(User user) {
+    return adapter.getSaveNames(user);
   }
 
   // ADAPTER CONTROLS
