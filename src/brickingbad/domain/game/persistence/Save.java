@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Save {
+  // TODO: keep game time
 
   public String name;
 
