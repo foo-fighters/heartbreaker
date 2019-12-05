@@ -1,6 +1,7 @@
 package brickingbad.controller;
 
 import brickingbad.domain.game.Game;
+import brickingbad.domain.game.authentication.User;
 import brickingbad.domain.game.persistence.Save;
 import brickingbad.domain.game.persistence.SaveAssembler;
 import brickingbad.services.Adapter;
@@ -26,14 +27,17 @@ public class SaveController {
   }
 
   public void saveGame(String name, boolean inRunningMode) {
+    User user = AuthenticationController.getInstance().getCurrentUser();
     Game game = Game.getInstance();
     Save save = SaveAssembler.assemble(game, name);
     save.inRunningMode = inRunningMode;
-    saveRepository.save(save);
+    save.username = AuthenticationController.getInstance().getCurrentUser().name;
+    saveRepository.save(save, user);
   }
 
   public void loadGame(String name) {
-    Save save = saveRepository.getSaveByName(name);
+    User user = AuthenticationController.getInstance().getCurrentUser();
+    Save save = saveRepository.getSaveByName(name, user);
     if (save.inRunningMode) {
       BrickingBadFrame.getInstance().showRunningModePanel();
     } else {
@@ -44,7 +48,8 @@ public class SaveController {
   }
 
   public List<String> getSaveNames() {
-    return saveRepository.getSaveNames();
+    User user = AuthenticationController.getInstance().getCurrentUser();
+    return saveRepository.getSaveNames(user);
   }
 
   public SaveController adapt(Adapter adapter) {
