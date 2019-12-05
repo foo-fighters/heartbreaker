@@ -10,7 +10,7 @@ import brickingbad.domain.physics.Vector;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class CooperativeAlien extends Alien implements AlienStrategy{
+public class CooperativeAlien extends Alien {
 private Random rand;
 private double h;
 private double h_up;

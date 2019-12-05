@@ -7,21 +7,12 @@ import brickingbad.domain.game.Shape;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.game.brick.BrickFactory;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import brickingbad.domain.game.brick.BrickFactory;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
-
-public class RepairingAlien extends Alien implements AlienStrategy {
+public class RepairingAlien extends Alien {
 
     public RepairingAlien() {
         this.position = new Vector();
