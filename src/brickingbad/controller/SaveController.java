@@ -44,7 +44,7 @@ public class SaveController {
       BrickingBadFrame.getInstance().showBuildingModePanel();
     }
     SaveAssembler.disassemble(save);
-    Game.getInstance().play();
+    GameController.getInstance().resumeGameIfPaused();
   }
 
   public List<String> getSaveNames() {

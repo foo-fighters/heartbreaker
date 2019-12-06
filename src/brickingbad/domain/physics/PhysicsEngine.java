@@ -5,7 +5,6 @@ import brickingbad.domain.game.*;
 import brickingbad.domain.game.border.Ground;
 import brickingbad.domain.game.border.Wall;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class PhysicsEngine implements Runnable {
@@ -15,19 +14,10 @@ public class PhysicsEngine implements Runnable {
     private int timePassed = 0;
 
     private static PhysicsEngine instance;
-    private JPanel currentPanel;
     private static boolean running;
 
     private PhysicsEngine() {
 
-    }
-
-    public static PhysicsEngine getInstance(JPanel currentPanel) {
-        if (instance == null) {
-            instance = new PhysicsEngine();
-        }
-        instance.currentPanel = currentPanel;
-        return instance;
     }
 
   public static PhysicsEngine getInstance() {
@@ -68,9 +58,9 @@ public class PhysicsEngine implements Runnable {
       }
       if (running) {
         if (GameController.getInstance().inRunningMode()) {
+          timePassed += SLEEP_TIME;
           handleCollisions();
           updatePositions();
-          timePassed += SLEEP_TIME;
         }
       }
     }
@@ -125,7 +115,9 @@ public class PhysicsEngine implements Runnable {
             }
           } else {
             o1.removeCollidedObject(o2);
-            o2.removeCollidedObject(o1);
+            if (o2 != null) {
+              o2.removeCollidedObject(o1);
+            }
           }
         });
       }
