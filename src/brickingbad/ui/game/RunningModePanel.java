@@ -35,6 +35,7 @@ public class RunningModePanel extends JPanel implements GameListener, AnimationL
 
   private CopyOnWriteArrayList<Effect> effects;
 
+
   private GameButtonPanel gameButtonPanel;
   private JLabel scoreLabel;
   private BufferedImage background;
@@ -49,7 +50,6 @@ public class RunningModePanel extends JPanel implements GameListener, AnimationL
     PhysicsEngine.getInstance().start();
     setLayout(null);
     uiObjects = new CopyOnWriteArrayList<>();
-    effects = new ArrayList<>();
     setLayout(null);
     effects = new CopyOnWriteArrayList<>();
     setLayout(null);
