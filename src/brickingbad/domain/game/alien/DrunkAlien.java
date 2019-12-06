@@ -58,7 +58,8 @@ public class DrunkAlien extends Alien {
                repairingAlien.performAction();
             } else if ((currentBrick > startBrickCount * 0.3 && currentBrick < startBrickCount * 0.4)
                     || (currentBrick > startBrickCount * 0.6 && currentBrick < startBrickCount * 0.7)) {
-               Date currentTime = new Date();
+
+               Date currentTime = new Date();//gettime ilke degisecek
                Timer myTimer = new Timer();
                TimerTask task = new TimerTask() {
                   @Override

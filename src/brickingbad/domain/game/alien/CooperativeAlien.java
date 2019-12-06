@@ -36,9 +36,10 @@ public class CooperativeAlien extends Alien {
     void performAction() {
         //if h is aroun d the center of bricks
        isDestroyed = false;
-       ArrayList<GameObject> objects = new ArrayList<>(Game.getInstance().getObjects()) ;
+
 
        while(!isDestroyed){//at least one brick should be disappeared
+           ArrayList<GameObject> objects = new ArrayList<>(Game.getInstance().getObjects()) ;
            h = (rand.nextInt((int) (GameConstants.brickAreaHeight - GameConstants.rectangularBrickThickness/2)) + GameConstants.menuAreaHeight +  GameConstants.rectangularBrickThickness/2)/10;//should be in the brick area
            h_down = h - GameConstants.rectangularBrickThickness/2;
            h_up = h + GameConstants.rectangularBrickThickness/2;
@@ -46,12 +47,11 @@ public class CooperativeAlien extends Alien {
                if (object instanceof Brick) {
                    if (object.getPosition().getY() > h_down && object.getPosition().getY() <= h_up) {//if rand is in the middle, (the center of bricks are in the bounds of the range random so destroy upper one <=) destroy
                        object.destroy();
-                       if(isDestroyed){
-                           objects.remove(object);
-                       }
+                       isDestroyed = true;
                    }
                }
             }
+
        }
     }
 }
