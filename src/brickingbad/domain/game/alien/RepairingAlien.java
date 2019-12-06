@@ -7,12 +7,12 @@ import brickingbad.domain.game.Shape;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.game.brick.BrickFactory;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class RepairingAlien extends Alien {
+    private Random rand;
+    private double y;
+    private double x;
 
     public RepairingAlien() {
         this.position = new Vector();
@@ -20,7 +20,11 @@ public class RepairingAlien extends Alien {
         this.velocity = new Vector();
         this.angle = 0.0;
         this.size = new Vector(GameConstants.alienSize, GameConstants.alienSize);
-
+        rand = new Random();
+        x =  (rand.nextInt(GameConstants.screenWidth - GameConstants.alienSize) + GameConstants.alienSize/2)/10;
+        y = (rand.nextInt((int) GameConstants.alienAreaHeight) + GameConstants.brickAreaHeight + GameConstants.menuAreaHeight )/10;//should be in the brick area
+        position.setVector(x,y);
+        repairCooldown = 5;
     }
 
     public RepairingAlien(int repairCooldown) {
@@ -53,19 +57,12 @@ public class RepairingAlien extends Alien {
                 }
             }
         };
-        myTimer.schedule(task, currentTime, 5);
-        //ArrayList<GameObject> objects = new ArrayList<>(Game.getInstance().getObjects());
-        //for (GameObject object : objects) {
-           //if (object instanceof RepairingAlien) {
-                //if (!(object instanceof RepairingAlien)) {
-                   // myTimer.cancel();
-             //   }
-           // }
+        myTimer.schedule(task, currentTime, repairCooldown);
         }
     }
 
 
-}
+
 
 
 

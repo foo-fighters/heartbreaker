@@ -8,10 +8,7 @@ import brickingbad.domain.game.Shape;
 import brickingbad.domain.game.brick.BrickFactory;
 import brickingbad.domain.physics.Vector;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class DrunkAlien extends Alien {
 
@@ -22,6 +19,9 @@ public class DrunkAlien extends Alien {
    private Alien protectingAlien;
    private ArrayList<GameObject> GameObjects;
    private BrickFactory brickFactory;
+   private double y;
+   private double x;
+   private Random rand;
 
 
    public DrunkAlien() {
@@ -32,7 +32,13 @@ public class DrunkAlien extends Alien {
       this.size = new Vector(GameConstants.alienSize, GameConstants.alienSize);
       startBrickCount = Game.getInstance().startBrickCount;
       currentBrick = Game.getInstance().getBrickCount();
-
+      cooperativeAlien = new CooperativeAlien();
+      protectingAlien = new ProtectingAlien();
+      repairingAlien = new RepairingAlien();
+      rand = new Random();
+      x =  (rand.nextInt(GameConstants.screenWidth - GameConstants.alienSize) + GameConstants.alienSize/2)/10;
+      y = (rand.nextInt((int) GameConstants.alienAreaHeight) + GameConstants.brickAreaHeight + GameConstants.menuAreaHeight )/10;//should be in the brick area
+      position.setVector(x,y);
    }
 
 

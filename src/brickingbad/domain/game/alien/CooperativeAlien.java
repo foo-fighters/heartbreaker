@@ -11,18 +11,25 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class CooperativeAlien extends Alien {
-private Random rand;
-private double h;
-private double h_up;
-private double h_down;
-//private boolean isDissappeared;
-private boolean isDestroyed;
+    private Random rand;
+    private double h;
+    private double h_up;
+    private double h_down;
+    private boolean isDestroyed;
+    private double y;
+    private double x;
+
+
     public CooperativeAlien() {
         this.position= new Vector();
         this.shape= Shape.CIRCLE;
         this.velocity=new Vector();
         this.angle = 0.0;
         this.size = new Vector(GameConstants.alienSize, GameConstants.alienSize);
+        rand = new Random();
+        x =  (rand.nextInt(GameConstants.screenWidth - GameConstants.alienSize) + GameConstants.alienSize/2)/10;
+        y = (rand.nextInt((int) GameConstants.alienAreaHeight) + GameConstants.brickAreaHeight + GameConstants.menuAreaHeight )/10;//should be in the brick area
+        position.setVector(x,y);
     }
 
     @Override
@@ -32,23 +39,20 @@ private boolean isDestroyed;
        ArrayList<GameObject> objects = new ArrayList<>(Game.getInstance().getObjects()) ;
 
        while(!isDestroyed){//at least one brick should be disappeared
-           h = rand.nextDouble();//should be in the brick area
+           h = (rand.nextInt((int) (GameConstants.brickAreaHeight - GameConstants.rectangularBrickThickness/2)) + GameConstants.menuAreaHeight +  GameConstants.rectangularBrickThickness/2)/10;//should be in the brick area
            h_down = h - GameConstants.rectangularBrickThickness/2;
            h_up = h + GameConstants.rectangularBrickThickness/2;
            for(GameObject object: objects) {
                if (object instanceof Brick) {
                    if (object.getPosition().getY() > h_down && object.getPosition().getY() <= h_up) {//if rand is in the middle, (the center of bricks are in the bounds of the range random so destroy upper one <=) destroy
                        object.destroy();
-                       objects.remove(object);
-                       isDestroyed = true;
+                       if(isDestroyed){
+                           objects.remove(object);
+                       }
                    }
                }
             }
        }
-      //disappear ile olmesinin farki ne
     }
-
-
-
 }
 
