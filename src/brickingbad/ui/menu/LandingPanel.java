@@ -21,7 +21,7 @@ public class LandingPanel extends JPanel implements ActionListener {
   private static JLabel usernameLabel;
   private static JLabel passwordLabel;
   private static JTextField usernameField;
-  private static JTextField passwordField;
+  private static JPasswordField passwordField;
 
   private static JComboBox adapterSelectionBox;
 
@@ -35,7 +35,8 @@ public class LandingPanel extends JPanel implements ActionListener {
     passwordLabel = new JLabel("PASSWORD");
 
     usernameField = new JTextField("", 20);
-    passwordField = new JTextField("", 20);
+    passwordField = new JPasswordField("", 20);
+    passwordField.setEchoChar('*');
 
     String[] selections = {Adapter.LOCAL.name(), Adapter.MONGODB.name()};
     adapterSelectionBox = new JComboBox(selections);
