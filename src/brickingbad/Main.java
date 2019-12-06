@@ -11,7 +11,9 @@ public class Main {
     SwingUtilities.invokeLater(() ->
       BrickingBadFrame.getInstance());
     try {
-      UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+      if (!System.getProperty("os.name").contains("Windows")) {
+        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }
