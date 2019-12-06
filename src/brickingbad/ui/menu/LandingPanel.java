@@ -62,12 +62,14 @@ public class LandingPanel extends JPanel implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    String name = usernameField.getText();
-    String password = passwordField.getText();
+    String name = usernameField.getText().toLowerCase();
+    String password = passwordField.getText().toLowerCase();
     String adapter = (String) adapterSelectionBox.getSelectedItem();
     if (e.getSource().equals(registerButton)) {
       User user = new User(name, password);
       AuthenticationController.getInstance().adapt(Adapter.valueOf(adapter)).addUser(user);
+      AuthenticationController.getInstance().adapt(Adapter.valueOf(adapter)).authenticate(name, password);
+      bbFrame.showMainMenuPanel();
     } else if (e.getSource().equals(loginButton)) {
       boolean auth = AuthenticationController.getInstance().adapt(Adapter.valueOf(adapter)).authenticate(name, password);
       if (auth) {
