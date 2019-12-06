@@ -39,31 +39,32 @@ public class RepairingAlien extends Alien {
 
     @Override
     void performAction() {
-
+        ArrayList<GameObject> objects = new ArrayList<>(Game.getInstance().getObjects());
         Date currentTime = new Date();
         Timer myTimer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                BrickFactory.getInstance().createSimpleBricks(1);
+                for (GameObject object : objects) {
+                    if (!(object instanceof RepairingAlien)) {
+                        myTimer.cancel();
+                    }
+                    BrickFactory.getInstance().createSimpleBricks(1);
+                }
             }
         };
         myTimer.schedule(task, currentTime, 5);
-        ArrayList<GameObject> objects = new ArrayList<>(Game.getInstance().getObjects());
-        for (GameObject object : objects) {
-            if (object instanceof RepairingAlien) {
-
-                if (!(object instanceof RepairingAlien)) {
-                    myTimer.cancel();
-                }
-            }
+        //ArrayList<GameObject> objects = new ArrayList<>(Game.getInstance().getObjects());
+        //for (GameObject object : objects) {
+           //if (object instanceof RepairingAlien) {
+                //if (!(object instanceof RepairingAlien)) {
+                   // myTimer.cancel();
+             //   }
+           // }
         }
     }
 
-    @Override
-    public void doSelection() {
 
-    }
 }
 
 

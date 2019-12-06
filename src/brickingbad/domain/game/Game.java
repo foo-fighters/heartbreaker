@@ -247,28 +247,28 @@ public class Game {
         trackObject(brick);
     }
 
-    public void addBrickHorizontal(Brick brick) {
+    public void addBrickHorizontal() {
         boolean overlaps = true;
         int y = ThreadLocalRandom.current().nextInt(brickGrid[0].length);//bunu alienin oldugu yere gore yap
-        int delta = 0;
-        double x ;
-        while (overlaps ) {//true ise bos yer arayincaya kadar don
-           x = GameConstants.rectangularBrickLength / 2 + delta;
-
-            if (bricks.size() == 0) {
-                overlaps = false;
-            } else {
-                overlaps = brickGrid[(int) x][y];//1.
+        int x = GameConstants.rectangularBrickLength / 2;
+        while(!((x + GameConstants.rectangularBrickLength) >= GameConstants.screenWidth)){//end of the line
+            SimpleBrick brick = new SimpleBrick();
+            while (overlaps) {//true ise bos yer arayincaya kadar don
+                if (bricks.size() == 0) {
+                    overlaps = false;
+                } else {
+                    overlaps = brickGrid[x][y];//1.
+                }
+                if (!overlaps) {
+                    brickGrid[x][y] = true;//2.
+                    brick.setPosition(new Vector(x, y));
+                }
+                x += GameConstants.rectangularBrickLength;
             }
-            if (!overlaps) {
-                brickGrid[(int) x][y] = true;//2.
-                brick.setPosition(new Vector(x, y));
-            }
-            delta += GameConstants.rectangularBrickLength;
 
+            bricks.add(brick);//3.
+            trackObject(brick);
         }
-        bricks.add(brick);//3.
-        trackObject(brick);
     }
 
 

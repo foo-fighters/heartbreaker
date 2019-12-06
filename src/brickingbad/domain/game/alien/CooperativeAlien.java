@@ -15,8 +15,8 @@ private Random rand;
 private double h;
 private double h_up;
 private double h_down;
-private boolean isDissappeared;
-
+//private boolean isDissappeared;
+private boolean isDestroyed;
     public CooperativeAlien() {
         this.position= new Vector();
         this.shape= Shape.CIRCLE;
@@ -28,32 +28,27 @@ private boolean isDissappeared;
     @Override
     void performAction() {
         //if h is aroun d the center of bricks
-        ArrayList<GameObject> objects = new ArrayList<>(Game.getInstance().getObjects()) ;
-       h = rand.nextDouble();
-       h_down = h - GameConstants.rectangularBrickThickness/2;
-       h_up = h + GameConstants.rectangularBrickThickness/2;
-       for(GameObject object: objects) {
-           if(object instanceof Brick){
-               if(object.getPosition().getY() > h_down &&  object.getPosition().getY() < h_up){
-                   object.destroy();
-                   isDissappeared = true;
+       isDestroyed = false;
+       ArrayList<GameObject> objects = new ArrayList<>(Game.getInstance().getObjects()) ;
+
+       while(!isDestroyed){//at least one brick should be disappeared
+           h = rand.nextDouble();//should be in the brick area
+           h_down = h - GameConstants.rectangularBrickThickness/2;
+           h_up = h + GameConstants.rectangularBrickThickness/2;
+           for(GameObject object: objects) {
+               if (object instanceof Brick) {
+                   if (object.getPosition().getY() > h_down && object.getPosition().getY() <= h_up) {//if rand is in the middle, (the center of bricks are in the bounds of the range random so destroy upper one <=) destroy
+                       object.destroy();
+                       objects.remove(object);
+                       isDestroyed = true;
+                   }
                }
-           }
-
+            }
        }
-
+      //disappear ile olmesinin farki ne
     }
 
-    boolean isDisappeared(boolean isDisappeared) {
-        if (isDisappeared) {
-            return true;
-        }
-    return false;
-    }
 
-    @Override
-    public void doSelection() {
-        this.performAction();
-    }
+
 }
 

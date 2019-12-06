@@ -21,8 +21,4 @@ public class ProtectingAlien extends Alien {
     }
 
 
-    @Override
-    public void doSelection() {
-
-    }
 }
