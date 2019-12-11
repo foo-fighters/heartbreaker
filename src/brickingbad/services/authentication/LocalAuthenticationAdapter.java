@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class LocalAuthenticationAdapter implements IAuthenticationAdapter {
 
   @Override
   public void addUser(User user) throws IllegalArgumentException {
+    createUsersDirectoryIfDoesntExist();
     ArrayList<String> names = getNames();
     if (names.contains(user.name)) {
       throw new IllegalArgumentException("A user with that username already exists.");
@@ -61,13 +63,25 @@ public class LocalAuthenticationAdapter implements IAuthenticationAdapter {
     ArrayList<String> names = new ArrayList<>();
     File folder = new File(usersPath);
     File[] listOfFiles = folder.listFiles();
-    assert listOfFiles != null;
-    for (File file : listOfFiles) {
-      String fullName = file.getName();
-      String[] tokens = fullName.split("[.]");
-      names.add(tokens[0]);
+    if (listOfFiles != null) {
+      for (File file : listOfFiles) {
+        String fullName = file.getName();
+        String[] tokens = fullName.split("[.]");
+        names.add(tokens[0]);
+      }
     }
     return names;
+  }
+
+  private void createUsersDirectoryIfDoesntExist() {
+    Path path = Paths.get(usersPath);
+    if (!Files.exists(path)) {
+      try {
+        Files.createDirectories(path);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
   }
 
 }
