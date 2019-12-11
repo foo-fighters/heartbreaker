@@ -43,7 +43,7 @@ public class AuthenticationController {
 
   public void addUser(User user) {
     try {
-      System.out.println("Created new account: " + user.name);
+      System.out.println("Trying to create new account: " + user.name);
       userRepository.addUser(user);
     } catch (IllegalArgumentException e) {
       System.out.println("User with name exists: " + user.name);
