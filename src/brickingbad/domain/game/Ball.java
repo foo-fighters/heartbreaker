@@ -1,8 +1,6 @@
 package brickingbad.domain.game;
 
 import brickingbad.controller.EffectsController;
-import brickingbad.domain.game.brick.HalfMetalBrick;
-import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.ball.BallState;
 import brickingbad.domain.physics.ball.ChemicalBallState;
@@ -11,6 +9,7 @@ import brickingbad.domain.physics.ball.SimpleBallState;
 
 public class Ball extends GameObject {
 
+    private final double PI = Math.PI;
     private BallState ballState;
     private double paddleOffset;
 
@@ -65,6 +64,26 @@ public class Ball extends GameObject {
 
     public void reflect(GameObject object) {
         double incidenceAngle = Math.atan2(velocity.getY(), -velocity.getX());
+        double ballAngle = incidenceAngle + PI;
+        double objectAngle = Math.atan2(object.getVelocity().getY(), object.getVelocity().getX());
+        double velocityDiff = Math.abs(ballAngle - objectAngle);
+        while(velocityDiff > PI) velocityDiff -= PI * 2.0;
+        double reflectionAngle;
+        if(object.isDynamic()) {
+            if(velocityDiff == PI / 2) {
+                reflectionAngle = (incidenceAngle + objectAngle) / 2;
+                this.angle = reflectionAngle;
+                double len = Math.hypot(velocity.getX(), velocity.getY());
+                velocity.setVector(Math.cos(reflectionAngle) * len, -Math.sin(reflectionAngle) * len);
+                return;
+            }else if(velocityDiff > PI / 2) {
+                reflectionAngle = incidenceAngle;
+                this.angle = reflectionAngle;
+                double len = Math.hypot(velocity.getX(), velocity.getY());
+                velocity.setVector(Math.cos(reflectionAngle) * len, -Math.sin(reflectionAngle) * len);
+                return;
+            }
+        }
         double normalAngle;
         if (object.getShape() == Shape.CIRCLE) {
             normalAngle = Math.atan2(object.getPosition().getY() - position.getY(),
@@ -77,12 +96,15 @@ public class Ball extends GameObject {
         double difference = normalAngle - incidenceAngle;
         while(difference > Math.PI) difference -= Math.PI * 2.0;
         while(difference < -Math.PI) difference += Math.PI * 2.0;
-        double reflectionAngle = normalAngle + difference;
+        reflectionAngle = normalAngle + difference;
         if(difference >= Math.PI / 2.0) reflectionAngle -= Math.PI / 2.0;
         if(-difference >= Math.PI / 2.0) reflectionAngle += Math.PI / 2.0;
         this.angle = reflectionAngle;
         double len = Math.hypot(velocity.getX(), velocity.getY());
         velocity.setVector(Math.cos(reflectionAngle) * len, -Math.sin(reflectionAngle) * len);
+        if(object.isDynamic() && velocityDiff < PI / 2) {
+            velocity.sum(new Vector(5 * Math.cos(objectAngle), 5 * Math.sin(objectAngle)));
+        }
     }
 
     @Override
