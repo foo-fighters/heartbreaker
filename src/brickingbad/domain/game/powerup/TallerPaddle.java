@@ -15,6 +15,7 @@ public class TallerPaddle extends PowerUp {
         this.angle = 0.0;
         this.name = WrapperContent.TALLER_PADDLE;
         this.duration = GameConstants.tallerPaddleDuration;
+        this.dynamic = true;
     }
 
     @Override

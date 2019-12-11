@@ -155,6 +155,11 @@ public class Game {
     }
 
     public void play() {
+        for(GameObject object: gameObjects) {
+            if(object instanceof Brick) {
+                ((Brick) object).startMovement();
+            }
+        }
     }
 
     private void removeObjectFromListeners(GameObject object) {

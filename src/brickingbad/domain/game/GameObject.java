@@ -12,6 +12,7 @@ public abstract class GameObject implements Comparable {
   protected Vector position;
   protected Vector velocity;
   protected double angle = 0.0;
+  protected boolean dynamic = false;
 
   protected ArrayList<GameObject> collidedObjects = new ArrayList<>();
   protected Direction reflectionDirection;
@@ -73,6 +74,10 @@ public abstract class GameObject implements Comparable {
   public double getAngle() { return angle; }
 
   public void setAngle(double angle) { this.angle = angle; }
+
+  public boolean isDynamic() { return dynamic; }
+
+  public void setDynamic(boolean dynamic) { this.dynamic = dynamic; }
 
   @Override
   public int compareTo(Object obj) {

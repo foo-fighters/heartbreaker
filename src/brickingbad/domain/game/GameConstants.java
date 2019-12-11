@@ -36,13 +36,13 @@ public class GameConstants {
     // Brick movement
     public final static int brickMovementSpeed = paddleLength / 4;
     public final static double brickMovementProbability = 0.1;
-    public final static double mineBrickMovementRadius = paddleLength * 1.5;
+    public final static double mineBrickMovementRadius = paddleLength * 0.5; // * 1.5 original
 
     // Building mode
-    public final static int simpleBrickLimit = 75; //change to 75 in phase 2
-    public final static int halfMetalBrickLimit = 10; //change to 10 in phase 2
-    public final static int mineBrickLimit = 5; //change to 5 in phase 2
-    public final static int wrapperBrickLimit = 0; //change to 10 in phase 2
+    public final static int simpleBrickLimit = 75;
+    public final static int halfMetalBrickLimit = 10;
+    public final static int mineBrickLimit = 5;
+    public final static int wrapperBrickLimit = 10;
 
     // Power-ups
     public final static int powerupFallSpeed = paddleLength;
@@ -54,7 +54,7 @@ public class GameConstants {
     public final static int tallerPaddleMultiplier = 2;
 
     // Extras
-    public final static double mineBrickExplosionRadius = paddleLength; // * 2 later
+    public final static double mineBrickExplosionRadius = paddleLength; // * 2 original
     public final static double fireBallDestructionRadius = paddleLength * 0.5;
     public final static int paddleHeightOnScreen = screenHeight / 10;
     public static int framesPerSecond = 60;

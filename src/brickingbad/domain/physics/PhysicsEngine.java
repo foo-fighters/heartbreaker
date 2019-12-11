@@ -76,50 +76,26 @@ public class PhysicsEngine implements Runnable {
 
     private static void handleCollisions () {
       ArrayList<GameObject> objects = Game.getInstance().getObjects();
-      objects.sort(GameObject::compareTo);
-
-      for (int i = 0; i < objects.size(); i++) {
-        ArrayList<GameObject> collideables = new ArrayList<>();
-        Game game = Game.getInstance();
-        collideables.addAll(game.getWalls());
-        collideables.add(game.getGround());
-        collideables.add(game.getPaddle());
-        for (int j = 1; j <= 12; j++) {
-          try {
-            GameObject object = objects.get(i + j);
-            if (!(object instanceof Wall || object instanceof Paddle || object instanceof Ground)) {
-              collideables.add(object);
+      for(int i = 0; i < objects.size(); i++) {
+        GameObject o1 = objects.get(i);
+        if (o1.isDynamic()){
+          for(int j = 0; j < objects.size(); j++) {
+            GameObject o2 = objects.get(j);
+            if(!o2.isDynamic() || (j > i)) {
+              if(areColliding(o1, o2)) {
+                if(!o1.getCollidedObjects().contains(o2) && !o1.getCollidedObjects().contains(o2)){
+                  o1.collide(o2);
+                  o2.collide(o1);
+                  o1.getCollidedObjects().add(o2);
+                  o2.getCollidedObjects().add(o1);
+                }
+              }else {
+                o1.getCollidedObjects().remove(o2);
+                o2.getCollidedObjects().remove(o1);
+              }
             }
-          } catch (IndexOutOfBoundsException e) {
-
-          }
-          try {
-            GameObject object = objects.get(i - j);
-            if (!(object instanceof Wall || object instanceof Paddle || object instanceof Ground)) {
-              collideables.add(object);
-            }
-          } catch (IndexOutOfBoundsException e) {
-
           }
         }
-
-        final GameObject o1 = objects.get(i);
-
-        collideables.forEach((o2) -> {
-          if (areColliding(o1, o2)) {
-            if (!o1.getCollidedObjects().contains(o2) || !o2.getCollidedObjects().contains(o1)) {
-              o1.addCollidedObject(o2);
-              o2.addCollidedObject(o1);
-              o1.collide(o2);
-              o2.collide(o1);
-            }
-          } else {
-            o1.removeCollidedObject(o2);
-            if (o2 != null) {
-              o2.removeCollidedObject(o1);
-            }
-          }
-        });
       }
     }
 
