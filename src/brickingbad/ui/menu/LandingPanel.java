@@ -29,8 +29,6 @@ public class LandingPanel extends JPanel implements ActionListener {
   private static BBMenuButton loginButton;
 
   private LandingPanel() {
-    setSize(GameConstants.screenWidth / 2, GameConstants.screenHeight / 2);
-
     usernameLabel = new JLabel("USERNAME");
     passwordLabel = new JLabel("PASSWORD");
 

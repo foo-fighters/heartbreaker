@@ -57,7 +57,7 @@ public class BrickingBadFrame extends JFrame {
 
     try{
       Font font = Font.createFont(Font.TRUETYPE_FONT, font_file);
-      Font sizedFont = font.deriveFont(14f);
+      Font sizedFont = font.deriveFont(12f);
       setUIFont (new javax.swing.plaf.FontUIResource(sizedFont));
     } catch(Exception e) {
       System.out.println("Problem importing font");
