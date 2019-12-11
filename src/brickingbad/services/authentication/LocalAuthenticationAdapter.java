@@ -24,7 +24,7 @@ public class LocalAuthenticationAdapter implements IAuthenticationAdapter {
   public void addUser(User user) throws IllegalArgumentException {
     createUsersDirectoryIfDoesntExist();
     ArrayList<String> names = getNames();
-    if (names.contains(user.name)) {
+    if (names.contains(Encoder.encodeString(user.name))) {
       throw new IllegalArgumentException("A user with that username already exists.");
     } else {
       String encodedPassword = Encoder.encodeString(user.password);
