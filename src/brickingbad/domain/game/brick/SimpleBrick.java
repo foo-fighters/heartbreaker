@@ -10,8 +10,18 @@ public class SimpleBrick extends Brick {
         this.position = new Vector();
         this.shape = Shape.RECTANGLE;
         this.size = new Vector(GameConstants.rectangularBrickLength, GameConstants.rectangularBrickThickness);
-        this.velocity = new Vector();
         this.angle = 0.0;
+        double rand = Math.random();
+        if (rand < GameConstants.brickMovementProbability) {
+            this.dynamic = true;
+            if(rand < GameConstants.brickMovementProbability / 2) {
+                this.velocity = new Vector(GameConstants.brickMovementSpeed, 0.0);
+            }else {
+                this.velocity = new Vector(-GameConstants.brickMovementSpeed, 0.0);
+            }
+        }else {
+            this.velocity = new Vector();
+        }
     }
 
     public SimpleBrick(Vector position) {

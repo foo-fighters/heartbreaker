@@ -18,6 +18,7 @@ public class Magnet extends PowerUp {
         this.angle = 0.0;
         this.name = WrapperContent.MAGNET;
         this.duration = GameConstants.magnetDuration;
+        this.dynamic = true;
     }
 
     @Override
