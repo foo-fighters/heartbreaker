@@ -14,6 +14,7 @@ public class ChemicalBall extends PowerUp {
         this.angle = 0.0;
         this.name = WrapperContent.CHEMICAL_BALL;
         this.duration = GameConstants.chemicalBallDuration;
+        this.dynamic = true;
     }
 
     @Override

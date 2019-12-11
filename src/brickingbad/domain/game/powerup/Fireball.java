@@ -12,6 +12,7 @@ public class Fireball extends PowerUp {
         this.velocity = new Vector(0, GameConstants.powerupFallSpeed);
         this.angle = 0.0;
         this.name = WrapperContent.FIREBALL;
+        this.dynamic = true;
     }
 
     @Override

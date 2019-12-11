@@ -27,6 +27,7 @@ public class Paddle extends GameObject {
     angle = 0.0;
     isMagnetized = false;
     currentBalls = new ArrayList<>();
+    dynamic = true;
   }
 
   public void setPosition(double x, double y) {

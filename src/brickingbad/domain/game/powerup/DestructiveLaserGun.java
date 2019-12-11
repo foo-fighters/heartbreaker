@@ -14,6 +14,7 @@ public class DestructiveLaserGun extends PowerUp {
         this.velocity = new Vector(0, GameConstants.powerupFallSpeed);
         this.angle = 0.0;
         this.name = WrapperContent.DESTRUCTIVE_LASER_GUN;
+        this.dynamic = true;
     }
 
     @Override

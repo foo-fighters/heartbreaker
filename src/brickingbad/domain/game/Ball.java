@@ -21,6 +21,7 @@ public class Ball extends GameObject {
         this.velocity = new Vector();
         this.paddleOffset = 0.0;
         this.angle = 0.0;
+        this.dynamic = true;
         setSimple();
     }
 
@@ -38,6 +39,7 @@ public class Ball extends GameObject {
 
     public void startMovement(double angle, double speed){
         velocity.setVector(-speed * Math.sin(Math.toRadians(angle)), -speed * Math.cos(Math.toRadians(angle)));
+        this.angle = angle;
     }
 
     public double getSpeed() {
