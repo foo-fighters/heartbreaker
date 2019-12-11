@@ -24,17 +24,17 @@ public class EndPaddleMoveState extends PaddleMoveState{
   public void updatePosition() {
     if (Math.abs(paddle.getPosition().getX() - startX) > stopDistance) {
       paddle.setIdleMove();
-    }else if(direction == Direction.LEFT) {
-      if(paddle.getPosition().getX() <= paddle.getSize().getX() / 2.0) {
+    } else if (direction == Direction.LEFT) {
+      if (paddle.getPosition().getX() <= paddle.getSize().getX() / 2.0) {
         paddle.setPosition(paddle.getSize().getX() / 2.0, paddle.getPosition().getY());
         paddle.setIdleMove();
         return;
       }
       paddle.getPosition().addVector(deltaPos.product(-1.0));
-      for(Ball ball: paddle.getCurrentBalls()){
+      for (Ball ball: paddle.getCurrentBalls()){
         ball.getPosition().addVector(deltaPos.product(-1.0));
       }
-    }else{
+    } else {
       if(paddle.getPosition().getX() >= GameConstants.screenWidth - paddle.getSize().getX() / 2.0) {
         paddle.setPosition(GameConstants. screenWidth - paddle.getSize().getX() / 2.0, paddle.getPosition().getY());
         paddle.setIdleMove();
