@@ -108,8 +108,7 @@ public class PhysicsEngine implements Runnable {
       }
     }
 
-    private static boolean areColliding (GameObject o1, GameObject o2){
-      if (o2 != null) {
+    private static boolean areColliding (GameObject o1, GameObject o2) {
         double o1_posx = o1.getPosition().getX();
         double o1_posy = o1.getPosition().getY();
         double o2_posx = o2.getPosition().getX();
@@ -126,11 +125,9 @@ public class PhysicsEngine implements Runnable {
         } else {
           return mixedColliding(o2, o1);
         }
-      }
-      return false;
     }
 
-    private static boolean mixedColliding (GameObject circle, GameObject rect){
+    private static boolean mixedColliding (GameObject circle, GameObject rect) {
       double circle_x = circle.getPosition().getX();
       double circle_y = circle.getPosition().getY();
       double radius = circle.getSize().getX() / 2.0;

@@ -68,7 +68,7 @@ public class MineBrick extends Brick {
     }
 
     @Override
-    public void collide(GameObject object) {
+    public void reflect() {
         clockwise = !clockwise;
     }
 }
