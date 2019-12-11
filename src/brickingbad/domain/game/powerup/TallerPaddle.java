@@ -30,6 +30,7 @@ public class TallerPaddle extends PowerUp {
 
     @Override
     public void deactivate() {
+        super.deactivate();
         Paddle paddle = Game.getInstance().getPaddle();
         paddle.getSize().setVector(GameConstants.paddleLength, GameConstants.paddleThickness);
         for(Ball ball: paddle.getCurrentBalls()) {

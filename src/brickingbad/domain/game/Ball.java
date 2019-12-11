@@ -1,6 +1,5 @@
 package brickingbad.domain.game;
 
-import brickingbad.controller.EffectsController;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.ball.BallState;
 import brickingbad.domain.physics.ball.ChemicalBallState;
@@ -13,7 +12,7 @@ public class Ball extends GameObject {
     private BallState ballState;
     private double paddleOffset;
 
-    public Ball(Vector position){
+    public Ball(Vector position) {
         this.shape = Shape.CIRCLE;
         this.size = new Vector(GameConstants.ballSize, GameConstants.ballSize);
         this.position = position;
@@ -36,7 +35,7 @@ public class Ball extends GameObject {
         this.paddleOffset = paddleOffset;
     }
 
-    public void startMovement(double angle, double speed){
+    public void startMovement(double angle, double speed) {
         velocity.setVector(-speed * Math.sin(Math.toRadians(angle)), -speed * Math.cos(Math.toRadians(angle)));
         this.angle = angle;
     }
@@ -45,22 +44,19 @@ public class Ball extends GameObject {
         return Math.hypot(velocity.getX(), velocity.getY());
     }
 
-    public void stopMovement(){
+    public void stopMovement() {
         this.velocity.setVector(0.0, 0.0);
     }
 
-    public void setSimple(){
+    public void setSimple() {
         ballState = new SimpleBallState(this);
     }
 
-    public void setFireball(){
+    public void setFireball() {
         ballState = new FireBallState(this);
     }
 
-    public void setChemical(){
-        ballState = new ChemicalBallState(this);
-        EffectsController.getInstance().activateChemicalBallTrailEffect();
-    }
+    public void setChemical() { ballState = new ChemicalBallState(this); }
 
     public void reflect(GameObject object) {
         double incidenceAngle = Math.atan2(velocity.getY(), -velocity.getX());
@@ -71,7 +67,7 @@ public class Ball extends GameObject {
         double reflectionAngle;
         if(object.isDynamic()) {
             if(velocityDiff == PI / 2) {
-                reflectionAngle = (incidenceAngle + objectAngle) / 2;
+                reflectionAngle = (incidenceAngle + objectAngle) / 2.0;
                 this.angle = reflectionAngle;
                 double len = Math.hypot(velocity.getX(), velocity.getY());
                 velocity.setVector(Math.cos(reflectionAngle) * len, -Math.sin(reflectionAngle) * len);
