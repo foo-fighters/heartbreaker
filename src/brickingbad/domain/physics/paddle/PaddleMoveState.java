@@ -13,4 +13,5 @@ public abstract class PaddleMoveState {
   public Direction getDirection() {
     return direction;
   }
+
 }
