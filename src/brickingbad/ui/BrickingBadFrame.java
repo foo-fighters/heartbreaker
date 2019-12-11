@@ -156,17 +156,20 @@ public class BrickingBadFrame extends JFrame {
       Adapter adapter = showAdapterSelection();
 
       List<String> saveNames = SaveController.getInstance().adapt(adapter).getSaveNames();
+      if (saveNames.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No saved games found for this account.");
+      } else {
+        String name = (String) JOptionPane.showInputDialog(null, "Choose a save: ",
+                "Load Game", JOptionPane.QUESTION_MESSAGE, null, // Use
+                // default
+                // icon
+                saveNames.toArray(), // Array of choices
+                saveNames.toArray()[0]); // Initial choice
 
-      String name = (String) JOptionPane.showInputDialog(null, "Choose a save: ",
-              "Load Game", JOptionPane.QUESTION_MESSAGE, null, // Use
-              // default
-              // icon
-              saveNames.toArray(), // Array of choices
-              saveNames.toArray()[0]); // Initial choice
-
-      if (name != null) {
-        GameController.getInstance().initializeGame(true);
-        SaveController.getInstance().adapt(adapter).loadGame(name);
+        if (name != null) {
+          GameController.getInstance().initializeGame(true);
+          SaveController.getInstance().adapt(adapter).loadGame(name);
+        }
       }
     }
   }
