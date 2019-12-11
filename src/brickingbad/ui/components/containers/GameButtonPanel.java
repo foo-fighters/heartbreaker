@@ -20,7 +20,7 @@ public class GameButtonPanel extends JPanel implements ActionListener {
   private BBGameButton saveButton;
   private BBGameButton loadButton;
   private BBGameButton pauseButton;
-  private BBGameButton quitButton;
+  private BBGameButton  quitButton;
   private BBGameButton godModeButton;
   private JLabel scoreLabel;
 
@@ -61,7 +61,7 @@ public class GameButtonPanel extends JPanel implements ActionListener {
       pauseButton.toggleText("PAUSE", "RESUME");
       GameController.getInstance().togglePauseResume();
     } else if (e.getSource().equals(quitButton)) {
-      EffectsController.getInstance().stopHeartBeat();
+      GameController.getInstance().clearGrid();
       GameController.getInstance().resetUI();
       GameController.getInstance().resetScore();
       BrickingBadFrame.getInstance().showMainMenuPanel();

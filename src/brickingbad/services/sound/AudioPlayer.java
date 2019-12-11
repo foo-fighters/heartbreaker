@@ -28,6 +28,15 @@ public class AudioPlayer {
         clip.start();
         long f5 = System.currentTimeMillis();
 
+        LineListener listener = event -> {
+            if (event.getType() != LineEvent.Type.STOP) {
+                return;
+            }
+            clip.stop();
+            clip.close();
+        };
+        clip.addLineListener(listener );
+
         System.out.println("first = " + (f2-f1));
         System.out.println("second = " + (f3-f2));
         System.out.println("third = " + (f4-f3));

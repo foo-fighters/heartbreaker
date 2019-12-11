@@ -55,7 +55,6 @@ public class Game {
 
     private ArrayList<GameListener> objectListeners;
     private ArrayList<ErrorListener> errorListeners;
-    private ArrayList<AnimationListener> animationListeners;
 
     // CONSTRUCTION AND INITIALIZATION
     private Game() {
@@ -72,10 +71,8 @@ public class Game {
         activeAliens = new ArrayList<>();
         aliens = new ArrayList<>();
         gameClock = Clock.systemDefaultZone();
-
-        int gridX = GameConstants.screenWidth / GameConstants.rectangularBrickLength;
-        int gridY = (int)GameConstants.brickAreaHeight / GameConstants.rectangularBrickThickness;
         brickGrid = new boolean[gridX][gridY];
+
     }
 
     public static Game getInstance() {
@@ -673,5 +670,9 @@ public class Game {
 
     public int getStartBrickCount() {
         return startBrickCount;
+    }
+
+    public void clearGrid(){
+        brickGrid = new boolean[gridX][gridY];
     }
 }

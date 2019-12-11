@@ -155,4 +155,8 @@ public class GameController {
     public void setUIScore(int score){
         RunningModePanel.getInstance().setScore(score);
     }
+
+    public void clearGrid() {
+        Game.getInstance().clearGrid();
+    }
 }

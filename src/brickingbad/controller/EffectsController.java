@@ -4,12 +4,9 @@ import brickingbad.ui.effects.MineBrickExplodeEffect;
 import brickingbad.ui.game.RunningModePanel;
 
 import brickingbad.services.sound.AudioPlayer;
-import brickingbad.ui.effects.MineBrickExplodeEffect;
-import brickingbad.ui.game.RunningModePanel;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -50,6 +47,7 @@ public class EffectsController {
   public void stopHeartBeat(){
     if (timer != null){
       clip.stop();
+      clip.close();
       timer.setRepeats(false);
       timer.stop();
     }
@@ -67,7 +65,6 @@ public class EffectsController {
 
     return null;
   }
-
 
   public void load(){
 
