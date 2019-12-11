@@ -24,9 +24,17 @@ public class SimpleBrick extends Brick {
         }
     }
 
-    public SimpleBrick(Vector position) {
-        this();
-        this.position = position;
+    @Override
+    public void startMovement() {
+        double rand = Math.random();
+        if (rand < GameConstants.brickMovementProbability) {
+            this.dynamic = true;
+            if(rand < GameConstants.brickMovementProbability / 2) {
+                this.velocity = new Vector(GameConstants.brickMovementSpeed, 0.0);
+            }else {
+                this.velocity = new Vector(-GameConstants.brickMovementSpeed, 0.0);
+            }
+        }
     }
 
 }

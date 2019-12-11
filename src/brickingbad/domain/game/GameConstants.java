@@ -36,7 +36,7 @@ public class GameConstants {
     // Brick movement
     public final static int brickMovementSpeed = paddleLength / 4;
     public final static double brickMovementProbability = 0.1;
-    public final static double mineBrickMovementRadius = paddleLength * 1.5;
+    public final static double mineBrickMovementRadius = paddleLength * 0.5;
 
     // Building mode
     public final static int simpleBrickLimit = 75; //change to 75 in phase 2
