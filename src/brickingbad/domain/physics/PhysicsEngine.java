@@ -117,9 +117,19 @@ public class PhysicsEngine implements Runnable {
             o1.removeCollidedObject(o2);
             if (o2 != null) {
               o2.removeCollidedObject(o1);
+      for(int i = 0; i < objects.size(); i++) {
+        GameObject o1 = objects.get(i);
+        if (o1.isDynamic()){
+          for(int j = 0; j < objects.size(); j++) {
+            GameObject o2 = objects.get(j);
+            if(!o2.isDynamic() || (j > i)) {
+              if(areColliding(o1, o2)) {
+                o1.collide(o2);
+                o2.collide(o1);
+              }
             }
           }
-        });
+        }
       }
     }
 

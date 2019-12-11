@@ -14,6 +14,11 @@ public class HalfMetalBrick extends Brick {
         this.size = new Vector(GameConstants.rectangularBrickLength, GameConstants.rectangularBrickThickness);
         this.angle = 0.0;
         this.isCracked = false;
+        this.velocity = new Vector();
+    }
+
+    @Override
+    public void startMovement() {
         double rand = Math.random();
         if (rand < GameConstants.brickMovementProbability) {
             this.dynamic = true;
@@ -22,8 +27,6 @@ public class HalfMetalBrick extends Brick {
             }else {
                 this.velocity = new Vector(-GameConstants.brickMovementSpeed, 0.0);
             }
-        }else {
-            this.velocity = new Vector();
         }
     }
 

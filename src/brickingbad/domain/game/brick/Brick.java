@@ -27,4 +27,7 @@ public abstract class Brick extends GameObject {
         setVelocity(new Vector(-getVelocity().getX(), getVelocity().getY()));
     }
 
+    public void startMovement() {
+    }
+
 }
