@@ -16,6 +16,8 @@ import brickingbad.domain.physics.Vector;
 import java.lang.reflect.InvocationTargetException;
 import java.time.Clock;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -527,5 +529,28 @@ public class Game {
     public void brickDestroyed() {
         score += 300/(PhysicsEngine.getInstance().getTimePassed()/1000);
         GameController.getInstance().setUIScore(score);
+    }
+
+    public void shootLaserColumn(double x) {
+        ArrayList<GameObject> objectColumn = new ArrayList<>();
+        double endY = 0;
+        for(GameObject object: gameObjects) {
+            if(object instanceof Brick || object instanceof Alien) {
+                if(Math.abs(object.getPosition().getX() - x) < GameConstants.rectangularBrickLength / 2.0) {
+                    objectColumn.add(object);
+                }
+            }
+        }
+        Collections.sort(objectColumn, Comparator.comparingDouble(o -> o.getPosition().getY()));
+        Collections.reverse(objectColumn);
+        for(GameObject object: objectColumn) {
+            if(object instanceof HalfMetalBrick) {
+                endY = object.position.getY() + object.getSize().getY() / 2;
+                break;
+            }else {
+                object.destroy();
+            }
+        }
+        publishAnimation("LaserAnimation", x, GameConstants.paddleHeightOnScreen, endY);
     }
 }

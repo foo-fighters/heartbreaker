@@ -6,27 +6,28 @@ import brickingbad.domain.physics.Vector;
 
 import java.awt.*;
 
-public class ExplosionAnimation extends Animation {
+public class LaserAnimation extends Animation {
 
-    int centerX;
-    int centerY;
-    int radius;
-    double size;
+    double size = GameConstants.rectangularBrickLength;
+    int startX;
+    int endY;
+    int height;
+    int width;
 
-    public ExplosionAnimation(AnimationListener listener, Vector center, double radius) {
+    public LaserAnimation(AnimationListener listener, double startX, double startY, double endY) {
         this.listener = listener;
-        this.size = radius;
-        centerX = (int) center.getX();
-        centerY = (int) center.getY();
+        this.endY = (int) endY;
+        this.startX = (int) startX;
+        this.height = (int) startY - this.endY;
         totalTime = GameConstants.calculationsPerSecond / 4;
         remainingTime = totalTime;
     }
 
     @Override
     public void drawFrame(Graphics g) {
-        radius = (int) (size * remainingTime / totalTime);
+        width = (int) (size * remainingTime / totalTime);
         g.setColor(new Color(255, 153, 0, 128));
-        g.fillOval(centerX - radius, centerY - radius, radius * 2, radius * 2);
+        g.fillRect(startX - width / 2, endY, width, height);
         remainingTime--;
         if(remainingTime == 0) {
             listener.stopAnimation(this);
