@@ -12,6 +12,7 @@ import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.domain.physics.Vector;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.Clock;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,10 +49,12 @@ public class Game {
 
     private ArrayList<GameObjectListener> objectListeners;
     private ArrayList<ErrorListener> errorListeners;
+    private ArrayList<AnimationListener> animationListeners;
 
     private Game() {
         objectListeners = new ArrayList<>();
         errorListeners = new ArrayList<>();
+        animationListeners = new ArrayList<>();
         balls = new ArrayList<>();
         walls = new ArrayList<>();
         bricks = new ArrayList<>();
@@ -81,6 +84,23 @@ public class Game {
 
     public void addErrorListener(ErrorListener err) {
         errorListeners.add(err);
+    }
+
+    public void addAnimationListener(AnimationListener anim) {
+        animationListeners.add(anim);
+    }
+
+    public void publishAnimation(String animationName, Object... args) {
+        for(AnimationListener anim: animationListeners) {
+            try {
+                anim.addAnimation(animationName, args);
+            } catch (ClassNotFoundException |
+                    IllegalAccessException |
+                    InvocationTargetException |
+                    InstantiationException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void trackObject(GameObject object) {
@@ -192,6 +212,7 @@ public class Game {
                 }
             }
         }
+        publishAnimation("ExplosionAnimation", center, radius);
     }
 
     public void addBrick(Brick brick) {
@@ -287,7 +308,7 @@ public class Game {
 
     public void invokeGodMode() {
         paddle.god();
-    } 
+    }
 
     public void addWrapperContent() {
         if(wrapperContentList.size() < WrapperContent.values().length) {
@@ -496,7 +517,6 @@ public class Game {
             GameController.getInstance().showWinDialog();
             alreadyWon = true;
         }
-
     }
 
     public void brickDestroyed() {
@@ -504,11 +524,10 @@ public class Game {
         GameController.getInstance().setUIScore(score);
     }
 
-    public void destroyBrickRow(double y) {
-    }
-
     public void shootLaserColumn(double x) {
         ArrayList<GameObject> objectColumn = new ArrayList<>();
+        double endY = 0;
+ 
         for(GameObject object: gameObjects) {
             if(object instanceof Brick || object instanceof Alien) {
                 if(Math.abs(object.getPosition().getX() - x) < GameConstants.rectangularBrickLength / 2.0) {
@@ -520,10 +539,12 @@ public class Game {
         Collections.reverse(objectColumn);
         for(GameObject object: objectColumn) {
             if(object instanceof HalfMetalBrick) {
+                endY = object.position.getY() + object.getSize().getY() / 2;
                 break;
             }else {
                 object.destroy();
             }
         }
+        publishAnimation("LaserAnimation", x, GameConstants.paddleHeightOnScreen, endY);
     }
 }

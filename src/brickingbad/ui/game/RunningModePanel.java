@@ -1,14 +1,13 @@
 package brickingbad.ui.game;
 
 import brickingbad.controller.GameController;
-import brickingbad.domain.game.Game;
-import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.GameObject;
-import brickingbad.domain.game.GameObjectListener;
+import brickingbad.domain.game.*;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.GameButtonPanel;
+import brickingbad.ui.game.animation.Animation;
 import brickingbad.ui.game.animation.Animator;
+import brickingbad.ui.game.animation.ExplosionAnimation;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -16,12 +15,13 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class RunningModePanel extends JPanel implements GameObjectListener {
+public class RunningModePanel extends JPanel implements GameObjectListener, AnimationListener {
 
   private static RunningModePanel instance;
 
@@ -37,6 +37,7 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
   private BufferedImage heart;
   private BufferedImage heart_empty;
 
+  private ArrayList<Animation> currentAnimations;
 
   private RunningModePanel() {
     Animator.getInstance(this).start();
@@ -48,6 +49,8 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
     loadHeartImage("resources/sprites/heart.png");
     loadHeartEmptyImage("resources/sprites/heart_empty.png");
     GameController.getInstance().addObjectListener(this);
+    GameController.getInstance().addAnimationListener(this);
+    currentAnimations = new ArrayList<>();
     this.addKeyListener(new GameKeyboardListener());
 
     scoreLabel = new JLabel();
@@ -84,12 +87,12 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
 
   @Override
   protected void paintComponent(Graphics g) {
-
     super.paintComponent(g);
     g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
-
-
-
+    ArrayList<Animation> animationsCopy = new ArrayList<>(currentAnimations);
+    for(Animation animation : animationsCopy) {
+      animation.drawFrame(g);
+    }
     for (Iterator<UIGameObject> iterator = uiObjects.iterator(); iterator.hasNext(); ) {
       UIGameObject object = iterator.next();
       object.paintComponent(g);
@@ -149,5 +152,23 @@ public class RunningModePanel extends JPanel implements GameObjectListener {
 
   public void setScore(int score) {
     gameButtonPanel.setUIScore(score);
+  }
+
+  @Override
+  public void addAnimation(String animationName, Object... args)
+          throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    Class animationClass = Class.forName("brickingbad.ui.game.animation." + animationName);
+    Constructor constructor = animationClass.getConstructors()[0];
+    Object[] params = new Object[args.length + 1];
+    params[0] = this;
+    for(int i = 0; i < args.length; i++) {
+      params[i + 1] = args[i];
+    }
+    currentAnimations.add((Animation) constructor.newInstance(params));
+  }
+
+  @Override
+  public void stopAnimation(Animation animation) {
+    currentAnimations.remove(animation);
   }
 }

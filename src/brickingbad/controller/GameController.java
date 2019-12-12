@@ -1,5 +1,6 @@
 package brickingbad.controller;
 
+import brickingbad.domain.game.AnimationListener;
 import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameObjectListener;
 import brickingbad.domain.game.WrapperContent;
@@ -121,6 +122,10 @@ public class GameController {
         Game.getInstance().addObjectListener(listener);
     }
 
+    public void addAnimationListener(AnimationListener listener) {
+        Game.getInstance().addAnimationListener(listener);
+    }
+
     public void invokeGodMode() {
         RunningModePanel.getInstance().invokeGodMode();
         Game.getInstance().invokeGodMode();
@@ -151,6 +156,7 @@ public class GameController {
         Game.getInstance().setScore(0);
         setUIScore(0);
     }
+
     public void setUIScore(int score){
         RunningModePanel.getInstance().setScore(score);
     }
