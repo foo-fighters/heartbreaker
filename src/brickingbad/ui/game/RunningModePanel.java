@@ -6,7 +6,6 @@ import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.GameButtonPanel;
 import brickingbad.ui.game.animation.Animation;
-import brickingbad.ui.effects.Effect;
 import brickingbad.ui.game.animation.Animator;
 import brickingbad.ui.game.animation.ExplosionAnimation;
 
@@ -31,8 +30,6 @@ public class RunningModePanel extends JPanel implements GameObjectListener, Anim
   //    and we are working with multiple threads, it is a logical choice.
   private CopyOnWriteArrayList<UIGameObject> uiObjects;
 
-  private CopyOnWriteArrayList<Effect> effects;
-
   private GameButtonPanel gameButtonPanel;
   private JLabel scoreLabel;
   private BufferedImage background;
@@ -48,13 +45,13 @@ public class RunningModePanel extends JPanel implements GameObjectListener, Anim
     PhysicsEngine.getInstance().start();
     setLayout(null);
     uiObjects = new CopyOnWriteArrayList<>();
-    effects = new CopyOnWriteArrayList<>();
-    setLayout(null);
     initUI();
     loadBackgroundImage("resources/sprites/background.png");
     loadHeartImage("resources/sprites/heart.png");
     loadHeartEmptyImage("resources/sprites/heart_empty.png");
     GameController.getInstance().addObjectListener(this);
+    GameController.getInstance().addAnimationListener(this);
+    currentAnimations = new ArrayList<>();
     this.addKeyListener(new GameKeyboardListener());
 
     scoreLabel = new JLabel();
@@ -89,16 +86,12 @@ public class RunningModePanel extends JPanel implements GameObjectListener, Anim
     uiObjects.removeIf(uiGameObject -> uiGameObject.containsObject(object));
   }
 
-  public void addEffect(Effect effect) {
-    effects.add(effect);
-  }
-
   @Override
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
-    for (UIGameObject object : uiObjects) {
-    for(Animation animation : currentAnimations) {
+    ArrayList<Animation> animationsCopy = new ArrayList<>(currentAnimations);
+    for(Animation animation : animationsCopy) {
       animation.drawFrame(g);
     }
     for (Iterator<UIGameObject> iterator = uiObjects.iterator(); iterator.hasNext(); ) {
@@ -165,9 +158,14 @@ public class RunningModePanel extends JPanel implements GameObjectListener, Anim
   @Override
   public void addAnimation(String animationName, Object... args)
           throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
-    Class animationClass = Class.forName("ui.game.animation." + animationName);
+    Class animationClass = Class.forName("brickingbad.ui.game.animation." + animationName);
     Constructor constructor = animationClass.getConstructors()[0];
-    currentAnimations.add((Animation) constructor.newInstance(this, args));
+    Object[] params = new Object[args.length + 1];
+    params[0] = this;
+    for(int i = 0; i < args.length; i++) {
+      params[i + 1] = args[i];
+    }
+    currentAnimations.add((Animation) constructor.newInstance(params));
   }
 
   @Override
