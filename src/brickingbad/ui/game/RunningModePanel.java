@@ -5,7 +5,9 @@ import brickingbad.domain.game.*;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.GameButtonPanel;
+import brickingbad.ui.game.animation.Animation;
 import brickingbad.ui.game.animation.Animator;
+import brickingbad.ui.game.animation.ExplosionAnimation;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,8 +15,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -33,6 +36,8 @@ public class RunningModePanel extends JPanel implements GameObjectListener, Anim
 
   private BufferedImage heart;
   private BufferedImage heart_empty;
+
+  private ArrayList<Animation> currentAnimations;
 
 
   private RunningModePanel() {
@@ -81,12 +86,11 @@ public class RunningModePanel extends JPanel implements GameObjectListener, Anim
 
   @Override
   protected void paintComponent(Graphics g) {
-
     super.paintComponent(g);
     g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
-
-
-
+    for(Animation animation : currentAnimations) {
+      animation.drawFrame(g);
+    }
     for (Iterator<UIGameObject> iterator = uiObjects.iterator(); iterator.hasNext(); ) {
       UIGameObject object = iterator.next();
       object.paintComponent(g);
@@ -146,5 +150,13 @@ public class RunningModePanel extends JPanel implements GameObjectListener, Anim
 
   public void setScore(int score) {
     gameButtonPanel.setUIScore(score);
+  }
+
+  @Override
+  public void addAnimation(String animationName, Object... args)
+          throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    Class animationClass = Class.forName("ui.game.animation." + animationName);
+    Constructor constructor = animationClass.getConstructors()[0];
+    currentAnimations.add((Animation) constructor.newInstance(args));
   }
 }
