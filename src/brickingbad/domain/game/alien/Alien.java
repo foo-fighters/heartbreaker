@@ -6,7 +6,17 @@ import java.lang.reflect.InvocationTargetException;
 
 public abstract class Alien extends GameObject {
 
-    abstract void performAction();
+    protected AlienStrategy currentStrategy;
+
+    @Override
+    public void updatePosition() {
+        super.updatePosition();
+        performAction();
+    }
+
+    public void performAction() {
+        currentStrategy.performAction();
+    }
 
     public String getTypeName() {
         return "Alien";

@@ -6,6 +6,7 @@ import brickingbad.domain.game.GameObject;
 import brickingbad.domain.physics.Vector;
 
 public abstract class Brick extends GameObject {
+
     @Override
     public void destroy() {
         Game.getInstance().anyBricksLeft();

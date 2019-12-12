@@ -5,6 +5,7 @@ import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.alien.Alien;
+import brickingbad.domain.game.alien.ProtectingAlien;
 import brickingbad.domain.game.brick.Brick;
 import brickingbad.domain.game.brick.HalfMetalBrick;
 import brickingbad.domain.game.powerup.PowerUp;
@@ -35,6 +36,11 @@ public class FireBallState extends BallState {
                     Game.getInstance().destroyBricksInRadius(object.getPosition(), GameConstants.fireBallDestructionRadius);
                 }else {
                     ((HalfMetalBrick) object).setCracked(true);
+                }
+            }else if(object instanceof ProtectingAlien) {
+                Direction dir = ball.getReflectionDirection();
+                if(dir == Direction.UP_LEFT || dir == Direction.UP || dir == Direction.UP_RIGHT) {
+                    object.destroy();
                 }
             }else{
                 object.destroy();
