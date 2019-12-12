@@ -190,6 +190,7 @@ public class Game {
                 }
             }
         }
+
     }
 
     public void addBrick(Brick brick) {
