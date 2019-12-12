@@ -412,8 +412,10 @@ public class Game {
         ArrayList<PowerUp> storedPowerUpsCopy = new ArrayList<>(storedPowerUps);
         for(PowerUp powerup: storedPowerUpsCopy) {
             if(powerup.getName() == name) {
-                storedPowerUps.remove(powerup);
-                activePowerUps.add(powerup);
+                if(powerup.getName() != WrapperContent.DESTRUCTIVE_LASER_GUN) {
+                    storedPowerUps.remove(powerup);
+                    activePowerUps.add(powerup);
+                }
                 powerup.activate();
             }
         }
@@ -515,7 +517,6 @@ public class Game {
             GameController.getInstance().showWinDialog();
             alreadyWon = true;
         }
-
     }
 
     public void brickDestroyed() {
@@ -526,6 +527,7 @@ public class Game {
     public void shootLaserColumn(double x) {
         ArrayList<GameObject> objectColumn = new ArrayList<>();
         double endY = 0;
+ 
         for(GameObject object: gameObjects) {
             if(object instanceof Brick || object instanceof Alien) {
                 if(Math.abs(object.getPosition().getX() - x) < GameConstants.rectangularBrickLength / 2.0) {
