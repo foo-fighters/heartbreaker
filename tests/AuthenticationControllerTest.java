@@ -2,7 +2,6 @@ import brickingbad.controller.AuthenticationController;
 import brickingbad.domain.game.authentication.User;
 import brickingbad.services.Adapter;
 import brickingbad.services.authentication.UserRepository;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
