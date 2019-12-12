@@ -19,10 +19,6 @@ import java.util.List;
 
 public class SaveAssembler {
 
-  /**
-   * Takes a Game object and a name string.
-   * Extracts the necessary information from the game object into the save object.
-   */
   public static Save assemble(Game game, String name) {
     Save save = new Save();
 
