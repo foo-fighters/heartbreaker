@@ -58,6 +58,7 @@ public class AuthenticationController {
       if (user.password.equals(password)) {
         System.out.println("Successful login: " + user.name);
         currentUser = user;
+        System.out.println(toString());
         return true;
       } else {
         System.out.println("Wrong password for: " + user.name);
@@ -115,6 +116,24 @@ public class AuthenticationController {
    */
   public User getCurrentUser() {
     return currentUser;
+  }
+
+  @Override
+  public String toString() {
+    String message = "";
+    message += "AuthenticationController \n";
+    message += "\tadapted to: " + userRepository.getAdapter().getClass().getSimpleName() + "\n";
+    if (currentUser == null) {
+      message += "\tcurrent user: " + "---" + "\n";
+    } else {
+      message += "\tcurrent user: " + currentUser.name + "\n";
+    }
+
+    return message;
+  }
+
+  public boolean repOk() {
+    return true; // ?
   }
 
 }
