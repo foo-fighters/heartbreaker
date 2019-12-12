@@ -4,6 +4,7 @@ import brickingbad.controller.GameController;
 import brickingbad.controller.SaveController;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.services.Adapter;
+import brickingbad.services.AdapterHandler;
 import brickingbad.ui.components.Panel;
 import brickingbad.ui.game.BuildingModePanel;
 import brickingbad.ui.game.animation.Animator;
@@ -138,7 +139,7 @@ public class BrickingBadFrame extends JFrame {
         getCurrentPanelName().equals(Panel.RUNNING_MODE)) {
       showPauseWarning();
     } else {
-      Adapter adapter = showAdapterSelection();
+      Adapter adapter = AdapterHandler.getCurrentAdapter();
       String name = JOptionPane.showInputDialog("Save name: ");
       System.out.println(name);
       if (name != null) {
@@ -153,7 +154,7 @@ public class BrickingBadFrame extends JFrame {
         getCurrentPanelName().equals(Panel.RUNNING_MODE)) {
       showPauseWarning();
     } else {
-      Adapter adapter = showAdapterSelection();
+      Adapter adapter = AdapterHandler.getCurrentAdapter();
 
       List<String> saveNames = SaveController.getInstance().adapt(adapter).getSaveNames();
       if (saveNames.isEmpty()) {
@@ -189,17 +190,6 @@ public class BrickingBadFrame extends JFrame {
 
   private void showPauseWarning() {
     JOptionPane.showMessageDialog(this, "The game should be paused for save/load. ");
-  }
-
-  private Adapter showAdapterSelection() {
-    Adapter[] saveLocations = Adapter.values();
-    Adapter adapterName = (Adapter) JOptionPane.showInputDialog(null, "Choose save location: ",
-            "Save Game", JOptionPane.QUESTION_MESSAGE, null, // Use
-            // default
-            // icon
-            saveLocations, // Array of choices
-            saveLocations); // Initial choice
-    return adapterName;
   }
 
 }
