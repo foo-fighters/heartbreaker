@@ -51,6 +51,10 @@ public class AuthenticationController {
     }
   }
 
+  public void deleteUser(User user) {
+    userRepository.deleteUser(user);
+  }
+
   public AuthenticationController adapt(Adapter adapter) {
     userRepository.adapt(adapter);
     return this;
