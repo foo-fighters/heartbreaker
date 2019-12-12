@@ -21,7 +21,7 @@ public class LocalAuthenticationAdapter implements IAuthenticationAdapter {
   private final String usersPath = "storage/users/";
 
   @Override
-  public void addUser(User user) throws IllegalArgumentException {
+  public boolean addUser(User user) throws IllegalArgumentException {
     createUsersDirectoryIfDoesntExist();
     ArrayList<String> names = getNames();
     if (names.contains(Encoder.encodeString(user.name))) {
@@ -33,8 +33,10 @@ public class LocalAuthenticationAdapter implements IAuthenticationAdapter {
         BufferedWriter writer = new BufferedWriter(new FileWriter(usersPath + encodedName + ".txt"));
         writer.write(encodedPassword);
         writer.close();
+        return true;
       } catch (IOException e) {
         e.printStackTrace();
+        return false;
       }
     }
   }

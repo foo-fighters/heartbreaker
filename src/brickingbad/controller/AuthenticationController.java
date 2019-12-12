@@ -68,13 +68,13 @@ public class AuthenticationController {
    * commands the {@link UserRepository} to save the given {@link User} to the database.
    * @param user the user to be saved
    */
-  public void addUser(User user) {
+  public boolean addUser(User user) {
     try {
       System.out.println("Trying to create new account: " + user.name);
-      userRepository.addUser(user);
+      return userRepository.addUser(user);
     } catch (IllegalArgumentException e) {
       System.out.println("User with name exists: " + user.name);
-      // TODO: handle (show UI message)
+      return false;
     }
   }
 
