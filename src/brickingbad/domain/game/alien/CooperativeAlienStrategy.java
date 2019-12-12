@@ -10,7 +10,8 @@ import brickingbad.domain.physics.Vector;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class CooperativeAlien extends Alien {
+public class CooperativeAlienStrategy extends AlienStrategy {
+
     private Random rand;
     private double h;
     private double h_up;
@@ -19,21 +20,21 @@ public class CooperativeAlien extends Alien {
     private double y;
     private double x;
 
-
-    public CooperativeAlien() {
+    public CooperativeAlienStrategy() {
         this.position= new Vector();
         this.shape= Shape.CIRCLE;
         this.velocity=new Vector();
         this.angle = 0.0;
         this.size = new Vector(GameConstants.alienSize, GameConstants.alienSize);
         rand = new Random();
-        x =  (rand.nextInt(GameConstants.screenWidth - GameConstants.alienSize) + GameConstants.alienSize/2)/10;
-        y = (rand.nextInt((int) GameConstants.alienAreaHeight) + GameConstants.brickAreaHeight + GameConstants.menuAreaHeight )/10;//should be in the brick area
+        x = ((rand.nextInt(GameConstants.screenWidth - GameConstants.alienSize) + GameConstants.alienSize/2)/10)*10;
+        y = ((rand.nextInt((int) GameConstants.alienAreaHeight - GameConstants.alienSize) + GameConstants.brickAreaHeight + GameConstants.menuAreaHeight
+                + GameConstants.alienSize/2)/10)*10;//should be in the brick area
         position.setVector(x,y);
     }
 
     @Override
-    void performAction() {
+    void performStrategy() {
         //if h is aroun d the center of bricks
        isDestroyed = false;
 
