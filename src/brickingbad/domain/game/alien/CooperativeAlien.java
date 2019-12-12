@@ -1,5 +1,6 @@
 package brickingbad.domain.game.alien;
 
+import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.Shape;
 import brickingbad.domain.physics.Vector;
@@ -12,11 +13,8 @@ public class CooperativeAlien extends Alien {
         this.velocity=new Vector();
         this.angle = 0.0;
         this.size = new Vector(GameConstants.alienSize, GameConstants.alienSize);
-    }
-
-    @Override
-    void performAction() {
-
+        this.dynamic = true;
+        this.currentStrategy = new CooperativeAlienStrategy(this);
     }
 
 }

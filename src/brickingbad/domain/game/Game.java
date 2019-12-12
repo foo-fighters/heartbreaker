@@ -34,6 +34,8 @@ public class Game {
     private ArrayList<Alien> aliens;
     private ArrayList<GameObject> gameObjects;
 
+    private int gridX = GameConstants.screenWidth / GameConstants.rectangularBrickLength;
+    private int gridY = (int)GameConstants.brickAreaHeight / GameConstants.rectangularBrickThickness;
     private boolean[][] brickGrid;
 
     private int score;
@@ -65,9 +67,6 @@ public class Game {
         activeAliens = new ArrayList<>();
         aliens = new ArrayList<>();
         gameClock = Clock.systemDefaultZone();
-
-        int gridX = GameConstants.screenWidth / GameConstants.rectangularBrickLength;
-        int gridY = (int)GameConstants.brickAreaHeight / GameConstants.rectangularBrickThickness;
         brickGrid = new boolean[gridX][gridY];
     }
 
@@ -105,7 +104,6 @@ public class Game {
 
     private void trackObject(GameObject object) {
         gameObjects.add(object);
-        gameObjects.sort(GameObject::compareTo);
         for (GameObjectListener listener : objectListeners) {
             listener.addObject(object);
         }
@@ -366,10 +364,16 @@ public class Game {
                 alien = new ProtectingAlien();
                 break;
             case REPAIRING_ALIEN:
-                alien = new RepairingAlien();
+                alien = new ProtectingAlien();
+                //alien = new RepairingAlien();
                 break;
             default:
         }
+        double spawnX = GameConstants.alienSize / 2.0 +
+                random.nextDouble() * (GameConstants.screenWidth - GameConstants.alienSize);
+        double spawnY = (GameConstants.screenHeight - GameConstants.paddleAreaHeight - GameConstants.alienSize / 2.0) -
+                random.nextDouble() * (GameConstants.alienAreaHeight - GameConstants.alienSize);
+        alien.setPosition(new Vector(spawnX, spawnY));
         aliens.add(alien);
         trackObject(alien);
     }
@@ -555,5 +559,57 @@ public class Game {
         for(AnimationListener anim: animationListeners) {
             anim.updateBalls(stateModifier);
         }
+    }
+
+    public void addBrickHorizontal() {
+        boolean overlaps = true;
+        int y = ThreadLocalRandom.current().nextInt(brickGrid[0].length);
+        int x = GameConstants.rectangularBrickLength / 2;
+        while(!((x + GameConstants.rectangularBrickLength) >= GameConstants.screenWidth)) {
+            SimpleBrick brick = new SimpleBrick();
+            while (overlaps) {
+                if (bricks.size() == 0) {
+                    overlaps = false;
+                } else {
+                    overlaps = brickGrid[x][y];
+                }
+                if (!overlaps) {
+                    brickGrid[x][y] = true;
+                    brick.setPosition(new Vector(x, y));
+                }
+                x += GameConstants.rectangularBrickLength;
+            }
+            bricks.add(brick);
+            trackObject(brick);
+        }
+    }
+
+    public double getBrickRowHeight() {
+        boolean empty = true;
+        double rowHeight = 0.0;
+        while(empty) {
+            int row = random.nextInt(gridX);
+            rowHeight = GameConstants.menuAreaHeight + GameConstants.rectangularBrickThickness / 2.0 +
+                    row * GameConstants.rectangularBrickThickness;
+            for(GameObject object: gameObjects) {
+                if(object.getPosition().getY() == rowHeight) {
+                    empty = false;
+                }
+            }
+        }
+        return rowHeight;
+    }
+
+    public Brick nextBrickInRow(double rowHeight) {
+        ArrayList<Brick> rowBricks = new ArrayList<>();
+        ArrayList<GameObject> objectsCopy = new ArrayList<>(gameObjects);
+        for(GameObject object: objectsCopy) {
+            if(object instanceof Brick && object.getPosition().getY() == rowHeight) {
+                rowBricks.add((Brick) object);
+            }
+        }
+        Collections.sort(rowBricks, Comparator.comparingDouble(o -> o.getPosition().getX()));
+        if(rowBricks.isEmpty()) return null;
+        return rowBricks.get(0);
     }
 }
