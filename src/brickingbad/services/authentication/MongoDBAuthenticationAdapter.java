@@ -24,6 +24,11 @@ public class MongoDBAuthenticationAdapter implements IAuthenticationAdapter {
   }
 
   @Override
+  public void deleteUser(User user) {
+    usersCollection.deleteOne(eq("name", user.name));
+  }
+
+  @Override
   public User findUserByName(String name) throws IllegalArgumentException {
     User user = usersCollection.find(eq("name", name)).first();
     if (user == null) {
