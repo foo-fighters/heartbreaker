@@ -6,6 +6,7 @@ import brickingbad.controller.SaveController;
 import brickingbad.controller.SaveController;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.services.Adapter;
+import brickingbad.services.AdapterHandler;
 import brickingbad.ui.components.Panel;
 import brickingbad.ui.game.BuildingModePanel;
 import brickingbad.ui.game.animation.Animator;
@@ -163,7 +164,7 @@ public class BrickingBadFrame extends JFrame {
         getCurrentPanelName().equals(Panel.RUNNING_MODE)) {
       showPauseWarning();
     } else {
-      Adapter adapter = showAdapterSelection();
+      Adapter adapter = AdapterHandler.getCurrentAdapter();
       String name = JOptionPane.showInputDialog("Save name: ");
       System.out.println(name);
       if (name != null) {
@@ -178,7 +179,7 @@ public class BrickingBadFrame extends JFrame {
         getCurrentPanelName().equals(Panel.RUNNING_MODE)) {
       showPauseWarning();
     } else {
-      Adapter adapter = showAdapterSelection();
+      Adapter adapter = AdapterHandler.getCurrentAdapter();
 
       List<String> saveNames = SaveController.getInstance().adapt(adapter).getSaveNames();
       if (saveNames.isEmpty()) {
