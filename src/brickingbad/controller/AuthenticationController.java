@@ -9,6 +9,9 @@ import brickingbad.services.authentication.UserRepository;
  *
  */
 public class AuthenticationController {
+  /* OVERVIEW: creates a link between the ui events regarding authentication
+                  and the service layer (UserRepository).
+   */
 
   /**
    * Maintains the single instance of {@link AuthenticationController} since it is implemented as a singleton.
@@ -47,6 +50,9 @@ public class AuthenticationController {
    * @return true if authentication succeeds, false otherwise.
    */
   public boolean authenticate(String name, String password) {
+    // REQUIRES: two non-null strings
+    // MODIFIES: currentUser
+    // EFFECTS:  returns the result of the authentication operations
     try {
       User user = userRepository.findUserByName(name);
       if (user.password.equals(password)) {
@@ -69,6 +75,9 @@ public class AuthenticationController {
    * @param user the user to be saved
    */
   public boolean addUser(User user) {
+    // REQUIRES: a non-null User object
+    // MODIFIES: nothing
+    // EFFECTS:  the given user is written to the database.
     try {
       System.out.println("Trying to create new account: " + user.name);
       return userRepository.addUser(user);
@@ -76,6 +85,13 @@ public class AuthenticationController {
       System.out.println("User with name exists: " + user.name);
       return false;
     }
+  }
+
+  public void deleteUser(User user) {
+    // REQUIRES: a non-null User object
+    // MODIFIES: nothing
+    // EFFECTS:  the given user is deleted from the database.
+    userRepository.deleteUser(user);
   }
 
   /**
@@ -86,6 +102,9 @@ public class AuthenticationController {
    * @return itself so that methods can be chained.
    */
   public AuthenticationController adapt(Adapter adapter) {
+    // REQUIRES: an Adapter enum value
+    // MODIFIES: nothing
+    // EFFECTS:  userRepository is adapted to the given adapter.
     userRepository.adapt(adapter);
     return this;
   }
