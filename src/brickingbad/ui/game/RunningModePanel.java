@@ -39,7 +39,6 @@ public class RunningModePanel extends JPanel implements GameObjectListener, Anim
 
   private ArrayList<Animation> currentAnimations;
 
-
   private RunningModePanel() {
     Animator.getInstance(this).start();
     PhysicsEngine.getInstance().start();
