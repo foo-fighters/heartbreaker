@@ -167,6 +167,11 @@ public class RunningModePanel extends JPanel implements GameObjectListener, Anim
           throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
     Class animationClass = Class.forName("ui.game.animation." + animationName);
     Constructor constructor = animationClass.getConstructors()[0];
-    currentAnimations.add((Animation) constructor.newInstance(args));
+    currentAnimations.add((Animation) constructor.newInstance(this, args));
+  }
+
+  @Override
+  public void stopAnimation(Animation animation) {
+    currentAnimations.remove(animation);
   }
 }
