@@ -52,9 +52,23 @@ public class UIGameObject extends JLabel implements MouseListener {
         g2d.dispose();
     }
 
+    public GameObject getGameObject() {
+        return gameObject;
+    }
+
     private void setSprite()  {
         try {
             String spritePath = String.format("resources/sprites/%s.png", gameObject.getClass().getSimpleName().toLowerCase());
+            sprite = ImageIO.read(new File(spritePath));
+            setIcon(new ImageIcon(sprite));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setSprite(String spriteName)  {
+        try {
+            String spritePath = String.format("resources/sprites/%s.png", spriteName);
             sprite = ImageIO.read(new File(spritePath));
             setIcon(new ImageIcon(sprite));
         } catch (IOException e) {

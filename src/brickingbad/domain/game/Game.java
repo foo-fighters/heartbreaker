@@ -550,4 +550,10 @@ public class Game {
         }
         publishAnimation("LaserAnimation", x, endY);
     }
+
+    public void updateBalls(String stateModifier) {
+        for(AnimationListener anim: animationListeners) {
+            anim.updateBalls(stateModifier);
+        }
+    }
 }

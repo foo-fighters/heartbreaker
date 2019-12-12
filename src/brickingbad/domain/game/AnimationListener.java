@@ -7,4 +7,5 @@ public interface AnimationListener {
     void addAnimation(String animationName, Object... args)
             throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException;
     void stopAnimation(Animation animation);
+    void updateBalls(String stateModifier);
 }

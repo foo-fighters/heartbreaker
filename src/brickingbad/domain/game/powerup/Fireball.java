@@ -22,6 +22,7 @@ public class Fireball extends PowerUp {
                 ((Ball) object).setFireball();
             }
         }
+        Game.getInstance().updateBalls("_fire");
         destroy();
     }
 

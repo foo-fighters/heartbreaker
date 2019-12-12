@@ -2,13 +2,12 @@ package brickingbad.ui.game.animation;
 
 import brickingbad.domain.game.AnimationListener;
 import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.physics.Vector;
 
 import java.awt.*;
 
 public class LaserAnimation extends Animation {
 
-    double size = GameConstants.rectangularBrickLength / 2;
+    double size = GameConstants.rectangularBrickLength / 2.0;
     int startX;
     int startY = GameConstants.screenHeight - GameConstants.paddleHeightOnScreen;
     int endY;
