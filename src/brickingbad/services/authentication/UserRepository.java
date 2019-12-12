@@ -30,6 +30,10 @@ public class UserRepository {
     return adapter.findUserByName(name);
   }
 
+  public void deleteUser(User user) {
+    adapter.deleteUser(user);
+  }
+
   // ADAPTER CONTROLS
 
   public void adapt(Adapter adapter) {

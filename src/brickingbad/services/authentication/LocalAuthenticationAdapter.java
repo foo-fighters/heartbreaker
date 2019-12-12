@@ -40,6 +40,13 @@ public class LocalAuthenticationAdapter implements IAuthenticationAdapter {
   }
 
   @Override
+  public void deleteUser(User user) {
+    String encodedName = Encoder.encodeString(user.name);
+    File file = new File(usersPath + encodedName + ".txt");
+    file.delete();
+  }
+
+  @Override
   public User findUserByName(String name) throws IllegalArgumentException {
     List<String> names = getNames()
                               .stream().map(Decoder::decodeString)
