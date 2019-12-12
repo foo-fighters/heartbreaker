@@ -321,9 +321,7 @@ public class Game {
     public void revealWrapperContent(Vector revealPosition) {
         if(wrapperContentList.size() > 0) {
             WrapperContent content = wrapperContentList.remove(random.nextInt(wrapperContentList.size()));
-            if(storedPowerUps.stream().map(PowerUp::getName).collect(Collectors.toList()).contains(content)
-                    || activePowerUps.stream().map(PowerUp::getName).collect(Collectors.toList()).contains(content)
-                    || activeAliens.contains(content)) {
+            if(activeAliens.contains(content)) {
                 return;
             }
             if(content.ordinal() < 6) {
@@ -401,6 +399,11 @@ public class Game {
     }
 
     public void storePowerUp(PowerUp powerup) {
+        if(storedPowerUps.stream().map(PowerUp::getName).collect(Collectors.toList()).contains(powerup.getName())
+                || activePowerUps.stream().map(PowerUp::getName).collect(Collectors.toList()).contains(powerup.getName())) {
+            powerup.destroy();
+            return;
+        }
         storedPowerUps.add(powerup);
         powerup.velocity.setVector(0.0, 0.0);
         int posX = 10 + GameConstants.powerupSize / 2 + (10 + GameConstants.powerupSize) * powerup.getName().ordinal();
@@ -545,6 +548,6 @@ public class Game {
                 object.destroy();
             }
         }
-        publishAnimation("LaserAnimation", x, GameConstants.paddleHeightOnScreen, endY);
+        publishAnimation("LaserAnimation", x, endY);
     }
 }
