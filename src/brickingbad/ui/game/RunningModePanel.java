@@ -3,6 +3,8 @@ package brickingbad.ui.game;
 import brickingbad.controller.GameController;
 import brickingbad.domain.game.*;
 import brickingbad.domain.physics.PhysicsEngine;
+import brickingbad.domain.physics.ball.BallState;
+import brickingbad.domain.physics.ball.FireBallState;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.GameButtonPanel;
 import brickingbad.ui.game.animation.Animation;
@@ -170,5 +172,14 @@ public class RunningModePanel extends JPanel implements GameObjectListener, Anim
   @Override
   public void stopAnimation(Animation animation) {
     currentAnimations.remove(animation);
+  }
+
+  @Override
+  public void updateBalls(String stateModifier) {
+    for(UIGameObject object: uiObjects) {
+      if(object.getGameObject() instanceof Ball) {
+        object.setSprite(String.format("ball%s", stateModifier));
+      }
+    }
   }
 }
