@@ -22,8 +22,8 @@ public class UserRepository {
 
   // READ/WRITE METHODS
 
-  public void addUser(User user) throws IllegalArgumentException {
-    adapter.addUser(user);
+  public boolean addUser(User user) throws IllegalArgumentException {
+    return adapter.addUser(user);
   }
 
   public User findUserByName(String name) throws IllegalArgumentException {
