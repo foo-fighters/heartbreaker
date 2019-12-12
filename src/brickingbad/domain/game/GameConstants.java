@@ -11,6 +11,7 @@ public class GameConstants {
     public final static double brickAreaHeight = screenHeight * 0.5;
     public final static double alienAreaHeight = screenHeight * 0.2;
     public final static double paddleAreaHeight = screenHeight * 0.25;
+    public final static int paddleHeightOnScreen = screenHeight / 10;
 
     // Object sizes
     public final static int ballSize = 17;
@@ -54,12 +55,13 @@ public class GameConstants {
     public final static int tallerPaddleMultiplier = 2;
 
     // Extras
+    public final static int heartSize = powerupSize;
     public final static double mineBrickExplosionRadius = paddleLength; // * 2 original
     public final static double fireBallDestructionRadius = paddleLength * 0.5;
-    public final static int paddleHeightOnScreen = screenHeight / 10;
-    public static int framesPerSecond = 60;
-    public static int calculationsPerSecond = 100;
-    public final static int heartSize = powerupSize;
+    public final static double laserGunOffset = paddleLength * 0.4;
+
+    public final static int framesPerSecond = 60;
+    public final static int calculationsPerSecond = 100;
 }
 
 

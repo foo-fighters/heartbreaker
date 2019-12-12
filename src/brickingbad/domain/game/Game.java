@@ -14,6 +14,8 @@ import brickingbad.domain.physics.Vector;
 
 import java.time.Clock;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -389,8 +391,10 @@ public class Game {
         ArrayList<PowerUp> storedPowerUpsCopy = new ArrayList<>(storedPowerUps);
         for(PowerUp powerup: storedPowerUpsCopy) {
             if(powerup.getName() == name) {
-                storedPowerUps.remove(powerup);
-                activePowerUps.add(powerup);
+                if(powerup.getName() != WrapperContent.DESTRUCTIVE_LASER_GUN) {
+                    storedPowerUps.remove(powerup);
+                    activePowerUps.add(powerup);
+                }
                 powerup.activate();
             }
         }
@@ -498,5 +502,28 @@ public class Game {
     public void brickDestroyed() {
         score += 300/(PhysicsEngine.getInstance().getTimePassed()/1000);
         GameController.getInstance().setUIScore(score);
+    }
+
+    public void destroyBrickRow(double y) {
+    }
+
+    public void shootLaserColumn(double x) {
+        ArrayList<GameObject> objectColumn = new ArrayList<>();
+        for(GameObject object: gameObjects) {
+            if(object instanceof Brick || object instanceof Alien) {
+                if(Math.abs(object.getPosition().getX() - x) < GameConstants.rectangularBrickLength / 2.0) {
+                    objectColumn.add(object);
+                }
+            }
+        }
+        Collections.sort(objectColumn, Comparator.comparingDouble(o -> o.getPosition().getY()));
+        Collections.reverse(objectColumn);
+        for(GameObject object: objectColumn) {
+            if(object instanceof HalfMetalBrick) {
+                break;
+            }else {
+                object.destroy();
+            }
+        }
     }
 }

@@ -22,11 +22,6 @@ public class Magnet extends PowerUp {
     }
 
     @Override
-    public void updatePosition() {
-        super.updatePosition();
-    }
-
-    @Override
     public void activate() {
         super.activate();
         Game.getInstance().getPaddle().setMagnetized(true);
@@ -34,6 +29,7 @@ public class Magnet extends PowerUp {
 
     @Override
     public void deactivate() {
+        super.deactivate();
         Game.getInstance().getPaddle().setMagnetized(false);
         destroy();
     }
