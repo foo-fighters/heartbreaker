@@ -67,7 +67,10 @@ public class Ball extends GameObject {
         double reflectionAngle;
         if(object.isDynamic()) {
             if(velocityDiff == PI / 2) {
-                reflectionAngle = (incidenceAngle + objectAngle) / 2.0;
+                double newDiff = objectAngle - incidenceAngle;
+                while(newDiff > Math.PI) newDiff -= Math.PI * 2.0;
+                while(newDiff < -Math.PI) newDiff += Math.PI * 2.0;
+                reflectionAngle = incidenceAngle + newDiff / 2.0;
                 this.angle = reflectionAngle;
                 double len = Math.hypot(velocity.getX(), velocity.getY());
                 velocity.setVector(Math.cos(reflectionAngle) * len, -Math.sin(reflectionAngle) * len);
