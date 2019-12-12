@@ -11,17 +11,17 @@ import brickingbad.services.authentication.UserRepository;
 public class AuthenticationController {
 
   /**
-   * Maintains the single instance of the controller since it is implemented as a singleton.
+   * Maintains the single instance of {@link AuthenticationController} since it is implemented as a singleton.
    */
   private static AuthenticationController instance;
 
   /**
-   * The UserRepository that deals with the adapters on a lower level.
+   * The {@link UserRepository} that deals with the adapters on a lower level.
    */
   private UserRepository userRepository;
 
   /**
-   * A reference to the current user logged in to the system.
+   * A reference to the current {@link User} logged in to the system.
    */
   private User currentUser;
 
