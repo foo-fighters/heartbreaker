@@ -1,10 +1,7 @@
 package brickingbad.ui.game;
 
 import brickingbad.controller.GameController;
-import brickingbad.domain.game.Game;
-import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.GameObject;
-import brickingbad.domain.game.GameObjectListener;
+import brickingbad.domain.game.*;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.GameButtonPanel;
@@ -21,7 +18,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class RunningModePanel extends JPanel implements GameObjectListener {
+public class RunningModePanel extends JPanel implements GameObjectListener, AnimationListener {
 
   private static RunningModePanel instance;
 
