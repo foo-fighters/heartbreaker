@@ -52,12 +52,12 @@ public class SaveRepository {
   }
 
   private SaveRepository adaptMongoDB() {
-    this.adapter = new MongoDBPersistenceAdapter();
+    instance.adapter = new MongoDBPersistenceAdapter();
     return this;
   }
 
   private SaveRepository adaptLocal() {
-    this.adapter = new LocalPersistenceAdapter();
+    instance.adapter = new LocalPersistenceAdapter();
     return this;
   }
 
