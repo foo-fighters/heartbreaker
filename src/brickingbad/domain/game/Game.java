@@ -12,6 +12,7 @@ import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.domain.physics.Vector;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.Clock;
 import java.util.ArrayList;
 import java.util.Random;
@@ -46,10 +47,12 @@ public class Game {
 
     private ArrayList<GameObjectListener> objectListeners;
     private ArrayList<ErrorListener> errorListeners;
+    private ArrayList<AnimationListener> animationListeners;
 
     private Game() {
         objectListeners = new ArrayList<>();
         errorListeners = new ArrayList<>();
+        animationListeners = new ArrayList<>();
         balls = new ArrayList<>();
         walls = new ArrayList<>();
         bricks = new ArrayList<>();
@@ -79,6 +82,23 @@ public class Game {
 
     public void addErrorListener(ErrorListener err) {
         errorListeners.add(err);
+    }
+
+    public void addAnimationListener(AnimationListener anim) {
+        animationListeners.add(anim);
+    }
+
+    public void publishAnimation(String animationName, Object... args) {
+        for(AnimationListener anim: animationListeners) {
+            try {
+                anim.addAnimation(animationName, args);
+            } catch (ClassNotFoundException |
+                    IllegalAccessException |
+                    InvocationTargetException |
+                    InstantiationException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void trackObject(GameObject object) {
@@ -190,7 +210,7 @@ public class Game {
                 }
             }
         }
-
+        publishAnimation("ExplosionAnimation", center, radius);
     }
 
     public void addBrick(Brick brick) {
@@ -286,7 +306,7 @@ public class Game {
 
     public void invokeGodMode() {
         paddle.god();
-    } 
+    }
 
     public void addWrapperContent() {
         if(wrapperContentList.size() < WrapperContent.values().length) {

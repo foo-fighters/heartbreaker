@@ -13,19 +13,20 @@ public class ExplosionAnimation extends Animation {
     int radius;
     double size;
 
-    public ExplosionAnimation(AnimationListener listener, Vector center, double size) {
+    public ExplosionAnimation(AnimationListener listener, Vector center, double radius) {
         this.listener = listener;
-        this.size = size;
+        this.size = radius;
         centerX = (int) center.getX();
         centerY = (int) center.getY();
-        totalTime = 2 * GameConstants.calculationsPerSecond;
+        totalTime = GameConstants.calculationsPerSecond / 2;
         remainingTime = totalTime;
     }
 
     @Override
     public void drawFrame(Graphics g) {
         radius = (int) (size * remainingTime / totalTime);
-        g.drawOval(centerX, centerY, radius, radius);
+        g.setColor(new Color(255, 102, 0, 128));
+        g.fillOval(centerX - radius, centerY - radius, radius * 2, radius * 2);
         remainingTime--;
         if(remainingTime == 0) {
             listener.stopAnimation(this);

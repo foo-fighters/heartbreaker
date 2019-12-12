@@ -50,6 +50,8 @@ public class RunningModePanel extends JPanel implements GameObjectListener, Anim
     loadHeartImage("resources/sprites/heart.png");
     loadHeartEmptyImage("resources/sprites/heart_empty.png");
     GameController.getInstance().addObjectListener(this);
+    GameController.getInstance().addAnimationListener(this);
+    currentAnimations = new ArrayList<>();
     this.addKeyListener(new GameKeyboardListener());
 
     scoreLabel = new JLabel();
@@ -88,7 +90,8 @@ public class RunningModePanel extends JPanel implements GameObjectListener, Anim
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
-    for(Animation animation : currentAnimations) {
+    ArrayList<Animation> animationsCopy = new ArrayList<>(currentAnimations);
+    for(Animation animation : animationsCopy) {
       animation.drawFrame(g);
     }
     for (Iterator<UIGameObject> iterator = uiObjects.iterator(); iterator.hasNext(); ) {
@@ -155,9 +158,14 @@ public class RunningModePanel extends JPanel implements GameObjectListener, Anim
   @Override
   public void addAnimation(String animationName, Object... args)
           throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
-    Class animationClass = Class.forName("ui.game.animation." + animationName);
+    Class animationClass = Class.forName("brickingbad.ui.game.animation." + animationName);
     Constructor constructor = animationClass.getConstructors()[0];
-    currentAnimations.add((Animation) constructor.newInstance(this, args));
+    Object[] params = new Object[args.length + 1];
+    params[0] = this;
+    for(int i = 0; i < args.length; i++) {
+      params[i + 1] = args[i];
+    }
+    currentAnimations.add((Animation) constructor.newInstance(params));
   }
 
   @Override
