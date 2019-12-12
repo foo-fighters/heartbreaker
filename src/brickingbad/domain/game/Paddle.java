@@ -14,6 +14,7 @@ public class Paddle extends GameObject {
   private ArrayList<Ball> currentBalls;
   private PaddleMoveState moveState;
   private PaddleRotateState rotateState;
+  public double paddleMountDistance;
   public boolean isMagnetized;
   public boolean isGod;
 
@@ -27,6 +28,7 @@ public class Paddle extends GameObject {
     angle = 0.0;
     isMagnetized = false;
     currentBalls = new ArrayList<>();
+    paddleMountDistance = GameConstants.paddleLength * 0.4;
   }
 
   public void setPosition(double x, double y) {
@@ -80,7 +82,7 @@ public class Paddle extends GameObject {
       Game game = Game.getInstance();
       ArrayList<Ball> balls = game.getBalls();
       balls.forEach((ball) -> {
-        if (Math.abs(ball.getPosition().getY() - position.getY()) < 30) {
+        if (Math.abs(ball.getPosition().getY() - position.getY()) < 50) {
           setPosition(ball.getPosition().getX(), position.getY());
           setAngle(0);
         } else {
@@ -135,9 +137,5 @@ public class Paddle extends GameObject {
 
   public void setMagnetized(boolean magnetized) {
     isMagnetized = magnetized;
-  }
-
-  public PaddleMoveState getMoveState() {
-    return moveState;
   }
 }
