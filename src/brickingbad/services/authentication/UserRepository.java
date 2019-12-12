@@ -54,5 +54,8 @@ public class UserRepository {
     return this;
   }
 
+  public IAuthenticationAdapter getAdapter() {
+    return adapter;
+  }
 
 }
