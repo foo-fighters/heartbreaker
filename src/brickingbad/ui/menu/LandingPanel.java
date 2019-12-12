@@ -1,9 +1,11 @@
 package brickingbad.ui.menu;
 
 import brickingbad.controller.AuthenticationController;
+import brickingbad.controller.SaveController;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.authentication.User;
 import brickingbad.services.Adapter;
+import brickingbad.services.AdapterHandler;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.components.BBMenuButton;
 
@@ -62,14 +64,17 @@ public class LandingPanel extends JPanel implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     String name = usernameField.getText().toLowerCase();
     String password = passwordField.getText().toLowerCase();
-    String adapter = (String) adapterSelectionBox.getSelectedItem();
+    String adapterString = (String) adapterSelectionBox.getSelectedItem();
+
+    Adapter adapter = Adapter.valueOf(adapterString);
+    AdapterHandler.setCurrentAdapter(adapter);
+
     if (e.getSource().equals(registerButton)) {
       User user = new User(name, password);
-      AuthenticationController.getInstance().adapt(Adapter.valueOf(adapter)).addUser(user);
-      AuthenticationController.getInstance().adapt(Adapter.valueOf(adapter)).authenticate(name, password);
-      bbFrame.showMainMenuPanel();
+      AuthenticationController.getInstance().adapt(adapter).addUser(user);
+      AuthenticationController.getInstance().adapt(adapter).authenticate(name, password);
     } else if (e.getSource().equals(loginButton)) {
-      boolean auth = AuthenticationController.getInstance().adapt(Adapter.valueOf(adapter)).authenticate(name, password);
+      boolean auth = AuthenticationController.getInstance().adapt(adapter).authenticate(name, password);
       if (auth) {
         bbFrame.showMainMenuPanel();
       } else {

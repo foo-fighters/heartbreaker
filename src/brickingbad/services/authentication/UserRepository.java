@@ -41,12 +41,12 @@ public class UserRepository {
   }
 
   private UserRepository adaptMongoDB() {
-    this.adapter = new MongoDBAuthenticationAdapter();
+    instance.adapter = new MongoDBAuthenticationAdapter();
     return this;
   }
 
   private UserRepository adaptLocal() {
-    this.adapter = new LocalAuthenticationAdapter();
+    instance.adapter = new LocalAuthenticationAdapter();
     return this;
   }
 

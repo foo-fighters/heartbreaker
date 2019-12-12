@@ -191,15 +191,4 @@ public class BrickingBadFrame extends JFrame {
     JOptionPane.showMessageDialog(this, "The game should be paused for save/load. ");
   }
 
-  private Adapter showAdapterSelection() {
-    Adapter[] saveLocations = Adapter.values();
-    Adapter adapterName = (Adapter) JOptionPane.showInputDialog(null, "Choose save location: ",
-            "Save Game", JOptionPane.QUESTION_MESSAGE, null, // Use
-            // default
-            // icon
-            saveLocations, // Array of choices
-            saveLocations); // Initial choice
-    return adapterName;
-  }
-
 }
