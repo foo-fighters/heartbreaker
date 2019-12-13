@@ -1,5 +1,6 @@
 package brickingbad.domain.game.brick;
 
+import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.Shape;
 import brickingbad.domain.physics.Vector;
@@ -38,6 +39,7 @@ public class HalfMetalBrick extends Brick {
 
     public void setCracked(boolean cracked) {
         isCracked = cracked;
+        Game.getInstance().crackHalfMetalBrick(this);
     }
 
 }
