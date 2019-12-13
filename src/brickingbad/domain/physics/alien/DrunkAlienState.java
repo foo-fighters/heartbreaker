@@ -2,10 +2,6 @@ package brickingbad.domain.physics.alien;
 
 import brickingbad.domain.game.Game;
 import brickingbad.domain.game.alien.Alien;
-import brickingbad.domain.game.brick.Brick;
-import brickingbad.domain.game.brick.BrickFactory;
-
-import java.util.ArrayList;
 
 public class DrunkAlienState extends AlienState {
 
