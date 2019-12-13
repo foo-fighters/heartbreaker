@@ -1,13 +1,8 @@
 package brickingbad.domain.game.alien;
 
-import brickingbad.domain.game.Ball;
-import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.GameObject;
-import brickingbad.domain.game.Shape;
-import brickingbad.domain.game.alien.Alien;
+import brickingbad.domain.game.*;
 import brickingbad.domain.physics.Vector;
-
-import java.util.Random;
+import brickingbad.domain.physics.alien.ProtectingAlienState;
 
 public class ProtectingAlien extends Alien {
 
@@ -18,8 +13,9 @@ public class ProtectingAlien extends Alien {
         this.angle = 0.0;
         this.size = new Vector(GameConstants.alienSize, GameConstants.alienSize);
         this.dynamic = true;
-        this.currentStrategy = new ProtectingAlienStrategy();
+        this.alienState = new ProtectingAlienState();
         this.velocity.setVector(GameConstants.alienSpeed, 0.0);
+        this.name = WrapperContent.PROTECTING_ALIEN;
     }
 
     @Override

@@ -1,10 +1,7 @@
 package brickingbad.domain.game;
 
 import brickingbad.controller.GameController;
-import brickingbad.domain.game.alien.Alien;
-import brickingbad.domain.game.alien.CooperativeAlien;
-import brickingbad.domain.game.alien.ProtectingAlien;
-import brickingbad.domain.game.alien.RepairingAlien;
+import brickingbad.domain.game.alien.*;
 import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.game.border.*;
 import brickingbad.domain.game.brick.*;
@@ -38,6 +35,7 @@ public class Game {
     private int gridX = GameConstants.screenWidth / GameConstants.rectangularBrickLength;
     private int gridY = (int)GameConstants.brickAreaHeight / GameConstants.rectangularBrickThickness;
     private boolean[][] brickGrid;
+    private int startBrickCount;
 
     private int score;
     private int lives;
@@ -46,7 +44,7 @@ public class Game {
     private ArrayList<WrapperContent> wrapperContentList;
     private ArrayList<PowerUp> storedPowerUps;
     private ArrayList<PowerUp> activePowerUps;
-    private ArrayList<WrapperContent> activeAliens;
+    private ArrayList<Alien> activeAliens;
     private boolean alreadyWon;
     private static final Random random = new Random();
 
@@ -138,9 +136,11 @@ public class Game {
     }
 
     public void play() {
+        startBrickCount = 0;
         for(GameObject object: gameObjects) {
             if(object instanceof Brick) {
                 ((Brick) object).startMovement();
+                startBrickCount++;
             }
         }
     }
@@ -290,6 +290,16 @@ public class Game {
     }
 
     // BRICKS
+    public int brickCount() {
+        int count = 0;
+        for(GameObject object: gameObjects) {
+            if(object instanceof Brick) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     public void destroyBricksInRadius(Vector center, double radius) {
         ArrayList<GameObject> objectList = new ArrayList<>(gameObjects);
         double xdist;
@@ -396,12 +406,12 @@ public class Game {
     public void revealWrapperContent(Vector revealPosition) {
         if(wrapperContentList.size() > 0) {
             WrapperContent content = wrapperContentList.remove(random.nextInt(wrapperContentList.size()));
-            if(activeAliens.contains(content)) {
-                return;
-            }
             if(content.ordinal() < 6) {
                 spawnPowerup(content, revealPosition);
             }else {
+                if(activeAliens.stream().map(Alien::getName).collect(Collectors.toList()).contains(content)) {
+                    return;
+                }
                 spawnAlien(content);
             }
         }
@@ -519,6 +529,9 @@ public class Game {
             case REPAIRING_ALIEN:
                 alien = new RepairingAlien();
                 break;
+            case DRUNK_ALIEN:
+                alien = new DrunkAlien();
+                break;
             default:
         }
         double spawnX = GameConstants.alienSize / 2.0 +
@@ -600,6 +613,10 @@ public class Game {
         return storedPowerUps;
     }
 
+    public ArrayList<Alien> getActiveAliens() {
+        return activeAliens;
+    }
+
     public int getScore() {
         return score;
     }
@@ -623,5 +640,9 @@ public class Game {
 
     public int getGridSize() {
         return gridX * gridY;
+    }
+
+    public int getStartBrickCount() {
+        return startBrickCount;
     }
 }

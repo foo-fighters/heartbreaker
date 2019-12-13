@@ -29,8 +29,7 @@ public class Magnet extends PowerUp {
 
     @Override
     public void deactivate() {
-        super.deactivate();
         Game.getInstance().getPaddle().setMagnetized(false);
-        destroy();
+        super.deactivate();
     }
 }
