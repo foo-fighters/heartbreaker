@@ -2,29 +2,33 @@ package brickingbad.domain.game.alien;
 
 import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.GameObject;
+import brickingbad.domain.game.brick.Brick;
 import brickingbad.domain.game.brick.BrickFactory;
+
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class RepairingAlienStrategy extends AlienStrategy {
 
     public boolean horizontalStrategy;
-    public Timer repairTimer = new Timer();
+    private double cooldown = 5;
+    private long startTime;
+
+    public RepairingAlienStrategy() {
+        this.startTime = Game.getInstance().getTime();
+    }
 
     @Override
     public void performAction() {
         if(horizontalStrategy) {
             Game.getInstance().addBrickHorizontal();
         }else {
-            TimerTask task = new TimerTask() {
-                @Override
-                public void run() {
-                    BrickFactory.getInstance().createSimpleBricks(1);
-                }
-            };
-            repairTimer.schedule(task, 0, GameConstants.repairingAlienCooldown);
+            long currentTime = Game.getInstance().getTime();
+            if(currentTime - startTime > 1000 * cooldown) {
+                ArrayList<Brick> simpleBricks = BrickFactory.getInstance().createSimpleBricks(1);
+                Brick newBrick = simpleBricks.get(0);
+                Game.getInstance().addBrick(newBrick);
+                startTime = currentTime;
+            }
         }
     }
 
