@@ -1,9 +1,8 @@
 package brickingbad.domain.game.alien;
 
-import brickingbad.domain.game.Game;
-import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.Shape;
-import brickingbad.domain.game.WrapperContent;
+import brickingbad.domain.game.*;
+import brickingbad.domain.game.brick.Brick;
+import brickingbad.domain.game.powerup.PowerUp;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.alien.CooperativeAlienState;
 import brickingbad.domain.physics.alien.DrunkAlienState;
@@ -22,6 +21,7 @@ public class DrunkAlien extends Alien {
         this.angle = 0.0;
         this.size = new Vector(GameConstants.alienSize, GameConstants.alienSize);
         this.name = WrapperContent.DRUNK_ALIEN;
+        this.dynamic = true;
         this.startBrickCount = Game.getInstance().getStartBrickCount();
         this.alienState = new ProtectingAlienState(this);
     }
@@ -48,9 +48,10 @@ public class DrunkAlien extends Alien {
             alienState = new RepairingAlienState(false);
         } else if((currentBrickCount > startBrickCount * 0.3 && currentBrickCount < startBrickCount * 0.4)
                 || (currentBrickCount > startBrickCount * 0.6 && currentBrickCount < startBrickCount * 0.7)
-                && !(alienState instanceof DrunkAlienState)){
+                && !(alienState instanceof DrunkAlienState)) {
             alienState.finishAction();
             alienState = new DrunkAlienState(this);
+            System.out.println("drunk");
         }
         alienState.performAction();
     }
