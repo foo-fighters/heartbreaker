@@ -372,25 +372,23 @@ public class Game {
     }
 
     public void addBrickHorizontal() {
-        boolean overlaps = true;
-        int y = ThreadLocalRandom.current().nextInt(brickGrid[0].length);
+        boolean overlaps = false;
+        int y = ThreadLocalRandom.current().nextInt(gridY);
         int x = GameConstants.rectangularBrickLength / 2;
-        while(!((x + GameConstants.rectangularBrickLength) >= GameConstants.screenWidth)) {
+        while(x <= GameConstants.screenWidth) {
             SimpleBrick brick = new SimpleBrick();
-            while (overlaps) {
-                if (bricks.size() == 0) {
-                    overlaps = false;
-                } else {
-                    overlaps = brickGrid[x][y];
+            brick.setPosition(new Vector(x, y));
+            for(GameObject object: gameObjects) {
+                if(PhysicsEngine.areColliding(object, brick)){
+                    overlaps = true;
+                    break;
                 }
-                if (!overlaps) {
-                    brickGrid[x][y] = true;
-                    brick.setPosition(new Vector(x, y));
-                }
-                x += GameConstants.rectangularBrickLength;
             }
-            bricks.add(brick);
-            trackObject(brick);
+            if(!overlaps) {
+                bricks.add(brick);
+                trackObject(brick);
+            }
+            x += GameConstants.rectangularBrickLength;
         }
     }
 
@@ -539,6 +537,7 @@ public class Game {
         double spawnY = (GameConstants.screenHeight - GameConstants.paddleAreaHeight - GameConstants.alienSize / 2.0) -
                 random.nextDouble() * (GameConstants.alienAreaHeight - GameConstants.alienSize);
         alien.setPosition(new Vector(spawnX, spawnY));
+        activeAliens.add(alien);
         aliens.add(alien);
         trackObject(alien);
     }
