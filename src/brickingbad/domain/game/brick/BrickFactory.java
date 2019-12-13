@@ -11,6 +11,7 @@ public class BrickFactory {
      * Maintains the single instance of {@link BrickFactory} since it is implemented as a singleton.
      */
     private static BrickFactory instance;
+
     /**
      * Straightforward implementation of a singleton method to obtain the instance.
      * @return the single instance of the class
