@@ -450,6 +450,7 @@ public class Game {
                     activePowerUps.add(powerup);
                 }
                 powerup.activate();
+                break;
             }
         }
     }
@@ -481,10 +482,9 @@ public class Game {
     public void shootLaserColumn(double x) {
         ArrayList<GameObject> objectColumn = new ArrayList<>();
         double endY = 0;
-
         for(GameObject object: gameObjects) {
             if(object instanceof Brick || object instanceof Alien) {
-                if(Math.abs(object.getPosition().getX() - x) < GameConstants.rectangularBrickLength / 2.0) {
+                if(Math.abs(object.getPosition().getX() - x) < object.getSize().getX() / 2.0) {
                     objectColumn.add(object);
                 }
             }
