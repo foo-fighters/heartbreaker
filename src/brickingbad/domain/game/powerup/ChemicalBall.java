@@ -30,13 +30,12 @@ public class ChemicalBall extends PowerUp {
 
     @Override
     public void deactivate() {
-        super.deactivate();
         for(GameObject object: Game.getInstance().getObjects()) {
             if(object instanceof Ball && ((Ball) object).getBallState() instanceof ChemicalBallState) {
                 ((Ball) object).setSimple();
             }
         }
-        destroy();
         Game.getInstance().updateBalls("");
+        super.deactivate();
     }
 }

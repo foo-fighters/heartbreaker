@@ -1,12 +1,16 @@
 package brickingbad.domain.game.alien;
 
+import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameObject;
+import brickingbad.domain.game.WrapperContent;
+import brickingbad.domain.physics.alien.AlienState;
 
 import java.lang.reflect.InvocationTargetException;
 
 public abstract class Alien extends GameObject {
 
-    protected AlienStrategy currentStrategy;
+    protected AlienState alienState;
+    protected WrapperContent name;
 
     @Override
     public void updatePosition() {
@@ -14,8 +18,18 @@ public abstract class Alien extends GameObject {
         performAction();
     }
 
+    @Override
+    public void destroy() {
+        Game.getInstance().getActiveAliens().remove(this);
+        super.destroy();
+    }
+
     public void performAction() {
-        currentStrategy.performAction();
+        alienState.performAction();
+    }
+
+    public WrapperContent getName() {
+        return name;
     }
 
     public String getTypeName() {
@@ -35,6 +49,10 @@ public abstract class Alien extends GameObject {
             e.printStackTrace();
         }
         return alien;
+    }
+
+    public AlienState getAlienState() {
+        return alienState;
     }
 
 }

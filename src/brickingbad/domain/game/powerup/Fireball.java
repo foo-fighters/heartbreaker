@@ -23,7 +23,7 @@ public class Fireball extends PowerUp {
             }
         }
         Game.getInstance().updateBalls("_fire");
-        destroy();
+        deactivate();
     }
 
     @Override

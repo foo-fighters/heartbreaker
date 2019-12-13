@@ -1,25 +1,25 @@
-package brickingbad.domain.game.alien;
+package brickingbad.domain.physics.alien;
 
 import brickingbad.domain.game.Game;
-import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.brick.Brick;
 import brickingbad.domain.game.brick.BrickFactory;
 
 import java.util.ArrayList;
 
-public class RepairingAlienStrategy extends AlienStrategy {
+public class RepairingAlienState extends AlienState {
 
-    public boolean horizontalStrategy;
+    public boolean horizontal;
     private double cooldown = 5;
     private long startTime;
 
-    public RepairingAlienStrategy() {
+    public RepairingAlienState(boolean horizontal) {
         this.startTime = Game.getInstance().getTime();
+        this.horizontal = horizontal;
     }
 
     @Override
     public void performAction() {
-        if(horizontalStrategy) {
+        if(horizontal) {
             Game.getInstance().addBrickHorizontal();
         }else {
             long currentTime = Game.getInstance().getTime();

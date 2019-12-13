@@ -28,10 +28,4 @@ public class DestructiveLaserGun extends PowerUp {
         charges--;
         if(charges == 0) deactivate();
     }
-
-    @Override
-    public void deactivate() {
-        Game.getInstance().getStoredPowerUps().remove(this);
-        destroy();
-    }
 }

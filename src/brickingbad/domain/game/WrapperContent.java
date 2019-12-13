@@ -9,5 +9,6 @@ public enum WrapperContent {
     GANG_OF_BALLS,
     COOPERATIVE_ALIEN,
     PROTECTING_ALIEN,
-    REPAIRING_ALIEN
+    REPAIRING_ALIEN,
+    DRUNK_ALIEN
 }

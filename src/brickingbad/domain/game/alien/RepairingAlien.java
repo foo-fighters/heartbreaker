@@ -2,8 +2,9 @@ package brickingbad.domain.game.alien;
 
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.Shape;
-import brickingbad.domain.game.alien.Alien;
+import brickingbad.domain.game.WrapperContent;
 import brickingbad.domain.physics.Vector;
+import brickingbad.domain.physics.alien.RepairingAlienState;
 
 public class RepairingAlien extends Alien {
 
@@ -13,7 +14,8 @@ public class RepairingAlien extends Alien {
         this.velocity=new Vector();
         this.angle = 0.0;
         this.size = new Vector(GameConstants.alienSize, GameConstants.alienSize);
-        this.currentStrategy = new RepairingAlienStrategy();
+        this.alienState = new RepairingAlienState(false);
+        this.name = WrapperContent.REPAIRING_ALIEN;
     }
 
 }

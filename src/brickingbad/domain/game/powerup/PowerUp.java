@@ -19,6 +19,7 @@ public abstract class PowerUp extends GameObject {
 
     public void deactivate() {
         Game.getInstance().getActivePowerUps().remove(this);
+        destroy();
     }
 
     @Override
