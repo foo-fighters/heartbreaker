@@ -16,4 +16,10 @@ public class CooperativeAlien extends Alien {
         this.currentStrategy = new CooperativeAlienStrategy(this);
     }
 
+    @Override
+    public void destroy() {
+        super.destroy();
+        Game.getInstance().finishAnimation("CooperativeAlienRowAnimation");
+    }
+
 }

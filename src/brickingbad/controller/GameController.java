@@ -79,7 +79,7 @@ public class GameController {
     }
 
     public void createBricks(int simple, int halfMetal, int mine, int wrapper) {
-        if (Game.getInstance().getBricks().size() + simple + halfMetal + mine + wrapper < 919){
+        if (Game.getInstance().getBricks().size() + simple + halfMetal + mine + wrapper <= Game.getInstance().getGridSize()) {
             ArrayList<Brick> simpleBricks = BrickFactory.getInstance().createSimpleBricks(simple);
 
             simpleBricks.forEach((brick -> {
