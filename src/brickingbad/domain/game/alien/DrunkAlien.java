@@ -23,7 +23,7 @@ public class DrunkAlien extends Alien {
         this.size = new Vector(GameConstants.alienSize, GameConstants.alienSize);
         this.name = WrapperContent.DRUNK_ALIEN;
         this.startBrickCount = Game.getInstance().getStartBrickCount();
-        this.alienState = new ProtectingAlienState();
+        this.alienState = new ProtectingAlienState(this);
     }
 
     @Override
@@ -38,11 +38,11 @@ public class DrunkAlien extends Alien {
             alienState = new RepairingAlienState(true);
             alienState.performAction();
             alienState.finishAction();
-            alienState = new ProtectingAlienState();
+            alienState = new ProtectingAlienState(this);
         } else if (currentBrickCount > startBrickCount * 0.4 && currentBrickCount < startBrickCount * 0.5
                 && !(alienState instanceof ProtectingAlienState)) {
             alienState.finishAction();
-            alienState = new ProtectingAlienState();
+            alienState = new ProtectingAlienState(this);
         } else if (currentBrickCount > startBrickCount * 0.5 && currentBrickCount < startBrickCount * 0.6
                 && !(alienState instanceof RepairingAlienState)) {
             alienState.finishAction();

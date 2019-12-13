@@ -1,8 +1,12 @@
 package brickingbad.domain.game.alien;
 
+import brickingbad.domain.game.Ball;
 import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.WrapperContent;
+import brickingbad.domain.game.brick.Brick;
+import brickingbad.domain.game.powerup.PowerUp;
+import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.alien.AlienState;
 
 import java.lang.reflect.InvocationTargetException;
@@ -19,7 +23,14 @@ public abstract class Alien extends GameObject {
     }
 
     @Override
+    public void collide(GameObject object) {
+        if(object instanceof Ball || object instanceof PowerUp || object instanceof Brick) return;
+        velocity = new Vector(-velocity.getX(), -velocity.getY());
+    }
+
+    @Override
     public void destroy() {
+        finishAction();
         Game.getInstance().getActiveAliens().remove(this);
         super.destroy();
     }
@@ -27,6 +38,8 @@ public abstract class Alien extends GameObject {
     public void performAction() {
         alienState.performAction();
     }
+
+    public void finishAction() { alienState.finishAction(); }
 
     public WrapperContent getName() {
         return name;
