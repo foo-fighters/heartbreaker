@@ -24,7 +24,6 @@ public abstract class Alien extends GameObject {
 
     @Override
     public void collide(GameObject object) {
-        if(this instanceof DrunkAlien) System.out.println(object.getClass().getSimpleName());
         if(object instanceof Ball || object instanceof PowerUp || object instanceof Brick) return;
         reflect();
     }
