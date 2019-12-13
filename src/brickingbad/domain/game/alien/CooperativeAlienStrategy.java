@@ -1,16 +1,11 @@
 package brickingbad.domain.game.alien;
 
 import brickingbad.domain.game.Game;
-import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.brick.Brick;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class CooperativeAlienStrategy extends AlienStrategy {
 
-    private double cooldown = 0.1;
+    private double cooldown = 1;
     private long startTime;
     private double rowHeight;
     private Alien alien;
@@ -32,7 +27,6 @@ public class CooperativeAlienStrategy extends AlienStrategy {
                 nextBrick.destroy();
                 startTime = currentTime;
             }
-
         }
     }
 

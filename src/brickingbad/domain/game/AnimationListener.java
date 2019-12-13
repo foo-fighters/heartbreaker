@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 public interface AnimationListener {
     void addAnimation(String animationName, Object... args)
             throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException;
+    void removeAnimation(String animationName);
     void stopAnimation(Animation animation);
     void updateBalls(String stateModifier);
 }

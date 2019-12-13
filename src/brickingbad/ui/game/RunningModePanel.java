@@ -3,13 +3,10 @@ package brickingbad.ui.game;
 import brickingbad.controller.GameController;
 import brickingbad.domain.game.*;
 import brickingbad.domain.physics.PhysicsEngine;
-import brickingbad.domain.physics.ball.BallState;
-import brickingbad.domain.physics.ball.FireBallState;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.GameButtonPanel;
 import brickingbad.ui.game.animation.Animation;
 import brickingbad.ui.game.animation.Animator;
-import brickingbad.ui.game.animation.ExplosionAnimation;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -167,6 +164,16 @@ public class RunningModePanel extends JPanel implements GameObjectListener, Anim
       params[i + 1] = args[i];
     }
     currentAnimations.add((Animation) constructor.newInstance(params));
+  }
+
+  @Override
+  public void removeAnimation(String animationName) {
+    ArrayList<Animation> animCopy = new ArrayList<>(currentAnimations);
+    for(Animation anim: animCopy) {
+      if(anim.getClass().getSimpleName().equals(animationName)) {
+        currentAnimations.remove(anim);
+      }
+    }
   }
 
   @Override

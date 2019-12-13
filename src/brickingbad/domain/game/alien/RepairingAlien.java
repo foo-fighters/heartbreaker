@@ -13,10 +13,7 @@ public class RepairingAlien extends Alien {
         this.velocity=new Vector();
         this.angle = 0.0;
         this.size = new Vector(GameConstants.alienSize, GameConstants.alienSize);
-        this.dynamic = true;
         this.currentStrategy = new RepairingAlienStrategy();
     }
-
-
 
 }
