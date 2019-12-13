@@ -14,6 +14,7 @@ public class CooperativeAlienStrategy extends AlienStrategy {
         this.startTime = Game.getInstance().getTime();
         this.rowHeight = Game.getInstance().getBrickRowHeight();
         this.alien = alien;
+        Game.getInstance().startAnimation("CooperativeAlienRowAnimation", rowHeight);
     }
 
     @Override

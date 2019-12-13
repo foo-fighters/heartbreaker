@@ -11,6 +11,7 @@ import brickingbad.domain.game.brick.*;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.domain.physics.Vector;
+import brickingbad.ui.game.animation.Animation;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.Clock;
@@ -232,15 +233,21 @@ public class Game {
     }
 
     public void startAnimation(String animationName, Object... args) {
-        for(AnimationListener anim: animationListeners) {
+        for(AnimationListener lis: animationListeners) {
             try {
-                anim.addAnimation(animationName, args);
+                lis.addAnimation(animationName, args);
             } catch (ClassNotFoundException |
                     IllegalAccessException |
                     InvocationTargetException |
                     InstantiationException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void finishAnimation(String animationName) {
+        for(AnimationListener lis: animationListeners) {
+            lis.removeAnimation(animationName);
         }
     }
 
@@ -606,5 +613,9 @@ public class Game {
 
     public void setLives(int lives) {
         this.lives = lives;
+    }
+
+    public int getGridSize() {
+        return gridX * gridY;
     }
 }
