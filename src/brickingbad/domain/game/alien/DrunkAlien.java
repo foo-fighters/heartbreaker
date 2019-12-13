@@ -28,7 +28,6 @@ public class DrunkAlien extends Alien {
 
     @Override
     public void performAction() {
-        System.out.println(alienState.getClass().getSimpleName());
         currentBrickCount = Game.getInstance().brickCount();
         if (currentBrickCount > startBrickCount * 0.7 && !(alienState instanceof CooperativeAlienState)) {
             alienState.finishAction();
