@@ -365,8 +365,9 @@ public class Game {
         while(x <= GameConstants.screenWidth) {
             SimpleBrick brick = new SimpleBrick();
             brick.setPosition(new Vector(x, y));
-            for(GameObject object: gameObjects) {
-                if(PhysicsEngine.areColliding(object, brick)){
+            ArrayList<GameObject> objectsCopy = new ArrayList<>(gameObjects);
+            for(GameObject object: objectsCopy) {
+                if(PhysicsEngine.areColliding(object, brick)) {
                     overlaps = true;
                     break;
                 }

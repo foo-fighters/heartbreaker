@@ -19,13 +19,4 @@ public class ProtectingAlien extends Alien {
         this.name = WrapperContent.PROTECTING_ALIEN;
     }
 
-    @Override
-    public void performAction() {
-
-    }
-
-    //public void reflect() {
-        //setVelocity(new Vector(-getVelocity().getX(), getVelocity().getY()));
-    //}
-
 }
