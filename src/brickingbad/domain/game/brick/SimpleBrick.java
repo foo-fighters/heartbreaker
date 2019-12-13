@@ -11,6 +11,7 @@ public class SimpleBrick extends Brick {
         this.shape = Shape.RECTANGLE;
         this.size = new Vector(GameConstants.rectangularBrickLength, GameConstants.rectangularBrickThickness);
         this.angle = 0.0;
+        this.name = "SimpleBrick";
         double rand = Math.random();
         if (rand < GameConstants.brickMovementProbability) {
             this.dynamic = true;
@@ -36,5 +37,16 @@ public class SimpleBrick extends Brick {
             }
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        SimpleBrick brick = (SimpleBrick) obj;
+        if(this.name.equals(brick.name)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
 }

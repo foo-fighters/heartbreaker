@@ -97,5 +97,4 @@ public class BrickFactory {
         }
         return brick;
     }
-
 }
