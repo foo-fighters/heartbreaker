@@ -12,6 +12,9 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 
 public abstract class Brick extends GameObject {
+
+    protected String name;
+
     @Override
     public void destroy(boolean destroyedByBall) {
         if (destroyedByBall) {
@@ -35,5 +38,8 @@ public abstract class Brick extends GameObject {
 
     public void startMovement() {
     }
+
+
+
 
 }

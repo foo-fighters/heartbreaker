@@ -15,6 +15,8 @@ public class HalfMetalBrick extends Brick {
         this.angle = 0.0;
         this.isCracked = false;
         this.velocity = new Vector();
+        this.name = "HalfMetalBrick";
+
     }
 
     @Override
@@ -36,6 +38,15 @@ public class HalfMetalBrick extends Brick {
 
     public void setCracked(boolean cracked) {
         isCracked = cracked;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        HalfMetalBrick brick = (HalfMetalBrick) obj;
+        if(this.name.equals(brick.name)){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }
