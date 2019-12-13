@@ -76,4 +76,11 @@ public class Vector {
     public String toString() {
         return String.format("Vector: (%f, %f)", xval, yval);
     }
+
+    @Override
+    public boolean equals(Object object) {
+        Vector vector = (Vector) object;
+        return vector.getX() == xval &&
+                vector.getY() == yval;
+    }
 }
