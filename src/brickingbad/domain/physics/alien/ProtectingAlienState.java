@@ -11,6 +11,7 @@ public class ProtectingAlienState extends AlienState {
     public ProtectingAlienState(Alien alien) {
         this.alien = alien;
         this.alien.setVelocity(new Vector(GameConstants.alienSpeed, 0.0));
+        System.out.println("hey");
     }
 
     @Override

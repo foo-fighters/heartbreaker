@@ -78,61 +78,48 @@ public class Game {
     }
 
     public void initialize(boolean fromSave) {
-        gameObjects = new ArrayList<>();
-
         alreadyWon = false;
 
-        for (Brick brick : bricks) {
-            removeObjectFromListeners(brick);
-        }
-        for (Ball ball : balls) {
-            removeObjectFromListeners(ball);
-        }
-        for (Ball ball : balls) {
-            removeObjectFromListeners(ball);
-        }
-        for (PowerUp powerup : storedPowerUps) {
-            removeObjectFromListeners(powerup);
-        }
-        for (PowerUp powerup : activePowerUps) {
-            removeObjectFromListeners(powerup);
+        for (GameObject object : gameObjects) {
+            removeObjectFromListeners(object);
         }
 
+        gameObjects = new ArrayList<>();
         bricks = new ArrayList<>();
         balls = new ArrayList<>();
         aliens = new ArrayList<>();
         activePowerUps = new ArrayList<>();
         storedPowerUps = new ArrayList<>();
-
-        removeObjectFromListeners(paddle);
+        activeAliens = new ArrayList<>();
+        wrapperContentList = new ArrayList<>();
+        brickGrid = new boolean[gridX][gridY];
 
         Wall wall1 = new Wall(Direction.UP);
         Wall wall2 = new Wall(Direction.RIGHT);
         Wall wall3 = new Wall(Direction.LEFT);
-        this.ground = new Ground();
-
         walls.add(wall1);
         walls.add(wall2);
         walls.add(wall3);
+        trackObject(wall1);
+        trackObject(wall2);
+        trackObject(wall3);
+
+        this.ground = new Ground();
+        trackObject(this.ground);
 
         if (!fromSave) {
             lives = 3;
             score = 0;
-
             paddle = new Paddle();
             Ball firstBall = new Ball(paddle.getBallStartPosition());
             balls.add(firstBall);
             paddle.getCurrentBalls().add(firstBall);
-
             trackObject(paddle);
             trackObject(firstBall);
         }
 
         GameController.getInstance().setUIScore(score);
-        trackObject(wall1);
-        trackObject(wall2);
-        trackObject(wall3);
-        trackObject(this.ground);
+
     }
 
     public void play() {

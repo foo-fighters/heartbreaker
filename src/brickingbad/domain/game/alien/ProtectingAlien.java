@@ -24,8 +24,8 @@ public class ProtectingAlien extends Alien {
 
     }
 
-    public void reflect() {
-        setVelocity(new Vector(-getVelocity().getX(), getVelocity().getY()));
-    }
+    //public void reflect() {
+        //setVelocity(new Vector(-getVelocity().getX(), getVelocity().getY()));
+    //}
 
 }
