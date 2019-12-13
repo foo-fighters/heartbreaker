@@ -232,6 +232,12 @@ public class Game {
         }
     }
 
+    public void crackHalfMetalBrick(HalfMetalBrick brick) {
+        for(AnimationListener anim: animationListeners) {
+            anim.crackHalfMetalBrick(brick);
+        }
+    }
+
     public void startAnimation(String animationName, Object... args) {
         for(AnimationListener lis: animationListeners) {
             try {

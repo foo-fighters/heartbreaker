@@ -1,5 +1,6 @@
 package brickingbad.domain.game;
 
+import brickingbad.domain.game.brick.HalfMetalBrick;
 import brickingbad.ui.game.animation.Animation;
 import java.lang.reflect.InvocationTargetException;
 
@@ -9,4 +10,5 @@ public interface AnimationListener {
     void removeAnimation(String animationName);
     void stopAnimation(Animation animation);
     void updateBalls(String stateModifier);
+    void crackHalfMetalBrick(HalfMetalBrick brick);
 }

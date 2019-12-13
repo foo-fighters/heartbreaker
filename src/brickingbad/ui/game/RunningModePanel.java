@@ -2,6 +2,7 @@ package brickingbad.ui.game;
 
 import brickingbad.controller.GameController;
 import brickingbad.domain.game.*;
+import brickingbad.domain.game.brick.HalfMetalBrick;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.GameButtonPanel;
@@ -186,6 +187,16 @@ public class RunningModePanel extends JPanel implements GameObjectListener, Anim
     for(UIGameObject object: uiObjects) {
       if(object.getGameObject() instanceof Ball) {
         object.setSprite(String.format("ball%s", stateModifier));
+      }
+    }
+  }
+
+  @Override
+  public void crackHalfMetalBrick(HalfMetalBrick brick) {
+    for(UIGameObject object: uiObjects) {
+      if(object.getGameObject() == brick) {
+        object.setSprite(String.format("halfmetalbrick_cracked"));
+        return;
       }
     }
   }
