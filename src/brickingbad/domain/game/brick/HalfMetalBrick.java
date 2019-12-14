@@ -37,7 +37,7 @@ public class HalfMetalBrick extends Brick {
 
     public void setCracked(boolean cracked) {
         isCracked = cracked;
-        publishStateToListener("cracked");
+        publishStateToListener("_cracked");
     }
 
 }
