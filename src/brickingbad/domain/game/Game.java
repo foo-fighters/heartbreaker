@@ -8,7 +8,8 @@ import brickingbad.domain.game.brick.*;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.domain.physics.Vector;
-import brickingbad.ui.game.animation.Animation;
+import brickingbad.domain.physics.ball.ChemicalBallState;
+import brickingbad.domain.physics.ball.FireBallState;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.Clock;
@@ -48,7 +49,7 @@ public class Game {
     private boolean alreadyWon;
     private static final Random random = new Random();
 
-    private ArrayList<GameObjectListener> objectListeners;
+    private ArrayList<GameListener> objectListeners;
     private ArrayList<ErrorListener> errorListeners;
     private ArrayList<AnimationListener> animationListeners;
 
@@ -191,7 +192,7 @@ public class Game {
     }
 
     // LISTENER FUNCTIONS
-    public void addObjectListener(GameObjectListener listener) {
+    public void addObjectListener(GameListener listener) {
         objectListeners.add(listener);
     }
 
@@ -211,18 +212,6 @@ public class Game {
         errorListeners.forEach(errorListener -> {
             errorListener.showError(err);
         });
-    }
-
-    public void updateBalls(String stateModifier) {
-        for(AnimationListener anim: animationListeners) {
-            anim.updateBalls(stateModifier);
-        }
-    }
-
-    public void crackHalfMetalBrick(HalfMetalBrick brick) {
-        for(AnimationListener anim: animationListeners) {
-            anim.crackHalfMetalBrick(brick);
-        }
     }
 
     public void startAnimation(String animationName, Object... args) {
@@ -247,7 +236,7 @@ public class Game {
     // GAME OBJECTS
     private void trackObject(GameObject object) {
         gameObjects.add(object);
-        for (GameObjectListener listener : objectListeners) {
+        for (GameListener listener : objectListeners) {
             listener.addObject(object);
         }
     }
@@ -469,11 +458,14 @@ public class Game {
             }
         }
         if(minimumDistance < GameConstants.rectangularBrickLength + GameConstants.ballSize) {
+            System.out.println(((Ball) closestBall).getBallState().getClass().getSimpleName());
             for(int i = 0; i < GameConstants.gangOfBallsMultiplier; i++) {
                 Ball ball = new Ball(revealPosition);
-                ball.startMovement((360.0 / GameConstants.gangOfBallsMultiplier) * i, ((Ball)closestBall).getSpeed());
+                ball.startMovement((360.0 / GameConstants.gangOfBallsMultiplier) * i, ((Ball) closestBall).getSpeed());
                 trackObject(ball);
                 balls.add(ball);
+                if(((Ball) closestBall).getBallState() instanceof FireBallState) ball.setFireball();
+                if(((Ball) closestBall).getBallState() instanceof ChemicalBallState) ball.setChemical();
             }
             removeObject(closestBall);
         }

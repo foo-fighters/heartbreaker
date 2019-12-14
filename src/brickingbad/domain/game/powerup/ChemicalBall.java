@@ -25,7 +25,6 @@ public class ChemicalBall extends PowerUp {
                 ((Ball) object).setChemical();
             }
         }
-        Game.getInstance().updateBalls("_chemical");
     }
 
     @Override
@@ -35,7 +34,6 @@ public class ChemicalBall extends PowerUp {
                 ((Ball) object).setSimple();
             }
         }
-        Game.getInstance().updateBalls("");
         super.deactivate();
     }
 }

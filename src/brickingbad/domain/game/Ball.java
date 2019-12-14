@@ -9,7 +9,7 @@ import brickingbad.domain.physics.ball.SimpleBallState;
 public class Ball extends GameObject {
 
     private final double PI = Math.PI;
-    private BallState ballState;
+    private BallState ballState = new SimpleBallState(this);
     private double paddleOffset;
 
     public Ball(Vector position) {
@@ -20,7 +20,6 @@ public class Ball extends GameObject {
         this.paddleOffset = 0.0;
         this.angle = 0.0;
         this.dynamic = true;
-        setSimple();
     }
 
     public BallState getBallState() {
@@ -50,13 +49,18 @@ public class Ball extends GameObject {
 
     public void setSimple() {
         ballState = new SimpleBallState(this);
+        publishStateToListener("");
     }
 
     public void setFireball() {
         ballState = new FireBallState(this);
+        publishStateToListener("fire");
     }
 
-    public void setChemical() { ballState = new ChemicalBallState(this); }
+    public void setChemical() {
+        ballState = new ChemicalBallState(this);
+        publishStateToListener("chemical");
+    }
 
     public void reflect(GameObject object) {
         double incidenceAngle = Math.atan2(velocity.getY(), -velocity.getX());

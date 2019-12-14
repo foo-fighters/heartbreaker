@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class BuildingModePanel extends JPanel implements GameObjectListener, ErrorListener {
+public class BuildingModePanel extends JPanel implements GameListener, ErrorListener {
 
     private static BuildingModePanel instance;
 

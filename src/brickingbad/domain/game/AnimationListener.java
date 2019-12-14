@@ -9,6 +9,4 @@ public interface AnimationListener {
             throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException;
     void removeAnimation(String animationName);
     void stopAnimation(Animation animation);
-    void updateBalls(String stateModifier);
-    void crackHalfMetalBrick(HalfMetalBrick brick);
 }

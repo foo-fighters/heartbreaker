@@ -2,7 +2,7 @@ package brickingbad.controller;
 
 import brickingbad.domain.game.AnimationListener;
 import brickingbad.domain.game.Game;
-import brickingbad.domain.game.GameObjectListener;
+import brickingbad.domain.game.GameListener;
 import brickingbad.domain.game.WrapperContent;
 import brickingbad.domain.game.brick.Brick;
 import brickingbad.domain.game.brick.BrickFactory;
@@ -110,7 +110,7 @@ public class GameController {
         return Game.getInstance().checkBrickCount();
     }
 
-    public void addObjectListener(GameObjectListener listener) {
+    public void addObjectListener(GameListener listener) {
         Game.getInstance().addObjectListener(listener);
     }
 
