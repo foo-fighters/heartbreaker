@@ -5,7 +5,6 @@ import brickingbad.domain.game.alien.Alien;
 
 public class DrunkAlienState extends AlienState {
 
-    private Alien alien;
     private double cooldown = 5;
     private long startTime;
 

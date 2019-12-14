@@ -1,6 +1,6 @@
 package brickingbad.ui.game.animation;
 
-import brickingbad.domain.game.AnimationListener;
+import brickingbad.domain.game.listeners.AnimationListener;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.physics.Vector;
 
