@@ -2,7 +2,7 @@ package brickingbad.ui.components;
 
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.GameObject;
-import brickingbad.domain.game.GameObjectListener;
+import brickingbad.domain.game.listeners.GameObjectListener;
 import brickingbad.domain.game.brick.Brick;
 import brickingbad.domain.physics.Vector;
 import brickingbad.ui.BrickingBadFrame;

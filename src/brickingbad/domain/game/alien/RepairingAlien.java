@@ -14,7 +14,7 @@ public class RepairingAlien extends Alien {
         this.velocity=new Vector();
         this.angle = 0.0;
         this.size = new Vector(GameConstants.alienSize, GameConstants.alienSize);
-        this.alienState = new RepairingAlienState(false);
+        this.alienState = new RepairingAlienState(this);
         this.name = WrapperContent.REPAIRING_ALIEN;
     }
 

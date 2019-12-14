@@ -34,7 +34,7 @@ public class DrunkAlien extends Alien {
             alienState = new CooperativeAlienState(this);
         } else if (currentBrickCount < startBrickCount * 0.3 && !(alienState instanceof ProtectingAlienState)) {
             alienState.finishAction();
-            alienState = new RepairingAlienState(true);
+            alienState = new RepairingAlienState(this);
             alienState.performAction();
             alienState.finishAction();
             alienState = new ProtectingAlienState(this);
@@ -45,7 +45,7 @@ public class DrunkAlien extends Alien {
         } else if (currentBrickCount > startBrickCount * 0.5 && currentBrickCount < startBrickCount * 0.6
                 && !(alienState instanceof RepairingAlienState)) {
             alienState.finishAction();
-            alienState = new RepairingAlienState(false);
+            alienState = new RepairingAlienState(this);
         } else if((currentBrickCount > startBrickCount * 0.3 && currentBrickCount < startBrickCount * 0.4)
                 || (currentBrickCount > startBrickCount * 0.6 && currentBrickCount < startBrickCount * 0.7)
                 && !(alienState instanceof DrunkAlienState)) {

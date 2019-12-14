@@ -1,5 +1,5 @@
 package brickingbad.ui.game.animation;
-import brickingbad.domain.game.AnimationListener;
+import brickingbad.domain.game.listeners.AnimationListener;
 import java.awt.*;
 
 public abstract class Animation {
