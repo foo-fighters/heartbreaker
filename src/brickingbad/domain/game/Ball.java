@@ -54,12 +54,12 @@ public class Ball extends GameObject {
 
     public void setFireball() {
         ballState = new FireBallState(this);
-        publishStateToListener("fire");
+        publishStateToListener("_fire");
     }
 
     public void setChemical() {
         ballState = new ChemicalBallState(this);
-        publishStateToListener("chemical");
+        publishStateToListener("_chemical");
     }
 
     public void reflect(GameObject object) {

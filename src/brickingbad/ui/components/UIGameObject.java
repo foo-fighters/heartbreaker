@@ -73,7 +73,7 @@ public class UIGameObject extends JLabel implements MouseListener, GameObjectLis
 
     public void setSprite(String spriteName)  {
         try {
-            String spritePath = String.format("resources/sprites/%s_%s.png",
+            String spritePath = String.format("resources/sprites/%s%s.png",
                     gameObject.getClass().getSimpleName().toLowerCase(), spriteName);
             sprite = ImageIO.read(new File(spritePath));
             setIcon(new ImageIcon(sprite));
