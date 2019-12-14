@@ -13,12 +13,14 @@ public abstract class PowerUp extends GameObject {
     protected boolean active = false;
 
     public void activate() {
+        Game.getInstance().getStoredPowerUps().remove(this);
+        Game.getInstance().getActivePowerUps().add(this);
         startTime = Game.getInstance().getTime();
         active = true;
     }
 
     public void deactivate() {
-        Game.getInstance().getStoredPowerUps().remove(this);
+        Game.getInstance().getActivePowerUps().remove(this);
         destroy();
     }
 
