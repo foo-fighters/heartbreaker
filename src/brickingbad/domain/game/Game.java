@@ -297,8 +297,8 @@ public class Game {
 
     public void addBrick(Brick brick) {
         boolean overlaps = true;
-
-        while (overlaps) {
+        int count = 0;
+        while (overlaps && count < 1000) {
             int x = ThreadLocalRandom.current().nextInt(brickGrid.length);
             int y = ThreadLocalRandom.current().nextInt(brickGrid[0].length);
             if (bricks.size() == 0) {
@@ -311,6 +311,7 @@ public class Game {
                 brick.setPosition(new Vector((x + 0.5) * GameConstants.rectangularBrickLength,
                         GameConstants.menuAreaHeight + (y + 0.5) * GameConstants.rectangularBrickThickness));
             }
+            count++;
         }
         bricks.add(brick);
         trackObject(brick);
@@ -319,7 +320,8 @@ public class Game {
     public double getBrickRowHeight() {
         boolean empty = true;
         double rowHeight = 0.0;
-        while(empty) {
+        int count = 0;
+        while(empty && count < 1000) {
             int row = random.nextInt(gridX);
             rowHeight = GameConstants.menuAreaHeight + GameConstants.rectangularBrickThickness / 2.0 +
                     row * GameConstants.rectangularBrickThickness;
@@ -328,6 +330,7 @@ public class Game {
                     empty = false;
                 }
             }
+            count++;
         }
         return rowHeight;
     }
@@ -515,11 +518,22 @@ public class Game {
                 break;
             default:
         }
-        double spawnX = GameConstants.alienSize / 2.0 +
-                random.nextDouble() * (GameConstants.screenWidth - GameConstants.alienSize);
-        double spawnY = (GameConstants.screenHeight - GameConstants.paddleAreaHeight - GameConstants.alienSize / 2.0) -
-                random.nextDouble() * (GameConstants.alienAreaHeight - GameConstants.alienSize);
-        alien.setPosition(new Vector(spawnX, spawnY));
+        ArrayList<Alien> aliensCopy = new ArrayList<>(activeAliens);
+        boolean overlaps = true;
+        while(overlaps) {
+            overlaps = false;
+            double spawnX = GameConstants.alienSize / 2.0 +
+                    random.nextDouble() * (GameConstants.screenWidth - GameConstants.alienSize);
+            double spawnY = (GameConstants.screenHeight - GameConstants.paddleAreaHeight - GameConstants.alienSize / 2.0) -
+                    random.nextDouble() * (GameConstants.alienAreaHeight - GameConstants.alienSize);
+            alien.setPosition(new Vector(spawnX, spawnY));
+            for(GameObject object: aliensCopy) {
+                if(PhysicsEngine.areColliding(object, alien)) {
+                    overlaps = true;
+                    break;
+                }
+            }
+        }
         activeAliens.add(alien);
         aliens.add(alien);
         trackObject(alien);
