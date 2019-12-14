@@ -1,8 +1,8 @@
 package brickingbad.controller;
 
-import brickingbad.domain.game.AnimationListener;
+import brickingbad.domain.game.listeners.AnimationListener;
 import brickingbad.domain.game.Game;
-import brickingbad.domain.game.GameListener;
+import brickingbad.domain.game.listeners.GameListener;
 import brickingbad.domain.game.WrapperContent;
 import brickingbad.domain.game.brick.Brick;
 import brickingbad.domain.game.brick.BrickFactory;

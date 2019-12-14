@@ -1,6 +1,8 @@
 package brickingbad.ui.game;
 
 import brickingbad.domain.game.*;
+import brickingbad.domain.game.listeners.ErrorListener;
+import brickingbad.domain.game.listeners.GameListener;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.BrickCountPanel;

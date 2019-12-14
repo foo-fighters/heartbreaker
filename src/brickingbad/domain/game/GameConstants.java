@@ -59,6 +59,7 @@ public class GameConstants {
     // Aliens
     public final static double alienSpeed = paddleLength * 2; // * 3 original
     public final static int repairingAlienCooldown = 5;
+    public final static int cooperativeAlienCooldown = 1;
 
     // Extras
     public final static int heartSize = powerupSize;
