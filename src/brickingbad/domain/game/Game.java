@@ -2,6 +2,9 @@ package brickingbad.domain.game;
 
 import brickingbad.controller.GameController;
 import brickingbad.domain.game.alien.*;
+import brickingbad.domain.game.listeners.AnimationListener;
+import brickingbad.domain.game.listeners.ErrorListener;
+import brickingbad.domain.game.listeners.GameListener;
 import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.game.border.*;
 import brickingbad.domain.game.brick.*;
