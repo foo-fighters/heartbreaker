@@ -1,9 +1,6 @@
 package brickingbad.domain.game.powerup;
 
-import brickingbad.domain.game.Game;
-import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.Shape;
-import brickingbad.domain.game.WrapperContent;
+import brickingbad.domain.game.*;
 import brickingbad.domain.physics.Vector;
 
 public class DestructiveLaserGun extends PowerUp {
@@ -27,5 +24,11 @@ public class DestructiveLaserGun extends PowerUp {
         Game.getInstance().shootLaserColumn(paddleX - Game.getInstance().getPaddle().paddleMountDistance);
         charges--;
         if(charges == 0) deactivate();
+    }
+
+    @Override
+    public void deactivate() {
+        Game.getInstance().getStoredPowerUps().remove(this);
+        destroy();
     }
 }
