@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class RunningModePanel extends JPanel implements GameObjectListener, AnimationListener {
+public class RunningModePanel extends JPanel implements GameListener, AnimationListener {
 
   private static RunningModePanel instance;
 
@@ -154,6 +154,10 @@ public class RunningModePanel extends JPanel implements GameObjectListener, Anim
     gameButtonPanel.setUIScore(score);
   }
 
+  public ArrayList<Animation> getCurrentAnimations() {
+    return currentAnimations;
+  }
+
   @Override
   public void addAnimation(String animationName, Object... args)
           throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
@@ -182,22 +186,4 @@ public class RunningModePanel extends JPanel implements GameObjectListener, Anim
     currentAnimations.remove(animation);
   }
 
-  @Override
-  public void updateBalls(String stateModifier) {
-    for(UIGameObject object: uiObjects) {
-      if(object.getGameObject() instanceof Ball) {
-        object.setSprite(String.format("ball%s", stateModifier));
-      }
-    }
-  }
-
-  @Override
-  public void crackHalfMetalBrick(HalfMetalBrick brick) {
-    for(UIGameObject object: uiObjects) {
-      if(object.getGameObject() == brick) {
-        object.setSprite(String.format("halfmetalbrick_cracked"));
-        return;
-      }
-    }
-  }
 }

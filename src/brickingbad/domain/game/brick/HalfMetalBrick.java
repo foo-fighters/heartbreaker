@@ -37,7 +37,7 @@ public class HalfMetalBrick extends Brick {
 
     public void setCracked(boolean cracked) {
         isCracked = cracked;
-        Game.getInstance().crackHalfMetalBrick(this);
+        publishStateToListener("cracked");
     }
 
 }

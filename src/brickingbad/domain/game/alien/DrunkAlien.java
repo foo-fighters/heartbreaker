@@ -51,7 +51,6 @@ public class DrunkAlien extends Alien {
                 && !(alienState instanceof DrunkAlienState)) {
             alienState.finishAction();
             alienState = new DrunkAlienState(this);
-            System.out.println("drunk");
         }
         alienState.performAction();
     }

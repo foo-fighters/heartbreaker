@@ -2,6 +2,7 @@ package brickingbad.ui.components;
 
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.GameObject;
+import brickingbad.domain.game.GameObjectListener;
 import brickingbad.domain.game.brick.Brick;
 import brickingbad.domain.physics.Vector;
 import brickingbad.ui.BrickingBadFrame;
@@ -17,17 +18,17 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class UIGameObject extends JLabel implements MouseListener {
+public class UIGameObject extends JLabel implements MouseListener, GameObjectListener {
 
     private Point position;
     private BufferedImage sprite;
     private GameObject gameObject;
     private JPanel panel;
     private AffineTransform defaultFrameTransform;
-    private boolean firstTime = true;
 
     public UIGameObject(GameObject gameObject, JPanel panel) {
         this.gameObject = gameObject;
+        gameObject.setGameObjectListener(this);
         this.panel = panel;
         this.position = new Point();
         this.setSprite();
@@ -42,21 +43,17 @@ public class UIGameObject extends JLabel implements MouseListener {
     public void paintComponent(Graphics g) {
         int newX = (int) (gameObject.getPosition().getX() - gameObject.getSize().getX() / 2.0);
         int newY = (int) (gameObject.getPosition().getY() - gameObject.getSize().getY() / 2.0);
-        boolean willRedraw = (newX != position.x) || (newY != position.y);
-//        if (willRedraw || firstTime) {
-            position.x = newX;
-            position.y = newY;
-            Graphics2D g2d = (Graphics2D) g.create();
-            AffineTransform at = new AffineTransform();
-            at.scale(defaultFrameTransform.getScaleX(), defaultFrameTransform.getScaleY());
-            at.rotate(-Math.toRadians(gameObject.getAngle()), gameObject.getPosition().getX(), gameObject.getPosition().getY());
-            at.translate(position.x, position.y);
-            at.scale(gameObject.getSize().getX() / sprite.getWidth(), gameObject.getSize().getY() / sprite.getHeight());
-            g2d.setTransform(at);
-            g2d.drawImage(sprite, 0, 0, null);
-            g2d.dispose();
-            firstTime = false;
-//        }
+        position.x = newX;
+        position.y = newY;
+        Graphics2D g2d = (Graphics2D) g.create();
+        AffineTransform at = new AffineTransform();
+        at.scale(defaultFrameTransform.getScaleX(), defaultFrameTransform.getScaleY());
+        at.rotate(-Math.toRadians(gameObject.getAngle()), gameObject.getPosition().getX(), gameObject.getPosition().getY());
+        at.translate(position.x, position.y);
+        at.scale(gameObject.getSize().getX() / sprite.getWidth(), gameObject.getSize().getY() / sprite.getHeight());
+        g2d.setTransform(at);
+        g2d.drawImage(sprite, 0, 0, null);
+        g2d.dispose();
     }
 
     public GameObject getGameObject() {
@@ -65,7 +62,8 @@ public class UIGameObject extends JLabel implements MouseListener {
 
     private void setSprite()  {
         try {
-            String spritePath = String.format("resources/sprites/%s.png", gameObject.getClass().getSimpleName().toLowerCase());
+            String spritePath = String.format("resources/sprites/%s.png",
+                    gameObject.getClass().getSimpleName().toLowerCase());
             sprite = ImageIO.read(new File(spritePath));
             setIcon(new ImageIcon(sprite));
         } catch (IOException e) {
@@ -75,7 +73,8 @@ public class UIGameObject extends JLabel implements MouseListener {
 
     public void setSprite(String spriteName)  {
         try {
-            String spritePath = String.format("resources/sprites/%s.png", spriteName);
+            String spritePath = String.format("resources/sprites/%s_%s.png",
+                    gameObject.getClass().getSimpleName().toLowerCase(), spriteName);
             sprite = ImageIO.read(new File(spritePath));
             setIcon(new ImageIcon(sprite));
         } catch (IOException e) {
@@ -129,5 +128,10 @@ public class UIGameObject extends JLabel implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    @Override
+    public void changeObjectState(String stateModifier) {
+        setSprite(stateModifier);
     }
 }
