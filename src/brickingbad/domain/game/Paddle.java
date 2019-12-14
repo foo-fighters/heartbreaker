@@ -137,4 +137,7 @@ public class Paddle extends GameObject {
     isMagnetized = magnetized;
   }
 
+  public PaddleMoveState getMoveState() {
+    return moveState;
+  }
 }
