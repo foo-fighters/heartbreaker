@@ -81,7 +81,7 @@ public class PhysicsEngine implements Runnable {
 
   /**
    * The main method of the thread.
-   * Calls {@link PhysicsEngine#handleCollisions()} and {@link PhysicsEngine#updatePositions()} at each iteration.
+   * Calls {@link PhysicsEngine#handleCollisions(ArrayList)} and {@link PhysicsEngine#updatePositions(ArrayList)} at each iteration.
    */
   @Override
   public void run() {
@@ -94,8 +94,9 @@ public class PhysicsEngine implements Runnable {
       if (running) {
         if (GameController.getInstance().inRunningMode()) {
           timePassed += SLEEP_TIME;
-          handleCollisions();
-          updatePositions();
+          ArrayList<GameObject> objects = Game.getInstance().getObjects();
+          handleCollisions(objects);
+          updatePositions(objects);
         }
       }
     }
@@ -115,14 +116,15 @@ public class PhysicsEngine implements Runnable {
   /**
    * Gets the list of {@link GameObject}s from the {@link Game} and checks if objects are colliding.
    * Adds the objects to their collidingObjects lists if they are colliding.
+   * @param objects
    */
-  private static void handleCollisions () {
-    ArrayList<GameObject> objects = Game.getInstance().getObjects();
-    for(int i = 0; i < objects.size(); i++) {
-      GameObject o1 = objects.get(i);
+  private static void handleCollisions(ArrayList<GameObject> objects) {
+    ArrayList<GameObject> objectsCopy = objects;
+    for(int i = 0; i < objectsCopy.size(); i++) {
+      GameObject o1 = objectsCopy.get(i);
       if (o1.isDynamic()){
-        for(int j = 0; j < objects.size(); j++) {
-          GameObject o2 = objects.get(j);
+        for(int j = 0; j < objectsCopy.size(); j++) {
+          GameObject o2 = objectsCopy.get(j);
           if(!o2.isDynamic() || (j > i)) {
             if(areColliding(o1, o2)) {
               if(!o1.getCollidedObjects().contains(o2) && !o1.getCollidedObjects().contains(o2)){
@@ -143,9 +145,10 @@ public class PhysicsEngine implements Runnable {
 
   /**
    * Gets the list of {@link GameObject}s from the {@link Game} and calls their {@link GameObject#updatePosition()} methods.
+   * @param objects
    */
-    private static void updatePositions () {
-      ArrayList<GameObject> objectsCopy = new ArrayList<>(Game.getInstance().getObjects());
+    public static void updatePositions(ArrayList<GameObject> objects) {
+      ArrayList<GameObject> objectsCopy = new ArrayList<>(objects);
       for (GameObject object : objectsCopy) {
         if (object != null) {
           object.updatePosition();
@@ -159,7 +162,7 @@ public class PhysicsEngine implements Runnable {
    * @param o2
    * @return the result of the collision check between two objects.
    */
-  private static boolean areColliding (GameObject o1, GameObject o2) {
+  public static boolean areColliding(GameObject o1, GameObject o2) {
       double o1_posx = o1.getPosition().getX();
       double o1_posy = o1.getPosition().getY();
       double o2_posx = o2.getPosition().getX();
@@ -184,7 +187,7 @@ public class PhysicsEngine implements Runnable {
    * @param rect
    * @return true if two objects are colliding, false otherwise.
    */
-  private static boolean mixedColliding (GameObject circle, GameObject rect) {
+  public static boolean mixedColliding(GameObject circle, GameObject rect) {
     double circle_x = circle.getPosition().getX();
     double circle_y = circle.getPosition().getY();
     double radius = circle.getSize().getX() / 2.0;
