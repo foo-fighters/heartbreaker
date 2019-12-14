@@ -108,7 +108,7 @@ public class PhysicsEngine implements Runnable {
       }
     }
 
-    private static boolean areColliding (GameObject o1, GameObject o2) {
+    public static boolean areColliding (GameObject o1, GameObject o2) {
         double o1_posx = o1.getPosition().getX();
         double o1_posy = o1.getPosition().getY();
         double o2_posx = o2.getPosition().getX();
