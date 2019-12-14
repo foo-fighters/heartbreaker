@@ -18,7 +18,11 @@ public class CooperativeAlienState extends AlienState {
         this.drunk = alien instanceof DrunkAlien;
         this.startTime = Game.getInstance().getTime();
         this.rowHeight = Game.getInstance().getBrickRowHeight();
-        Game.getInstance().startAnimation("CooperativeAlienRowAnimation", rowHeight);
+        if(drunk) {
+            Game.getInstance().startAnimation("DrunkAlienRowAnimation", rowHeight);
+        }else {
+            Game.getInstance().startAnimation("CooperativeAlienRowAnimation", rowHeight);
+        }
     }
 
     @Override
@@ -27,11 +31,11 @@ public class CooperativeAlienState extends AlienState {
         if(currentTime - startTime > 1000 * cooldown) {
             Brick nextBrick = Game.getInstance().nextBrickInRow(rowHeight);
             if (nextBrick == null) {
+                finishAction();
                 if(drunk) {
                     rowHeight = Game.getInstance().getBrickRowHeight();
-                    Game.getInstance().startAnimation("CooperativeAlienRowAnimation", rowHeight);
+                    Game.getInstance().startAnimation("DrunkAlienRowAnimation", rowHeight);
                 }else {
-                    finishAction();
                     alien.destroy();
                 }
             }else {
@@ -43,7 +47,11 @@ public class CooperativeAlienState extends AlienState {
 
     @Override
     public void finishAction() {
-        Game.getInstance().finishAnimation("CooperativeAlienRowAnimation");
+        if(drunk) {
+            Game.getInstance().finishAnimation("DrunkAlienRowAnimation");
+        }else {
+            Game.getInstance().finishAnimation("CooperativeAlienRowAnimation");
+        }
     }
 
 }
