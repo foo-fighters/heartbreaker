@@ -84,16 +84,17 @@ public class BrickFactory {
      * @param className gives the required brick type
      * @return brick
      */
-    public Brick createBrick(String className) {
-        Brick brick;
+    public Brick createBrick(String className) throws InvocationTargetException, NoSuchMethodException,
+            ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Brick brick = null;
         try {
             brick = (Brick) Class.forName(className).getDeclaredConstructor().newInstance();
         } catch (ClassNotFoundException |
                 NoSuchMethodException |
                 InstantiationException |
                 IllegalAccessException |
-                InvocationTargetException e){
-            return new SimpleBrick();
+                InvocationTargetException e) {
+            throw e;
         }
         return brick;
     }
