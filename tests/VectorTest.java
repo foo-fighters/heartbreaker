@@ -3,6 +3,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class VectorTest {
 
@@ -41,6 +42,12 @@ public class VectorTest {
     Vector expected = new Vector(0.0, 0.0);
     Vector given = v1.product(0);
     assertEquals(expected, given);
+  }
+
+  @Test
+  public void vectorRepOK() {
+    assertTrue(v1.repOK());
+    assertTrue(v2.repOK());
   }
 
 }

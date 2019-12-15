@@ -31,6 +31,9 @@ public class ActivePaddleMoveState extends PaddleMoveState {
    */
   @Override
   public void updatePosition() {
+    // REQUIRES: field "direction" is Direction.LEFT or Direction.RIGHT
+    // MODIFIES: field "paddle"
+    // EFFECTS: updates paddle's position according to its movement direction.
     if(direction == Direction.LEFT) {
       if(paddle.getPosition().getX() <= paddle.getSize().getX() / 2.0) {
         paddle.setPosition(paddle.getSize().getX() / 2.0, paddle.getPosition().getY());
@@ -40,7 +43,7 @@ public class ActivePaddleMoveState extends PaddleMoveState {
       for(Ball ball: paddle.getCurrentBalls()) {
         ball.getPosition().addVector(deltaPos.product(-1.0));
       }
-    }else{
+    }else {
       if(paddle.getPosition().getX() >= GameConstants. screenWidth - paddle.getSize().getX() / 2.0) {
         paddle.setPosition(GameConstants. screenWidth - paddle.getSize().getX() / 2.0, paddle.getPosition().getY());
         return;

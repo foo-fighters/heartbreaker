@@ -37,6 +37,11 @@ public class PhysicsEngineTest {
   }
 
   @Test
+  public void testInstanceReturn() {
+    assertNotNull(engine);
+  }
+
+  @Test
   public void testUpdatePositions() {
     Vector v1 = new Vector(5, 0);
     Vector v2 = new Vector();

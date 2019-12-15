@@ -10,6 +10,7 @@ import java.util.ArrayList;
  * It also handles the position updates for game objects.
  */
 public class PhysicsEngine implements Runnable {
+  // OVERVIEW: A physics engine that handles physical collisions and position calculations of game objects.
 
   /**
    * The time the thread sleeps at each iteration.
@@ -19,7 +20,7 @@ public class PhysicsEngine implements Runnable {
   /**
    * Keeps the time passed since the engine started in seconds.
    */
-    private int timePassed = 0;
+  private int timePassed = 0;
 
   /**
    * The sole instance of the PhysicsEngine since it is implemented as a singleton.
@@ -54,6 +55,7 @@ public class PhysicsEngine implements Runnable {
    * Starts the thread bound to the PhysicsEngine.
    */
   public void start() {
+    // EFFECTS: starts a new thread from this instance.
     (new Thread(instance)).start();
   }
 
@@ -61,6 +63,8 @@ public class PhysicsEngine implements Runnable {
    * Changes the thread's state from running to paused and vice versa.
    */
   public void togglePauseResume() {
+    // MODIFIES: field "running"
+    // EFFECTS: changes the boolean field "running" of this instance.
     if (running) {
       System.out.println("Physics engine paused.");
       running = false;
@@ -85,6 +89,8 @@ public class PhysicsEngine implements Runnable {
    */
   @Override
   public void run() {
+    // REQUIRES: a thread is running from this instance.
+    // EFFECTS: handles collisions and updates positions of each game objects during this frame.
     while (true) {
       try {
         Thread.sleep(SLEEP_TIME);
@@ -119,6 +125,8 @@ public class PhysicsEngine implements Runnable {
    * @param objects
    */
   private static void handleCollisions(ArrayList<GameObject> objects) {
+    // MODIFIES: objects
+    // EFFECTS: checks collisions between game objects, then calls each colliding object's collide function.
     ArrayList<GameObject> objectsCopy = objects;
     for(int i = 0; i < objectsCopy.size(); i++) {
       GameObject o1 = objectsCopy.get(i);
@@ -147,14 +155,16 @@ public class PhysicsEngine implements Runnable {
    * Gets the list of {@link GameObject}s from the {@link Game} and calls their {@link GameObject#updatePosition()} methods.
    * @param objects
    */
-    public static void updatePositions(ArrayList<GameObject> objects) {
-      ArrayList<GameObject> objectsCopy = new ArrayList<>(objects);
-      for (GameObject object : objectsCopy) {
-        if (object != null) {
-          object.updatePosition();
-        }
+  public static void updatePositions(ArrayList<GameObject> objects) {
+    // MODIFIES: objects
+    // EFFECTS: each object's position is updated by adding their one-frame velocity to them.
+    ArrayList<GameObject> objectsCopy = new ArrayList<>(objects);
+    for (GameObject object : objectsCopy) {
+      if (object != null) {
+        object.updatePosition();
       }
     }
+  }
 
   /**
    * Takes in two {@link GameObject} instances and returns true if they are colliding, false otherwise.
@@ -163,22 +173,24 @@ public class PhysicsEngine implements Runnable {
    * @return the result of the collision check between two objects.
    */
   public static boolean areColliding(GameObject o1, GameObject o2) {
-      double o1_posx = o1.getPosition().getX();
-      double o1_posy = o1.getPosition().getY();
-      double o2_posx = o2.getPosition().getX();
-      double o2_posy = o2.getPosition().getY();
-      double distx = (o1.getSize().getX() + o2.getSize().getX()) / 2.0;
-      double disty = (o1.getSize().getY() + o2.getSize().getY()) / 2.0;
+    // REQUIRES: given objects are not null, their shapes, sizes, and positions are also not null.
+    // EFFECTS: returns true if the given 2D objects would collide in a 2D space.
+    double o1_posx = o1.getPosition().getX();
+    double o1_posy = o1.getPosition().getY();
+    double o2_posx = o2.getPosition().getX();
+    double o2_posy = o2.getPosition().getY();
+    double distx = (o1.getSize().getX() + o2.getSize().getX()) / 2.0;
+    double disty = (o1.getSize().getY() + o2.getSize().getY()) / 2.0;
 
-      if (o1.getShape() == Shape.RECTANGLE && o2.getShape() == Shape.RECTANGLE) {
-        return Math.abs(o1_posx - o2_posx) < distx && Math.abs(o1_posy - o2_posy) < disty;
-      } else if (o1.getShape() == Shape.CIRCLE && o2.getShape() == Shape.CIRCLE) {
-        return Math.hypot(o1_posx - o2_posx, o1_posy - o2_posy) < distx;
-      } else if (o1.getShape() == Shape.CIRCLE) {
-        return mixedColliding(o1, o2);
-      } else {
-        return mixedColliding(o2, o1);
-      }
+    if (o1.getShape() == Shape.RECTANGLE && o2.getShape() == Shape.RECTANGLE) {
+      return Math.abs(o1_posx - o2_posx) < distx && Math.abs(o1_posy - o2_posy) < disty;
+    } else if (o1.getShape() == Shape.CIRCLE && o2.getShape() == Shape.CIRCLE) {
+      return Math.hypot(o1_posx - o2_posx, o1_posy - o2_posy) < distx;
+    } else if (o1.getShape() == Shape.CIRCLE) {
+      return mixedColliding(o1, o2);
+    } else {
+      return mixedColliding(o2, o1);
+    }
   }
 
   /**
@@ -188,6 +200,8 @@ public class PhysicsEngine implements Runnable {
    * @return true if two objects are colliding, false otherwise.
    */
   public static boolean mixedColliding(GameObject circle, GameObject rect) {
+    // REQUIRES: object "circle" has the shape Shape.CIRCLE and object "rect" has the shape Shape.RECTANGLE.
+    // EFFECTS: returns true if the given circular and rectangular objects would collide in a 2-dimensional space.
     double circle_x = circle.getPosition().getX();
     double circle_y = circle.getPosition().getY();
     double radius = circle.getSize().getX() / 2.0;
