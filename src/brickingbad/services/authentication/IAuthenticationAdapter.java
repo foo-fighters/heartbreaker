@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface IAuthenticationAdapter {
 
-  void addUser(User user) throws IllegalArgumentException;
+  boolean addUser(User user) throws IllegalArgumentException;
   void deleteUser(User user);
   User findUserByName(String name) throws IllegalArgumentException;
   ArrayList<String> getNames();

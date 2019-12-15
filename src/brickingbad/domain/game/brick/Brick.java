@@ -7,6 +7,8 @@ import brickingbad.domain.physics.Vector;
 
 public abstract class Brick extends GameObject {
 
+    protected String name;
+
     @Override
     public void destroy() {
         Game.getInstance().anyBricksLeft();
@@ -26,5 +28,8 @@ public abstract class Brick extends GameObject {
 
     public void startMovement() {
     }
+
+
+
 
 }

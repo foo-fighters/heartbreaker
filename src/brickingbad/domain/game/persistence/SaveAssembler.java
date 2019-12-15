@@ -11,6 +11,7 @@ import brickingbad.domain.game.brick.SimpleBrick;
 import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.physics.Vector;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Array;
 import java.sql.Wrapper;
 import java.util.ArrayList;
@@ -19,10 +20,6 @@ import java.util.List;
 
 public class SaveAssembler {
 
-  /**
-   * Takes a Game object and a name string.
-   * Extracts the necessary information from the game object into the save object.
-   */
   public static Save assemble(Game game, String name) {
     Save save = new Save();
 
@@ -94,7 +91,16 @@ public class SaveAssembler {
       String className = save.brickTypes.get(brickIndex);
       double x = coordinates.get(0);
       double y = coordinates.get(1);
-      Brick brick = BrickFactory.getInstance().createBrick(className);
+      Brick brick = null;
+      try {
+        brick = BrickFactory.getInstance().createBrick(className);
+      } catch (ClassNotFoundException |
+              NoSuchMethodException |
+              InstantiationException |
+              IllegalAccessException |
+              InvocationTargetException e){
+        e.printStackTrace();
+      }
       brick.setPosition(new Vector(x, y));
       bricks.add(brick);
       brickIndex++;

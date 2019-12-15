@@ -6,9 +6,18 @@ import brickingbad.domain.game.Paddle;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
 
+/**
+ * ActivePaddleMoveState is responsible for one of the paddle state since the state pattern is implemented
+ */
 public class ActivePaddleMoveState extends PaddleMoveState {
 
+  /**
+   * The private value for the paddle move speed
+   */
   private final double moveSpeed = GameConstants.regularPaddleMovementSpeed;
+  /**
+   * The private value for the delta distance between each frame
+   */
   private final Vector deltaPos;
 
   public ActivePaddleMoveState(Paddle paddle, Direction direction) {
@@ -17,8 +26,14 @@ public class ActivePaddleMoveState extends PaddleMoveState {
     this.deltaPos = new Vector(moveSpeed / GameConstants.calculationsPerSecond, 0.0);
   }
 
+  /**
+   * Updates the paddle position in accordance to its required state
+   */
   @Override
   public void updatePosition() {
+    // REQUIRES: field "direction" is Direction.LEFT or Direction.RIGHT
+    // MODIFIES: field "paddle"
+    // EFFECTS: updates paddle's position according to its movement direction.
     if(direction == Direction.LEFT) {
       if(paddle.getPosition().getX() <= paddle.getSize().getX() / 2.0) {
         paddle.setPosition(paddle.getSize().getX() / 2.0, paddle.getPosition().getY());
@@ -28,7 +43,7 @@ public class ActivePaddleMoveState extends PaddleMoveState {
       for(Ball ball: paddle.getCurrentBalls()) {
         ball.getPosition().addVector(deltaPos.product(-1.0));
       }
-    }else{
+    }else {
       if(paddle.getPosition().getX() >= GameConstants. screenWidth - paddle.getSize().getX() / 2.0) {
         paddle.setPosition(GameConstants. screenWidth - paddle.getSize().getX() / 2.0, paddle.getPosition().getY());
         return;

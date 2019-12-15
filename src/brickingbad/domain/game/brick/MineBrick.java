@@ -25,6 +25,7 @@ public class MineBrick extends Brick {
         this.size = new Vector(GameConstants.circularBrickSize, GameConstants.circularBrickSize);
         this.velocity = new Vector();
         this.angle = 0.0;
+        this.name = "MineBrick";
     }
 
     @Override
@@ -71,4 +72,7 @@ public class MineBrick extends Brick {
     public void reflect() {
         clockwise = !clockwise;
     }
+
+
+
 }

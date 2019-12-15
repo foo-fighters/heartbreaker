@@ -14,4 +14,11 @@ public class User {
     this.password = password;
   }
 
+  @Override
+  public boolean equals(Object object) {
+    User user = (User) object;
+    return user.name.equals(this.name) &&
+            user.password.equals(this.password);
+  }
+
 }

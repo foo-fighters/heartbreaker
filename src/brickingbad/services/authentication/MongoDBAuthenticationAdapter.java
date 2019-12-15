@@ -14,12 +14,13 @@ public class MongoDBAuthenticationAdapter implements IAuthenticationAdapter {
   private static final MongoCollection<User> usersCollection = MongoDBService.getDatabase().getCollection("users", User.class);
 
   @Override
-  public void addUser(User user) throws IllegalArgumentException {
+  public boolean addUser(User user) throws IllegalArgumentException {
     ArrayList<String> names = getNames();
     if (names.contains(user.name)) {
       throw new IllegalArgumentException("A user with that name already exists.");
     } else {
       usersCollection.insertOne(user);
+      return true;
     }
   }
 
