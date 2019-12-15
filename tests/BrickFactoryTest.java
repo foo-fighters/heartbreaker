@@ -16,10 +16,10 @@ public class BrickFactoryTest {
     @Before
     public void setUp() {
         brickFactory = brickingbad.domain.game.brick.BrickFactory.getInstance();
-        simpleBrick = brickFactory.createBrick("SimpleBrick");
-        mineBrick =  brickFactory.createBrick("MineBrick");
-        wrapperBrick =  brickFactory.createBrick("WrapperBrick");
-        halfMetalBrick =brickFactory.createBrick("HalfMetalBrick");
+        simpleBrick = brickFactory.createBrick("brickingbad.domain.game.brick.SimpleBrick");
+        mineBrick =  brickFactory.createBrick("brickingbad.domain.game.brick.MineBrick");
+        wrapperBrick =  brickFactory.createBrick("brickingbad.domain.game.brick.WrapperBrick");
+        halfMetalBrick =brickFactory.createBrick("brickingbad.domain.game.brick.HalfMetalBrick");
     }
 
     @Test
@@ -30,18 +30,16 @@ public class BrickFactoryTest {
     @Test
     public void isABrickReturnedByType() throws Exception {
 
-        if (simpleBrick instanceof SimpleBrick) {
-            assertTrue("Brick is not SimpleBrick!", true);
-        }
-        if (halfMetalBrick instanceof HalfMetalBrick) {
-            assertTrue("Brick is not HalfMetalBrick!", true);
-        }
-        if (mineBrick instanceof MineBrick) {
-            assertTrue("Brick is not MineBrick!", true);
-        }
-        if (wrapperBrick instanceof WrapperBrick) {
-            assertTrue("Brick is not WrapperBrick!", true);
-        }
+        /*boolean simpleBrickCheck = (simpleBrick instanceof SimpleBrick);
+        boolean mineBrickCheck = (mineBrick instanceof MineBrick);
+        boolean wrapperBrickCheck = (wrapperBrick instanceof WrapperBrick);
+        boolean halfMetalBrickCheck = (halfMetalBrick instanceof HalfMetalBrick);*/
+
+            assertTrue(simpleBrick instanceof SimpleBrick);
+            assertTrue(mineBrick instanceof MineBrick);
+            assertTrue(wrapperBrick instanceof WrapperBrick);
+            assertTrue(halfMetalBrick instanceof HalfMetalBrick);
+
     }
 
     @Test
