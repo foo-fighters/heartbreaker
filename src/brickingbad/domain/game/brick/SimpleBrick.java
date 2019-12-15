@@ -38,15 +38,6 @@ public class SimpleBrick extends Brick {
         }
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        SimpleBrick brick = (SimpleBrick) obj;
-        if(this.name.equals(brick.name)){
-            return true;
-        }else{
-            return false;
-        }
-    }
 
 
 }
