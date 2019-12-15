@@ -73,14 +73,6 @@ public class MineBrick extends Brick {
         clockwise = !clockwise;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-      MineBrick brick = (MineBrick) obj;
-        if(this.name.equals(brick.name)){
-            return true;
-        }else{
-            return false;
-        }
-    }
+
 
 }

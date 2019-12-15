@@ -23,15 +23,7 @@ public class WrapperBrick extends Brick {
         Game.getInstance().revealWrapperContent(position);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        WrapperBrick brick = (WrapperBrick) obj;
-        if(this.name.equals(brick.name)){
-            return true;
-        }else{
-            return false;
-        }
-    }
+
 
 
 }
