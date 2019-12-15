@@ -48,17 +48,22 @@ public class GameConstants {
     // Power-ups
     public final static int powerupFallSpeed = paddleLength;
     public final static int gangOfBallsMultiplier = 10;
-    public final static int laserGunCharges = 5;
     public final static int chemicalBallDuration = 60;
     public final static int tallerPaddleDuration = 30;
-    public final static int magnetDuration = 30;
     public final static int tallerPaddleMultiplier = 2;
+    public final static int magnetDuration = 30;
+    public final static int laserGunCharges = 5;
+    public final static double laserGunOffset = paddleLength * 0.4;
+    public final static double fireBallDestructionRadius = paddleLength * 0.5;
+
+    // Aliens
+    public final static double alienSpeed = paddleLength * 2; // * 3 original
+    public final static int repairingAlienCooldown = 5;
+    public final static int cooperativeAlienCooldown = 1;
 
     // Extras
     public final static int heartSize = powerupSize;
     public final static double mineBrickExplosionRadius = paddleLength; // * 2 original
-    public final static double fireBallDestructionRadius = paddleLength * 0.5;
-    public final static double laserGunOffset = paddleLength * 0.4;
 
     public final static int framesPerSecond = 60;
     public final static int calculationsPerSecond = 100;

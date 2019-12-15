@@ -2,12 +2,13 @@ package brickingbad.ui.game;
 
 import brickingbad.controller.GameController;
 import brickingbad.domain.game.*;
+import brickingbad.domain.game.listeners.AnimationListener;
+import brickingbad.domain.game.listeners.GameListener;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.GameButtonPanel;
 import brickingbad.ui.game.animation.Animation;
 import brickingbad.ui.game.animation.Animator;
-import brickingbad.ui.game.animation.ExplosionAnimation;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class RunningModePanel extends JPanel implements GameObjectListener, AnimationListener {
+public class RunningModePanel extends JPanel implements GameListener, AnimationListener {
 
   private static RunningModePanel instance;
 
@@ -154,6 +155,10 @@ public class RunningModePanel extends JPanel implements GameObjectListener, Anim
     gameButtonPanel.setUIScore(score);
   }
 
+  public ArrayList<Animation> getCurrentAnimations() {
+    return currentAnimations;
+  }
+
   @Override
   public void addAnimation(String animationName, Object... args)
           throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
@@ -168,7 +173,18 @@ public class RunningModePanel extends JPanel implements GameObjectListener, Anim
   }
 
   @Override
+  public void removeAnimation(String animationName) {
+    ArrayList<Animation> animCopy = new ArrayList<>(currentAnimations);
+    for(Animation anim: animCopy) {
+      if(anim.getClass().getSimpleName().equals(animationName)) {
+        currentAnimations.remove(anim);
+      }
+    }
+  }
+
+  @Override
   public void stopAnimation(Animation animation) {
     currentAnimations.remove(animation);
   }
+
 }

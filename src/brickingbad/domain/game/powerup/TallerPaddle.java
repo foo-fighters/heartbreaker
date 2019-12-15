@@ -23,6 +23,13 @@ public class TallerPaddle extends PowerUp {
         super.activate();
         Paddle paddle = Game.getInstance().getPaddle();
         paddle.getSize().setVector(GameConstants.paddleLength * multiplier, GameConstants.paddleThickness);
+        if(paddle.getPosition().getX() <= paddle.getSize().getX() / 2.0) {
+            paddle.setPosition(paddle.getSize().getX() / 2.0, paddle.getPosition().getY());
+        }
+        if(paddle.getPosition().getX() >= GameConstants. screenWidth - paddle.getSize().getX() / 2.0) {
+            paddle.setPosition(GameConstants. screenWidth - paddle.getSize().getX() / 2.0, paddle.getPosition().getY());
+        }
+        Game.getInstance().getPaddle().paddleMountDistance *= multiplier;
         for(Ball ball: paddle.getCurrentBalls()) {
             ball.setPaddleOffset(ball.getPaddleOffset() * multiplier);
         }
@@ -30,12 +37,12 @@ public class TallerPaddle extends PowerUp {
 
     @Override
     public void deactivate() {
-        super.deactivate();
         Paddle paddle = Game.getInstance().getPaddle();
         paddle.getSize().setVector(GameConstants.paddleLength, GameConstants.paddleThickness);
+        Game.getInstance().getPaddle().paddleMountDistance /= multiplier;
         for(Ball ball: paddle.getCurrentBalls()) {
             ball.setPaddleOffset(ball.getPaddleOffset() / multiplier);
         }
-        destroy();
+        super.deactivate();
     }
 }

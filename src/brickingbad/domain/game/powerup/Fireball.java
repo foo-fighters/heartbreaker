@@ -3,6 +3,9 @@ package brickingbad.domain.game.powerup;
 import brickingbad.domain.game.*;
 import brickingbad.domain.physics.Vector;
 
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 public class Fireball extends PowerUp {
 
     public Fireball(Vector revealPosition) {
@@ -17,12 +20,18 @@ public class Fireball extends PowerUp {
 
     @Override
     public void activate() {
+        ArrayList<PowerUp> powerUpsCopy = new ArrayList<>(Game.getInstance().getActivePowerUps());
+        for(PowerUp power: powerUpsCopy) {
+            if(power instanceof ChemicalBall) {
+                power.deactivate();
+            }
+        }
         for(GameObject object: Game.getInstance().getObjects()) {
             if(object instanceof Ball) {
                 ((Ball) object).setFireball();
             }
         }
-        destroy();
+        deactivate();
     }
 
     @Override

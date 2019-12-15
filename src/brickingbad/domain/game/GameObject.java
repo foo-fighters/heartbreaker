@@ -1,5 +1,6 @@
 package brickingbad.domain.game;
 
+import brickingbad.domain.game.listeners.GameObjectListener;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
 
@@ -13,6 +14,7 @@ public abstract class GameObject implements Comparable {
   protected Vector velocity;
   protected double angle = 0.0;
   protected boolean dynamic = false;
+  protected GameObjectListener gameObjectListener;
 
   protected ArrayList<GameObject> collidedObjects = new ArrayList<>();
   protected Direction reflectionDirection;
@@ -91,4 +93,11 @@ public abstract class GameObject implements Comparable {
     return this.getClass().getName();
   }
 
+  public void setGameObjectListener(GameObjectListener gameObjectListener) {
+    this.gameObjectListener = gameObjectListener;
+  }
+
+  public void publishStateToListener(String stateModifier) {
+    gameObjectListener.changeObjectState(stateModifier);
+  }
 }
