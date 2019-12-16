@@ -121,9 +121,7 @@ public class Game {
             trackObject(paddle);
             trackObject(firstBall);
         }
-
         GameController.getInstance().setUIScore(score);
-
     }
 
     public void play() {

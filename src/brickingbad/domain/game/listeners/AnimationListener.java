@@ -9,4 +9,5 @@ public interface AnimationListener {
             throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException;
     void removeAnimation(String animationName);
     void stopAnimation(Animation animation);
+    void clearAllAnimations();
 }
