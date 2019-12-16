@@ -1,5 +1,6 @@
 package brickingbad.domain.game.powerup;
 
+import brickingbad.controller.EffectsController;
 import brickingbad.domain.game.*;
 import brickingbad.domain.physics.Vector;
 
@@ -22,6 +23,7 @@ public class DestructiveLaserGun extends PowerUp {
         double paddleX = Game.getInstance().getPaddle().getPosition().getX();
         Game.getInstance().shootLaserColumn(paddleX + Game.getInstance().getPaddle().paddleMountDistance);
         Game.getInstance().shootLaserColumn(paddleX - Game.getInstance().getPaddle().paddleMountDistance);
+        EffectsController.getInstance().playAudio("laserGun");
         charges--;
         if(charges == 0) deactivate();
     }

@@ -78,6 +78,7 @@ public class EffectsController {
     initiateAudio("resources/sounds/lastLife.wav");
     initiateAudio("resources/sounds/endLaugh.wav");
     initiateAudio("resources/sounds/congratz.wav");
+    initiateAudio("resources/sounds/laserGun.wav");
 
   }
 
