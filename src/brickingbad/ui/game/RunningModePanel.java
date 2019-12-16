@@ -187,4 +187,9 @@ public class RunningModePanel extends JPanel implements GameListener, AnimationL
     currentAnimations.remove(animation);
   }
 
+  @Override
+  public void clearAllAnimations() {
+    currentAnimations.clear();
+  }
+
 }
