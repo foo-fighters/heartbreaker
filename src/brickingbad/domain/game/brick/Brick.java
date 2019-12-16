@@ -1,8 +1,10 @@
 package brickingbad.domain.game.brick;
 
 import brickingbad.controller.EffectsController;
+import brickingbad.domain.game.Ball;
 import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameObject;
+import brickingbad.domain.physics.Vector;
 import brickingbad.services.sound.AudioPlayer;
 
 import javax.sound.sampled.LineUnavailableException;

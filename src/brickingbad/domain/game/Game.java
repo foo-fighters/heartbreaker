@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 public class Game {
 
     private static Game instance;
+    private final ArrayList<AnimationListener> animationListeners;
 
     private Paddle paddle;
     private ArrayList<Ball> balls;
@@ -643,27 +644,7 @@ public class Game {
         return ground;
     }
 
-    public void lostLife() {
-        if (lives != 1){
-            EffectsController.getInstance().playAudio("lifeLost");
-            lives = lives - 1;
-            resetBall();
-
-            if (lives == 1){
-                EffectsController.getInstance().startHeartBeat();
-            }
-
-        }else{
-            EffectsController.getInstance().stopHeartBeat();
-            GameController.getInstance().stopAnimator();
-            GameController.getInstance().showDeadDialog();
-        }
-    }
-
-    public void anyBallLeft() {
-        if (balls.isEmpty()){
-            lostLife();
-        }
+    
     public int getGridSize() {
         return gridX * gridY;
     }
