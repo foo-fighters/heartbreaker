@@ -212,9 +212,7 @@ public class Game {
     }
 
     private void sendError(String err){
-        errorListeners.forEach(errorListener -> {
-            errorListener.showError(err);
-        });
+        errorListeners.forEach(errorListener -> errorListener.showError(err));
     }
 
     public void startAnimation(String animationName, Object... args) {
@@ -246,13 +244,9 @@ public class Game {
 
     public void removeObject(GameObject object) {
         removeObjectFromListeners(object);
-        gameObjects.removeIf(obj -> obj.equals(object));
-        if (object instanceof Brick) {
-            bricks.removeIf(brick -> brick.equals(object));
-        }
-        if (object instanceof Ball) {
-            balls.removeIf(ball -> ball.equals(object));
-        }
+        gameObjects.remove(object);
+        bricks.remove(object);
+        balls.remove(object);
     }
 
     // BALLS
@@ -317,6 +311,12 @@ public class Game {
         trackObject(brick);
     }
 
+    public Vector getClosestGridLocation(Vector pos) {
+        int indX = Math.floorDiv((int) pos.getX(), GameConstants.rectangularBrickLength);
+        int indY = Math.floorDiv((int) (pos.getY() - GameConstants.menuAreaHeight), GameConstants.rectangularBrickThickness);
+        return new Vector(indX, indY);
+    }
+
     public double getBrickRowHeight() {
         boolean empty = true;
         double rowHeight = 0.0;
@@ -326,8 +326,9 @@ public class Game {
             rowHeight = GameConstants.menuAreaHeight + GameConstants.rectangularBrickThickness / 2.0 +
                     row * GameConstants.rectangularBrickThickness;
             for(GameObject object: gameObjects) {
-                if(object.getPosition().getY() == rowHeight) {
+                if (object.getPosition().getY() == rowHeight) {
                     empty = false;
+                    break;
                 }
             }
             count++;
@@ -343,7 +344,7 @@ public class Game {
                 rowBricks.add((Brick) object);
             }
         }
-        Collections.sort(rowBricks, Comparator.comparingDouble(o -> o.getPosition().getX()));
+        rowBricks.sort(Comparator.comparingDouble(o -> o.getPosition().getX()));
         if(rowBricks.isEmpty()) return null;
         return rowBricks.get(0);
     }
@@ -487,7 +488,7 @@ public class Game {
                 }
             }
         }
-        Collections.sort(objectColumn, Comparator.comparingDouble(o -> o.getPosition().getY()));
+        objectColumn.sort(Comparator.comparingDouble(o -> o.getPosition().getY()));
         Collections.reverse(objectColumn);
         for(GameObject object: objectColumn) {
             if(object instanceof HalfMetalBrick) {
@@ -526,6 +527,7 @@ public class Game {
                     random.nextDouble() * (GameConstants.screenWidth - GameConstants.alienSize);
             double spawnY = (GameConstants.screenHeight - GameConstants.paddleAreaHeight - GameConstants.alienSize / 2.0) -
                     random.nextDouble() * (GameConstants.alienAreaHeight - GameConstants.alienSize);
+            assert alien != null;
             alien.setPosition(new Vector(spawnX, spawnY));
             for(GameObject object: aliensCopy) {
                 if(PhysicsEngine.areColliding(object, alien)) {
@@ -633,6 +635,8 @@ public class Game {
     public void setLives(int lives) {
         this.lives = lives;
     }
+
+    public boolean[][] getBrickGrid() { return brickGrid; }
 
     public int getGridSize() {
         return gridX * gridY;

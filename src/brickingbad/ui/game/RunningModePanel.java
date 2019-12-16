@@ -78,7 +78,7 @@ public class RunningModePanel extends JPanel implements GameListener, AnimationL
 
   @Override
   public void addObject(GameObject object) {
-    uiObjects.add(new UIGameObject(object, this));
+    uiObjects.add(new UIGameObject(object));
   }
 
   @Override

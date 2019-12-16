@@ -68,7 +68,10 @@ public class BuildingModePanel extends JPanel implements GameListener, ErrorList
 
     @Override
     public void addObject(GameObject object) {
-        uiObjects.add(new UIGameObject(object, this));
+        UIGameObject newUIObject = new UIGameObject(object);
+        addMouseListener(newUIObject);
+        addMouseMotionListener(newUIObject);
+        uiObjects.add(newUIObject);
     }
 
     @Override
@@ -81,6 +84,19 @@ public class BuildingModePanel extends JPanel implements GameListener, ErrorList
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
+        g.setColor(new Color(255, 102, 102));
+        int gridX = Game.getInstance().getBrickGrid()[0].length;
+        int gridY = Game.getInstance().getBrickGrid().length;
+        int current;
+        for(int i = 0; i <= gridX; i++) {
+            current = (int)GameConstants.menuAreaHeight + GameConstants.rectangularBrickThickness * i;
+            g.drawLine(0, current, GameConstants.screenWidth, current);
+        }
+        for(int i = 0; i <= gridY; i++) {
+            current = GameConstants.rectangularBrickLength * i;
+            g.drawLine(current, (int)GameConstants.menuAreaHeight,
+                    current, (int)(GameConstants.menuAreaHeight + GameConstants.brickAreaHeight));
+        }
         uiObjects.forEach((obj) -> obj.paintComponent(g));
     }
 
@@ -100,4 +116,5 @@ public class BuildingModePanel extends JPanel implements GameListener, ErrorList
     public void resetUI() {
         uiObjects = new ArrayList<>();
     }
+
 }

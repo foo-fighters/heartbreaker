@@ -1,16 +1,17 @@
 package brickingbad.ui.components;
 
+import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.listeners.GameObjectListener;
 import brickingbad.domain.game.brick.Brick;
 import brickingbad.domain.physics.Vector;
 import brickingbad.ui.BrickingBadFrame;
-import brickingbad.ui.game.BuildingModePanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -18,24 +19,20 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class UIGameObject extends JLabel implements MouseListener, GameObjectListener {
+public class UIGameObject extends JLabel implements MouseListener, MouseMotionListener, GameObjectListener {
 
     private Point position;
     private BufferedImage sprite;
     private GameObject gameObject;
-    private JPanel panel;
     private AffineTransform defaultFrameTransform;
+    boolean dragging = false;
+    private Vector startCell;
 
-    public UIGameObject(GameObject gameObject, JPanel panel) {
+    public UIGameObject(GameObject gameObject) {
         this.gameObject = gameObject;
         gameObject.setGameObjectListener(this);
-        this.panel = panel;
         this.position = new Point();
         this.setSprite();
-        panel.removeMouseListener(this);
-        if (BrickingBadFrame.getInstance().getCurrentPanel() instanceof BuildingModePanel) {
-            panel.addMouseListener(this);
-        }
         this.defaultFrameTransform = BrickingBadFrame.getInstance().getGraphicsConfiguration().getDefaultTransform();
     }
 
@@ -54,10 +51,6 @@ public class UIGameObject extends JLabel implements MouseListener, GameObjectLis
         g2d.setTransform(at);
         g2d.drawImage(sprite, 0, 0, null);
         g2d.dispose();
-    }
-
-    public GameObject getGameObject() {
-        return gameObject;
     }
 
     private void setSprite()  {
@@ -87,24 +80,21 @@ public class UIGameObject extends JLabel implements MouseListener, GameObjectLis
     }
 
     @Override
+    public void changeObjectState(String stateModifier) {
+        setSprite(stateModifier);
+    }
+
+    @Override
     public void mouseClicked(MouseEvent e) {
-        if (panel.getClass().getSimpleName().equals("RunningModePanel")) {
-            if (e.getButton() == MouseEvent.BUTTON3){
-                if (gameObject instanceof Brick){
-                    double mouseX = e.getX();
-                    double mouseY = e.getY();
-
-                    Vector v = gameObject.getPosition();
-
-                    double brickX = v.getX();
-                    double brickY = v.getY();
-
-                    if (Math.abs(mouseX-brickX) <= GameConstants.rectangularBrickLength &&
-                            Math.abs(mouseY-brickY) <= GameConstants.rectangularBrickThickness){
-                        gameObject.destroy();
-                    }
-
-
+        if (e.getButton() == MouseEvent.BUTTON3) {
+            if (gameObject instanceof Brick) {
+                double mouseX = e.getX();
+                double mouseY = e.getY();
+                double brickX = gameObject.getPosition().getX();
+                double brickY = gameObject.getPosition().getY();
+                if (Math.abs(mouseX-brickX) <= GameConstants.rectangularBrickLength / 2.0 &&
+                        Math.abs(mouseY-brickY) <= GameConstants.rectangularBrickThickness / 2.0) {
+                    Game.getInstance().removeObject(gameObject);
                 }
             }
         }
@@ -112,12 +102,43 @@ public class UIGameObject extends JLabel implements MouseListener, GameObjectLis
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            if (gameObject instanceof Brick) {
+                double mouseX = e.getX();
+                double mouseY = e.getY();
+                double brickX = gameObject.getPosition().getX();
+                double brickY = gameObject.getPosition().getY();
+                if (Math.abs(mouseX-brickX) <= GameConstants.rectangularBrickLength / 2.0 &&
+                        Math.abs(mouseY-brickY) <= GameConstants.rectangularBrickThickness / 2.0) {
+                    startCell = Game.getInstance().getClosestGridLocation(gameObject.getPosition());
+                    dragging = true;
+                }
+            }
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        if(dragging) {
+            Vector location = Game.getInstance().getClosestGridLocation(gameObject.getPosition());
+            int indX = (int)location.getX();
+            int indY = (int)location.getY();
+            if(gameObject.getPosition().getX() <= 0 ||
+                    gameObject.getPosition().getX() >= GameConstants.rectangularBrickLength *
+                            Game.getInstance().getBrickGrid().length ||
+                    gameObject.getPosition().getY() <= GameConstants.menuAreaHeight ||
+                    gameObject.getPosition().getY() >= GameConstants.menuAreaHeight + GameConstants.brickAreaHeight ||
+                    Game.getInstance().getBrickGrid()[indX][indY]) {
+                gameObject.setPosition(new Vector(((int)startCell.getX() + 0.5) * GameConstants.rectangularBrickLength,
+                        GameConstants.menuAreaHeight + ((int)startCell.getY() + 0.5) * GameConstants.rectangularBrickThickness));
+            }else {
+                Game.getInstance().getBrickGrid()[(int)startCell.getX()][(int)startCell.getY()] = false;
+                Game.getInstance().getBrickGrid()[indX][indY] = true;
+                gameObject.setPosition(new Vector((indX + 0.5) * GameConstants.rectangularBrickLength,
+                        GameConstants.menuAreaHeight + (indY + 0.5) * GameConstants.rectangularBrickThickness));
+            }
+        }
+        dragging = false;
     }
 
     @Override
@@ -131,7 +152,15 @@ public class UIGameObject extends JLabel implements MouseListener, GameObjectLis
     }
 
     @Override
-    public void changeObjectState(String stateModifier) {
-        setSprite(stateModifier);
+    public void mouseDragged(MouseEvent e) {
+        if (dragging) {
+            gameObject.setPosition(new Vector(e.getX(), e.getY()));
+            repaint();
+        }
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
     }
 }
