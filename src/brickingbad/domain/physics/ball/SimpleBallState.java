@@ -31,7 +31,7 @@ public class SimpleBallState extends BallState {
                 }
             }else if(object instanceof ProtectingAlien) {
                 Direction dir = ball.getReflectionDirection();
-                if(dir == Direction.UP_LEFT || dir == Direction.UP || dir == Direction.UP_RIGHT) {
+                if(dir == Direction.UP) {
                     object.destroy();
                 }
             }else{
