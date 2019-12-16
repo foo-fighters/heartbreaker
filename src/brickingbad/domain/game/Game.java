@@ -488,7 +488,7 @@ public class Game {
                 }
             }
         }
-        Collections.sort(objectColumn, Comparator.comparingDouble(o -> o.getPosition().getY()));
+        objectColumn.sort(Comparator.comparingDouble(o -> o.getPosition().getY()));
         Collections.reverse(objectColumn);
         for(GameObject object: objectColumn) {
             if(object instanceof HalfMetalBrick) {
@@ -527,6 +527,7 @@ public class Game {
                     random.nextDouble() * (GameConstants.screenWidth - GameConstants.alienSize);
             double spawnY = (GameConstants.screenHeight - GameConstants.paddleAreaHeight - GameConstants.alienSize / 2.0) -
                     random.nextDouble() * (GameConstants.alienAreaHeight - GameConstants.alienSize);
+            assert alien != null;
             alien.setPosition(new Vector(spawnX, spawnY));
             for(GameObject object: aliensCopy) {
                 if(PhysicsEngine.areColliding(object, alien)) {
