@@ -68,7 +68,10 @@ public class BuildingModePanel extends JPanel implements GameListener, ErrorList
 
     @Override
     public void addObject(GameObject object) {
-        uiObjects.add(new UIGameObject(object, this));
+        UIGameObject newUIObject = new UIGameObject(object);
+        addMouseListener(newUIObject);
+        addMouseMotionListener(newUIObject);
+        uiObjects.add(newUIObject);
     }
 
     @Override
@@ -100,4 +103,5 @@ public class BuildingModePanel extends JPanel implements GameListener, ErrorList
     public void resetUI() {
         uiObjects = new ArrayList<>();
     }
+
 }
