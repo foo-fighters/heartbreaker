@@ -85,17 +85,17 @@ public class BuildingModePanel extends JPanel implements GameListener, ErrorList
         super.paintComponent(g);
         g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
         g.setColor(new Color(255, 102, 102));
-        int gridX = Game.getInstance().getBrickGrid()[0].length;
-        int gridY = Game.getInstance().getBrickGrid().length;
+        int gridX = Game.getInstance().getGridX();
+        int gridY = Game.getInstance().getGridY();
         int current;
         for(int i = 0; i <= gridX; i++) {
-            current = (int)GameConstants.menuAreaHeight + GameConstants.rectangularBrickThickness * i;
-            g.drawLine(0, current, GameConstants.screenWidth, current);
-        }
-        for(int i = 0; i <= gridY; i++) {
             current = GameConstants.rectangularBrickLength * i;
             g.drawLine(current, (int)GameConstants.menuAreaHeight,
                     current, (int)(GameConstants.menuAreaHeight + GameConstants.brickAreaHeight));
+        }
+        for(int i = 0; i <= gridY; i++) {
+            current = (int)GameConstants.menuAreaHeight + GameConstants.rectangularBrickThickness * i;
+            g.drawLine(0, current, GameConstants.screenWidth, current);
         }
         uiObjects.forEach((obj) -> obj.paintComponent(g));
     }

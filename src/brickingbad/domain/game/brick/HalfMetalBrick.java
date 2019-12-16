@@ -16,8 +16,6 @@ public class HalfMetalBrick extends Brick {
         this.angle = 0.0;
         this.isCracked = false;
         this.velocity = new Vector();
-        this.name = "HalfMetalBrick";
-
     }
 
     @Override

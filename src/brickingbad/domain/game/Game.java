@@ -36,8 +36,8 @@ public class Game {
     private ArrayList<Alien> aliens;
     private ArrayList<GameObject> gameObjects;
 
-    private int gridX = GameConstants.screenWidth / GameConstants.rectangularBrickLength;
-    private int gridY = (int)GameConstants.brickAreaHeight / GameConstants.rectangularBrickThickness;
+    private final int gridX = GameConstants.screenWidth / GameConstants.rectangularBrickLength;
+    private final int gridY = (int)GameConstants.brickAreaHeight / GameConstants.rectangularBrickThickness;
     private boolean[][] brickGrid;
     private int startBrickCount;
 
@@ -291,8 +291,8 @@ public class Game {
         boolean overlaps = true;
         int count = 0;
         while (overlaps && count < 1000) {
-            int x = ThreadLocalRandom.current().nextInt(brickGrid.length);
-            int y = ThreadLocalRandom.current().nextInt(brickGrid[0].length);
+            int x = ThreadLocalRandom.current().nextInt(gridX);
+            int y = ThreadLocalRandom.current().nextInt(gridY);
             if (bricks.size() == 0) {
                 overlaps = false;
             } else {
@@ -302,6 +302,8 @@ public class Game {
                 brickGrid[x][y] = true;
                 brick.setPosition(new Vector((x + 0.5) * GameConstants.rectangularBrickLength,
                         GameConstants.menuAreaHeight + (y + 0.5) * GameConstants.rectangularBrickThickness));
+                brick.setCellX(x);
+                brick.setCellY(y);
             }
             count++;
         }
@@ -636,8 +638,12 @@ public class Game {
 
     public boolean[][] getBrickGrid() { return brickGrid; }
 
-    public int getGridSize() {
-        return gridX * gridY;
+    public int getGridX() {
+        return gridX;
+    }
+
+    public int getGridY() {
+        return gridY;
     }
 
     public int getStartBrickCount() {

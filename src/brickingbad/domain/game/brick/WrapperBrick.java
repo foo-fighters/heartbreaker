@@ -13,8 +13,6 @@ public class WrapperBrick extends Brick {
         this.size = new Vector(GameConstants.rectangularBrickLength, GameConstants.rectangularBrickThickness);
         this.velocity = new Vector();
         this.angle = 0.0;
-        this.name = "WrapperBrick";
-
         Game.getInstance().addWrapperContent();
     }
 

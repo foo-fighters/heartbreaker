@@ -7,7 +7,8 @@ import brickingbad.domain.physics.Vector;
 
 public abstract class Brick extends GameObject {
 
-    protected String name;
+    protected int cellX;
+    protected int cellY;
 
     @Override
     public void destroy() {
@@ -29,7 +30,19 @@ public abstract class Brick extends GameObject {
     public void startMovement() {
     }
 
+    public int getCellX() {
+        return cellX;
+    }
 
+    public void setCellX(int cellX) {
+        this.cellX = cellX;
+    }
 
+    public int getCellY() {
+        return cellY;
+    }
 
+    public void setCellY(int cellY) {
+        this.cellY = cellY;
+    }
 }
