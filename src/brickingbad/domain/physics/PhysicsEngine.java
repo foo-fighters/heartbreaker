@@ -2,6 +2,9 @@ package brickingbad.domain.physics;
 
 import brickingbad.controller.GameController;
 import brickingbad.domain.game.*;
+import brickingbad.domain.game.brick.Brick;
+import brickingbad.domain.game.brick.HalfMetalBrick;
+import brickingbad.domain.game.brick.SimpleBrick;
 import brickingbad.domain.physics.collisions.CircleCollisionStrategy;
 import brickingbad.domain.physics.collisions.ICollisionStrategy;
 import brickingbad.domain.physics.collisions.MixedCollisionStrategy;
@@ -138,8 +141,11 @@ public class PhysicsEngine implements Runnable {
         for(int j = 0; j < objectsCopy.size(); j++) {
           GameObject o2 = objectsCopy.get(j);
           if(!o2.isDynamic() || (j > i)) {
+            if((o1 instanceof SimpleBrick || o1 instanceof HalfMetalBrick)
+                    && (o2 instanceof SimpleBrick || o2 instanceof HalfMetalBrick)
+                    && (((Brick) o1).getCellY() != ((Brick) o2).getCellY())) continue;
             if(areColliding(o1, o2)) {
-              if(!o1.getCollidedObjects().contains(o2) && !o1.getCollidedObjects().contains(o2)){
+              if(!o1.getCollidedObjects().contains(o2) && !o1.getCollidedObjects().contains(o2)) {
                 o1.collide(o2);
                 o2.collide(o1);
                 o1.getCollidedObjects().add(o2);
