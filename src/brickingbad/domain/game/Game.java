@@ -33,7 +33,6 @@ public class Game {
     private Ground ground;
     private ArrayList<Wall> walls;
     private ArrayList<Brick> bricks;
-    private ArrayList<Alien> aliens;
     private ArrayList<GameObject> gameObjects;
 
     private int gridX = GameConstants.screenWidth / GameConstants.rectangularBrickLength;
@@ -69,7 +68,6 @@ public class Game {
         gameObjects = new ArrayList<>();
         wrapperContentList = new ArrayList<>();
         activeAliens = new ArrayList<>();
-        aliens = new ArrayList<>();
         gameClock = Clock.systemDefaultZone();
         brickGrid = new boolean[gridX][gridY];
     }
@@ -91,7 +89,6 @@ public class Game {
         gameObjects = new ArrayList<>();
         bricks = new ArrayList<>();
         balls = new ArrayList<>();
-        aliens = new ArrayList<>();
         activePowerUps = new ArrayList<>();
         storedPowerUps = new ArrayList<>();
         activeAliens = new ArrayList<>();
@@ -258,6 +255,11 @@ public class Game {
         balls.add(firstBall);
         paddle.getCurrentBalls().add(firstBall);
         trackObject(firstBall);
+    }
+
+    public void addAlien(Alien alien) {
+        activeAliens.add(alien);
+        trackObject(alien);
     }
 
     // BRICKS
@@ -535,7 +537,6 @@ public class Game {
             }
         }
         activeAliens.add(alien);
-        aliens.add(alien);
         trackObject(alien);
     }
 
@@ -587,10 +588,6 @@ public class Game {
 
     public ArrayList<Ball> getBalls() {
         return balls;
-    }
-
-    public ArrayList<Alien> getAliens() {
-        return aliens;
     }
 
     public Paddle getPaddle() {

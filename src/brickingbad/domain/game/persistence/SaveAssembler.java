@@ -56,13 +56,13 @@ public class SaveAssembler {
       save.brickTypes.add(brick.getTypeName());
     });
 
-    ArrayList<Alien> aliens = game.getAliens();
+    ArrayList<Alien> aliens = game.getActiveAliens();
     aliens.forEach((alien) -> {
       ArrayList<Double> tempCoordinates = new ArrayList<>();
       tempCoordinates.add(alien.getPosition().getX());
       tempCoordinates.add(alien.getPosition().getY());
       save.alienCoordinates.add(tempCoordinates);
-      save.alienTypes.add(alien.getTypeName());
+      save.alienTypes.add(alien.getClass().getName());
     });
 
     ArrayList<PowerUp> storedPowerUps = game.getStoredPowerUps();
@@ -138,15 +138,17 @@ public class SaveAssembler {
       Game.getInstance().usePowerUp(WrapperContent.valueOf(name));
     }
 
-//    int alienIndex = 0;
-//    for (List<Double> coordinates : save.alienCoordinates) {
-//      double x = coordinates.get(0);
-//      double y = coordinates.get(1);
-//      String typeName = save.alienTypes.get(alienIndex);
-//      Alien alien = Alien.getByType(typeName);
-//      Game.getInstance().addAlien(alien);
-//      alienIndex++;
-//    }
+    int alienIndex = 0;
+    for (List<Double> coordinates : save.alienCoordinates) {
+      double x = coordinates.get(0);
+      double y = coordinates.get(1);
+      String typeName = save.alienTypes.get(alienIndex);
+      Alien alien = Alien.getByType(typeName);
+      alien.setPosition(new Vector(x, y));
+      System.out.println(alien.toString());
+      Game.getInstance().addAlien(alien);
+      alienIndex++;
+    }
 
     Game.getInstance().setScore(score);
     Game.getInstance().setLives(lives);
