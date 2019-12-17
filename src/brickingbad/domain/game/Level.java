@@ -195,13 +195,6 @@ public class Level {
         balls.remove(object);
     }
 
-    // BALLS
-    public void resetBall() {
-        Ball firstBall = new Ball(paddle.getBallStartPosition());
-        paddle.getCurrentBalls().add(firstBall);
-        addObject(firstBall);
-    }
-
     // BRICKS
     public int brickCount() {
         int count = 0;
@@ -265,9 +258,15 @@ public class Level {
     }
 
     // WIN AND LOSE CONDITIONS
-    public void anyBallLeft() {
+    public void anyBallsLeft() {
         if (balls.isEmpty()) {
-            loseLife();
+            lives--;
+            publishLives();
+            if(lives <= 0) {
+                gameStateListener.loseGame();
+            }else {
+                resetBall();
+            }
         }
     }
 
@@ -277,14 +276,10 @@ public class Level {
         }
     }
 
-    public void loseLife() {
-        lives--;
-        publishLives();
-        if(lives <= 0) {
-            gameStateListener.loseGame();
-        }else {
-            resetBall();
-        }
+    public void resetBall() {
+        Ball firstBall = new Ball(paddle.getBallStartPosition());
+        paddle.getCurrentBalls().add(firstBall);
+        addObject(firstBall);
     }
 
     public void increaseScore() {
