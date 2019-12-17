@@ -1,9 +1,13 @@
 package brickingbad.domain.game;
 
+import brickingbad.domain.game.alien.Alien;
 import brickingbad.domain.game.brick.*;
 import brickingbad.domain.physics.Vector;
+import brickingbad.domain.physics.ball.ChemicalBallState;
+import brickingbad.domain.physics.ball.FireBallState;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -109,5 +113,58 @@ public class GameLogic {
         rowBricks.sort(Comparator.comparingDouble(o -> o.getPosition().getX()));
         if(rowBricks.isEmpty()) return null;
         return rowBricks.get(0);
+    }
+
+    static void spawnGangOfBalls(Vector revealPosition) {
+        double minimumDistance = GameConstants.screenWidth;
+        GameObject closestBall = null;
+        for (GameObject object: objectsCopy()) {
+            if(object instanceof Ball) {
+                double ballDistance = Math.hypot(object.getPosition().getX() - revealPosition.getX(),
+                        object.getPosition().getY() - revealPosition.getY());
+                if(ballDistance < minimumDistance) {
+                    minimumDistance = ballDistance;
+                    closestBall = object;
+                }
+            }
+        }
+        if(minimumDistance < GameConstants.rectangularBrickLength + GameConstants.ballSize) {
+            System.out.println(((Ball) closestBall).getBallState().getClass().getSimpleName());
+            for(int i = 0; i < GameConstants.gangOfBallsMultiplier; i++) {
+                Ball ball = new Ball(revealPosition);
+                ball.startMovement((360.0 / GameConstants.gangOfBallsMultiplier) * i, ((Ball) closestBall).getSpeed());
+                Level.getInstance().addObject(ball);
+                if(((Ball) closestBall).getBallState() instanceof FireBallState) ball.setFireball();
+                if(((Ball) closestBall).getBallState() instanceof ChemicalBallState) ball.setChemical();
+            }
+            Level.getInstance().removeObject(closestBall);
+        }
+    }
+
+    public static void shootLaserColumn(double x) {
+        ArrayList<GameObject> objectColumn = new ArrayList<>();
+        double endY = 0;
+        for(GameObject object: objectsCopy()) {
+            if(object instanceof Brick || object instanceof Alien) {
+                if(Math.abs(object.getPosition().getX() - x) < object.getSize().getX() / 2.0) {
+                    objectColumn.add(object);
+                }
+            }
+        }
+        objectColumn.sort(Comparator.comparingDouble(o -> o.getPosition().getY()));
+        Collections.reverse(objectColumn);
+        for(GameObject object: objectColumn) {
+            if(object instanceof HalfMetalBrick) {
+                endY = object.position.getY() + object.getSize().getY() / 2;
+                break;
+            }else {
+                object.destroy();
+            }
+        }
+        Level.getInstance().startAnimation("LaserAnimation", x, endY);
+    }
+
+    public static void invokeGodMode() {
+        Level.getInstance().getPaddle().god();
     }
 }

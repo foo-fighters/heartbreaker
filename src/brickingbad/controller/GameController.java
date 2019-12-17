@@ -1,6 +1,7 @@
 package brickingbad.controller;
 
 import brickingbad.domain.game.GameLogic;
+import brickingbad.domain.game.GameObjectFactory;
 import brickingbad.domain.game.Level;
 import brickingbad.domain.game.listeners.AnimationListener;
 import brickingbad.domain.game.listeners.GameListener;
@@ -82,29 +83,18 @@ public class GameController {
     public void createBricks(int simple, int halfMetal, int mine, int wrapper) {
         if (Level.getInstance().getBricks().size() + simple + halfMetal + mine + wrapper
                 <= Level.getInstance().getGridX() * Level.getInstance().getGridY()) {
-            ArrayList<Brick> simpleBricks = BrickFactory.getInstance().createSimpleBricks(simple);
 
-            simpleBricks.forEach((brick -> {
-                Level.getInstance().addBrick(brick);
-            }));
+            ArrayList<Brick> simpleBricks = BrickFactory.getInstance().createSimpleBricks(simple);
+            simpleBricks.forEach((brick -> GameObjectFactory.getInstance().addBrick(brick)));
 
             ArrayList<Brick> halfMetalBricks = BrickFactory.getInstance().createHalfMetalBricks(halfMetal);
-
-            halfMetalBricks.forEach((brick -> {
-                Level.getInstance().addBrick(brick);
-            }));
+            halfMetalBricks.forEach((brick -> GameObjectFactory.getInstance().addBrick(brick)));
 
             ArrayList<Brick> mineBricks = BrickFactory.getInstance().createMineBricks(mine);
-
-            mineBricks.forEach((brick -> {
-                Level.getInstance().addBrick(brick);
-            }));
+            mineBricks.forEach((brick -> GameObjectFactory.getInstance().addBrick(brick)));
 
             ArrayList<Brick> wrapperBricks = BrickFactory.getInstance().createWrapperBricks(wrapper);
-
-            wrapperBricks.forEach((brick -> {
-                Level.getInstance().addBrick(brick);
-            }));
+            wrapperBricks.forEach((brick -> GameObjectFactory.getInstance().addBrick(brick)));
         }
     }
 
@@ -122,7 +112,7 @@ public class GameController {
 
     public void invokeGodMode() {
         RunningModePanel.getInstance().invokeGodMode();
-        Level.getInstance().invokeGodMode();
+        GameLogic.invokeGodMode();
     }
 
     public void usePowerUp(WrapperContent name) {

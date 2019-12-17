@@ -20,8 +20,8 @@ public class DestructiveLaserGun extends PowerUp {
     @Override
     public void activate() {
         double paddleX = Level.getInstance().getPaddle().getPosition().getX();
-        Level.getInstance().shootLaserColumn(paddleX + Level.getInstance().getPaddle().paddleMountDistance);
-        Level.getInstance().shootLaserColumn(paddleX - Level.getInstance().getPaddle().paddleMountDistance);
+        GameLogic.shootLaserColumn(paddleX + Level.getInstance().getPaddle().paddleMountDistance);
+        GameLogic.shootLaserColumn(paddleX - Level.getInstance().getPaddle().paddleMountDistance);
         charges--;
         if(charges == 0) deactivate();
     }

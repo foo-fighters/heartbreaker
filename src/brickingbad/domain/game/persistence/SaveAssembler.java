@@ -1,9 +1,6 @@
 package brickingbad.domain.game.persistence;
 
-import brickingbad.domain.game.Ball;
-import brickingbad.domain.game.Level;
-import brickingbad.domain.game.Paddle;
-import brickingbad.domain.game.WrapperContent;
+import brickingbad.domain.game.*;
 import brickingbad.domain.game.alien.Alien;
 import brickingbad.domain.game.brick.Brick;
 import brickingbad.domain.game.brick.BrickFactory;
@@ -147,11 +144,11 @@ public class SaveAssembler {
 
     Level.getInstance().setScore(score);
     Level.getInstance().setLives(lives);
-    bricks.forEach(brick -> Level.getInstance().addBrick(brick));
+    bricks.forEach(brick -> GameObjectFactory.getInstance().addBrick(brick));
     Level.getInstance().setPaddle(paddle);
     for (int i = 0; i < balls.size(); i++) {
       Ball ball = balls.get(i);
-      Level.getInstance().addBall(ball);
+      Level.getInstance().addObject(ball);
       if (save.ballOnPaddle.get(i)) {
         Level.getInstance().getPaddle().catchBall(ball);
       }

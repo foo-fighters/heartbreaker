@@ -1,5 +1,6 @@
 package brickingbad.domain.physics.alien;
 
+import brickingbad.domain.game.GameObjectFactory;
 import brickingbad.domain.game.Level;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.alien.Alien;
@@ -30,7 +31,7 @@ public class RepairingAlienState extends AlienState {
             if(currentTime - startTime > 1000 * cooldown) {
                 ArrayList<Brick> simpleBricks = BrickFactory.getInstance().createSimpleBricks(1);
                 Brick newBrick = simpleBricks.get(0);
-                Level.getInstance().addBrick(newBrick);
+                GameObjectFactory.getInstance().addBrick(newBrick);
                 startTime = currentTime;
             }
         }

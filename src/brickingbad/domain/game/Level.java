@@ -152,6 +152,13 @@ public class Level {
     }
 
     // GAME OBJECTS
+    public void addObject(GameObject object) {
+        trackObject(object);
+        if(object instanceof Brick) bricks.add((Brick) object);
+        if(object instanceof Ball) balls.add((Ball) object);
+        if(object instanceof Alien) aliens.add((Alien) object);
+    }
+
     private void trackObject(GameObject object) {
         gameObjects.add(object);
         for (GameListener listener : objectListeners) {
@@ -167,16 +174,10 @@ public class Level {
     }
 
     // BALLS
-    public void addBall(Ball ball) {
-        balls.add(ball);
-        trackObject(ball);
-    }
-
     public void resetBall() {
         Ball firstBall = new Ball(paddle.getBallStartPosition());
-        balls.add(firstBall);
         paddle.getCurrentBalls().add(firstBall);
-        trackObject(firstBall);
+        addObject(firstBall);
     }
 
     // BRICKS
@@ -188,30 +189,6 @@ public class Level {
             }
         }
         return count;
-    }
-
-    public void addBrick(Brick brick) {
-        boolean overlaps = true;
-        int count = 0;
-        while (overlaps && count < 1000) {
-            int x = ThreadLocalRandom.current().nextInt(gridX);
-            int y = ThreadLocalRandom.current().nextInt(gridY);
-            if (bricks.size() == 0) {
-                overlaps = false;
-            } else {
-                overlaps = brickGrid[x][y];
-            }
-            if (!overlaps) {
-                brickGrid[x][y] = true;
-                brick.setPosition(new Vector((x + 0.5) * GameConstants.rectangularBrickLength,
-                        GameConstants.menuAreaHeight + (y + 0.5) * GameConstants.rectangularBrickThickness));
-                brick.setCellX(x);
-                brick.setCellY(y);
-            }
-            count++;
-        }
-        bricks.add(brick);
-        trackObject(brick);
     }
 
     public void increaseScore() {
@@ -234,8 +211,7 @@ public class Level {
                 }
             }
             if(!overlaps) {
-                bricks.add(brick);
-                trackObject(brick);
+               addObject(brick);
             }
             x += GameConstants.rectangularBrickLength;
         }
@@ -259,7 +235,7 @@ public class Level {
                 if(activeAliens.stream().map(Alien::getName).collect(Collectors.toList()).contains(content)) {
                     return;
                 }
-                spawnAlien(content);
+                GameObjectFactory.getInstance().spawnAlien(content);
             }
         }
     }
@@ -283,7 +259,7 @@ public class Level {
                 trackObject(new TallerPaddle(revealPosition));
                 break;
             case GANG_OF_BALLS:
-                spawnGangOfBalls(revealPosition);
+                GameLogic.spawnGangOfBalls(revealPosition);
                 break;
             default:
         }
@@ -316,105 +292,15 @@ public class Level {
         }
     }
 
-    private void spawnGangOfBalls(Vector revealPosition) {
-        double minimumDistance = GameConstants.screenWidth;
-        GameObject closestBall = null;
-        for (GameObject object: gameObjects) {
-            if(object instanceof Ball) {
-                double ballDistance = Math.hypot(object.getPosition().getX() - revealPosition.getX(),
-                        object.getPosition().getY() - revealPosition.getY());
-                if(ballDistance < minimumDistance) {
-                    minimumDistance = ballDistance;
-                    closestBall = object;
-                }
-            }
-        }
-        if(minimumDistance < GameConstants.rectangularBrickLength + GameConstants.ballSize) {
-            System.out.println(((Ball) closestBall).getBallState().getClass().getSimpleName());
-            for(int i = 0; i < GameConstants.gangOfBallsMultiplier; i++) {
-                Ball ball = new Ball(revealPosition);
-                ball.startMovement((360.0 / GameConstants.gangOfBallsMultiplier) * i, ((Ball) closestBall).getSpeed());
-                trackObject(ball);
-                balls.add(ball);
-                if(((Ball) closestBall).getBallState() instanceof FireBallState) ball.setFireball();
-                if(((Ball) closestBall).getBallState() instanceof ChemicalBallState) ball.setChemical();
-            }
-            removeObject(closestBall);
-        }
-    }
-
-    public void shootLaserColumn(double x) {
-        ArrayList<GameObject> objectColumn = new ArrayList<>();
-        double endY = 0;
-        for(GameObject object: gameObjects) {
-            if(object instanceof Brick || object instanceof Alien) {
-                if(Math.abs(object.getPosition().getX() - x) < object.getSize().getX() / 2.0) {
-                    objectColumn.add(object);
-                }
-            }
-        }
-        objectColumn.sort(Comparator.comparingDouble(o -> o.getPosition().getY()));
-        Collections.reverse(objectColumn);
-        for(GameObject object: objectColumn) {
-            if(object instanceof HalfMetalBrick) {
-                endY = object.position.getY() + object.getSize().getY() / 2;
-                break;
-            }else {
-                object.destroy();
-            }
-        }
-        startAnimation("LaserAnimation", x, endY);
-    }
-
-    // ALIENS
-    private void spawnAlien(WrapperContent content) {
-        Alien alien = null;
-        switch (content) {
-            case COOPERATIVE_ALIEN:
-                alien = new CooperativeAlien();
-                break;
-            case PROTECTING_ALIEN:
-                alien = new ProtectingAlien();
-                break;
-            case REPAIRING_ALIEN:
-                alien = new RepairingAlien();
-                break;
-            case DRUNK_ALIEN:
-                alien = new DrunkAlien();
-                break;
-            default:
-        }
-        ArrayList<Alien> aliensCopy = new ArrayList<>(activeAliens);
-        boolean overlaps = true;
-        while(overlaps) {
-            overlaps = false;
-            double spawnX = GameConstants.alienSize / 2.0 +
-                    random.nextDouble() * (GameConstants.screenWidth - GameConstants.alienSize);
-            double spawnY = (GameConstants.screenHeight - GameConstants.paddleAreaHeight - GameConstants.alienSize / 2.0) -
-                    random.nextDouble() * (GameConstants.alienAreaHeight - GameConstants.alienSize);
-            assert alien != null;
-            alien.setPosition(new Vector(spawnX, spawnY));
-            for(GameObject object: aliensCopy) {
-                if(PhysicsEngine.areColliding(object, alien)) {
-                    overlaps = true;
-                    break;
-                }
-            }
-        }
-        activeAliens.add(alien);
-        aliens.add(alien);
-        trackObject(alien);
-    }
-
     // WIN AND LOSE CONDITIONS
     public void anyBallLeft() {
-        if (balls.isEmpty()){
+        if (balls.isEmpty()) {
             lostLife();
         }
     }
 
-    public void anyBricksLeft(){
-        if (bricks.isEmpty()){
+    public void anyBricksLeft() {
+        if (bricks.isEmpty()) {
             winGame();
         }
     }
@@ -435,11 +321,6 @@ public class Level {
             GameController.getInstance().showWinDialog();
             alreadyWon = true;
         }
-    }
-
-    // EXTRA
-    public void invokeGodMode() {
-        paddle.god();
     }
 
     // GETTERS & SETTERS
