@@ -7,6 +7,7 @@ import brickingbad.domain.game.gameobjects.alien.*;
 import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.listeners.AnimationListener;
 import brickingbad.domain.game.listeners.GameListener;
+import brickingbad.domain.game.listeners.GameStateListener;
 import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.game.gameobjects.border.*;
 import brickingbad.domain.game.gameobjects.brick.*;
@@ -38,16 +39,17 @@ public class Level {
     private int score;
     private int lives;
     private Clock gameClock;
+    private long startTime;
 
     private ArrayList<WrapperContent> wrapperContentList;
     private ArrayList<PowerUp> storedPowerUps;
     private ArrayList<PowerUp> activePowerUps;
     private ArrayList<Alien> activeAliens;
-    private boolean alreadyWon;
     private static final Random random = new Random();
 
     private ArrayList<GameListener> gameListeners;
     private ArrayList<AnimationListener> animationListeners;
+    private GameStateListener gameStateListener;
 
     // CONSTRUCTION AND INITIALIZATION
     private Level() {
@@ -73,7 +75,6 @@ public class Level {
     }
 
     public void initialize(boolean fromSave) {
-        alreadyWon = false;
 
         for (GameObject object : gameObjects) {
             removeObjectFromListeners(object);
@@ -110,6 +111,7 @@ public class Level {
     }
 
     public void play() {
+        startTime = gameClock.millis();
         startBrickCount = 0;
         for(GameObject object: gameObjects) {
             if(object instanceof Brick) {
@@ -121,6 +123,10 @@ public class Level {
     }
 
     // LISTENER FUNCTIONS
+    public void setGameStateListener(GameStateListener gameStateListener) {
+        this.gameStateListener = gameStateListener;
+    }
+
     public void addGameListener(GameListener lis) {
         gameListeners.add(lis);
     }
@@ -267,31 +273,22 @@ public class Level {
 
     public void anyBricksLeft() {
         if (bricks.isEmpty()) {
-            winGame();
+            gameStateListener.winGame();
         }
     }
 
     public void loseLife() {
-        if (lives != 1) {
-            lives = lives - 1;
-            resetBall();
-        }else {
-            //UIController.getInstance().stopAnimator();
-            //UIController.getInstance().showDeadDialog();
-        }
+        lives--;
         publishLives();
-    }
-
-    private void winGame() {
-        if (!alreadyWon) {
-            //UIController.getInstance().stopAnimator();
-            //UIController.getInstance().showWinDialog();
-            alreadyWon = true;
+        if(lives <= 0) {
+            gameStateListener.loseGame();
+        }else {
+            resetBall();
         }
     }
 
     public void increaseScore() {
-        score += 300/(PhysicsEngine.getInstance().getTimePassed()/1000);
+        score += 300000/(gameClock.millis() - startTime);
         publishScore();
     }
 

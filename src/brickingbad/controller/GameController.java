@@ -7,7 +7,6 @@ import brickingbad.domain.game.listeners.AnimationListener;
 import brickingbad.domain.game.listeners.GameListener;
 import brickingbad.domain.game.WrapperContent;
 import brickingbad.domain.physics.Direction;
-import brickingbad.domain.physics.PhysicsEngine;
 
 public class GameController {
 
@@ -76,7 +75,6 @@ public class GameController {
     }
 
     public void resetScore() {
-        PhysicsEngine.getInstance().resetTimePassed();
         Level.getInstance().setScore(0);
     }
 

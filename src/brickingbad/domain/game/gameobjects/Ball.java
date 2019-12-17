@@ -117,7 +117,6 @@ public class Ball extends GameObject {
     @Override
     public void destroy() {
         super.destroy();
-        Level.getInstance().removeObject(this);
         Level.getInstance().anyBallLeft();
     }
 

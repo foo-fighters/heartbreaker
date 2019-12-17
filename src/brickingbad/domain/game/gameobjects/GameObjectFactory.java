@@ -181,7 +181,7 @@ public class GameObjectFactory {
                 if(((Ball) closestBall).getBallState() instanceof FireBallState) ball.setFireball();
                 if(((Ball) closestBall).getBallState() instanceof ChemicalBallState) ball.setChemical();
             }
-            Level.getInstance().removeObject(closestBall);
+            closestBall.destroy();
         }
     }
 }

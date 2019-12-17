@@ -5,6 +5,8 @@ import brickingbad.domain.game.Level;
 import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.physics.Vector;
 
+import java.util.stream.Collectors;
+
 public abstract class Brick extends GameObject {
 
     protected int cellX;
@@ -12,9 +14,9 @@ public abstract class Brick extends GameObject {
 
     @Override
     public void destroy() {
-        Level.getInstance().anyBricksLeft();
-        Level.getInstance().increaseScore();
         super.destroy();
+        Level.getInstance().increaseScore();
+        Level.getInstance().anyBricksLeft();
     }
 
     @Override

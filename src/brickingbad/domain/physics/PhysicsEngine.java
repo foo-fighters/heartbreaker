@@ -26,11 +26,6 @@ public class PhysicsEngine implements Runnable {
   private final int SLEEP_TIME = 1000 / GameConstants.calculationsPerSecond;
 
   /**
-   * Keeps the time passed since the engine started in seconds.
-   */
-  private int timePassed = 0;
-
-  /**
    * The sole instance of the PhysicsEngine since it is implemented as a singleton.
    */
   private static PhysicsEngine instance;
@@ -106,23 +101,11 @@ public class PhysicsEngine implements Runnable {
         System.out.println("Program interrupted.");
       }
       if (running) {
-        timePassed += SLEEP_TIME;
         ArrayList<GameObject> objects = Level.getInstance().getObjects();
         handleCollisions(objects);
         updatePositions(objects);
       }
     }
-  }
-
-  public int getTimePassed() {
-    return timePassed;
-  }
-
-  /**
-   * Sets {@link PhysicsEngine#timePassed} to 0.
-   */
-  public void resetTimePassed() {
-    this.timePassed = 0;
   }
 
   /**
