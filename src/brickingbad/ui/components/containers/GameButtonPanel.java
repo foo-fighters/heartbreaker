@@ -1,5 +1,6 @@
 package brickingbad.ui.components.containers;
 
+import brickingbad.audio.AudioController;
 import brickingbad.controller.GameController;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.ui.BrickingBadFrame;
@@ -58,6 +59,7 @@ public class GameButtonPanel extends JPanel implements ActionListener {
       pauseButton.toggleText("PAUSE", "RESUME");
       UIController.getInstance().togglePauseResume();
     } else if (e.getSource().equals(quitButton)) {
+      AudioController.getInstance().playMenuMusic();
       UIController.getInstance().resetUI();
       GameController.getInstance().resetScore();
       BrickingBadFrame.getInstance().showMainMenuPanel();
