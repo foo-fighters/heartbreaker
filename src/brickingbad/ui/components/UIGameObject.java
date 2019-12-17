@@ -3,9 +3,9 @@ package brickingbad.ui.components;
 import brickingbad.domain.game.GameLogic;
 import brickingbad.domain.game.Level;
 import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.GameObject;
+import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.listeners.GameObjectListener;
-import brickingbad.domain.game.brick.Brick;
+import brickingbad.domain.game.gameobjects.brick.Brick;
 import brickingbad.domain.physics.Vector;
 import brickingbad.ui.BrickingBadFrame;
 

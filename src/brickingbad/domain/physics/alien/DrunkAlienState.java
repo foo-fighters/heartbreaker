@@ -1,7 +1,7 @@
 package brickingbad.domain.physics.alien;
 
 import brickingbad.domain.game.Level;
-import brickingbad.domain.game.alien.Alien;
+import brickingbad.domain.game.gameobjects.alien.Alien;
 
 public class DrunkAlienState extends AlienState {
 

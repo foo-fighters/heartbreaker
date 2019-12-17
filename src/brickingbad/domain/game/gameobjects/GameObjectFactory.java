@@ -1,7 +1,10 @@
-package brickingbad.domain.game;
+package brickingbad.domain.game.gameobjects;
 
-import brickingbad.domain.game.alien.*;
-import brickingbad.domain.game.brick.Brick;
+import brickingbad.domain.game.GameConstants;
+import brickingbad.domain.game.Level;
+import brickingbad.domain.game.WrapperContent;
+import brickingbad.domain.game.gameobjects.alien.*;
+import brickingbad.domain.game.gameobjects.brick.Brick;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.domain.physics.Vector;
 

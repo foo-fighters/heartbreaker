@@ -1,6 +1,6 @@
 package brickingbad.domain.physics.collisions;
 
-import brickingbad.domain.game.GameObject;
+import brickingbad.domain.game.gameobjects.GameObject;
 
 public class RectangleCollisionStrategy implements ICollisionStrategy {
     @Override

@@ -1,8 +1,6 @@
-package brickingbad.domain.game.alien;
+package brickingbad.domain.game.gameobjects.alien;
 
 import brickingbad.domain.game.*;
-import brickingbad.domain.game.brick.Brick;
-import brickingbad.domain.game.powerup.PowerUp;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.alien.ProtectingAlienState;
 

@@ -1,6 +1,8 @@
 package brickingbad.domain.game.powerup;
 
 import brickingbad.domain.game.*;
+import brickingbad.domain.game.gameobjects.Ball;
+import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.physics.Vector;
 
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
-import brickingbad.domain.game.Ball;
+import brickingbad.domain.game.gameobjects.Ball;
 import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.GameObject;
-import brickingbad.domain.game.brick.SimpleBrick;
+import brickingbad.domain.game.gameobjects.GameObject;
+import brickingbad.domain.game.gameobjects.brick.SimpleBrick;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.domain.physics.Vector;
 import org.junit.Before;

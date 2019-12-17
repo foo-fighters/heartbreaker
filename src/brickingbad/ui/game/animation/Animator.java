@@ -1,12 +1,9 @@
 package brickingbad.ui.game.animation;
 
 import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.brick.Brick;
 import brickingbad.ui.BrickingBadFrame;
-import brickingbad.ui.game.GameKeyboardListener;
 
 import javax.swing.*;
-import java.util.Vector;
 
 public class Animator implements Runnable {
 

@@ -1,7 +1,6 @@
-package brickingbad.domain.game.brick;
+package brickingbad.domain.game.gameobjects.brick;
 
 import brickingbad.domain.game.GameLogic;
-import brickingbad.domain.game.Level;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.Shape;
 import brickingbad.domain.physics.Vector;

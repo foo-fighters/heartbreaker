@@ -1,13 +1,13 @@
 package brickingbad.controller;
 
 import brickingbad.domain.game.GameLogic;
-import brickingbad.domain.game.GameObjectFactory;
+import brickingbad.domain.game.gameobjects.GameObjectFactory;
 import brickingbad.domain.game.Level;
 import brickingbad.domain.game.listeners.AnimationListener;
 import brickingbad.domain.game.listeners.GameListener;
 import brickingbad.domain.game.WrapperContent;
-import brickingbad.domain.game.brick.Brick;
-import brickingbad.domain.game.brick.BrickFactory;
+import brickingbad.domain.game.gameobjects.brick.Brick;
+import brickingbad.domain.game.gameobjects.brick.BrickFactory;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.ui.BrickingBadFrame;

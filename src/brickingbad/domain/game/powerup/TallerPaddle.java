@@ -1,6 +1,8 @@
 package brickingbad.domain.game.powerup;
 
 import brickingbad.domain.game.*;
+import brickingbad.domain.game.gameobjects.Ball;
+import brickingbad.domain.game.gameobjects.Paddle;
 import brickingbad.domain.physics.Vector;
 
 public class TallerPaddle extends PowerUp {

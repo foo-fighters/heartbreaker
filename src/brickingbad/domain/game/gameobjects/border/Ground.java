@@ -1,8 +1,8 @@
-package brickingbad.domain.game.border;
+package brickingbad.domain.game.gameobjects.border;
 
-import brickingbad.domain.game.Ball;
+import brickingbad.domain.game.gameobjects.Ball;
 import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.GameObject;
+import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.Shape;
 import brickingbad.domain.game.powerup.PowerUp;
 import brickingbad.domain.physics.Vector;

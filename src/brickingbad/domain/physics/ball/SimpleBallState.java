@@ -1,12 +1,11 @@
 package brickingbad.domain.physics.ball;
 
-import brickingbad.domain.game.Ball;
-import brickingbad.domain.game.GameObject;
-import brickingbad.domain.game.Shape;
-import brickingbad.domain.game.alien.Alien;
-import brickingbad.domain.game.alien.ProtectingAlien;
-import brickingbad.domain.game.brick.Brick;
-import brickingbad.domain.game.brick.HalfMetalBrick;
+import brickingbad.domain.game.gameobjects.Ball;
+import brickingbad.domain.game.gameobjects.GameObject;
+import brickingbad.domain.game.gameobjects.alien.Alien;
+import brickingbad.domain.game.gameobjects.alien.ProtectingAlien;
+import brickingbad.domain.game.gameobjects.brick.Brick;
+import brickingbad.domain.game.gameobjects.brick.HalfMetalBrick;
 import brickingbad.domain.game.powerup.PowerUp;
 import brickingbad.domain.physics.Direction;
 

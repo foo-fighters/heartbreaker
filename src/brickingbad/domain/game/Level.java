@@ -1,23 +1,23 @@
 package brickingbad.domain.game;
 
 import brickingbad.controller.GameController;
-import brickingbad.domain.game.alien.*;
+import brickingbad.domain.game.gameobjects.Ball;
+import brickingbad.domain.game.gameobjects.GameObjectFactory;
+import brickingbad.domain.game.gameobjects.Paddle;
+import brickingbad.domain.game.gameobjects.alien.*;
+import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.listeners.AnimationListener;
 import brickingbad.domain.game.listeners.GameListener;
 import brickingbad.domain.game.powerup.*;
-import brickingbad.domain.game.border.*;
-import brickingbad.domain.game.brick.*;
+import brickingbad.domain.game.gameobjects.border.*;
+import brickingbad.domain.game.gameobjects.brick.*;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.domain.physics.Vector;
-import brickingbad.domain.physics.ball.ChemicalBallState;
-import brickingbad.domain.physics.ball.FireBallState;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.Clock;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
@@ -272,10 +272,10 @@ public class Level {
             return;
         }
         storedPowerUps.add(powerup);
-        powerup.velocity.setVector(0.0, 0.0);
+        powerup.setVelocity(new Vector());
         int posX = 10 + GameConstants.powerupSize / 2 + (10 + GameConstants.powerupSize) * powerup.getName().ordinal();
         int posY = GameConstants.screenHeight - GameConstants.powerupSize / 2 - 10;
-        powerup.position.setVector(posX, posY);
+        powerup.setPosition(new Vector(posX, posY));
     }
 
     public void usePowerUp(WrapperContent name) {

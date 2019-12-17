@@ -1,9 +1,12 @@
 package brickingbad.domain.game.persistence;
 
 import brickingbad.domain.game.*;
-import brickingbad.domain.game.alien.Alien;
-import brickingbad.domain.game.brick.Brick;
-import brickingbad.domain.game.brick.BrickFactory;
+import brickingbad.domain.game.gameobjects.Ball;
+import brickingbad.domain.game.gameobjects.GameObjectFactory;
+import brickingbad.domain.game.gameobjects.Paddle;
+import brickingbad.domain.game.gameobjects.alien.Alien;
+import brickingbad.domain.game.gameobjects.brick.Brick;
+import brickingbad.domain.game.gameobjects.brick.BrickFactory;
 import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.physics.Vector;
 

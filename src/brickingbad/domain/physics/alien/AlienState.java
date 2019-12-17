@@ -1,7 +1,7 @@
 package brickingbad.domain.physics.alien;
 
-import brickingbad.domain.game.GameObject;
-import brickingbad.domain.game.alien.Alien;
+import brickingbad.domain.game.gameobjects.GameObject;
+import brickingbad.domain.game.gameobjects.alien.Alien;
 
 public abstract class AlienState extends GameObject {
 

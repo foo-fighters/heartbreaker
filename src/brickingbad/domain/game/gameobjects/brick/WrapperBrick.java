@@ -1,4 +1,4 @@
-package brickingbad.domain.game.brick;
+package brickingbad.domain.game.gameobjects.brick;
 
 import brickingbad.domain.game.Level;
 import brickingbad.domain.game.GameConstants;

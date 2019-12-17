@@ -1,12 +1,12 @@
 package brickingbad.domain.physics.alien;
 
-import brickingbad.domain.game.GameObjectFactory;
+import brickingbad.domain.game.gameobjects.GameObjectFactory;
 import brickingbad.domain.game.Level;
 import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.alien.Alien;
-import brickingbad.domain.game.alien.DrunkAlien;
-import brickingbad.domain.game.brick.Brick;
-import brickingbad.domain.game.brick.BrickFactory;
+import brickingbad.domain.game.gameobjects.alien.Alien;
+import brickingbad.domain.game.gameobjects.alien.DrunkAlien;
+import brickingbad.domain.game.gameobjects.brick.Brick;
+import brickingbad.domain.game.gameobjects.brick.BrickFactory;
 
 import java.util.ArrayList;
 

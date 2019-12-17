@@ -1,8 +1,8 @@
-package brickingbad.domain.game.brick;
+package brickingbad.domain.game.gameobjects.brick;
 
-import brickingbad.domain.game.Ball;
+import brickingbad.domain.game.gameobjects.Ball;
 import brickingbad.domain.game.Level;
-import brickingbad.domain.game.GameObject;
+import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.physics.Vector;
 
 public abstract class Brick extends GameObject {

@@ -1,7 +1,7 @@
 package brickingbad.domain.game.powerup;
 
 import brickingbad.domain.game.Level;
-import brickingbad.domain.game.GameObject;
+import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.WrapperContent;
 import brickingbad.domain.physics.Vector;
 

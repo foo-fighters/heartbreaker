@@ -2,6 +2,7 @@ package brickingbad.ui.game;
 
 import brickingbad.controller.GameController;
 import brickingbad.domain.game.*;
+import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.listeners.AnimationListener;
 import brickingbad.domain.game.listeners.GameListener;
 import brickingbad.domain.physics.PhysicsEngine;

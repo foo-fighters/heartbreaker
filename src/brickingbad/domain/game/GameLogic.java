@@ -1,7 +1,9 @@
 package brickingbad.domain.game;
 
-import brickingbad.domain.game.alien.Alien;
-import brickingbad.domain.game.brick.*;
+import brickingbad.domain.game.gameobjects.Ball;
+import brickingbad.domain.game.gameobjects.alien.Alien;
+import brickingbad.domain.game.gameobjects.brick.*;
+import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.ball.ChemicalBallState;
 import brickingbad.domain.physics.ball.FireBallState;
@@ -155,7 +157,7 @@ public class GameLogic {
         Collections.reverse(objectColumn);
         for(GameObject object: objectColumn) {
             if(object instanceof HalfMetalBrick) {
-                endY = object.position.getY() + object.getSize().getY() / 2;
+                endY = object.getPosition().getY() + object.getSize().getY() / 2;
                 break;
             }else {
                 object.destroy();

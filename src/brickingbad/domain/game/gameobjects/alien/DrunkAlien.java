@@ -1,4 +1,4 @@
-package brickingbad.domain.game.alien;
+package brickingbad.domain.game.gameobjects.alien;
 
 import brickingbad.domain.game.*;
 import brickingbad.domain.physics.Vector;

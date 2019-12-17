@@ -2,9 +2,10 @@ package brickingbad.domain.physics;
 
 import brickingbad.controller.GameController;
 import brickingbad.domain.game.*;
-import brickingbad.domain.game.brick.Brick;
-import brickingbad.domain.game.brick.HalfMetalBrick;
-import brickingbad.domain.game.brick.SimpleBrick;
+import brickingbad.domain.game.gameobjects.brick.Brick;
+import brickingbad.domain.game.gameobjects.brick.HalfMetalBrick;
+import brickingbad.domain.game.gameobjects.brick.SimpleBrick;
+import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.physics.collisions.CircleCollisionStrategy;
 import brickingbad.domain.physics.collisions.ICollisionStrategy;
 import brickingbad.domain.physics.collisions.MixedCollisionStrategy;
