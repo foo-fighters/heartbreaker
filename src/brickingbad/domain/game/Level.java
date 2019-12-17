@@ -3,7 +3,6 @@ package brickingbad.domain.game;
 import brickingbad.controller.GameController;
 import brickingbad.domain.game.alien.*;
 import brickingbad.domain.game.listeners.AnimationListener;
-import brickingbad.domain.game.listeners.ErrorListener;
 import brickingbad.domain.game.listeners.GameListener;
 import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.game.border.*;
@@ -21,7 +20,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class Level {
@@ -53,13 +51,11 @@ public class Level {
     private static final Random random = new Random();
 
     private ArrayList<GameListener> objectListeners;
-    private ArrayList<ErrorListener> errorListeners;
     private ArrayList<AnimationListener> animationListeners;
 
     // CONSTRUCTION AND INITIALIZATION
     private Level() {
         objectListeners = new ArrayList<>();
-        errorListeners = new ArrayList<>();
         animationListeners = new ArrayList<>();
         balls = new ArrayList<>();
         walls = new ArrayList<>();
@@ -134,71 +130,9 @@ public class Level {
         }
     }
 
-    public boolean checkBrickCount() {
-        AtomicInteger simpleBrickCount = new AtomicInteger();
-        AtomicInteger halfMetalBrickCount = new AtomicInteger();
-        AtomicInteger mineBrickCount = new AtomicInteger();
-        AtomicInteger wrapperBrickCount = new AtomicInteger();
-
-        bricks.forEach(brick -> {
-            if (brick instanceof SimpleBrick) {
-                simpleBrickCount.getAndIncrement();
-            } else if (brick instanceof HalfMetalBrick) {
-                halfMetalBrickCount.getAndIncrement();
-            } else if (brick instanceof MineBrick) {
-                mineBrickCount.getAndIncrement();
-            } else if (brick instanceof WrapperBrick) {
-                wrapperBrickCount.getAndIncrement();
-            }
-        });
-
-        String warning = "";
-        boolean enoughSimpleBricks = false;
-        boolean enoughHalfMetalBricks = false;
-        boolean enoughMineBricks = false;
-        boolean enoughWrapperBricks = false;
-
-        if (simpleBrickCount.get() >= GameConstants.simpleBrickLimit) {
-            enoughSimpleBricks = true;
-        } else {
-            warning = warning + (GameConstants.simpleBrickLimit - simpleBrickCount.get()) + " Simple Bricks, ";
-        }
-
-        if (halfMetalBrickCount.get() >= GameConstants.halfMetalBrickLimit) {
-            enoughHalfMetalBricks = true;
-        } else {
-            warning = warning + (GameConstants.halfMetalBrickLimit - halfMetalBrickCount.get()) + " Half Metal Bricks, ";
-        }
-
-        if (mineBrickCount.get() >= GameConstants.mineBrickLimit) {
-            enoughMineBricks = true;
-        } else {
-            warning = warning + (GameConstants.mineBrickLimit - mineBrickCount.get()) + " Mine Bricks, ";
-        }
-
-        if (wrapperBrickCount.get() >= GameConstants.wrapperBrickLimit) {
-            enoughWrapperBricks = true;
-        } else {
-            warning = warning + (GameConstants.wrapperBrickLimit - wrapperBrickCount.get()) + " Wrapper Bricks, ";
-        }
-
-        if (enoughSimpleBricks && enoughHalfMetalBricks && enoughMineBricks && enoughWrapperBricks){
-            return true;
-        }else {
-            warning = warning.substring(0, warning.length() - 2);
-            warning = warning + " more are needed to start the Game.";
-            sendError(warning);
-            return false;
-        }
-    }
-
     // LISTENER FUNCTIONS
     public void addObjectListener(GameListener listener) {
         objectListeners.add(listener);
-    }
-
-    public void addErrorListener(ErrorListener err) {
-        errorListeners.add(err);
     }
 
     public void addAnimationListener(AnimationListener anim) {
@@ -207,10 +141,6 @@ public class Level {
 
     private void removeObjectFromListeners(GameObject object) {
         objectListeners.forEach(listener -> listener.removeObject(object));
-    }
-
-    private void sendError(String err){
-        errorListeners.forEach(errorListener -> errorListener.showError(err));
     }
 
     public void startAnimation(String animationName, Object... args) {

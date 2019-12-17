@@ -1,7 +1,6 @@
 package brickingbad.ui.game;
 
 import brickingbad.domain.game.*;
-import brickingbad.domain.game.listeners.ErrorListener;
 import brickingbad.domain.game.listeners.GameListener;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.components.UIGameObject;
@@ -17,7 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class BuildingModePanel extends JPanel implements GameListener, ErrorListener {
+public class BuildingModePanel extends JPanel implements GameListener {
 
     private static BuildingModePanel instance;
 
@@ -35,7 +34,6 @@ public class BuildingModePanel extends JPanel implements GameListener, ErrorList
         initUI();
         loadBackgroundImage();
         Level.getInstance().addObjectListener(this);
-        Level.getInstance().addErrorListener(this);
     }
 
     public static BuildingModePanel getInstance() {
@@ -108,7 +106,6 @@ public class BuildingModePanel extends JPanel implements GameListener, ErrorList
         }
     }
 
-    @Override
     public void showError(String errorMessage) {
       JOptionPane.showMessageDialog(BrickingBadFrame.getInstance(), errorMessage);
     }

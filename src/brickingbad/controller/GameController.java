@@ -1,5 +1,6 @@
 package brickingbad.controller;
 
+import brickingbad.domain.game.GameLogic;
 import brickingbad.domain.game.Level;
 import brickingbad.domain.game.listeners.AnimationListener;
 import brickingbad.domain.game.listeners.GameListener;
@@ -107,8 +108,8 @@ public class GameController {
         }
     }
 
-    public boolean checkBrickCount(){
-        return Level.getInstance().checkBrickCount();
+    public String checkBrickCount() {
+        return GameLogic.checkBrickCount();
     }
 
     public void addObjectListener(GameListener listener) {
@@ -126,10 +127,6 @@ public class GameController {
 
     public void usePowerUp(WrapperContent name) {
         Level.getInstance().usePowerUp(name);
-    }
-
-    public void lifeLost() {
-        Level.getInstance().lostLife();
     }
 
     public void stopAnimator() {
