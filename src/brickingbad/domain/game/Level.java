@@ -19,7 +19,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.time.Clock;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public class Level {
@@ -248,7 +247,7 @@ public class Level {
     // WIN AND LOSE CONDITIONS
     public void anyBallLeft() {
         if (balls.isEmpty()) {
-            lostLife();
+            loseLife();
         }
     }
 
@@ -258,18 +257,18 @@ public class Level {
         }
     }
 
-    public void lostLife() {
-        if (lives != 1){
+    public void loseLife() {
+        if (lives != 1) {
             lives = lives - 1;
             resetBall();
-        }else{
+        }else {
             GameController.getInstance().stopAnimator();
             GameController.getInstance().showDeadDialog();
         }
     }
 
     private void winGame() {
-        if (!alreadyWon){
+        if (!alreadyWon) {
             GameController.getInstance().stopAnimator();
             GameController.getInstance().showWinDialog();
             alreadyWon = true;

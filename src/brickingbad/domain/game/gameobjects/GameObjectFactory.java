@@ -10,6 +10,8 @@ import brickingbad.domain.game.gameobjects.brick.SimpleBrick;
 import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.domain.physics.Vector;
+import brickingbad.domain.physics.ball.ChemicalBallState;
+import brickingbad.domain.physics.ball.FireBallState;
 
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
@@ -27,6 +29,10 @@ public class GameObjectFactory {
 
     private GameObjectFactory() {
 
+    }
+
+    private static ArrayList<GameObject> objectsCopy() {
+        return new ArrayList<>(Level.getInstance().getObjects());
     }
 
     public void addBrick(Brick brick) {
@@ -59,8 +65,7 @@ public class GameObjectFactory {
         while(x <= GameConstants.screenWidth) {
             SimpleBrick brick = new SimpleBrick();
             brick.setPosition(new Vector(x, y));
-            ArrayList<GameObject> objectsCopy = new ArrayList<>(Level.getInstance().getObjects());
-            for(GameObject object: objectsCopy) {
+            for(GameObject object: objectsCopy()) {
                 if(PhysicsEngine.areColliding(object, brick)) {
                     overlaps = true;
                     break;
@@ -129,11 +134,36 @@ public class GameObjectFactory {
                 power = new TallerPaddle(revealPosition);
                 break;
             case GANG_OF_BALLS:
-                GameLogic.spawnGangOfBalls(revealPosition);
+                spawnGangOfBalls(revealPosition);
                 return;
             default:
         }
         assert power != null;
         Level.getInstance().addObject(power);
+    }
+
+    private static void spawnGangOfBalls(Vector revealPosition) {
+        double minimumDistance = GameConstants.screenWidth;
+        GameObject closestBall = null;
+        for (GameObject object: objectsCopy()) {
+            if(object instanceof Ball) {
+                double ballDistance = Math.hypot(object.getPosition().getX() - revealPosition.getX(),
+                        object.getPosition().getY() - revealPosition.getY());
+                if(ballDistance < minimumDistance) {
+                    minimumDistance = ballDistance;
+                    closestBall = object;
+                }
+            }
+        }
+        if(minimumDistance < GameConstants.rectangularBrickLength + GameConstants.ballSize) {
+            for(int i = 0; i < GameConstants.gangOfBallsMultiplier; i++) {
+                Ball ball = new Ball(revealPosition);
+                ball.startMovement((360.0 / GameConstants.gangOfBallsMultiplier) * i, ((Ball) closestBall).getSpeed());
+                Level.getInstance().addObject(ball);
+                if(((Ball) closestBall).getBallState() instanceof FireBallState) ball.setFireball();
+                if(((Ball) closestBall).getBallState() instanceof ChemicalBallState) ball.setChemical();
+            }
+            Level.getInstance().removeObject(closestBall);
+        }
     }
 }

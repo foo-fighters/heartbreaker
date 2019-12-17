@@ -65,21 +65,6 @@ public class GameLogic {
         return warning;
     }
 
-    public static void destroyBricksInRadius(Vector center, double radius) {
-        double xdist;
-        double ydist;
-        for (GameObject object: objectsCopy()) {
-            if(object instanceof Brick) {
-                xdist = center.getX() - object.getPosition().getX();
-                ydist = center.getY() - object.getPosition().getY();
-                if(Math.hypot(xdist, ydist) < radius) {
-                    object.destroy();
-                }
-            }
-        }
-        Level.getInstance().startAnimation("ExplosionAnimation", center, radius);
-    }
-
     public static Vector getClosestGridLocation(Vector pos) {
         int indX = Math.floorDiv((int) pos.getX(), GameConstants.rectangularBrickLength);
         int indY = Math.floorDiv((int) (pos.getY() - GameConstants.menuAreaHeight), GameConstants.rectangularBrickThickness);
@@ -117,29 +102,19 @@ public class GameLogic {
         return rowBricks.get(0);
     }
 
-    public static void spawnGangOfBalls(Vector revealPosition) {
-        double minimumDistance = GameConstants.screenWidth;
-        GameObject closestBall = null;
+    public static void destroyBricksInRadius(Vector center, double radius) {
+        double xdist;
+        double ydist;
         for (GameObject object: objectsCopy()) {
-            if(object instanceof Ball) {
-                double ballDistance = Math.hypot(object.getPosition().getX() - revealPosition.getX(),
-                        object.getPosition().getY() - revealPosition.getY());
-                if(ballDistance < minimumDistance) {
-                    minimumDistance = ballDistance;
-                    closestBall = object;
+            if(object instanceof Brick) {
+                xdist = center.getX() - object.getPosition().getX();
+                ydist = center.getY() - object.getPosition().getY();
+                if(Math.hypot(xdist, ydist) < radius) {
+                    object.destroy();
                 }
             }
         }
-        if(minimumDistance < GameConstants.rectangularBrickLength + GameConstants.ballSize) {
-            for(int i = 0; i < GameConstants.gangOfBallsMultiplier; i++) {
-                Ball ball = new Ball(revealPosition);
-                ball.startMovement((360.0 / GameConstants.gangOfBallsMultiplier) * i, ((Ball) closestBall).getSpeed());
-                Level.getInstance().addObject(ball);
-                if(((Ball) closestBall).getBallState() instanceof FireBallState) ball.setFireball();
-                if(((Ball) closestBall).getBallState() instanceof ChemicalBallState) ball.setChemical();
-            }
-            Level.getInstance().removeObject(closestBall);
-        }
+        Level.getInstance().startAnimation("ExplosionAnimation", center, radius);
     }
 
     public static void shootLaserColumn(double x) {
