@@ -24,7 +24,7 @@ public abstract class GameObject implements Comparable {
   public void collide(GameObject object) { }
 
   public void destroy() {
-    Game.getInstance().removeObject(this);
+    Level.getInstance().removeObject(this);
   }
 
   public Shape getShape() {

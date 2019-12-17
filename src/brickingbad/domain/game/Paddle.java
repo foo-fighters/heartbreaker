@@ -5,7 +5,6 @@ import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.paddle.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +64,7 @@ public class Paddle extends GameObject {
   @Override
   public void collide(GameObject object) {
     if(object instanceof PowerUp) {
-      Game.getInstance().storePowerUp((PowerUp) object);
+      Level.getInstance().storePowerUp((PowerUp) object);
     }
     if(object instanceof Ball) {
       if((object.getReflectionDirection() == Direction.UP || object.getReflectionDirection() == Direction.UP_LEFT
@@ -79,8 +78,7 @@ public class Paddle extends GameObject {
     moveState.updatePosition();
     rotateState.updatePosition();
     if (isGod) {
-      Game game = Game.getInstance();
-      ArrayList<Ball> balls = game.getBalls();
+      ArrayList<Ball> balls = Level.getInstance().getBalls();
       balls.forEach((ball) -> {
         if (Math.abs(ball.getPosition().getY() - position.getY()) < 50) {
           setPosition(ball.getPosition().getX(), position.getY());

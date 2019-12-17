@@ -1,6 +1,6 @@
 package brickingbad.domain.game.powerup;
 
-import brickingbad.domain.game.Game;
+import brickingbad.domain.game.Level;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.Shape;
 import brickingbad.domain.game.WrapperContent;
@@ -24,12 +24,12 @@ public class Magnet extends PowerUp {
     @Override
     public void activate() {
         super.activate();
-        Game.getInstance().getPaddle().setMagnetized(true);
+        Level.getInstance().getPaddle().setMagnetized(true);
     }
 
     @Override
     public void deactivate() {
-        Game.getInstance().getPaddle().setMagnetized(false);
+        Level.getInstance().getPaddle().setMagnetized(false);
         super.deactivate();
     }
 }

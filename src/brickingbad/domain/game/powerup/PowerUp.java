@@ -1,6 +1,6 @@
 package brickingbad.domain.game.powerup;
 
-import brickingbad.domain.game.Game;
+import brickingbad.domain.game.Level;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.WrapperContent;
 import brickingbad.domain.physics.Vector;
@@ -13,21 +13,21 @@ public abstract class PowerUp extends GameObject {
     protected boolean active = false;
 
     public void activate() {
-        Game.getInstance().getStoredPowerUps().remove(this);
-        Game.getInstance().getActivePowerUps().add(this);
-        startTime = Game.getInstance().getTime();
+        Level.getInstance().getStoredPowerUps().remove(this);
+        Level.getInstance().getActivePowerUps().add(this);
+        startTime = Level.getInstance().getTime();
         active = true;
     }
 
     public void deactivate() {
-        Game.getInstance().getActivePowerUps().remove(this);
+        Level.getInstance().getActivePowerUps().remove(this);
         destroy();
     }
 
     @Override
     public void updatePosition() {
         super.updatePosition();
-        if(active && Game.getInstance().getTime() - startTime > 1000 * duration) deactivate();
+        if(active && Level.getInstance().getTime() - startTime > 1000 * duration) deactivate();
     }
 
     public WrapperContent getName() {

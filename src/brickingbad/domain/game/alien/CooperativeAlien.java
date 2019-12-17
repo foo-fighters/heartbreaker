@@ -1,6 +1,6 @@
 package brickingbad.domain.game.alien;
 
-import brickingbad.domain.game.Game;
+import brickingbad.domain.game.Level;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.Shape;
 import brickingbad.domain.game.WrapperContent;
@@ -21,7 +21,7 @@ public class CooperativeAlien extends Alien {
 
     @Override
     public void destroy() {
-        Game.getInstance().finishAnimation("CooperativeAlienRowAnimation");
+        Level.getInstance().finishAnimation("CooperativeAlienRowAnimation");
         super.destroy();
     }
 

@@ -1,14 +1,9 @@
 package brickingbad.domain.game.brick;
 
-import brickingbad.domain.game.Game;
+import brickingbad.domain.game.Level;
 import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.Shape;
-import brickingbad.domain.game.brick.Brick;
-import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
-
-import java.util.ArrayList;
 
 public class MineBrick extends Brick {
 
@@ -44,7 +39,7 @@ public class MineBrick extends Brick {
     @Override
     public void destroy() {
         super.destroy();
-        Game.getInstance().destroyBricksInRadius(position, GameConstants.mineBrickExplosionRadius);
+        Level.getInstance().destroyBricksInRadius(position, GameConstants.mineBrickExplosionRadius);
     }
 
     @Override

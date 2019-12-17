@@ -34,8 +34,8 @@ public class BuildingModePanel extends JPanel implements GameListener, ErrorList
         uiObjects = new ArrayList<>();
         initUI();
         loadBackgroundImage();
-        Game.getInstance().addObjectListener(this);
-        Game.getInstance().addErrorListener(this);
+        Level.getInstance().addObjectListener(this);
+        Level.getInstance().addErrorListener(this);
     }
 
     public static BuildingModePanel getInstance() {
@@ -85,8 +85,8 @@ public class BuildingModePanel extends JPanel implements GameListener, ErrorList
         super.paintComponent(g);
         g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
         g.setColor(new Color(255, 102, 102));
-        int gridX = Game.getInstance().getGridX();
-        int gridY = Game.getInstance().getGridY();
+        int gridX = Level.getInstance().getGridX();
+        int gridY = Level.getInstance().getGridY();
         int current;
         for(int i = 0; i <= gridX; i++) {
             current = GameConstants.rectangularBrickLength * i;

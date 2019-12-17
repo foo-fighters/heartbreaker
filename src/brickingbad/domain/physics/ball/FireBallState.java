@@ -1,7 +1,7 @@
 package brickingbad.domain.physics.ball;
 
 import brickingbad.domain.game.Ball;
-import brickingbad.domain.game.Game;
+import brickingbad.domain.game.Level;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.alien.Alien;
@@ -26,14 +26,14 @@ public class FireBallState extends BallState {
                 Direction dir = ball.getReflectionDirection();
                 if(dir == Direction.UP_LEFT || dir == Direction.UP || dir == Direction.UP_RIGHT) {
                     object.destroy();
-                    Game.getInstance().destroyBricksInRadius(object.getPosition(), GameConstants.fireBallDestructionRadius);
+                    Level.getInstance().destroyBricksInRadius(object.getPosition(), GameConstants.fireBallDestructionRadius);
                 }else if((dir == Direction.LEFT || dir == Direction.RIGHT)
                         && ball.getPosition().getY() < object.getPosition().getY()) {
                     object.destroy();
-                    Game.getInstance().destroyBricksInRadius(object.getPosition(), GameConstants.fireBallDestructionRadius);
+                    Level.getInstance().destroyBricksInRadius(object.getPosition(), GameConstants.fireBallDestructionRadius);
                 }else if(((HalfMetalBrick) object).isCracked()) {
                     object.destroy();
-                    Game.getInstance().destroyBricksInRadius(object.getPosition(), GameConstants.fireBallDestructionRadius);
+                    Level.getInstance().destroyBricksInRadius(object.getPosition(), GameConstants.fireBallDestructionRadius);
                 }else {
                     ((HalfMetalBrick) object).setCracked(true);
                 }
@@ -44,7 +44,7 @@ public class FireBallState extends BallState {
                 }
             }else{
                 object.destroy();
-                Game.getInstance().destroyBricksInRadius(object.getPosition(), GameConstants.fireBallDestructionRadius);
+                Level.getInstance().destroyBricksInRadius(object.getPosition(), GameConstants.fireBallDestructionRadius);
             }
         }
         ball.reflect(object);

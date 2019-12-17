@@ -1,9 +1,7 @@
 package brickingbad.ui.components.containers;
 
 import brickingbad.controller.GameController;
-import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.brick.Brick;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.components.BBGameButton;
 import brickingbad.ui.game.animation.Animator;
@@ -12,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 public class GameButtonPanel extends JPanel implements ActionListener {
 

@@ -1,7 +1,7 @@
 package brickingbad.domain.game.alien;
 
 import brickingbad.domain.game.Ball;
-import brickingbad.domain.game.Game;
+import brickingbad.domain.game.Level;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.WrapperContent;
 import brickingbad.domain.game.brick.Brick;
@@ -35,7 +35,7 @@ public abstract class Alien extends GameObject {
     @Override
     public void destroy() {
         finishAction();
-        Game.getInstance().getActiveAliens().remove(this);
+        Level.getInstance().getActiveAliens().remove(this);
         super.destroy();
     }
 

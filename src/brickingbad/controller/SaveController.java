@@ -1,6 +1,6 @@
 package brickingbad.controller;
 
-import brickingbad.domain.game.Game;
+import brickingbad.domain.game.Level;
 import brickingbad.domain.game.authentication.User;
 import brickingbad.domain.game.persistence.Save;
 import brickingbad.domain.game.persistence.SaveAssembler;
@@ -28,8 +28,8 @@ public class SaveController {
 
   public void saveGame(String name, boolean inRunningMode) {
     User user = AuthenticationController.getInstance().getCurrentUser();
-    Game game = Game.getInstance();
-    Save save = SaveAssembler.assemble(game, name);
+    Level level = Level.getInstance();
+    Save save = SaveAssembler.assemble(level, name);
     save.inRunningMode = inRunningMode;
     save.username = AuthenticationController.getInstance().getCurrentUser().name;
     saveRepository.save(save, user);

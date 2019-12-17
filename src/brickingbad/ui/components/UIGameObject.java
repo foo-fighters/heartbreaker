@@ -1,6 +1,6 @@
 package brickingbad.ui.components;
 
-import brickingbad.domain.game.Game;
+import brickingbad.domain.game.Level;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.listeners.GameObjectListener;
@@ -93,7 +93,7 @@ public class UIGameObject extends JLabel implements MouseListener, MouseMotionLi
                 double brickY = gameObject.getPosition().getY();
                 if (Math.abs(mouseX-brickX) <= GameConstants.rectangularBrickLength / 2.0 &&
                         Math.abs(mouseY-brickY) <= GameConstants.rectangularBrickThickness / 2.0) {
-                    Game.getInstance().removeObject(gameObject);
+                    Level.getInstance().removeObject(gameObject);
                 }
             }
         }
@@ -119,20 +119,20 @@ public class UIGameObject extends JLabel implements MouseListener, MouseMotionLi
     public void mouseReleased(MouseEvent e) {
         if(dragging) {
             Brick brick = (Brick)gameObject;
-            Vector location = Game.getInstance().getClosestGridLocation(gameObject.getPosition());
+            Vector location = Level.getInstance().getClosestGridLocation(gameObject.getPosition());
             int indX = (int)location.getX();
             int indY = (int)location.getY();
             if(brick.getPosition().getX() <= 0 ||
                     brick.getPosition().getX() >= GameConstants.rectangularBrickLength *
-                            Game.getInstance().getBrickGrid().length ||
+                            Level.getInstance().getBrickGrid().length ||
                     brick.getPosition().getY() <= GameConstants.menuAreaHeight ||
                     brick.getPosition().getY() >= GameConstants.menuAreaHeight + GameConstants.brickAreaHeight ||
-                    Game.getInstance().getBrickGrid()[indX][indY]) {
+                    Level.getInstance().getBrickGrid()[indX][indY]) {
                 brick.setPosition(new Vector((brick.getCellX() + 0.5) * GameConstants.rectangularBrickLength,
                         GameConstants.menuAreaHeight + (brick.getCellY() + 0.5) * GameConstants.rectangularBrickThickness));
             }else {
-                Game.getInstance().getBrickGrid()[brick.getCellX()][brick.getCellY()] = false;
-                Game.getInstance().getBrickGrid()[indX][indY] = true;
+                Level.getInstance().getBrickGrid()[brick.getCellX()][brick.getCellY()] = false;
+                Level.getInstance().getBrickGrid()[indX][indY] = true;
                 brick.setCellX(indX);
                 brick.setCellY(indY);
                 brick.setPosition(new Vector((indX + 0.5) * GameConstants.rectangularBrickLength,

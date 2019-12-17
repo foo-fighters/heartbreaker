@@ -1,7 +1,7 @@
 package brickingbad.controller;
 
+import brickingbad.domain.game.Level;
 import brickingbad.domain.game.listeners.AnimationListener;
-import brickingbad.domain.game.Game;
 import brickingbad.domain.game.listeners.GameListener;
 import brickingbad.domain.game.WrapperContent;
 import brickingbad.domain.game.brick.Brick;
@@ -41,11 +41,11 @@ public class GameController {
     }
 
     public void initializeGame(boolean fromSave) {
-        Game.getInstance().initialize(fromSave);
+        Level.getInstance().initialize(fromSave);
     }
 
     public void startGame() {
-        Game.getInstance().play();
+        Level.getInstance().play();
     }
 
     public void togglePauseResume() {
@@ -59,77 +59,77 @@ public class GameController {
     }
 
     public void launchBalls() {
-        Game.getInstance().getPaddle().launchBalls();
+        Level.getInstance().getPaddle().launchBalls();
     }
 
     public void startPaddleMove(Direction direction) {
-        Game.getInstance().getPaddle().startMove(direction);
+        Level.getInstance().getPaddle().startMove(direction);
     }
 
     public void endPaddleMove(Direction direction) {
-        Game.getInstance().getPaddle().endMove(direction);
+        Level.getInstance().getPaddle().endMove(direction);
     }
 
     public void startPaddleRotate(Direction direction) {
-        Game.getInstance().getPaddle().startRotate(direction);
+        Level.getInstance().getPaddle().startRotate(direction);
     }
 
     public void endPaddleRotate(Direction direction) {
-        Game.getInstance().getPaddle().endRotate(direction);
+        Level.getInstance().getPaddle().endRotate(direction);
     }
 
     public void createBricks(int simple, int halfMetal, int mine, int wrapper) {
-        if (Game.getInstance().getBricks().size() + simple + halfMetal + mine + wrapper
-                <= Game.getInstance().getGridX() * Game.getInstance().getGridY()) {
+        if (Level.getInstance().getBricks().size() + simple + halfMetal + mine + wrapper
+                <= Level.getInstance().getGridX() * Level.getInstance().getGridY()) {
             ArrayList<Brick> simpleBricks = BrickFactory.getInstance().createSimpleBricks(simple);
 
             simpleBricks.forEach((brick -> {
-                Game.getInstance().addBrick(brick);
+                Level.getInstance().addBrick(brick);
             }));
 
             ArrayList<Brick> halfMetalBricks = BrickFactory.getInstance().createHalfMetalBricks(halfMetal);
 
             halfMetalBricks.forEach((brick -> {
-                Game.getInstance().addBrick(brick);
+                Level.getInstance().addBrick(brick);
             }));
 
             ArrayList<Brick> mineBricks = BrickFactory.getInstance().createMineBricks(mine);
 
             mineBricks.forEach((brick -> {
-                Game.getInstance().addBrick(brick);
+                Level.getInstance().addBrick(brick);
             }));
 
             ArrayList<Brick> wrapperBricks = BrickFactory.getInstance().createWrapperBricks(wrapper);
 
             wrapperBricks.forEach((brick -> {
-                Game.getInstance().addBrick(brick);
+                Level.getInstance().addBrick(brick);
             }));
         }
     }
 
     public boolean checkBrickCount(){
-        return Game.getInstance().checkBrickCount();
+        return Level.getInstance().checkBrickCount();
     }
 
     public void addObjectListener(GameListener listener) {
-        Game.getInstance().addObjectListener(listener);
+        Level.getInstance().addObjectListener(listener);
     }
 
     public void addAnimationListener(AnimationListener listener) {
-        Game.getInstance().addAnimationListener(listener);
+        Level.getInstance().addAnimationListener(listener);
     }
 
     public void invokeGodMode() {
         RunningModePanel.getInstance().invokeGodMode();
-        Game.getInstance().invokeGodMode();
+        Level.getInstance().invokeGodMode();
     }
 
     public void usePowerUp(WrapperContent name) {
-        Game.getInstance().usePowerUp(name);
+        Level.getInstance().usePowerUp(name);
     }
 
     public void lifeLost() {
-        Game.getInstance().lostLife();
+        Level.getInstance().lostLife();
     }
 
     public void stopAnimator() {
@@ -146,7 +146,7 @@ public class GameController {
 
     public void resetScore() {
         PhysicsEngine.getInstance().resetTimePassed();
-        Game.getInstance().setScore(0);
+        Level.getInstance().setScore(0);
         setUIScore(0);
     }
 

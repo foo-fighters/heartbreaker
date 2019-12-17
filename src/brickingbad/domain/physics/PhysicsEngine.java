@@ -107,7 +107,7 @@ public class PhysicsEngine implements Runnable {
       if (running) {
         if (GameController.getInstance().inRunningMode()) {
           timePassed += SLEEP_TIME;
-          ArrayList<GameObject> objects = Game.getInstance().getObjects();
+          ArrayList<GameObject> objects = Level.getInstance().getObjects();
           handleCollisions(objects);
           updatePositions(objects);
         }
@@ -127,7 +127,7 @@ public class PhysicsEngine implements Runnable {
   }
 
   /**
-   * Gets the list of {@link GameObject}s from the {@link Game} and checks if objects are colliding.
+   * Gets the list of {@link GameObject}s from the {@link Level} and checks if objects are colliding.
    * Adds the objects to their collidingObjects lists if they are colliding.
    * @param objects
    */
@@ -162,7 +162,7 @@ public class PhysicsEngine implements Runnable {
   }
 
   /**
-   * Gets the list of {@link GameObject}s from the {@link Game} and calls their {@link GameObject#updatePosition()} methods.
+   * Gets the list of {@link GameObject}s from the {@link Level} and calls their {@link GameObject#updatePosition()} methods.
    * @param objects
    */
   public static void updatePositions(ArrayList<GameObject> objects) {

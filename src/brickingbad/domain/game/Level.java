@@ -24,9 +24,9 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-public class Game {
+public class Level {
 
-    private static Game instance;
+    private static Level instance;
 
     private Paddle paddle;
     private ArrayList<Ball> balls;
@@ -57,7 +57,7 @@ public class Game {
     private ArrayList<AnimationListener> animationListeners;
 
     // CONSTRUCTION AND INITIALIZATION
-    private Game() {
+    private Level() {
         objectListeners = new ArrayList<>();
         errorListeners = new ArrayList<>();
         animationListeners = new ArrayList<>();
@@ -74,9 +74,9 @@ public class Game {
         brickGrid = new boolean[gridX][gridY];
     }
 
-    public static Game getInstance() {
+    public static Level getInstance() {
         if (instance == null) {
-            instance = new Game();
+            instance = new Level();
         }
         return instance;
     }

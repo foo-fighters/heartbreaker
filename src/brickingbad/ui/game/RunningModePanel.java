@@ -98,7 +98,7 @@ public class RunningModePanel extends JPanel implements GameListener, AnimationL
       UIGameObject object = iterator.next();
       object.paintComponent(g);
     }
-    drawHearts(g, Game.getInstance().getLives());
+    drawHearts(g, Level.getInstance().getLives());
   }
 
 
