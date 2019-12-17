@@ -1,14 +1,16 @@
 package brickingbad.ui;
 
-import brickingbad.domain.game.listeners.GameStateListener;
 import brickingbad.domain.physics.PhysicsEngine;
+import brickingbad.ui.game.BuildingModePanel;
+import brickingbad.ui.game.RunningModePanel;
 import brickingbad.ui.game.animation.Animator;
 
-public class UIController implements GameStateListener {
+public class UIController {
 
     private static UIController instance;
 
     private UIController() {
+
     }
 
     public static UIController getInstance() {
@@ -38,6 +40,11 @@ public class UIController implements GameStateListener {
 
     public void showWinDialog() {
         BrickingBadFrame.getInstance().showWonDialog();
+    }
+
+    public static void resetUI() {
+        RunningModePanel.getInstance().resetUI();
+        BuildingModePanel.getInstance().resetUI();
     }
 
 }

@@ -4,7 +4,7 @@ import brickingbad.controller.GameController;
 import brickingbad.domain.game.*;
 import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.listeners.AnimationListener;
-import brickingbad.domain.game.listeners.LevelListener;
+import brickingbad.domain.game.listeners.GameListener;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.GameButtonPanel;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class RunningModePanel extends JPanel implements LevelListener, AnimationListener {
+public class RunningModePanel extends JPanel implements GameListener, AnimationListener {
 
   private static RunningModePanel instance;
 
@@ -36,6 +36,7 @@ public class RunningModePanel extends JPanel implements LevelListener, Animation
   private JLabel scoreLabel;
   private BufferedImage background;
 
+  private int numHearts;
   private BufferedImage heart;
   private BufferedImage heart_empty;
 
@@ -88,6 +89,16 @@ public class RunningModePanel extends JPanel implements LevelListener, Animation
   }
 
   @Override
+  public void updateLives(int lives) {
+    numHearts = lives;
+  }
+
+  @Override
+  public void updateScore(int score) {
+    gameButtonPanel.setUIScore(score);
+  }
+
+  @Override
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
@@ -99,7 +110,7 @@ public class RunningModePanel extends JPanel implements LevelListener, Animation
       UIGameObject object = iterator.next();
       object.paintComponent(g);
     }
-    drawHearts(g, Level.getInstance().getLives());
+    drawHearts(g, numHearts);
   }
 
 
@@ -127,7 +138,7 @@ public class RunningModePanel extends JPanel implements LevelListener, Animation
     }
   }
 
-  public void reset(){
+  public void reset() {
 
   }
 
@@ -135,14 +146,13 @@ public class RunningModePanel extends JPanel implements LevelListener, Animation
     loadBackgroundImage("resources/sprites/godmode.png");
   }
 
-  public void drawHearts(Graphics g, int livesLeft){
+  public void drawHearts(Graphics g, int livesLeft) {
     int iteration = 0;
-
-    for (int i = 0; i < livesLeft; i++){
+    for (int i = 0; i < livesLeft; i++) {
       g.drawImage(heart,getWidth()-150 + iteration,getHeight()-50, GameConstants.heartSize,GameConstants.heartSize,null);
       iteration += GameConstants.heartSize + 10;
     }
-    for (int i = 0; i < (3-livesLeft); i++){
+    for (int i = 0; i < (3-livesLeft); i++) {
       g.drawImage(heart_empty,getWidth()-150 + iteration,getHeight()-50, GameConstants.heartSize,GameConstants.heartSize,null);
       iteration += GameConstants.heartSize + 10;
     }
@@ -150,14 +160,6 @@ public class RunningModePanel extends JPanel implements LevelListener, Animation
 
   public void resetUI() {
     uiObjects = new CopyOnWriteArrayList<>();
-  }
-
-  public void setScore(int score) {
-    gameButtonPanel.setUIScore(score);
-  }
-
-  public ArrayList<Animation> getCurrentAnimations() {
-    return currentAnimations;
   }
 
   @Override

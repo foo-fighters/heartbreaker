@@ -1,20 +1,18 @@
 package brickingbad.domain.game;
 
-import brickingbad.controller.GameController;
 import brickingbad.domain.game.gameobjects.Ball;
 import brickingbad.domain.game.gameobjects.GameObjectFactory;
 import brickingbad.domain.game.gameobjects.Paddle;
 import brickingbad.domain.game.gameobjects.alien.*;
 import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.listeners.AnimationListener;
-import brickingbad.domain.game.listeners.LevelListener;
+import brickingbad.domain.game.listeners.GameListener;
 import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.game.gameobjects.border.*;
 import brickingbad.domain.game.gameobjects.brick.*;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.domain.physics.Vector;
-import brickingbad.ui.UIController;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.Clock;
@@ -48,12 +46,12 @@ public class Level {
     private boolean alreadyWon;
     private static final Random random = new Random();
 
-    private ArrayList<LevelListener> objectListeners;
+    private ArrayList<GameListener> gameListeners;
     private ArrayList<AnimationListener> animationListeners;
 
     // CONSTRUCTION AND INITIALIZATION
     private Level() {
-        objectListeners = new ArrayList<>();
+        gameListeners = new ArrayList<>();
         animationListeners = new ArrayList<>();
         balls = new ArrayList<>();
         bricks = new ArrayList<>();
@@ -106,7 +104,9 @@ public class Level {
             trackObject(paddle);
             trackObject(firstBall);
         }
-        GameController.getInstance().setUIScore(score);
+
+        publishLives();
+        publishScore();
     }
 
     public void play() {
@@ -121,16 +121,28 @@ public class Level {
     }
 
     // LISTENER FUNCTIONS
-    public void addObjectListener(LevelListener listener) {
-        objectListeners.add(listener);
-    }
-
-    public void addAnimationListener(AnimationListener anim) {
-        animationListeners.add(anim);
+    public void addGameListener(GameListener lis) {
+        gameListeners.add(lis);
     }
 
     private void removeObjectFromListeners(GameObject object) {
-        objectListeners.forEach(listener -> listener.removeObject(object));
+        gameListeners.forEach(lis -> lis.removeObject(object));
+    }
+
+    private void publishLives() {
+        for (GameListener lis : gameListeners) {
+            lis.updateLives(lives);
+        }
+    }
+
+    private void publishScore() {
+        for (GameListener lis : gameListeners) {
+            lis.updateScore(score);
+        }
+    }
+
+    public void addAnimationListener(AnimationListener lis) {
+        animationListeners.add(lis);
     }
 
     public void startAnimation(String animationName, Object... args) {
@@ -165,8 +177,8 @@ public class Level {
 
     private void trackObject(GameObject object) {
         gameObjects.add(object);
-        for (LevelListener listener : objectListeners) {
-            listener.addObject(object);
+        for (GameListener lis : gameListeners) {
+            lis.addObject(object);
         }
     }
 
@@ -264,22 +276,23 @@ public class Level {
             lives = lives - 1;
             resetBall();
         }else {
-            UIController.getInstance().stopAnimator();
-            UIController.getInstance().showDeadDialog();
+            //UIController.getInstance().stopAnimator();
+            //UIController.getInstance().showDeadDialog();
         }
+        publishLives();
     }
 
     private void winGame() {
         if (!alreadyWon) {
-            UIController.getInstance().stopAnimator();
-            UIController.getInstance().showWinDialog();
+            //UIController.getInstance().stopAnimator();
+            //UIController.getInstance().showWinDialog();
             alreadyWon = true;
         }
     }
 
     public void increaseScore() {
         score += 300/(PhysicsEngine.getInstance().getTimePassed()/1000);
-        GameController.getInstance().setUIScore(score);
+        publishScore();
     }
 
     // GETTERS & SETTERS

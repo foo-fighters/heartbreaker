@@ -4,13 +4,10 @@ import brickingbad.domain.game.GameLogic;
 import brickingbad.domain.game.gameobjects.GameObjectFactory;
 import brickingbad.domain.game.Level;
 import brickingbad.domain.game.listeners.AnimationListener;
-import brickingbad.domain.game.listeners.LevelListener;
+import brickingbad.domain.game.listeners.GameListener;
 import brickingbad.domain.game.WrapperContent;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.PhysicsEngine;
-import brickingbad.ui.game.BuildingModePanel;
-import brickingbad.ui.game.RunningModePanel;
-
 
 public class GameController {
 
@@ -24,11 +21,6 @@ public class GameController {
             instance = new GameController();
         }
         return instance;
-    }
-
-    public static void resetUI() {
-        RunningModePanel.getInstance().resetUI();
-        BuildingModePanel.getInstance().resetUI();
     }
 
     public void initializeGame(boolean fromSave) {
@@ -67,8 +59,8 @@ public class GameController {
         return GameLogic.checkBrickCount();
     }
 
-    public void addObjectListener(LevelListener listener) {
-        Level.getInstance().addObjectListener(listener);
+    public void addObjectListener(GameListener listener) {
+        Level.getInstance().addGameListener(listener);
     }
 
     public void addAnimationListener(AnimationListener listener) {
@@ -76,7 +68,6 @@ public class GameController {
     }
 
     public void invokeGodMode() {
-        RunningModePanel.getInstance().invokeGodMode();
         GameLogic.invokeGodMode();
     }
 
@@ -87,10 +78,6 @@ public class GameController {
     public void resetScore() {
         PhysicsEngine.getInstance().resetTimePassed();
         Level.getInstance().setScore(0);
-        setUIScore(0);
     }
 
-    public void setUIScore(int score){
-        RunningModePanel.getInstance().setScore(score);
-    }
 }

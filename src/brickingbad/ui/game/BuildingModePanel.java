@@ -2,7 +2,7 @@ package brickingbad.ui.game;
 
 import brickingbad.domain.game.*;
 import brickingbad.domain.game.gameobjects.GameObject;
-import brickingbad.domain.game.listeners.LevelListener;
+import brickingbad.domain.game.listeners.GameListener;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.BrickCountPanel;
@@ -17,7 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class BuildingModePanel extends JPanel implements LevelListener {
+public class BuildingModePanel extends JPanel implements GameListener {
 
     private static BuildingModePanel instance;
 
@@ -34,7 +34,7 @@ public class BuildingModePanel extends JPanel implements LevelListener {
         uiObjects = new ArrayList<>();
         initUI();
         loadBackgroundImage();
-        Level.getInstance().addObjectListener(this);
+        Level.getInstance().addGameListener(this);
     }
 
     public static BuildingModePanel getInstance() {
@@ -76,6 +76,14 @@ public class BuildingModePanel extends JPanel implements LevelListener {
     @Override
     public void removeObject(GameObject object) {
         uiObjects.removeIf(uiGameObject -> uiGameObject.containsObject(object));
+    }
+
+    @Override
+    public void updateLives(int lives) {
+    }
+
+    @Override
+    public void updateScore(int score) {
     }
 
 

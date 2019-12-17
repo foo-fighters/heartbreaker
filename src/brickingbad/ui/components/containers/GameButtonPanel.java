@@ -58,7 +58,7 @@ public class GameButtonPanel extends JPanel implements ActionListener {
       pauseButton.toggleText("PAUSE", "RESUME");
       UIController.getInstance().togglePauseResume();
     } else if (e.getSource().equals(quitButton)) {
-      GameController.getInstance().resetUI();
+      UIController.getInstance().resetUI();
       GameController.getInstance().resetScore();
       BrickingBadFrame.getInstance().showMainMenuPanel();
       pauseButton.setText("PAUSE");
