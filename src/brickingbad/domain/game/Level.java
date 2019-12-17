@@ -156,7 +156,10 @@ public class Level {
         trackObject(object);
         if(object instanceof Brick) bricks.add((Brick) object);
         if(object instanceof Ball) balls.add((Ball) object);
-        if(object instanceof Alien) aliens.add((Alien) object);
+        if(object instanceof Alien) {
+            aliens.add((Alien) object);
+            activeAliens.add((Alien) object);
+        }
     }
 
     private void trackObject(GameObject object) {
@@ -191,32 +194,6 @@ public class Level {
         return count;
     }
 
-    public void increaseScore() {
-        score += 300/(PhysicsEngine.getInstance().getTimePassed()/1000);
-        GameController.getInstance().setUIScore(score);
-    }
-
-    public void addBrickHorizontal() {
-        boolean overlaps = false;
-        int y = ThreadLocalRandom.current().nextInt(gridY);
-        int x = GameConstants.rectangularBrickLength / 2;
-        while(x <= GameConstants.screenWidth) {
-            SimpleBrick brick = new SimpleBrick();
-            brick.setPosition(new Vector(x, y));
-            ArrayList<GameObject> objectsCopy = new ArrayList<>(gameObjects);
-            for(GameObject object: objectsCopy) {
-                if(PhysicsEngine.areColliding(object, brick)) {
-                    overlaps = true;
-                    break;
-                }
-            }
-            if(!overlaps) {
-               addObject(brick);
-            }
-            x += GameConstants.rectangularBrickLength;
-        }
-    }
-
     // WRAPPER CONTENTS
     public void addWrapperContent() {
         if(wrapperContentList.size() < WrapperContent.values().length) {
@@ -230,7 +207,7 @@ public class Level {
         if(wrapperContentList.size() > 0) {
             WrapperContent content = wrapperContentList.remove(random.nextInt(wrapperContentList.size()));
             if(content.ordinal() < 6) {
-                spawnPowerup(content, revealPosition);
+                GameObjectFactory.getInstance().spawnPowerup(content, revealPosition);
             }else {
                 if(activeAliens.stream().map(Alien::getName).collect(Collectors.toList()).contains(content)) {
                     return;
@@ -241,30 +218,6 @@ public class Level {
     }
 
     // POWER-UPS
-    private void spawnPowerup(WrapperContent content, Vector revealPosition) {
-        switch (content) {
-            case FIREBALL:
-                trackObject(new Fireball(revealPosition));
-                break;
-            case CHEMICAL_BALL:
-                trackObject(new ChemicalBall(revealPosition));
-                break;
-            case DESTRUCTIVE_LASER_GUN:
-                trackObject(new DestructiveLaserGun(revealPosition));
-                break;
-            case MAGNET:
-                trackObject(new Magnet(revealPosition));
-                break;
-            case TALLER_PADDLE:
-                trackObject(new TallerPaddle(revealPosition));
-                break;
-            case GANG_OF_BALLS:
-                GameLogic.spawnGangOfBalls(revealPosition);
-                break;
-            default:
-        }
-    }
-
     public void storePowerUp(PowerUp powerup) {
         if(storedPowerUps.stream().map(PowerUp::getName).collect(Collectors.toList()).contains(powerup.getName())
                 || activePowerUps.stream().map(PowerUp::getName).collect(Collectors.toList()).contains(powerup.getName())) {
@@ -321,6 +274,11 @@ public class Level {
             GameController.getInstance().showWinDialog();
             alreadyWon = true;
         }
+    }
+
+    public void increaseScore() {
+        score += 300/(PhysicsEngine.getInstance().getTimePassed()/1000);
+        GameController.getInstance().setUIScore(score);
     }
 
     // GETTERS & SETTERS

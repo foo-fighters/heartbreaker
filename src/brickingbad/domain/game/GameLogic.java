@@ -117,7 +117,7 @@ public class GameLogic {
         return rowBricks.get(0);
     }
 
-    static void spawnGangOfBalls(Vector revealPosition) {
+    public static void spawnGangOfBalls(Vector revealPosition) {
         double minimumDistance = GameConstants.screenWidth;
         GameObject closestBall = null;
         for (GameObject object: objectsCopy()) {
@@ -131,7 +131,6 @@ public class GameLogic {
             }
         }
         if(minimumDistance < GameConstants.rectangularBrickLength + GameConstants.ballSize) {
-            System.out.println(((Ball) closestBall).getBallState().getClass().getSimpleName());
             for(int i = 0; i < GameConstants.gangOfBallsMultiplier; i++) {
                 Ball ball = new Ball(revealPosition);
                 ball.startMovement((360.0 / GameConstants.gangOfBallsMultiplier) * i, ((Ball) closestBall).getSpeed());

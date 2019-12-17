@@ -1,10 +1,13 @@
 package brickingbad.domain.game.gameobjects;
 
 import brickingbad.domain.game.GameConstants;
+import brickingbad.domain.game.GameLogic;
 import brickingbad.domain.game.Level;
 import brickingbad.domain.game.WrapperContent;
 import brickingbad.domain.game.gameobjects.alien.*;
 import brickingbad.domain.game.gameobjects.brick.Brick;
+import brickingbad.domain.game.gameobjects.brick.SimpleBrick;
+import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.domain.physics.Vector;
 
@@ -49,6 +52,27 @@ public class GameObjectFactory {
         Level.getInstance().addObject(brick);
     }
 
+    public void addBrickHorizontal() {
+        boolean overlaps = false;
+        int y = ThreadLocalRandom.current().nextInt(Level.getInstance().getGridY());
+        int x = GameConstants.rectangularBrickLength / 2;
+        while(x <= GameConstants.screenWidth) {
+            SimpleBrick brick = new SimpleBrick();
+            brick.setPosition(new Vector(x, y));
+            ArrayList<GameObject> objectsCopy = new ArrayList<>(Level.getInstance().getObjects());
+            for(GameObject object: objectsCopy) {
+                if(PhysicsEngine.areColliding(object, brick)) {
+                    overlaps = true;
+                    break;
+                }
+            }
+            if(!overlaps) {
+                Level.getInstance().addObject(brick);
+            }
+            x += GameConstants.rectangularBrickLength;
+        }
+    }
+
     public void spawnAlien(WrapperContent content) {
         Alien alien = null;
         switch (content) {
@@ -66,6 +90,7 @@ public class GameObjectFactory {
                 break;
             default:
         }
+        assert alien != null;
         ArrayList<Alien> aliensCopy = new ArrayList<>(Level.getInstance().getActiveAliens());
         boolean overlaps = true;
         while(overlaps) {
@@ -74,7 +99,6 @@ public class GameObjectFactory {
                     ThreadLocalRandom.current().nextDouble() * (GameConstants.screenWidth - GameConstants.alienSize);
             double spawnY = (GameConstants.screenHeight - GameConstants.paddleAreaHeight - GameConstants.alienSize / 2.0) -
                     ThreadLocalRandom.current().nextDouble() * (GameConstants.alienAreaHeight - GameConstants.alienSize);
-            assert alien != null;
             alien.setPosition(new Vector(spawnX, spawnY));
             for(GameObject object: aliensCopy) {
                 if(PhysicsEngine.areColliding(object, alien)) {
@@ -83,7 +107,33 @@ public class GameObjectFactory {
                 }
             }
         }
-        Level.getInstance().getActiveAliens().add(alien);
         Level.getInstance().addObject(alien);
+    }
+
+    public void spawnPowerup(WrapperContent content, Vector revealPosition) {
+        PowerUp power = null;
+        switch (content) {
+            case FIREBALL:
+                power = new Fireball(revealPosition);
+                break;
+            case CHEMICAL_BALL:
+                power = new ChemicalBall(revealPosition);
+                break;
+            case DESTRUCTIVE_LASER_GUN:
+                power = new DestructiveLaserGun(revealPosition);
+                break;
+            case MAGNET:
+                power = new Magnet(revealPosition);
+                break;
+            case TALLER_PADDLE:
+                power = new TallerPaddle(revealPosition);
+                break;
+            case GANG_OF_BALLS:
+                GameLogic.spawnGangOfBalls(revealPosition);
+                return;
+            default:
+        }
+        assert power != null;
+        Level.getInstance().addObject(power);
     }
 }

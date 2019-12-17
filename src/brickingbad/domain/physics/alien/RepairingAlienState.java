@@ -25,7 +25,7 @@ public class RepairingAlienState extends AlienState {
     @Override
     public void performAction() {
         if(drunk) {
-            Level.getInstance().addBrickHorizontal();
+            GameObjectFactory.getInstance().addBrickHorizontal();
         }else {
             long currentTime = Level.getInstance().getTime();
             if(currentTime - startTime > 1000 * cooldown) {
