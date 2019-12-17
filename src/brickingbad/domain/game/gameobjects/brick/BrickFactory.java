@@ -1,4 +1,4 @@
-package brickingbad.domain.game.brick;
+package brickingbad.domain.game.gameobjects.brick;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;

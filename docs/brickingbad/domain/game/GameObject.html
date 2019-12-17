@@ -6,7 +6,7 @@
 <title>GameObject</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="dc.created" content="2019-12-12">
-<meta name="description" content="declaration: package: brickingbad.domain.game, class: GameObject">
+<meta name="description" content="declaration: package: brickingbad.domain.level, class: GameObject">
 <meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../script-dir/jquery-ui.css" title="Style">
@@ -88,12 +88,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <!-- ======== START OF CLASS DATA ======== -->
 <main role="main">
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">brickingbad.domain.game</a></div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">brickingbad.domain.level</a></div>
 <h1 title="Class GameObject" class="title">Class GameObject</h1>
 </div>
 <div class="contentContainer">
 <div class="inheritance" title="Inheritance Tree">java.lang.Object
-<div class="inheritance">brickingbad.domain.game.GameObject</div>
+<div class="inheritance">brickingbad.domain.level.GameObject</div>
 </div>
 <section class="description">
 <dl>
@@ -102,7 +102,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="alien/Alien.html" title="class in brickingbad.domain.game.alien">Alien</a></code>, <code><a href="Ball.html" title="class in brickingbad.domain.game">Ball</a></code>, <code><a href="brick/Brick.html" title="class in brickingbad.domain.game.brick">Brick</a></code>, <code><a href="border/Ground.html" title="class in brickingbad.domain.game.border">Ground</a></code>, <code><a href="Paddle.html" title="class in brickingbad.domain.game">Paddle</a></code>, <code><a href="powerup/PowerUp.html" title="class in brickingbad.domain.game.powerup">PowerUp</a></code>, <code><a href="border/Wall.html" title="class in brickingbad.domain.game.border">Wall</a></code></dd>
+<dd><code><a href="alien/Alien.html" title="class in brickingbad.domain.level.alien">Alien</a></code>, <code><a href="Ball.html" title="class in brickingbad.domain.level">Ball</a></code>, <code><a href="brick/Brick.html" title="class in brickingbad.domain.level.brick">Brick</a></code>, <code><a href="border/Ground.html" title="class in brickingbad.domain.level.border">Ground</a></code>, <code><a href="Paddle.html" title="class in brickingbad.domain.level">Paddle</a></code>, <code><a href="powerup/PowerUp.html" title="class in brickingbad.domain.level.powerup">PowerUp</a></code>, <code><a href="border/Wall.html" title="class in brickingbad.domain.level.border">Wall</a></code></dd>
 </dl>
 <hr>
 <pre>public abstract class <span class="typeNameLabel">GameObject</span>
@@ -134,7 +134,7 @@ implements java.lang.Comparable</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected java.util.ArrayList&lt;<a href="GameObject.html" title="class in brickingbad.domain.game">GameObject</a>&gt;</code></td>
+<td class="colFirst"><code>protected java.util.ArrayList&lt;<a href="GameObject.html" title="class in brickingbad.domain.level">GameObject</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#collidedObjects">collidedObjects</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -154,7 +154,7 @@ implements java.lang.Comparable</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected <a href="Shape.html" title="enum in brickingbad.domain.game">Shape</a></code></td>
+<td class="colFirst"><code>protected <a href="Shape.html" title="enum in brickingbad.domain.level">Shape</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#shape">shape</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -218,12 +218,12 @@ implements java.lang.Comparable</pre>
 <tbody>
 <tr class="altColor" id="i0">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addCollidedObject(brickingbad.domain.game.GameObject)">addCollidedObject</a></span>&#8203;(<a href="GameObject.html" title="class in brickingbad.domain.game">GameObject</a>&nbsp;collidedObject)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addCollidedObject(brickingbad.domain.level.GameObject)">addCollidedObject</a></span>&#8203;(<a href="GameObject.html" title="class in brickingbad.domain.level">GameObject</a>&nbsp;collidedObject)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#collide(brickingbad.domain.game.GameObject)">collide</a></span>&#8203;(<a href="GameObject.html" title="class in brickingbad.domain.game">GameObject</a>&nbsp;object)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#collide(brickingbad.domain.level.GameObject)">collide</a></span>&#8203;(<a href="GameObject.html" title="class in brickingbad.domain.level">GameObject</a>&nbsp;object)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor" id="i2">
@@ -242,7 +242,7 @@ implements java.lang.Comparable</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor" id="i5">
-<td class="colFirst"><code>java.util.ArrayList&lt;<a href="GameObject.html" title="class in brickingbad.domain.game">GameObject</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.ArrayList&lt;<a href="GameObject.html" title="class in brickingbad.domain.level">GameObject</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCollidedObjects()">getCollidedObjects</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -257,7 +257,7 @@ implements java.lang.Comparable</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor" id="i8">
-<td class="colFirst"><code><a href="Shape.html" title="enum in brickingbad.domain.game">Shape</a></code></td>
+<td class="colFirst"><code><a href="Shape.html" title="enum in brickingbad.domain.level">Shape</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getShape()">getShape</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -283,7 +283,7 @@ implements java.lang.Comparable</pre>
 </tr>
 <tr class="rowColor" id="i13">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCollidedObject(brickingbad.domain.game.GameObject)">removeCollidedObject</a></span>&#8203;(<a href="GameObject.html" title="class in brickingbad.domain.game">GameObject</a>&nbsp;collidedObject)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCollidedObject(brickingbad.domain.level.GameObject)">removeCollidedObject</a></span>&#8203;(<a href="GameObject.html" title="class in brickingbad.domain.level">GameObject</a>&nbsp;collidedObject)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor" id="i14">
@@ -308,7 +308,7 @@ implements java.lang.Comparable</pre>
 </tr>
 <tr class="altColor" id="i18">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setShape(brickingbad.domain.game.Shape)">setShape</a></span>&#8203;(<a href="Shape.html" title="enum in brickingbad.domain.game">Shape</a>&nbsp;shape)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setShape(brickingbad.domain.level.Shape)">setShape</a></span>&#8203;(<a href="Shape.html" title="enum in brickingbad.domain.level">Shape</a>&nbsp;shape)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor" id="i19">
@@ -351,7 +351,7 @@ implements java.lang.Comparable</pre>
 <li class="blockList">
 <section class="detail">
 <h3><a id="shape">shape</a></h3>
-<div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType"><a href="Shape.html" title="enum in brickingbad.domain.game">Shape</a></span>&nbsp;<span class="memberName">shape</span></div>
+<div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType"><a href="Shape.html" title="enum in brickingbad.domain.level">Shape</a></span>&nbsp;<span class="memberName">shape</span></div>
 </section>
 </li>
 <li class="blockList">
@@ -387,7 +387,7 @@ implements java.lang.Comparable</pre>
 <li class="blockList">
 <section class="detail">
 <h3><a id="collidedObjects">collidedObjects</a></h3>
-<div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType">java.util.ArrayList&lt;<a href="GameObject.html" title="class in brickingbad.domain.game">GameObject</a>&gt;</span>&nbsp;<span class="memberName">collidedObjects</span></div>
+<div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType">java.util.ArrayList&lt;<a href="GameObject.html" title="class in brickingbad.domain.level">GameObject</a>&gt;</span>&nbsp;<span class="memberName">collidedObjects</span></div>
 </section>
 </li>
 <li class="blockList">
@@ -430,8 +430,8 @@ implements java.lang.Comparable</pre>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="collide(brickingbad.domain.game.GameObject)">collide</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">collide</span>&#8203;(<span class="arguments"><a href="GameObject.html" title="class in brickingbad.domain.game">GameObject</a>&nbsp;object)</span></div>
+<h3><a id="collide(brickingbad.domain.level.GameObject)">collide</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">collide</span>&#8203;(<span class="arguments"><a href="GameObject.html" title="class in brickingbad.domain.level">GameObject</a>&nbsp;object)</span></div>
 </section>
 </li>
 <li class="blockList">
@@ -443,13 +443,13 @@ implements java.lang.Comparable</pre>
 <li class="blockList">
 <section class="detail">
 <h3><a id="getShape()">getShape</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Shape.html" title="enum in brickingbad.domain.game">Shape</a></span>&nbsp;<span class="memberName">getShape</span>()</div>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Shape.html" title="enum in brickingbad.domain.level">Shape</a></span>&nbsp;<span class="memberName">getShape</span>()</div>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="setShape(brickingbad.domain.game.Shape)">setShape</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setShape</span>&#8203;(<span class="arguments"><a href="Shape.html" title="enum in brickingbad.domain.game">Shape</a>&nbsp;shape)</span></div>
+<h3><a id="setShape(brickingbad.domain.level.Shape)">setShape</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setShape</span>&#8203;(<span class="arguments"><a href="Shape.html" title="enum in brickingbad.domain.level">Shape</a>&nbsp;shape)</span></div>
 </section>
 </li>
 <li class="blockList">
@@ -503,19 +503,19 @@ implements java.lang.Comparable</pre>
 <li class="blockList">
 <section class="detail">
 <h3><a id="getCollidedObjects()">getCollidedObjects</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.util.ArrayList&lt;<a href="GameObject.html" title="class in brickingbad.domain.game">GameObject</a>&gt;</span>&nbsp;<span class="memberName">getCollidedObjects</span>()</div>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.util.ArrayList&lt;<a href="GameObject.html" title="class in brickingbad.domain.level">GameObject</a>&gt;</span>&nbsp;<span class="memberName">getCollidedObjects</span>()</div>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="addCollidedObject(brickingbad.domain.game.GameObject)">addCollidedObject</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">addCollidedObject</span>&#8203;(<span class="arguments"><a href="GameObject.html" title="class in brickingbad.domain.game">GameObject</a>&nbsp;collidedObject)</span></div>
+<h3><a id="addCollidedObject(brickingbad.domain.level.GameObject)">addCollidedObject</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">addCollidedObject</span>&#8203;(<span class="arguments"><a href="GameObject.html" title="class in brickingbad.domain.level">GameObject</a>&nbsp;collidedObject)</span></div>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="removeCollidedObject(brickingbad.domain.game.GameObject)">removeCollidedObject</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">removeCollidedObject</span>&#8203;(<span class="arguments"><a href="GameObject.html" title="class in brickingbad.domain.game">GameObject</a>&nbsp;collidedObject)</span></div>
+<h3><a id="removeCollidedObject(brickingbad.domain.level.GameObject)">removeCollidedObject</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">removeCollidedObject</span>&#8203;(<span class="arguments"><a href="GameObject.html" title="class in brickingbad.domain.level">GameObject</a>&nbsp;collidedObject)</span></div>
 </section>
 </li>
 <li class="blockList">

@@ -1,4 +1,4 @@
-import brickingbad.domain.game.brick.*;
+import brickingbad.domain.game.gameobjects.brick.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +14,7 @@ public class BrickFactoryTest {
 
     @Before
     public void setUp() {
-        brickFactory = brickingbad.domain.game.brick.BrickFactory.getInstance();
+        brickFactory = brickingbad.domain.game.gameobjects.brick.BrickFactory.getInstance();
     }
 
     @Test
@@ -25,10 +25,10 @@ public class BrickFactoryTest {
     @Test
     public void isBrickReturnedByTypeTest() throws ClassNotFoundException, NoSuchMethodException,
             InstantiationException, IllegalAccessException, InvocationTargetException {
-        Brick simpleBrick = brickFactory.createBrick("brickingbad.domain.game.brick.SimpleBrick");
-        Brick mineBrick =  brickFactory.createBrick("brickingbad.domain.game.brick.MineBrick");
-        Brick wrapperBrick = brickFactory.createBrick("brickingbad.domain.game.brick.WrapperBrick");
-        Brick halfMetalBrick = brickFactory.createBrick("brickingbad.domain.game.brick.HalfMetalBrick");
+        Brick simpleBrick = brickFactory.createBrick("brickingbad.domain.game.gameobjects.brick.SimpleBrick");
+        Brick mineBrick =  brickFactory.createBrick("brickingbad.domain.game.gameobjects.brick.MineBrick");
+        Brick wrapperBrick = brickFactory.createBrick("brickingbad.domain.game.gameobjects.brick.WrapperBrick");
+        Brick halfMetalBrick = brickFactory.createBrick("brickingbad.domain.game.gameobjects.brick.HalfMetalBrick");
         assertTrue(simpleBrick instanceof SimpleBrick);
         assertTrue(halfMetalBrick instanceof HalfMetalBrick);
         assertTrue(mineBrick instanceof MineBrick);

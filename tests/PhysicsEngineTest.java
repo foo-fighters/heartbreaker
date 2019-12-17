@@ -1,7 +1,7 @@
-import brickingbad.domain.game.Ball;
+import brickingbad.domain.game.gameobjects.Ball;
 import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.GameObject;
-import brickingbad.domain.game.brick.SimpleBrick;
+import brickingbad.domain.game.gameobjects.GameObject;
+import brickingbad.domain.game.gameobjects.brick.SimpleBrick;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.domain.physics.Vector;
 import org.junit.Before;
@@ -85,18 +85,18 @@ public class PhysicsEngineTest {
   }
 
   @Test
-  public void testMixedColliding() {
+  public void testAreCollidingCircleRect() {
     brick1.setSize(new Vector(6, 6));
     ball1.setSize(new Vector(2, 2));
     brick1.setPosition(new Vector(0, 0));
     ball1.setPosition(new Vector(0, -3.5));
-    assertTrue(engine.mixedColliding(ball1, brick1));
+    assertTrue(engine.areColliding(ball1, brick1));
     ball1.setPosition(new Vector(0, -5));
-    assertFalse(engine.mixedColliding(ball1, brick1));
+    assertFalse(engine.areColliding(brick1, ball1));
     ball1.setPosition(new Vector(3.5, 3.5));
-    assertTrue(engine.mixedColliding(ball1, brick1));
+    assertTrue(engine.areColliding(ball1, brick1));
     ball1.setPosition(new Vector(4.5, 4.5));
-    assertFalse(engine.mixedColliding(ball1, brick1));
+    assertFalse(engine.areColliding(brick1, ball1));
   }
 
 }

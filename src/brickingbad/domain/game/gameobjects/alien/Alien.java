@@ -1,10 +1,10 @@
-package brickingbad.domain.game.alien;
+package brickingbad.domain.game.gameobjects.alien;
 
-import brickingbad.domain.game.Ball;
-import brickingbad.domain.game.Game;
-import brickingbad.domain.game.GameObject;
+import brickingbad.domain.game.gameobjects.Ball;
+import brickingbad.domain.game.Level;
+import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.WrapperContent;
-import brickingbad.domain.game.brick.Brick;
+import brickingbad.domain.game.gameobjects.brick.Brick;
 import brickingbad.domain.game.powerup.PowerUp;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.alien.AlienState;
@@ -35,7 +35,7 @@ public abstract class Alien extends GameObject {
     @Override
     public void destroy() {
         finishAction();
-        Game.getInstance().getActiveAliens().remove(this);
+        Level.getInstance().getActiveAliens().remove(this);
         super.destroy();
     }
 

@@ -1,13 +1,12 @@
 package brickingbad.domain.physics.ball;
 
-import brickingbad.domain.game.Ball;
-import brickingbad.domain.game.Game;
-import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.GameObject;
-import brickingbad.domain.game.alien.Alien;
-import brickingbad.domain.game.alien.ProtectingAlien;
-import brickingbad.domain.game.brick.Brick;
-import brickingbad.domain.game.brick.HalfMetalBrick;
+import brickingbad.domain.game.*;
+import brickingbad.domain.game.gameobjects.Ball;
+import brickingbad.domain.game.gameobjects.alien.Alien;
+import brickingbad.domain.game.gameobjects.alien.ProtectingAlien;
+import brickingbad.domain.game.gameobjects.brick.Brick;
+import brickingbad.domain.game.gameobjects.brick.HalfMetalBrick;
+import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.powerup.PowerUp;
 import brickingbad.domain.physics.Direction;
 
@@ -26,25 +25,25 @@ public class FireBallState extends BallState {
                 Direction dir = ball.getReflectionDirection();
                 if(dir == Direction.UP_LEFT || dir == Direction.UP || dir == Direction.UP_RIGHT) {
                     object.destroy();
-                    Game.getInstance().destroyBricksInRadius(object.getPosition(), GameConstants.fireBallDestructionRadius);
+                    GameLogic.destroyBricksInRadius(object.getPosition(), GameConstants.fireBallDestructionRadius);
                 }else if((dir == Direction.LEFT || dir == Direction.RIGHT)
                         && ball.getPosition().getY() < object.getPosition().getY()) {
                     object.destroy();
-                    Game.getInstance().destroyBricksInRadius(object.getPosition(), GameConstants.fireBallDestructionRadius);
+                    GameLogic.destroyBricksInRadius(object.getPosition(), GameConstants.fireBallDestructionRadius);
                 }else if(((HalfMetalBrick) object).isCracked()) {
                     object.destroy();
-                    Game.getInstance().destroyBricksInRadius(object.getPosition(), GameConstants.fireBallDestructionRadius);
+                    GameLogic.destroyBricksInRadius(object.getPosition(), GameConstants.fireBallDestructionRadius);
                 }else {
                     ((HalfMetalBrick) object).setCracked(true);
                 }
             }else if(object instanceof ProtectingAlien) {
                 Direction dir = ball.getReflectionDirection();
-                if(dir == Direction.UP_LEFT || dir == Direction.UP || dir == Direction.UP_RIGHT) {
+                if(dir == Direction.UP) {
                     object.destroy();
                 }
             }else{
                 object.destroy();
-                Game.getInstance().destroyBricksInRadius(object.getPosition(), GameConstants.fireBallDestructionRadius);
+                GameLogic.destroyBricksInRadius(object.getPosition(), GameConstants.fireBallDestructionRadius);
             }
         }
         ball.reflect(object);
