@@ -257,6 +257,11 @@ public class Game {
         trackObject(firstBall);
     }
 
+    public void addAlien(Alien alien) {
+        activeAliens.add(alien);
+        trackObject(alien);
+    }
+
     // BRICKS
     public int brickCount() {
         int count = 0;
