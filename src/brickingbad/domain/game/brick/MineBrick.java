@@ -1,5 +1,6 @@
 package brickingbad.domain.game.brick;
 
+import brickingbad.domain.game.GameLogic;
 import brickingbad.domain.game.Level;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.Shape;
@@ -39,7 +40,7 @@ public class MineBrick extends Brick {
     @Override
     public void destroy() {
         super.destroy();
-        Level.getInstance().destroyBricksInRadius(position, GameConstants.mineBrickExplosionRadius);
+        GameLogic.destroyBricksInRadius(position, GameConstants.mineBrickExplosionRadius);
     }
 
     @Override

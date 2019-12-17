@@ -1,33 +1,18 @@
 package brickingbad.domain.game;
 
 import brickingbad.domain.game.brick.*;
+import brickingbad.domain.physics.Vector;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class GameLogic {
 
-//    private static GameLogic instance;
-//    private ArrayList<ErrorListener> errorListeners;
-//
-//    public static GameLogic getInstance() {
-//        if (instance == null) {
-//            instance = new GameLogic();
-//        }
-//        return instance;
-//    }
-//
-//    private GameLogic() {
-//        errorListeners = new ArrayList<>();
-//    }
-//
-//    public void addErrorListener(ErrorListener err) {
-//        errorListeners.add(err);
-//    }
-//
-//    private void sendError(String err){
-//        errorListeners.forEach(errorListener -> errorListener.showError(err));
-//    }
+    private static ArrayList<GameObject> objectsCopy() {
+        return new ArrayList<>(Level.getInstance().getObjects());
+    }
 
     public static String checkBrickCount() {
         AtomicInteger simpleBrickCount = new AtomicInteger();
@@ -72,5 +57,57 @@ public class GameLogic {
         }
         System.out.println(warning);
         return warning;
+    }
+
+    public static void destroyBricksInRadius(Vector center, double radius) {
+        double xdist;
+        double ydist;
+        for (GameObject object: objectsCopy()) {
+            if(object instanceof Brick) {
+                xdist = center.getX() - object.getPosition().getX();
+                ydist = center.getY() - object.getPosition().getY();
+                if(Math.hypot(xdist, ydist) < radius) {
+                    object.destroy();
+                }
+            }
+        }
+        Level.getInstance().startAnimation("ExplosionAnimation", center, radius);
+    }
+
+    public static Vector getClosestGridLocation(Vector pos) {
+        int indX = Math.floorDiv((int) pos.getX(), GameConstants.rectangularBrickLength);
+        int indY = Math.floorDiv((int) (pos.getY() - GameConstants.menuAreaHeight), GameConstants.rectangularBrickThickness);
+        return new Vector(indX, indY);
+    }
+
+    public static double getBrickRowHeight() {
+        boolean empty = true;
+        double rowHeight = 0.0;
+        int count = 0;
+        while(empty && count < 1000) {
+            int row = ThreadLocalRandom.current().nextInt(Level.getInstance().getGridX());
+            rowHeight = GameConstants.menuAreaHeight + GameConstants.rectangularBrickThickness / 2.0 +
+                    row * GameConstants.rectangularBrickThickness;
+            for(GameObject object: objectsCopy()) {
+                if (object.getPosition().getY() == rowHeight) {
+                    empty = false;
+                    break;
+                }
+            }
+            count++;
+        }
+        return rowHeight;
+    }
+
+    public static Brick nextBrickInRow(double rowHeight) {
+        ArrayList<Brick> rowBricks = new ArrayList<>();
+        for(GameObject object: objectsCopy()) {
+            if(object instanceof Brick && object.getPosition().getY() == rowHeight) {
+                rowBricks.add((Brick) object);
+            }
+        }
+        rowBricks.sort(Comparator.comparingDouble(o -> o.getPosition().getX()));
+        if(rowBricks.isEmpty()) return null;
+        return rowBricks.get(0);
     }
 }

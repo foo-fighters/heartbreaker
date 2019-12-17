@@ -1,5 +1,6 @@
 package brickingbad.domain.physics.alien;
 
+import brickingbad.domain.game.GameLogic;
 import brickingbad.domain.game.Level;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.alien.Alien;
@@ -17,7 +18,7 @@ public class CooperativeAlienState extends AlienState {
         this.alien = alien;
         this.drunk = alien instanceof DrunkAlien;
         this.startTime = Level.getInstance().getTime();
-        this.rowHeight = Level.getInstance().getBrickRowHeight();
+        this.rowHeight = GameLogic.getBrickRowHeight();
         if(drunk) {
             Level.getInstance().startAnimation("DrunkAlienRowAnimation", rowHeight);
         }else {
@@ -29,11 +30,11 @@ public class CooperativeAlienState extends AlienState {
     public void performAction() {
         long currentTime = Level.getInstance().getTime();
         if(currentTime - startTime > 1000 * cooldown) {
-            Brick nextBrick = Level.getInstance().nextBrickInRow(rowHeight);
+            Brick nextBrick = GameLogic.nextBrickInRow(rowHeight);
             if (nextBrick == null) {
                 finishAction();
                 if(drunk) {
-                    rowHeight = Level.getInstance().getBrickRowHeight();
+                    rowHeight = GameLogic.getBrickRowHeight();
                     Level.getInstance().startAnimation("DrunkAlienRowAnimation", rowHeight);
                 }else {
                     alien.destroy();

@@ -28,8 +28,6 @@ public class Level {
 
     private Paddle paddle;
     private ArrayList<Ball> balls;
-    private Ground ground;
-    private ArrayList<Wall> walls;
     private ArrayList<Brick> bricks;
     private ArrayList<Alien> aliens;
     private ArrayList<GameObject> gameObjects;
@@ -58,7 +56,6 @@ public class Level {
         objectListeners = new ArrayList<>();
         animationListeners = new ArrayList<>();
         balls = new ArrayList<>();
-        walls = new ArrayList<>();
         bricks = new ArrayList<>();
         activePowerUps = new ArrayList<>();
         storedPowerUps = new ArrayList<>();
@@ -94,18 +91,10 @@ public class Level {
         wrapperContentList = new ArrayList<>();
         brickGrid = new boolean[gridX][gridY];
 
-        Wall wall1 = new Wall(Direction.UP);
-        Wall wall2 = new Wall(Direction.RIGHT);
-        Wall wall3 = new Wall(Direction.LEFT);
-        walls.add(wall1);
-        walls.add(wall2);
-        walls.add(wall3);
-        trackObject(wall1);
-        trackObject(wall2);
-        trackObject(wall3);
-
-        this.ground = new Ground();
-        trackObject(this.ground);
+        trackObject(new Wall(Direction.UP));
+        trackObject(new Wall(Direction.RIGHT));
+        trackObject(new Wall(Direction.LEFT));
+        trackObject(new Ground());
 
         if (!fromSave) {
             lives = 3;
@@ -201,22 +190,6 @@ public class Level {
         return count;
     }
 
-    public void destroyBricksInRadius(Vector center, double radius) {
-        ArrayList<GameObject> objectList = new ArrayList<>(gameObjects);
-        double xdist;
-        double ydist;
-        for (GameObject object: objectList) {
-            if(object instanceof Brick) {
-                xdist = center.getX() - object.getPosition().getX();
-                ydist = center.getY() - object.getPosition().getY();
-                if(Math.hypot(xdist, ydist) < radius) {
-                    object.destroy();
-                }
-            }
-        }
-        startAnimation("ExplosionAnimation", center, radius);
-    }
-
     public void addBrick(Brick brick) {
         boolean overlaps = true;
         int count = 0;
@@ -241,45 +214,7 @@ public class Level {
         trackObject(brick);
     }
 
-    public Vector getClosestGridLocation(Vector pos) {
-        int indX = Math.floorDiv((int) pos.getX(), GameConstants.rectangularBrickLength);
-        int indY = Math.floorDiv((int) (pos.getY() - GameConstants.menuAreaHeight), GameConstants.rectangularBrickThickness);
-        return new Vector(indX, indY);
-    }
-
-    public double getBrickRowHeight() {
-        boolean empty = true;
-        double rowHeight = 0.0;
-        int count = 0;
-        while(empty && count < 1000) {
-            int row = random.nextInt(gridX);
-            rowHeight = GameConstants.menuAreaHeight + GameConstants.rectangularBrickThickness / 2.0 +
-                    row * GameConstants.rectangularBrickThickness;
-            for(GameObject object: gameObjects) {
-                if (object.getPosition().getY() == rowHeight) {
-                    empty = false;
-                    break;
-                }
-            }
-            count++;
-        }
-        return rowHeight;
-    }
-
-    public Brick nextBrickInRow(double rowHeight) {
-        ArrayList<Brick> rowBricks = new ArrayList<>();
-        ArrayList<GameObject> objectsCopy = new ArrayList<>(gameObjects);
-        for(GameObject object: objectsCopy) {
-            if(object instanceof Brick && object.getPosition().getY() == rowHeight) {
-                rowBricks.add((Brick) object);
-            }
-        }
-        rowBricks.sort(Comparator.comparingDouble(o -> o.getPosition().getX()));
-        if(rowBricks.isEmpty()) return null;
-        return rowBricks.get(0);
-    }
-
-    public void brickDestroyed() {
+    public void increaseScore() {
         score += 300/(PhysicsEngine.getInstance().getTimePassed()/1000);
         GameController.getInstance().setUIScore(score);
     }

@@ -1,5 +1,6 @@
 package brickingbad.ui.components;
 
+import brickingbad.domain.game.GameLogic;
 import brickingbad.domain.game.Level;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.GameObject;
@@ -119,7 +120,7 @@ public class UIGameObject extends JLabel implements MouseListener, MouseMotionLi
     public void mouseReleased(MouseEvent e) {
         if(dragging) {
             Brick brick = (Brick)gameObject;
-            Vector location = Level.getInstance().getClosestGridLocation(gameObject.getPosition());
+            Vector location = GameLogic.getClosestGridLocation(gameObject.getPosition());
             int indX = (int)location.getX();
             int indY = (int)location.getY();
             if(brick.getPosition().getX() <= 0 ||

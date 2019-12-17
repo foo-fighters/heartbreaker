@@ -13,7 +13,7 @@ public abstract class Brick extends GameObject {
     @Override
     public void destroy() {
         Level.getInstance().anyBricksLeft();
-        Level.getInstance().brickDestroyed();
+        Level.getInstance().increaseScore();
         super.destroy();
     }
 
