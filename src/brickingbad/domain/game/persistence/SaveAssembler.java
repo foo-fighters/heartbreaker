@@ -59,7 +59,7 @@ public class SaveAssembler {
       tempCoordinates.add(alien.getPosition().getX());
       tempCoordinates.add(alien.getPosition().getY());
       save.alienCoordinates.add(tempCoordinates);
-      save.alienTypes.add(alien.getTypeName());
+      save.alienTypes.add(alien.getClass().getName());
     });
 
     ArrayList<PowerUp> storedPowerUps = level.getStoredPowerUps();
@@ -135,15 +135,17 @@ public class SaveAssembler {
       Level.getInstance().usePowerUp(WrapperContent.valueOf(name));
     }
 
-//    int alienIndex = 0;
-//    for (List<Double> coordinates : save.alienCoordinates) {
-//      double x = coordinates.get(0);
-//      double y = coordinates.get(1);
-//      String typeName = save.alienTypes.get(alienIndex);
-//      Alien alien = Alien.getByType(typeName);
-//      Game.getInstance().addAlien(alien);
-//      alienIndex++;
-//    }
+    int alienIndex = 0;
+    for (List<Double> coordinates : save.alienCoordinates) {
+      double x = coordinates.get(0);
+      double y = coordinates.get(1);
+      String typeName = save.alienTypes.get(alienIndex);
+      Alien alien = Alien.getByType(typeName);
+      alien.setPosition(new Vector(x, y));
+      System.out.println(alien.toString());
+      Level.getInstance().addObject(alien);
+      alienIndex++;
+    }
 
     Level.getInstance().setScore(score);
     Level.getInstance().setLives(lives);
