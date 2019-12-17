@@ -10,7 +10,7 @@ import brickingbad.domain.game.gameobjects.brick.Brick;
 import brickingbad.domain.game.gameobjects.brick.BrickFactory;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.PhysicsEngine;
-import brickingbad.ui.BrickingBadFrame;
+//import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.game.BuildingModePanel;
 import brickingbad.ui.game.RunningModePanel;
 import brickingbad.ui.components.Panel;
@@ -35,11 +35,6 @@ public class GameController {
     public static void resetUI() {
         RunningModePanel.getInstance().resetUI();
         BuildingModePanel.getInstance().resetUI();
-    }
-
-    public boolean inRunningMode() {
-        Panel panel = BrickingBadFrame.getInstance().getCurrentPanelName();
-        return panel == Panel.RUNNING_MODE;
     }
 
     public void initializeGame(boolean fromSave) {
@@ -123,13 +118,13 @@ public class GameController {
         Animator.getInstance().stop();
     }
   
-    public void showDeadDialog(){
-        BrickingBadFrame.getInstance().showYouAreDeadDialog();
-    }
-
-    public void showWinDialog() {
-        BrickingBadFrame.getInstance().showWonDialog();
-    }
+//    public void showDeadDialog(){
+//        BrickingBadFrame.getInstance().showYouAreDeadDialog();
+//    }
+//
+//    public void showWinDialog() {
+//        BrickingBadFrame.getInstance().showWonDialog();
+//    }
 
     public void resetScore() {
         PhysicsEngine.getInstance().resetTimePassed();

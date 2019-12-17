@@ -1,7 +1,6 @@
 package brickingbad.domain.game.gameobjects;
 
 import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.GameLogic;
 import brickingbad.domain.game.Level;
 import brickingbad.domain.game.WrapperContent;
 import brickingbad.domain.game.gameobjects.alien.*;
@@ -66,7 +65,7 @@ public class GameObjectFactory {
             SimpleBrick brick = new SimpleBrick();
             brick.setPosition(new Vector(x, y));
             for(GameObject object: objectsCopy()) {
-                if(PhysicsEngine.areColliding(object, brick)) {
+                if(PhysicsEngine.getInstance().areColliding(object, brick)) {
                     overlaps = true;
                     break;
                 }
@@ -106,7 +105,7 @@ public class GameObjectFactory {
                     ThreadLocalRandom.current().nextDouble() * (GameConstants.alienAreaHeight - GameConstants.alienSize);
             alien.setPosition(new Vector(spawnX, spawnY));
             for(GameObject object: aliensCopy) {
-                if(PhysicsEngine.areColliding(object, alien)) {
+                if(PhysicsEngine.getInstance().areColliding(object, alien)) {
                     overlaps = true;
                     break;
                 }

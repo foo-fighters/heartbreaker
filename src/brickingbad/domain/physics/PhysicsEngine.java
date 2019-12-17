@@ -38,7 +38,7 @@ public class PhysicsEngine implements Runnable {
   /**
    * True if thread is running, false otherwise.
    */
-  private static boolean running;
+  private static boolean running = false;
 
   /**
    * Private constructor for singleton implementation.
@@ -54,7 +54,6 @@ public class PhysicsEngine implements Runnable {
   public static PhysicsEngine getInstance() {
     if (instance == null) {
       instance = new PhysicsEngine();
-      running = true;
     }
     return instance;
   }
@@ -87,7 +86,8 @@ public class PhysicsEngine implements Runnable {
    */
   public void resumeIfPaused() {
     if (!running) {
-      togglePauseResume();
+      System.out.println("Physics engine resumed.");
+      running = true;
     }
   }
 
@@ -106,12 +106,10 @@ public class PhysicsEngine implements Runnable {
         System.out.println("Program interrupted.");
       }
       if (running) {
-        if (GameController.getInstance().inRunningMode()) {
-          timePassed += SLEEP_TIME;
-          ArrayList<GameObject> objects = Level.getInstance().getObjects();
-          handleCollisions(objects);
-          updatePositions(objects);
-        }
+        timePassed += SLEEP_TIME;
+        ArrayList<GameObject> objects = Level.getInstance().getObjects();
+        handleCollisions(objects);
+        updatePositions(objects);
       }
     }
   }
@@ -132,7 +130,7 @@ public class PhysicsEngine implements Runnable {
    * Adds the objects to their collidingObjects lists if they are colliding.
    * @param objects
    */
-  private static void handleCollisions(ArrayList<GameObject> objects) {
+  private void handleCollisions(ArrayList<GameObject> objects) {
     // MODIFIES: objects
     // EFFECTS: checks collisions between game objects, then calls each colliding object's collide function.
     ArrayList<GameObject> objectsCopy = objects;
@@ -166,7 +164,7 @@ public class PhysicsEngine implements Runnable {
    * Gets the list of {@link GameObject}s from the {@link Level} and calls their {@link GameObject#updatePosition()} methods.
    * @param objects
    */
-  public static void updatePositions(ArrayList<GameObject> objects) {
+  public void updatePositions(ArrayList<GameObject> objects) {
     // MODIFIES: objects
     // EFFECTS: each object's position is updated by adding their one-frame velocity to them.
     ArrayList<GameObject> objectsCopy = new ArrayList<>(objects);
@@ -183,7 +181,7 @@ public class PhysicsEngine implements Runnable {
    * @param o2
    * @return the result of the collision check between two objects.
    */
-  public static boolean areColliding(GameObject o1, GameObject o2) {
+  public boolean areColliding(GameObject o1, GameObject o2) {
     // REQUIRES: given objects are not null, their shapes, sizes, and positions are also not null.
     // EFFECTS: returns true if the given 2D objects would collide in a 2D space.
     ICollisionStrategy collisionStrategy;

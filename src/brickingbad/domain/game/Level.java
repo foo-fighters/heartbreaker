@@ -116,6 +116,7 @@ public class Level {
                 startBrickCount++;
             }
         }
+        PhysicsEngine.getInstance().resumeIfPaused();
     }
 
     // LISTENER FUNCTIONS
@@ -263,14 +264,14 @@ public class Level {
             resetBall();
         }else {
             GameController.getInstance().stopAnimator();
-            GameController.getInstance().showDeadDialog();
+            //GameController.getInstance().showDeadDialog();
         }
     }
 
     private void winGame() {
         if (!alreadyWon) {
             GameController.getInstance().stopAnimator();
-            GameController.getInstance().showWinDialog();
+            //GameController.getInstance().showWinDialog();
             alreadyWon = true;
         }
     }
