@@ -5,6 +5,7 @@ import brickingbad.domain.game.Level;
 import brickingbad.domain.game.WrapperContent;
 import brickingbad.domain.game.gameobjects.alien.*;
 import brickingbad.domain.game.gameobjects.brick.Brick;
+import brickingbad.domain.game.gameobjects.brick.BrickFactory;
 import brickingbad.domain.game.gameobjects.brick.SimpleBrick;
 import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.physics.PhysicsEngine;
@@ -32,6 +33,24 @@ public class GameObjectFactory {
 
     private static ArrayList<GameObject> objectsCopy() {
         return new ArrayList<>(Level.getInstance().getObjects());
+    }
+
+    public void createBricks(int simple, int halfMetal, int mine, int wrapper) {
+        if (Level.getInstance().getBricks().size() + simple + halfMetal + mine + wrapper
+                <= Level.getInstance().getGridX() * Level.getInstance().getGridY()) {
+
+            ArrayList<Brick> simpleBricks = BrickFactory.getInstance().createSimpleBricks(simple);
+            simpleBricks.forEach((this::addBrick));
+
+            ArrayList<Brick> halfMetalBricks = BrickFactory.getInstance().createHalfMetalBricks(halfMetal);
+            halfMetalBricks.forEach((this::addBrick));
+
+            ArrayList<Brick> mineBricks = BrickFactory.getInstance().createMineBricks(mine);
+            mineBricks.forEach((this::addBrick));
+
+            ArrayList<Brick> wrapperBricks = BrickFactory.getInstance().createWrapperBricks(wrapper);
+            wrapperBricks.forEach((this::addBrick));
+        }
     }
 
     public void addBrick(Brick brick) {

@@ -7,13 +7,14 @@ import brickingbad.domain.game.gameobjects.Paddle;
 import brickingbad.domain.game.gameobjects.alien.*;
 import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.listeners.AnimationListener;
-import brickingbad.domain.game.listeners.GameListener;
+import brickingbad.domain.game.listeners.LevelListener;
 import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.game.gameobjects.border.*;
 import brickingbad.domain.game.gameobjects.brick.*;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.domain.physics.Vector;
+import brickingbad.ui.UIController;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.Clock;
@@ -47,7 +48,7 @@ public class Level {
     private boolean alreadyWon;
     private static final Random random = new Random();
 
-    private ArrayList<GameListener> objectListeners;
+    private ArrayList<LevelListener> objectListeners;
     private ArrayList<AnimationListener> animationListeners;
 
     // CONSTRUCTION AND INITIALIZATION
@@ -120,7 +121,7 @@ public class Level {
     }
 
     // LISTENER FUNCTIONS
-    public void addObjectListener(GameListener listener) {
+    public void addObjectListener(LevelListener listener) {
         objectListeners.add(listener);
     }
 
@@ -164,7 +165,7 @@ public class Level {
 
     private void trackObject(GameObject object) {
         gameObjects.add(object);
-        for (GameListener listener : objectListeners) {
+        for (LevelListener listener : objectListeners) {
             listener.addObject(object);
         }
     }
@@ -263,15 +264,15 @@ public class Level {
             lives = lives - 1;
             resetBall();
         }else {
-            GameController.getInstance().stopAnimator();
-            //GameController.getInstance().showDeadDialog();
+            UIController.getInstance().stopAnimator();
+            UIController.getInstance().showDeadDialog();
         }
     }
 
     private void winGame() {
         if (!alreadyWon) {
-            GameController.getInstance().stopAnimator();
-            //GameController.getInstance().showWinDialog();
+            UIController.getInstance().stopAnimator();
+            UIController.getInstance().showWinDialog();
             alreadyWon = true;
         }
     }

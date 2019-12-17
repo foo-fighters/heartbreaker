@@ -2,6 +2,7 @@ package brickingbad.ui.components.containers;
 
 import brickingbad.controller.GameController;
 import brickingbad.ui.BrickingBadFrame;
+import brickingbad.ui.UIController;
 import brickingbad.ui.components.BBGameButton;
 import brickingbad.ui.game.BuildingModePanel;
 
@@ -48,7 +49,7 @@ public class BuildButtonPanel extends JPanel implements ActionListener {
             }else {
                 BuildingModePanel.getInstance().showError(checkedForCount);
             }
-            GameController.getInstance().resumeGameIfPaused();
+            UIController.getInstance().resumeGameIfPaused();
         } else if (e.getSource().equals(quitButton)) {
             BrickingBadFrame.getInstance().showMainMenuPanel();
         } else {

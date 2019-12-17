@@ -7,6 +7,7 @@ import brickingbad.domain.game.persistence.SaveAssembler;
 import brickingbad.services.Adapter;
 import brickingbad.services.persistence.SaveRepository;
 import brickingbad.ui.BrickingBadFrame;
+import brickingbad.ui.UIController;
 
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class SaveController {
       BrickingBadFrame.getInstance().showBuildingModePanel();
     }
     SaveAssembler.disassemble(save);
-    GameController.getInstance().resumeGameIfPaused();
+    UIController.getInstance().resumeGameIfPaused();
   }
 
   public List<String> getSaveNames() {

@@ -86,7 +86,7 @@ public class BrickingBadFrame extends JFrame {
 
   public void showRunningModePanel() {
     currentPanelName = Panel.RUNNING_MODE;
-    GameController.getInstance().resumeGameIfPaused();
+    UIController.getInstance().resumeGameIfPaused();
     showPanel(currentPanelName);
   }
 

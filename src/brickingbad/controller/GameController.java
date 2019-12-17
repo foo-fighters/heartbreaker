@@ -4,18 +4,12 @@ import brickingbad.domain.game.GameLogic;
 import brickingbad.domain.game.gameobjects.GameObjectFactory;
 import brickingbad.domain.game.Level;
 import brickingbad.domain.game.listeners.AnimationListener;
-import brickingbad.domain.game.listeners.GameListener;
+import brickingbad.domain.game.listeners.LevelListener;
 import brickingbad.domain.game.WrapperContent;
-import brickingbad.domain.game.gameobjects.brick.Brick;
-import brickingbad.domain.game.gameobjects.brick.BrickFactory;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.PhysicsEngine;
-//import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.game.BuildingModePanel;
 import brickingbad.ui.game.RunningModePanel;
-import brickingbad.ui.components.Panel;
-import brickingbad.ui.game.animation.Animator;
-import java.util.ArrayList;
 
 
 public class GameController {
@@ -45,16 +39,6 @@ public class GameController {
         Level.getInstance().play();
     }
 
-    public void togglePauseResume() {
-        Animator.getInstance().togglePauseResume();
-        PhysicsEngine.getInstance().togglePauseResume();
-    }
-
-    public void resumeGameIfPaused() {
-        Animator.getInstance().resumeIfPaused();
-        PhysicsEngine.getInstance().resumeIfPaused();
-    }
-
     public void launchBalls() {
         Level.getInstance().getPaddle().launchBalls();
     }
@@ -76,28 +60,14 @@ public class GameController {
     }
 
     public void createBricks(int simple, int halfMetal, int mine, int wrapper) {
-        if (Level.getInstance().getBricks().size() + simple + halfMetal + mine + wrapper
-                <= Level.getInstance().getGridX() * Level.getInstance().getGridY()) {
-
-            ArrayList<Brick> simpleBricks = BrickFactory.getInstance().createSimpleBricks(simple);
-            simpleBricks.forEach((brick -> GameObjectFactory.getInstance().addBrick(brick)));
-
-            ArrayList<Brick> halfMetalBricks = BrickFactory.getInstance().createHalfMetalBricks(halfMetal);
-            halfMetalBricks.forEach((brick -> GameObjectFactory.getInstance().addBrick(brick)));
-
-            ArrayList<Brick> mineBricks = BrickFactory.getInstance().createMineBricks(mine);
-            mineBricks.forEach((brick -> GameObjectFactory.getInstance().addBrick(brick)));
-
-            ArrayList<Brick> wrapperBricks = BrickFactory.getInstance().createWrapperBricks(wrapper);
-            wrapperBricks.forEach((brick -> GameObjectFactory.getInstance().addBrick(brick)));
-        }
+        GameObjectFactory.getInstance().createBricks(simple, halfMetal, mine, wrapper);
     }
 
     public String checkBrickCount() {
         return GameLogic.checkBrickCount();
     }
 
-    public void addObjectListener(GameListener listener) {
+    public void addObjectListener(LevelListener listener) {
         Level.getInstance().addObjectListener(listener);
     }
 
@@ -113,18 +83,6 @@ public class GameController {
     public void usePowerUp(WrapperContent name) {
         Level.getInstance().usePowerUp(name);
     }
-
-    public void stopAnimator() {
-        Animator.getInstance().stop();
-    }
-  
-//    public void showDeadDialog(){
-//        BrickingBadFrame.getInstance().showYouAreDeadDialog();
-//    }
-//
-//    public void showWinDialog() {
-//        BrickingBadFrame.getInstance().showWonDialog();
-//    }
 
     public void resetScore() {
         PhysicsEngine.getInstance().resetTimePassed();

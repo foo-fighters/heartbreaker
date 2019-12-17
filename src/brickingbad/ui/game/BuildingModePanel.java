@@ -2,7 +2,7 @@ package brickingbad.ui.game;
 
 import brickingbad.domain.game.*;
 import brickingbad.domain.game.gameobjects.GameObject;
-import brickingbad.domain.game.listeners.GameListener;
+import brickingbad.domain.game.listeners.LevelListener;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.BrickCountPanel;
@@ -17,7 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class BuildingModePanel extends JPanel implements GameListener {
+public class BuildingModePanel extends JPanel implements LevelListener {
 
     private static BuildingModePanel instance;
 
