@@ -1,6 +1,6 @@
 package brickingbad.domain.physics.ball;
 
-import brickingbad.domain.game.GameObject;
+import brickingbad.domain.game.gameobjects.GameObject;
 
 public abstract class BallState {
 

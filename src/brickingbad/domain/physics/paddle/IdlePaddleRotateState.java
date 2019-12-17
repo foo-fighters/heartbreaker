@@ -1,7 +1,6 @@
 package brickingbad.domain.physics.paddle;
 
-import brickingbad.domain.game.Paddle;
-import brickingbad.domain.physics.Direction;
+import brickingbad.domain.game.gameobjects.Paddle;
 
 public class IdlePaddleRotateState extends PaddleRotateState {
 

@@ -1,6 +1,8 @@
 package brickingbad.domain.game.powerup;
 
 import brickingbad.domain.game.*;
+import brickingbad.domain.game.gameobjects.Ball;
+import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.ball.ChemicalBallState;
 
@@ -20,7 +22,7 @@ public class ChemicalBall extends PowerUp {
     @Override
     public void activate() {
         super.activate();
-        for(GameObject object: Game.getInstance().getObjects()) {
+        for(GameObject object: Level.getInstance().getObjects()) {
             if(object instanceof Ball) {
                 ((Ball) object).setChemical();
             }
@@ -29,7 +31,7 @@ public class ChemicalBall extends PowerUp {
 
     @Override
     public void deactivate() {
-        for(GameObject object: Game.getInstance().getObjects()) {
+        for(GameObject object: Level.getInstance().getObjects()) {
             if(object instanceof Ball && ((Ball) object).getBallState() instanceof ChemicalBallState) {
                 ((Ball) object).setSimple();
             }

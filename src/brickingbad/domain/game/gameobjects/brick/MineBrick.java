@@ -1,14 +1,9 @@
-package brickingbad.domain.game.brick;
+package brickingbad.domain.game.gameobjects.brick;
 
-import brickingbad.domain.game.Game;
+import brickingbad.domain.game.GameLogic;
 import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.GameObject;
 import brickingbad.domain.game.Shape;
-import brickingbad.domain.game.brick.Brick;
-import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
-
-import java.util.ArrayList;
 
 public class MineBrick extends Brick {
 
@@ -25,7 +20,6 @@ public class MineBrick extends Brick {
         this.size = new Vector(GameConstants.circularBrickSize, GameConstants.circularBrickSize);
         this.velocity = new Vector();
         this.angle = 0.0;
-        this.name = "MineBrick";
     }
 
     @Override
@@ -45,7 +39,7 @@ public class MineBrick extends Brick {
     @Override
     public void destroy() {
         super.destroy();
-        Game.getInstance().destroyBricksInRadius(position, GameConstants.mineBrickExplosionRadius);
+        GameLogic.destroyBricksInRadius(position, GameConstants.mineBrickExplosionRadius);
     }
 
     @Override

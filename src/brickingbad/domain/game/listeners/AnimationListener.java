@@ -1,6 +1,5 @@
 package brickingbad.domain.game.listeners;
 
-import brickingbad.domain.game.brick.HalfMetalBrick;
 import brickingbad.ui.game.animation.Animation;
 import java.lang.reflect.InvocationTargetException;
 

@@ -86,7 +86,7 @@ public class BrickingBadFrame extends JFrame {
 
   public void showRunningModePanel() {
     currentPanelName = Panel.RUNNING_MODE;
-    GameController.getInstance().resumeGameIfPaused();
+    UIController.getInstance().resumeGameIfPaused();
     showPanel(currentPanelName);
   }
 
@@ -177,7 +177,8 @@ public class BrickingBadFrame extends JFrame {
 
   public void showGodModeDialog() {
     String answer = (String) JOptionPane.showInputDialog("What is the answer to life, universe and everything?");
-    if (answer.equals("42")) {
+    if (answer != null && answer.equals("42")) {
+      RunningModePanel.getInstance().invokeGodMode();
       GameController.getInstance().invokeGodMode();
     } else {
       JOptionPane.showMessageDialog(getInstance(), "NO!");

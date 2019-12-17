@@ -1,5 +1,8 @@
-package brickingbad.domain.game;
+package brickingbad.domain.game.gameobjects;
 
+import brickingbad.domain.game.GameConstants;
+import brickingbad.domain.game.Level;
+import brickingbad.domain.game.Shape;
 import brickingbad.domain.game.listeners.GameObjectListener;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
@@ -24,7 +27,7 @@ public abstract class GameObject implements Comparable {
   public void collide(GameObject object) { }
 
   public void destroy() {
-    Game.getInstance().removeObject(this);
+    Level.getInstance().removeObject(this);
   }
 
   public Shape getShape() {

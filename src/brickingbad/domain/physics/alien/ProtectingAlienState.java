@@ -1,7 +1,7 @@
 package brickingbad.domain.physics.alien;
 
 import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.alien.Alien;
+import brickingbad.domain.game.gameobjects.alien.Alien;
 import brickingbad.domain.physics.Vector;
 
 public class ProtectingAlienState extends AlienState {

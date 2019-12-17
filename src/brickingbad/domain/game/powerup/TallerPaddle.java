@@ -1,6 +1,8 @@
 package brickingbad.domain.game.powerup;
 
 import brickingbad.domain.game.*;
+import brickingbad.domain.game.gameobjects.Ball;
+import brickingbad.domain.game.gameobjects.Paddle;
 import brickingbad.domain.physics.Vector;
 
 public class TallerPaddle extends PowerUp {
@@ -21,7 +23,7 @@ public class TallerPaddle extends PowerUp {
     @Override
     public void activate() {
         super.activate();
-        Paddle paddle = Game.getInstance().getPaddle();
+        Paddle paddle = Level.getInstance().getPaddle();
         paddle.getSize().setVector(GameConstants.paddleLength * multiplier, GameConstants.paddleThickness);
         if(paddle.getPosition().getX() <= paddle.getSize().getX() / 2.0) {
             paddle.setPosition(paddle.getSize().getX() / 2.0, paddle.getPosition().getY());
@@ -29,7 +31,7 @@ public class TallerPaddle extends PowerUp {
         if(paddle.getPosition().getX() >= GameConstants. screenWidth - paddle.getSize().getX() / 2.0) {
             paddle.setPosition(GameConstants. screenWidth - paddle.getSize().getX() / 2.0, paddle.getPosition().getY());
         }
-        Game.getInstance().getPaddle().paddleMountDistance *= multiplier;
+        Level.getInstance().getPaddle().paddleMountDistance *= multiplier;
         for(Ball ball: paddle.getCurrentBalls()) {
             ball.setPaddleOffset(ball.getPaddleOffset() * multiplier);
         }
@@ -37,9 +39,9 @@ public class TallerPaddle extends PowerUp {
 
     @Override
     public void deactivate() {
-        Paddle paddle = Game.getInstance().getPaddle();
+        Paddle paddle = Level.getInstance().getPaddle();
         paddle.getSize().setVector(GameConstants.paddleLength, GameConstants.paddleThickness);
-        Game.getInstance().getPaddle().paddleMountDistance /= multiplier;
+        Level.getInstance().getPaddle().paddleMountDistance /= multiplier;
         for(Ball ball: paddle.getCurrentBalls()) {
             ball.setPaddleOffset(ball.getPaddleOffset() / multiplier);
         }

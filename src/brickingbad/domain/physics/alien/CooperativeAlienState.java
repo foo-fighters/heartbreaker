@@ -1,10 +1,11 @@
 package brickingbad.domain.physics.alien;
 
-import brickingbad.domain.game.Game;
+import brickingbad.domain.game.GameLogic;
+import brickingbad.domain.game.Level;
 import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.alien.Alien;
-import brickingbad.domain.game.alien.DrunkAlien;
-import brickingbad.domain.game.brick.Brick;
+import brickingbad.domain.game.gameobjects.alien.Alien;
+import brickingbad.domain.game.gameobjects.alien.DrunkAlien;
+import brickingbad.domain.game.gameobjects.brick.Brick;
 
 public class CooperativeAlienState extends AlienState {
 
@@ -16,25 +17,25 @@ public class CooperativeAlienState extends AlienState {
     public CooperativeAlienState(Alien alien) {
         this.alien = alien;
         this.drunk = alien instanceof DrunkAlien;
-        this.startTime = Game.getInstance().getTime();
-        this.rowHeight = Game.getInstance().getBrickRowHeight();
+        this.startTime = Level.getInstance().getTime();
+        this.rowHeight = GameLogic.getBrickRowHeight();
         if(drunk) {
-            Game.getInstance().startAnimation("DrunkAlienRowAnimation", rowHeight);
+            Level.getInstance().startAnimation("DrunkAlienRowAnimation", rowHeight);
         }else {
-            Game.getInstance().startAnimation("CooperativeAlienRowAnimation", rowHeight);
+            Level.getInstance().startAnimation("CooperativeAlienRowAnimation", rowHeight);
         }
     }
 
     @Override
     public void performAction() {
-        long currentTime = Game.getInstance().getTime();
+        long currentTime = Level.getInstance().getTime();
         if(currentTime - startTime > 1000 * cooldown) {
-            Brick nextBrick = Game.getInstance().nextBrickInRow(rowHeight);
+            Brick nextBrick = GameLogic.nextBrickInRow(rowHeight);
             if (nextBrick == null) {
                 finishAction();
                 if(drunk) {
-                    rowHeight = Game.getInstance().getBrickRowHeight();
-                    Game.getInstance().startAnimation("DrunkAlienRowAnimation", rowHeight);
+                    rowHeight = GameLogic.getBrickRowHeight();
+                    Level.getInstance().startAnimation("DrunkAlienRowAnimation", rowHeight);
                 }else {
                     alien.destroy();
                 }
@@ -48,9 +49,9 @@ public class CooperativeAlienState extends AlienState {
     @Override
     public void finishAction() {
         if(drunk) {
-            Game.getInstance().finishAnimation("DrunkAlienRowAnimation");
+            Level.getInstance().finishAnimation("DrunkAlienRowAnimation");
         }else {
-            Game.getInstance().finishAnimation("CooperativeAlienRowAnimation");
+            Level.getInstance().finishAnimation("CooperativeAlienRowAnimation");
         }
     }
 

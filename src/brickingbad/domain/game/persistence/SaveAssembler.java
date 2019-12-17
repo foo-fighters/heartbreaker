@@ -1,38 +1,35 @@
 package brickingbad.domain.game.persistence;
 
-import brickingbad.domain.game.Ball;
-import brickingbad.domain.game.Game;
-import brickingbad.domain.game.Paddle;
-import brickingbad.domain.game.WrapperContent;
-import brickingbad.domain.game.alien.Alien;
-import brickingbad.domain.game.brick.Brick;
-import brickingbad.domain.game.brick.BrickFactory;
-import brickingbad.domain.game.brick.SimpleBrick;
+import brickingbad.domain.game.*;
+import brickingbad.domain.game.gameobjects.Ball;
+import brickingbad.domain.game.gameobjects.GameObjectFactory;
+import brickingbad.domain.game.gameobjects.Paddle;
+import brickingbad.domain.game.gameobjects.alien.Alien;
+import brickingbad.domain.game.gameobjects.brick.Brick;
+import brickingbad.domain.game.gameobjects.brick.BrickFactory;
 import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.physics.Vector;
 
 import java.lang.reflect.InvocationTargetException;
-import java.sql.Array;
-import java.sql.Wrapper;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class SaveAssembler {
 
-  public static Save assemble(Game game, String name) {
+  public static Save assemble(Level level, String name) {
     Save save = new Save();
 
-    int score = game.getScore();
-    int lives = game.getLives();
+    int score = level.getScore();
+    int lives = level.getLives();
     
-    double paddleX = game.getPaddle().getPosition().getX();
-    double paddleY = game.getPaddle().getPosition().getY();
+    double paddleX = level.getPaddle().getPosition().getX();
+    double paddleY = level.getPaddle().getPosition().getY();
     save.paddleCoordinates.add(paddleX);
     save.paddleCoordinates.add(paddleY);
 
-    ArrayList<Ball> balls = game.getBalls();
-    List<Ball> paddleBalls = game.getPaddle().getCurrentBalls();
+    ArrayList<Ball> balls = level.getBalls();
+    List<Ball> paddleBalls = level.getPaddle().getCurrentBalls();
     balls.forEach((ball) -> {
       ArrayList<Double> tempCoordinates  = new ArrayList<>();
       tempCoordinates.add(ball.getPosition().getX());
@@ -47,7 +44,7 @@ public class SaveAssembler {
       save.ballOnPaddle.add(paddleBalls.contains(ball));
     });
 
-    ArrayList<Brick> bricks = game.getBricks();
+    ArrayList<Brick> bricks = level.getBricks();
     bricks.forEach((brick) -> {
       ArrayList<Double> tempCoordinates = new ArrayList<>();
       tempCoordinates.add(brick.getPosition().getX());
@@ -56,7 +53,7 @@ public class SaveAssembler {
       save.brickTypes.add(brick.getTypeName());
     });
 
-    ArrayList<Alien> aliens = game.getActiveAliens();
+    ArrayList<Alien> aliens = level.getAliens();
     aliens.forEach((alien) -> {
       ArrayList<Double> tempCoordinates = new ArrayList<>();
       tempCoordinates.add(alien.getPosition().getX());
@@ -65,8 +62,8 @@ public class SaveAssembler {
       save.alienTypes.add(alien.getClass().getName());
     });
 
-    ArrayList<PowerUp> storedPowerUps = game.getStoredPowerUps();
-    ArrayList<PowerUp> activePowerUps = game.getActivePowerUps();
+    ArrayList<PowerUp> storedPowerUps = level.getStoredPowerUps();
+    ArrayList<PowerUp> activePowerUps = level.getActivePowerUps();
     storedPowerUps.forEach((powerUp) -> {
       save.storedPowerUps.add(powerUp.getName().name());
     });
@@ -130,12 +127,12 @@ public class SaveAssembler {
     List<String> storedPowerUps = save.storedPowerUps;
     for (String name : storedPowerUps) {
       PowerUp powerUp = PowerUp.getByName(name);
-      Game.getInstance().storePowerUp(powerUp);
+      Level.getInstance().storePowerUp(powerUp);
     }
     for (String name : activePowerUps) {
       PowerUp powerUp = PowerUp.getByName(name);
-      Game.getInstance().storePowerUp(powerUp);
-      Game.getInstance().usePowerUp(WrapperContent.valueOf(name));
+      Level.getInstance().storePowerUp(powerUp);
+      Level.getInstance().usePowerUp(WrapperContent.valueOf(name));
     }
 
     int alienIndex = 0;
@@ -146,19 +143,19 @@ public class SaveAssembler {
       Alien alien = Alien.getByType(typeName);
       alien.setPosition(new Vector(x, y));
       System.out.println(alien.toString());
-      Game.getInstance().addAlien(alien);
+      Level.getInstance().addObject(alien);
       alienIndex++;
     }
 
-    Game.getInstance().setScore(score);
-    Game.getInstance().setLives(lives);
-    bricks.forEach(brick -> Game.getInstance().addBrick(brick));
-    Game.getInstance().setPaddle(paddle);
+    Level.getInstance().setScore(score);
+    Level.getInstance().setLives(lives);
+    bricks.forEach(brick -> GameObjectFactory.getInstance().addBrick(brick));
+    Level.getInstance().setPaddle(paddle);
     for (int i = 0; i < balls.size(); i++) {
       Ball ball = balls.get(i);
-      Game.getInstance().addBall(ball);
+      Level.getInstance().addObject(ball);
       if (save.ballOnPaddle.get(i)) {
-        Game.getInstance().getPaddle().catchBall(ball);
+        Level.getInstance().getPaddle().catchBall(ball);
       }
     }
   }

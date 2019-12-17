@@ -1,5 +1,9 @@
-package brickingbad.domain.game;
+package brickingbad.domain.game.gameobjects;
 
+import brickingbad.domain.game.GameConstants;
+import brickingbad.domain.game.Level;
+import brickingbad.domain.game.Shape;
+import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.ball.BallState;
 import brickingbad.domain.physics.ball.ChemicalBallState;
@@ -113,9 +117,7 @@ public class Ball extends GameObject {
     @Override
     public void destroy() {
         super.destroy();
-        Game.getInstance().removeObject(this);
-        Game.getInstance().anyBallLeft();
-        System.out.println(Game.getInstance().getBalls().size());
+        Level.getInstance().anyBallLeft();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package brickingbad.domain.physics.paddle;
 
-import brickingbad.domain.game.Paddle;
+import brickingbad.domain.game.gameobjects.Paddle;
 import brickingbad.domain.physics.Direction;
 
 public abstract class PaddleRotateState {

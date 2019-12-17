@@ -1,6 +1,6 @@
-import brickingbad.domain.game.Ball;
+import brickingbad.domain.game.gameobjects.Ball;
 import brickingbad.domain.game.GameConstants;
-import brickingbad.domain.game.Paddle;
+import brickingbad.domain.game.gameobjects.Paddle;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.paddle.ActivePaddleMoveState;

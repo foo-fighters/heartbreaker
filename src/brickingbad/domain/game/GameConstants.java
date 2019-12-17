@@ -17,7 +17,7 @@ public class GameConstants {
     public final static int ballSize = 17;
     public final static int paddleLength = screenWidth / 10;
     public final static int paddleThickness = 20;
-    public final static int rectangularBrickLength = paddleLength / 5;
+    public final static int rectangularBrickLength = paddleLength / 4;
     public final static int rectangularBrickThickness = 20;
     public final static int circularBrickSize = 20;
     public final static int alienSize = 50;

@@ -1,12 +1,13 @@
 package brickingbad.controller;
 
-import brickingbad.domain.game.Game;
+import brickingbad.domain.game.Level;
 import brickingbad.domain.game.authentication.User;
 import brickingbad.domain.game.persistence.Save;
 import brickingbad.domain.game.persistence.SaveAssembler;
 import brickingbad.services.Adapter;
 import brickingbad.services.persistence.SaveRepository;
 import brickingbad.ui.BrickingBadFrame;
+import brickingbad.ui.UIController;
 
 import java.util.List;
 
@@ -28,8 +29,8 @@ public class SaveController {
 
   public void saveGame(String name, boolean inRunningMode) {
     User user = AuthenticationController.getInstance().getCurrentUser();
-    Game game = Game.getInstance();
-    Save save = SaveAssembler.assemble(game, name);
+    Level level = Level.getInstance();
+    Save save = SaveAssembler.assemble(level, name);
     save.inRunningMode = inRunningMode;
     save.username = AuthenticationController.getInstance().getCurrentUser().name;
     saveRepository.save(save, user);
@@ -44,7 +45,7 @@ public class SaveController {
       BrickingBadFrame.getInstance().showBuildingModePanel();
     }
     SaveAssembler.disassemble(save);
-    GameController.getInstance().resumeGameIfPaused();
+    UIController.getInstance().resumeGameIfPaused();
   }
 
   public List<String> getSaveNames() {

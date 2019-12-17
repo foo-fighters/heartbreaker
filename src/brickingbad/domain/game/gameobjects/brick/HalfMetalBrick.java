@@ -1,6 +1,5 @@
-package brickingbad.domain.game.brick;
+package brickingbad.domain.game.gameobjects.brick;
 
-import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.Shape;
 import brickingbad.domain.physics.Vector;
@@ -16,8 +15,6 @@ public class HalfMetalBrick extends Brick {
         this.angle = 0.0;
         this.isCracked = false;
         this.velocity = new Vector();
-        this.name = "HalfMetalBrick";
-
     }
 
     @Override
