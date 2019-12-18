@@ -1,5 +1,6 @@
 package brickingbad.domain.game.alien;
 
+import brickingbad.controller.EffectsController;
 import brickingbad.domain.game.Game;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.Shape;
@@ -17,6 +18,7 @@ public class CooperativeAlien extends Alien {
         this.size = new Vector(GameConstants.alienSize, GameConstants.alienSize);
         this.alienState = new CooperativeAlienState(this);
         this.name = WrapperContent.COOPERATIVE_ALIEN;
+        EffectsController.getInstance().playAudio("alienSpawn");
     }
 
     @Override

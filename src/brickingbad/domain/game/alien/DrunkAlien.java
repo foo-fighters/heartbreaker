@@ -1,5 +1,6 @@
 package brickingbad.domain.game.alien;
 
+import brickingbad.controller.EffectsController;
 import brickingbad.domain.game.*;
 import brickingbad.domain.game.brick.Brick;
 import brickingbad.domain.game.powerup.PowerUp;
@@ -24,6 +25,7 @@ public class DrunkAlien extends Alien {
         this.dynamic = true;
         this.startBrickCount = Game.getInstance().getStartBrickCount();
         this.alienState = new ProtectingAlienState(this);
+        EffectsController.getInstance().playAudio("alienSpawn");
     }
 
     @Override

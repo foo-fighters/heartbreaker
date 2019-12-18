@@ -1,5 +1,6 @@
 package brickingbad.domain.game.alien;
 
+import brickingbad.controller.EffectsController;
 import brickingbad.domain.game.*;
 import brickingbad.domain.game.brick.Brick;
 import brickingbad.domain.game.powerup.PowerUp;
@@ -17,6 +18,7 @@ public class ProtectingAlien extends Alien {
         this.dynamic = true;
         this.alienState = new ProtectingAlienState(this);
         this.name = WrapperContent.PROTECTING_ALIEN;
+        EffectsController.getInstance().playAudio("alienSpawn");
     }
 
 }
