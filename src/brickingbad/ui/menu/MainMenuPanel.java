@@ -2,6 +2,7 @@ package brickingbad.ui.menu;
 
 import brickingbad.controller.GameController;
 import brickingbad.ui.BrickingBadFrame;
+import brickingbad.ui.DefaultActionable;
 import brickingbad.ui.UIController;
 import brickingbad.ui.components.BBMenuButton;
 import brickingbad.ui.components.UIGameObject;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class MainMenuPanel extends JPanel implements ActionListener {
+public class MainMenuPanel extends JPanel implements ActionListener, DefaultActionable {
 
   private static MainMenuPanel instance;
 

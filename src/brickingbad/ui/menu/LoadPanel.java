@@ -1,8 +1,10 @@
 package brickingbad.ui.menu;
 
+import brickingbad.ui.DefaultActionable;
+
 import javax.swing.*;
 
-public class LoadPanel extends JPanel {
+public class LoadPanel extends JPanel implements DefaultActionable {
 
   private static LoadPanel instance;
 

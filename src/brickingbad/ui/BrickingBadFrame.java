@@ -6,6 +6,7 @@ import brickingbad.controller.SaveController;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.services.Adapter;
 import brickingbad.services.AdapterHandler;
+import brickingbad.ui.components.BBButton;
 import brickingbad.ui.components.Panel;
 import brickingbad.ui.game.BuildingModePanel;
 import brickingbad.ui.game.animation.Animator;
@@ -37,6 +38,7 @@ public class BrickingBadFrame extends JFrame {
       instance = new BrickingBadFrame();
       initializePanels();
     }
+    instance.setDefaultButton();
     return instance;
   }
 
@@ -64,7 +66,8 @@ public class BrickingBadFrame extends JFrame {
   }
 
   private static void initializePanels() {
-    currentPanelName = Panel.MAIN_MENU;
+
+    currentPanelName = Panel.LANDING;
     panelsMap = new HashMap<>();
     panelsMap.put(Panel.MAIN_MENU, MainMenuPanel.getInstance());
     panelsMap.put(Panel.BUILDING_MODE, BuildingModePanel.getInstance());
@@ -83,6 +86,7 @@ public class BrickingBadFrame extends JFrame {
   public void showBuildingModePanel() {
     currentPanelName = Panel.BUILDING_MODE;
     showPanel(currentPanelName);
+    setDefaultButton();
   }
 
   public void showRunningModePanel() {
@@ -129,7 +133,6 @@ public class BrickingBadFrame extends JFrame {
         UIManager.put (key, f);
     }
   }
-
 
   public void showYouAreDeadDialog() {
     JOptionPane.showMessageDialog(this, "All lives are lost!");
@@ -194,6 +197,19 @@ public class BrickingBadFrame extends JFrame {
 
   private void showPauseWarning() {
     JOptionPane.showMessageDialog(this, "The game should be paused for save/load. ");
+  }
+
+  private void setDefaultButton(){
+      DefaultActionable bBButtonPanel = ((DefaultActionable) getCurrentPanel());
+      if (bBButtonPanel == null){
+        return;
+      }
+      BBButton defaultButton = bBButtonPanel.getDefaultButton();
+
+      if (defaultButton == null){
+        return;
+      }
+      rootPane.setDefaultButton(defaultButton);
   }
 
 }

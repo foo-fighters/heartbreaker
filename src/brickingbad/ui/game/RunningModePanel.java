@@ -6,6 +6,7 @@ import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.listeners.AnimationListener;
 import brickingbad.domain.game.listeners.GameListener;
 import brickingbad.domain.physics.PhysicsEngine;
+import brickingbad.ui.DefaultActionable;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.GameButtonPanel;
 import brickingbad.ui.game.animation.Animation;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class RunningModePanel extends JPanel implements GameListener, AnimationListener {
+public class RunningModePanel extends JPanel implements GameListener, AnimationListener, DefaultActionable {
 
   private static RunningModePanel instance;
 

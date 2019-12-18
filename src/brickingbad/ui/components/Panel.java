@@ -6,5 +6,5 @@ public enum Panel {
   MAIN_MENU,
   LOAD_GAME,
   LANDING,
-  HELP;
+  HELP
 }

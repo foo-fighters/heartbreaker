@@ -4,6 +4,8 @@ import brickingbad.domain.game.*;
 import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.listeners.GameListener;
 import brickingbad.ui.BrickingBadFrame;
+import brickingbad.ui.DefaultActionable;
+import brickingbad.ui.components.BBButton;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.components.containers.BrickCountPanel;
 import brickingbad.ui.components.containers.BuildButtonPanel;
@@ -17,7 +19,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class BuildingModePanel extends JPanel implements GameListener {
+public class BuildingModePanel extends JPanel implements GameListener, DefaultActionable {
+
 
     private static BuildingModePanel instance;
 
@@ -122,5 +125,11 @@ public class BuildingModePanel extends JPanel implements GameListener {
     public void resetUI() {
         uiObjects = new ArrayList<>();
     }
+
+    @Override
+    public BBButton getDefaultButton() {
+        return brickCountPanel.getSubmitButton();
+    }
+
 
 }

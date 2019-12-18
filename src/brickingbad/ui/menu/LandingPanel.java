@@ -7,6 +7,8 @@ import brickingbad.domain.game.authentication.User;
 import brickingbad.services.Adapter;
 import brickingbad.services.AdapterHandler;
 import brickingbad.ui.BrickingBadFrame;
+import brickingbad.ui.DefaultActionable;
+import brickingbad.ui.components.BBButton;
 import brickingbad.ui.components.BBMenuButton;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.game.animation.Animation;
@@ -22,7 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class LandingPanel extends JPanel implements ActionListener {
+public class LandingPanel extends JPanel implements ActionListener, DefaultActionable {
 
   private static LandingPanel instance;
 
@@ -67,6 +69,8 @@ public class LandingPanel extends JPanel implements ActionListener {
 
     loadBackgroundImage("resources/sprites/background.png");
     loadTitle("resources/sprites/title.png");
+
+
   }
 
   public static LandingPanel getInstance() {
@@ -123,4 +127,8 @@ public class LandingPanel extends JPanel implements ActionListener {
     }
   }
 
+  @Override
+  public BBButton getDefaultButton() {
+    return loginButton;
+  }
 }

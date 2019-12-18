@@ -2,7 +2,10 @@ package brickingbad.ui.components.containers;
 
 import brickingbad.controller.GameController;
 import brickingbad.domain.game.GameConstants;
+import brickingbad.ui.BrickingBadFrame;
+import brickingbad.ui.components.BBButton;
 import brickingbad.ui.components.BBGameButton;
+import brickingbad.ui.game.BuildingModePanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -78,7 +81,10 @@ public class BrickCountPanel extends JPanel implements ActionListener {
         add(submitButton);
 
         setFocusable(false);
+    }
 
+    public BBButton getSubmitButton() {
+        return submitButton;
     }
 
     @Override
