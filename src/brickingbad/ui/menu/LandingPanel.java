@@ -8,11 +8,19 @@ import brickingbad.services.Adapter;
 import brickingbad.services.AdapterHandler;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.components.BBMenuButton;
+import brickingbad.ui.components.UIGameObject;
+import brickingbad.ui.game.animation.Animation;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class LandingPanel extends JPanel implements ActionListener {
 
@@ -30,9 +38,14 @@ public class LandingPanel extends JPanel implements ActionListener {
   private static BBMenuButton registerButton;
   private static BBMenuButton loginButton;
 
+  private BufferedImage background;
+  private BufferedImage title;
+
   private LandingPanel() {
     usernameLabel = new JLabel("USERNAME");
+    usernameLabel.setForeground(Color.WHITE);
     passwordLabel = new JLabel("PASSWORD");
+    passwordLabel.setForeground(Color.WHITE);
 
     usernameField = new JTextField("", 20);
     passwordField = new JPasswordField("", 20);
@@ -51,6 +64,9 @@ public class LandingPanel extends JPanel implements ActionListener {
     add(adapterSelectionBox);
     add(registerButton);
     add(loginButton);
+
+    loadBackgroundImage("resources/sprites/background.png");
+    loadTitle("resources/sprites/title.png");
   }
 
   public static LandingPanel getInstance() {
@@ -58,6 +74,14 @@ public class LandingPanel extends JPanel implements ActionListener {
       instance = new LandingPanel();
     }
     return instance;
+  }
+
+  @Override
+  protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
+    g.drawImage(title, getWidth() / 4, getHeight() * 61 / 128,
+            getWidth() / 2, getHeight() * 6 / 128, null);
   }
 
   @Override
@@ -80,6 +104,22 @@ public class LandingPanel extends JPanel implements ActionListener {
       } else {
         JOptionPane.showMessageDialog(this, "Wrong username and/or password.");
       }
+    }
+  }
+
+  private void loadBackgroundImage(String path) {
+    try {
+      this.background = ImageIO.read(new File(path));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private void loadTitle(String path) {
+    try {
+      this.title = ImageIO.read(new File(path));
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 

@@ -4,10 +4,19 @@ import brickingbad.controller.GameController;
 import brickingbad.ui.BrickingBadFrame;
 import brickingbad.ui.UIController;
 import brickingbad.ui.components.BBMenuButton;
+import brickingbad.ui.components.UIGameObject;
+import brickingbad.ui.game.animation.Animation;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class MainMenuPanel extends JPanel implements ActionListener {
@@ -21,6 +30,8 @@ public class MainMenuPanel extends JPanel implements ActionListener {
   private static BBMenuButton helpButton;
   private static BBMenuButton exitButton;
 
+  private BufferedImage background;
+
   private MainMenuPanel() {
     newGameButton = new BBMenuButton("NEW GAME", this);
     loadGameButton = new BBMenuButton("LOAD GAME", this);
@@ -31,6 +42,8 @@ public class MainMenuPanel extends JPanel implements ActionListener {
     add(loadGameButton);
     add(helpButton);
     add(exitButton);
+
+    loadBackgroundImage("resources/sprites/background.png");
   }
 
   public static MainMenuPanel getInstance() {
@@ -52,6 +65,20 @@ public class MainMenuPanel extends JPanel implements ActionListener {
       UIController.getInstance().resumeGameIfPaused();
     } else if (e.getSource().equals(exitButton)) {
       System.exit(0);
+    }
+  }
+
+  @Override
+  protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
+  }
+
+  private void loadBackgroundImage(String path) {
+    try {
+      this.background = ImageIO.read(new File(path));
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 

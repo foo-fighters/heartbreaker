@@ -32,7 +32,7 @@ public class UIController implements GameStateListener {
         PhysicsEngine.getInstance().resumeIfPaused();
     }
 
-    public static void resetUI() {
+    public void resetUI() {
         RunningModePanel.getInstance().resetUI();
         BuildingModePanel.getInstance().resetUI();
     }

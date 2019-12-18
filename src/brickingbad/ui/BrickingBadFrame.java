@@ -1,5 +1,6 @@
 package brickingbad.ui;
 
+import brickingbad.audio.AudioController;
 import brickingbad.controller.GameController;
 import brickingbad.controller.SaveController;
 import brickingbad.domain.game.GameConstants;
@@ -40,7 +41,7 @@ public class BrickingBadFrame extends JFrame {
   }
 
   private BrickingBadFrame() {
-
+    AudioController.getInstance().playMenuMusic();
     File font_file = new File("resources/fonts/ARCADECLASSIC.TTF");
 
     setTitle("Bricking Bad");

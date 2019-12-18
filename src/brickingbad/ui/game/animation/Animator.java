@@ -12,14 +12,11 @@ public class Animator implements Runnable {
   private static Animator instance;
   private static boolean running = true;
 
-  private static JPanel panel;
-
   private Animator() {
   }
 
   public static Animator getInstance(JPanel currentPanel) {
     instance = getInstance();
-    instance.setPanel(currentPanel);
     return instance;
   }
 
@@ -69,10 +66,6 @@ public class Animator implements Runnable {
         BrickingBadFrame.getInstance().getCurrentPanel().repaint();
       }
     }
-  }
-
-  public void setPanel(JPanel panel) {
-    this.panel = panel;
   }
 
   public boolean isRunning() {
