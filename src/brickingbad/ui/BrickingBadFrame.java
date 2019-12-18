@@ -187,7 +187,8 @@ public class BrickingBadFrame extends JFrame {
   }
 
   public void showWonDialog() {
-      JOptionPane.showMessageDialog(this, "Congratz YOU HAVE WON");
+      JOptionPane.showMessageDialog(this, "Congratz YOU HAVE WON" );
+      showMainMenuPanel();
     }
 
   private void showPauseWarning() {
