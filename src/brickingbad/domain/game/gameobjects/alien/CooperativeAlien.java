@@ -24,5 +24,4 @@ public class CooperativeAlien extends Alien {
         Level.getInstance().finishAnimation("CooperativeAlienRowAnimation");
         super.destroy();
     }
-
 }

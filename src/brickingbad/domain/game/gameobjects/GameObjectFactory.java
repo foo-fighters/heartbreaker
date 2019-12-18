@@ -96,12 +96,17 @@ public class GameObjectFactory {
         }
     }
 
-    public void spawnAlien(WrapperContent content) {
+    public void spawnAlien(WrapperContent content, boolean cooperativeAlienIsKilled) {
         Alien alien = null;
         switch (content) {
             case COOPERATIVE_ALIEN:
-                alien = new CooperativeAlien();
+                if (!cooperativeAlienIsKilled){
+                    alien = new CooperativeAlien();
+                }else {
+                    return;
+                }
                 break;
+
             case PROTECTING_ALIEN:
                 alien = new ProtectingAlien();
                 break;

@@ -1,8 +1,10 @@
 package brickingbad.domain.physics.ball;
 
+import brickingbad.domain.game.Level;
 import brickingbad.domain.game.gameobjects.Ball;
 import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.gameobjects.alien.Alien;
+import brickingbad.domain.game.gameobjects.alien.CooperativeAlien;
 import brickingbad.domain.game.gameobjects.alien.ProtectingAlien;
 import brickingbad.domain.game.gameobjects.brick.Brick;
 import brickingbad.domain.game.gameobjects.brick.HalfMetalBrick;
@@ -33,6 +35,9 @@ public class SimpleBallState extends BallState {
                 if(dir == Direction.UP) {
                     object.destroy();
                 }
+            }else if(object instanceof CooperativeAlien){
+                Level.getInstance().setCooperativeAlienIsKilled(true);
+                object.destroy();
             }else{
                 object.destroy();
             }

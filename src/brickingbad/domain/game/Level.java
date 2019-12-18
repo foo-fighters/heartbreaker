@@ -41,6 +41,8 @@ public class Level {
     private Clock gameClock;
     private long startTime;
 
+    private boolean cooperativeAlienIsKilled;
+
     private ArrayList<WrapperContent> wrapperContentList;
     private ArrayList<PowerUp> storedPowerUps;
     private ArrayList<PowerUp> activePowerUps;
@@ -98,6 +100,7 @@ public class Level {
         if (!fromSave) {
             lives = 3;
             score = 0;
+            cooperativeAlienIsKilled = false;
             paddle = new Paddle();
             Ball firstBall = new Ball(paddle.getBallStartPosition());
             balls.add(firstBall);
@@ -224,7 +227,7 @@ public class Level {
                 if(activeAliens.stream().map(Alien::getName).collect(Collectors.toList()).contains(content)) {
                     return;
                 }
-                GameObjectFactory.getInstance().spawnAlien(content);
+                GameObjectFactory.getInstance().spawnAlien(content, cooperativeAlienIsKilled);
             }
         }
     }
@@ -358,5 +361,9 @@ public class Level {
 
     public int getStartBrickCount() {
         return startBrickCount;
+    }
+
+    public void setCooperativeAlienIsKilled(boolean cooperativeAlienIsKilled) {
+        this.cooperativeAlienIsKilled = cooperativeAlienIsKilled;
     }
 }
