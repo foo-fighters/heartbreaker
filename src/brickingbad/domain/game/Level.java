@@ -14,6 +14,7 @@ import brickingbad.domain.game.gameobjects.brick.*;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.domain.physics.Vector;
+import brickingbad.ui.UIController;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.Clock;
@@ -96,8 +97,10 @@ public class Level {
         trackObject(new Wall(Direction.RIGHT));
         trackObject(new Wall(Direction.LEFT));
         trackObject(new Ground());
+        UIController.getInstance().setAlreadyWon(false);
 
         if (!fromSave) {
+
             lives = 3;
             score = 0;
             cooperativeAlienIsKilled = false;

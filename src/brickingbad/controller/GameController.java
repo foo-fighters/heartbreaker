@@ -7,6 +7,7 @@ import brickingbad.domain.game.listeners.AnimationListener;
 import brickingbad.domain.game.listeners.GameListener;
 import brickingbad.domain.game.WrapperContent;
 import brickingbad.domain.physics.Direction;
+import brickingbad.ui.game.animation.Animator;
 
 public class GameController {
 
@@ -24,6 +25,7 @@ public class GameController {
 
     public void initializeGame(boolean fromSave) {
         Level.getInstance().initialize(fromSave);
+        Animator.getInstance().start();
     }
 
     public void startGame() {

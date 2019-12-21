@@ -9,6 +9,8 @@ import brickingbad.ui.game.animation.Animator;
 
 public class UIController implements GameStateListener {
 
+
+
     private boolean alreadyWon = false;
     private static UIController instance;
 
@@ -51,5 +53,9 @@ public class UIController implements GameStateListener {
     public void loseGame() {
         Animator.getInstance().stop();
         BrickingBadFrame.getInstance().showYouAreDeadDialog();
+    }
+
+    public void setAlreadyWon(boolean alreadyWon) {
+        this.alreadyWon = alreadyWon;
     }
 }
