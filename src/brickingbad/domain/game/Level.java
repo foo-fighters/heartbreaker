@@ -366,4 +366,9 @@ public class Level {
     public void setCooperativeAlienIsKilled(boolean cooperativeAlienIsKilled) {
         this.cooperativeAlienIsKilled = cooperativeAlienIsKilled;
     }
+
+    public boolean getCooperativeAlienIsKilled() {
+        return cooperativeAlienIsKilled;
+    }
+
 }

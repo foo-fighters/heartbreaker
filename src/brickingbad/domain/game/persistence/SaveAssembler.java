@@ -22,7 +22,9 @@ public class SaveAssembler {
 
     int score = level.getScore();
     int lives = level.getLives();
-    
+
+    save.cooperativeAlienIsKilled = level.getCooperativeAlienIsKilled();
+
     double paddleX = level.getPaddle().getPosition().getX();
     double paddleY = level.getPaddle().getPosition().getY();
     save.paddleCoordinates.add(paddleX);
@@ -81,6 +83,8 @@ public class SaveAssembler {
   public static void disassemble(Save save) {
     int score = save.score;
     int lives = save.lives;
+
+    Level.getInstance().setCooperativeAlienIsKilled(save.cooperativeAlienIsKilled);
 
     ArrayList<Brick> bricks = new ArrayList<>();
     int brickIndex = 0;

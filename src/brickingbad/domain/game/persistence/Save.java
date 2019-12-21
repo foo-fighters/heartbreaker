@@ -30,6 +30,8 @@ public class Save {
   public List<List<Double>> alienCoordinates;
   public List<String> alienTypes;
 
+  public boolean cooperativeAlienIsKilled;
+
   public Save() {
     paddleCoordinates = new ArrayList<>();
     brickCoordinates = new ArrayList<>();
