@@ -277,6 +277,7 @@ public class Level {
     }
 
     public void anyBricksLeft() {
+        System.out.println(bricks.size());
         if (bricks.isEmpty()) {
             gameStateListener.winGame();
         }

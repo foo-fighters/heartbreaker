@@ -28,6 +28,7 @@ public abstract class GameObject implements Comparable {
 
   public void destroy() {
     Level.getInstance().removeObject(this);
+    Level.getInstance().anyBricksLeft();
   }
 
   public Shape getShape() {

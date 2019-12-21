@@ -161,6 +161,7 @@ public class RunningModePanel extends JPanel implements GameListener, AnimationL
 
   public void resetUI() {
     uiObjects = new CopyOnWriteArrayList<>();
+    clearAllAnimations();
   }
 
   @Override
