@@ -24,6 +24,7 @@ public class SaveAssembler {
     int lives = level.getLives();
 
     save.cooperativeAlienIsKilled = level.getCooperativeAlienIsKilled();
+    save.offset = level.getCurrentTime();
 
     double paddleX = level.getPaddle().getPosition().getX();
     double paddleY = level.getPaddle().getPosition().getY();
@@ -85,6 +86,7 @@ public class SaveAssembler {
     int lives = save.lives;
 
     Level.getInstance().setCooperativeAlienIsKilled(save.cooperativeAlienIsKilled);
+    Level.getInstance().setSaveTimeOffset(save.offset);
 
     ArrayList<Brick> bricks = new ArrayList<>();
     int brickIndex = 0;

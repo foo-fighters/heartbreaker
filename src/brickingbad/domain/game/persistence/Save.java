@@ -32,6 +32,8 @@ public class Save {
 
   public boolean cooperativeAlienIsKilled;
 
+  public long offset;
+
   public Save() {
     paddleCoordinates = new ArrayList<>();
     brickCoordinates = new ArrayList<>();
