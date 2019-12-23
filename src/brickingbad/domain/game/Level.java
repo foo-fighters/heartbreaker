@@ -39,8 +39,10 @@ public class Level {
 
     private int score;
     private int lives;
+
     private Clock gameClock;
     private long startTime;
+    private long saveTimeOffset;
 
     private boolean cooperativeAlienIsKilled;
 
@@ -290,7 +292,7 @@ public class Level {
     }
 
     public void increaseScore() {
-        score += 300000/(gameClock.millis() - startTime);
+        score += 300000/(gameClock.millis() - startTime - saveTimeOffset);
         publishScore();
     }
 
@@ -370,4 +372,21 @@ public class Level {
     public void setCooperativeAlienIsKilled(boolean cooperativeAlienIsKilled) {
         this.cooperativeAlienIsKilled = cooperativeAlienIsKilled;
     }
+
+    public boolean getCooperativeAlienIsKilled() {
+        return cooperativeAlienIsKilled;
+    }
+
+    public void setSaveTimeOffset(long offset) {
+        saveTimeOffset = offset;
+    }
+
+    public long getCurrentTime() {
+        return gameClock.millis();
+    }
+
+    public long getSaveTimeOffset() {
+        return saveTimeOffset;
+    }
+
 }
