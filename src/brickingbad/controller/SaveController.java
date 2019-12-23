@@ -6,8 +6,6 @@ import brickingbad.domain.game.persistence.Save;
 import brickingbad.domain.game.persistence.SaveAssembler;
 import brickingbad.services.Adapter;
 import brickingbad.services.persistence.SaveRepository;
-import brickingbad.ui.BrickingBadFrame;
-import brickingbad.ui.UIController;
 
 import java.util.List;
 
@@ -36,16 +34,11 @@ public class SaveController {
     saveRepository.save(save, user);
   }
 
-  public void loadGame(String name) {
+  public boolean loadGame(String name) {
     User user = AuthenticationController.getInstance().getCurrentUser();
     Save save = saveRepository.getSaveByName(name, user);
-    if (save.inRunningMode) {
-      BrickingBadFrame.getInstance().showRunningModePanel();
-    } else {
-      BrickingBadFrame.getInstance().showBuildingModePanel();
-    }
     SaveAssembler.disassemble(save);
-    UIController.getInstance().resumeGameIfPaused();
+    return save.inRunningMode;
   }
 
   public List<String> getSaveNames() {

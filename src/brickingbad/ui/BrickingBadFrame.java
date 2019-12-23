@@ -100,11 +100,6 @@ public class BrickingBadFrame extends JFrame {
     showPanel(currentPanelName);
   }
 
-  public void showLoadGamePanel() {
-    currentPanelName = Panel.LOAD_GAME;
-    showPanel(currentPanelName);
-  }
-
   public void showMainMenuPanel() {
     currentPanelName = Panel.MAIN_MENU;
     showPanel(currentPanelName);
@@ -174,7 +169,13 @@ public class BrickingBadFrame extends JFrame {
 
         if (name != null) {
           GameController.getInstance().initializeGame(true);
-          SaveController.getInstance().adapt(adapter).loadGame(name);
+          boolean loadRunningModePanel = SaveController.getInstance().adapt(adapter).loadGame(name);
+          if (loadRunningModePanel) {
+            showRunningModePanel();
+          } else {
+            showBuildingModePanel();
+          }
+          UIController.getInstance().resumeGameIfPaused();
         }
       }
     }
