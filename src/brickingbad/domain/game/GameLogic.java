@@ -121,7 +121,7 @@ public class GameLogic {
             }
         }
         mineBrickCenters.forEach(c -> destroyBricksInRadius(c, GameConstants.mineBrickExplosionRadius));
-        Level.getInstance().startAnimation("ExplosionAnimation", center, radius);
+        Level.getInstance().startAnimation("ExplosionAnimation", 0, center, radius);
     }
 
     public static void shootLaserColumn(double x) {
@@ -144,7 +144,7 @@ public class GameLogic {
                 object.destroy();
             }
         }
-        Level.getInstance().startAnimation("LaserAnimation", x, endY);
+        Level.getInstance().startAnimation("LaserAnimation", 0, x, endY);
     }
 
     public static void invokeGodMode() {

@@ -13,8 +13,9 @@ public class ExplosionAnimation extends Animation {
     int radius;
     double size;
 
-    public ExplosionAnimation(AnimationListener listener, Vector center, double radius) {
+    public ExplosionAnimation(AnimationListener listener, int tag, Vector center, double radius) {
         this.listener = listener;
+        this.tag = tag;
         this.size = radius;
         centerX = (int) center.getX();
         centerY = (int) center.getY();

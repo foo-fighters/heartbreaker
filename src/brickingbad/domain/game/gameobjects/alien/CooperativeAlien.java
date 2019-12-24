@@ -21,7 +21,7 @@ public class CooperativeAlien extends Alien {
 
     @Override
     public void destroy() {
-        Level.getInstance().finishAnimation("CooperativeAlienRowAnimation");
+        Level.getInstance().finishAnimation("CooperativeAlienRowAnimation", 0);
         super.destroy();
     }
 }

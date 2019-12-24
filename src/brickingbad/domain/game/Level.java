@@ -162,10 +162,10 @@ public class Level {
         animationListeners.add(lis);
     }
 
-    public void startAnimation(String animationName, Object... args) {
+    public void startAnimation(String animationName, int animationTag, Object... args) {
         for(AnimationListener lis: animationListeners) {
             try {
-                lis.addAnimation(animationName, args);
+                lis.addAnimation(animationName, animationTag, args);
             } catch (ClassNotFoundException |
                     IllegalAccessException |
                     InvocationTargetException |
@@ -175,9 +175,9 @@ public class Level {
         }
     }
 
-    public void finishAnimation(String animationName) {
+    public void finishAnimation(String animationName, int animationTag) {
         for(AnimationListener lis: animationListeners) {
-            lis.removeAnimation(animationName);
+            lis.removeAnimation(animationName, animationTag);
         }
     }
 
