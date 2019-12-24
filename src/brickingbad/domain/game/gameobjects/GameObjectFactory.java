@@ -6,6 +6,7 @@ import brickingbad.domain.game.WrapperContent;
 import brickingbad.domain.game.gameobjects.alien.*;
 import brickingbad.domain.game.gameobjects.brick.Brick;
 import brickingbad.domain.game.gameobjects.brick.BrickFactory;
+import brickingbad.domain.game.gameobjects.brick.HalfMetalBrick;
 import brickingbad.domain.game.gameobjects.brick.SimpleBrick;
 import brickingbad.domain.game.powerup.*;
 import brickingbad.domain.physics.PhysicsEngine;
@@ -54,16 +55,25 @@ public class GameObjectFactory {
     }
 
     public void addBrick(Brick brick) {
+        boolean bottomFull = true;
         boolean overlaps = true;
         int count = 0;
-        while (overlaps && count < 1000) {
-            int x = ThreadLocalRandom.current().nextInt(Level.getInstance().getGridX());
-            int y = ThreadLocalRandom.current().nextInt(Level.getInstance().getGridY());
-            if (Level.getInstance().brickCount() == 0) {
-                overlaps = false;
-            } else {
-                overlaps = Level.getInstance().getBrickGrid()[x][y];
+        int x = 0;
+        int y = 0;
+        if(brick instanceof HalfMetalBrick) {
+            y = Level.getInstance().getGridY() - 1;
+            for (int i = 2; i < Level.getInstance().getGridX() - 2; i++) {
+                if(!Level.getInstance().getBrickGrid()[i][y]) bottomFull = false;
             }
+        }
+        while (overlaps && count < 1000) {
+            if(brick instanceof HalfMetalBrick && !bottomFull) {
+                x = ThreadLocalRandom.current().nextInt(2, Level.getInstance().getGridX() - 2);
+            }else {
+                x = ThreadLocalRandom.current().nextInt(Level.getInstance().getGridX());
+                y = ThreadLocalRandom.current().nextInt(Level.getInstance().getGridY() - 1);
+            }
+            overlaps = Level.getInstance().getBrickGrid()[x][y];
             if (!overlaps) {
                 Level.getInstance().getBrickGrid()[x][y] = true;
                 brick.setPosition(new Vector((x + 0.5) * GameConstants.rectangularBrickLength,
@@ -73,7 +83,7 @@ public class GameObjectFactory {
             }
             count++;
         }
-        Level.getInstance().addObject(brick);
+        if(!overlaps) Level.getInstance().addObject(brick);
     }
 
     public void addBrickHorizontal() {
