@@ -132,6 +132,7 @@ public class BrickingBadFrame extends JFrame {
   public void showYouAreDeadDialog() {
     JOptionPane.showMessageDialog(this, "All lives are lost!");
     showMainMenuPanel();
+    AudioController.getInstance().playMenuMusic();
   }
 
   public void showSaveDialog() {

@@ -46,6 +46,9 @@ public class GameKeyboardListener implements KeyListener {
         if(key == KeyEvent.VK_T){
             GameController.getInstance().usePowerUp(WrapperContent.TALLER_PADDLE);
         }
+        if(key == KeyEvent.VK_R){
+            GameController.getInstance().resetBalls();
+        }
     }
 
     @Override

@@ -78,4 +78,6 @@ public class GameController {
         Level.getInstance().setScore(0);
     }
 
+    public void resetBalls() { GameLogic.destroyAllBalls(); }
+
 }

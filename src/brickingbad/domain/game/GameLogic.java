@@ -150,4 +150,12 @@ public class GameLogic {
     public static void invokeGodMode() {
         Level.getInstance().getPaddle().god();
     }
+
+    public static void destroyAllBalls() {
+        for(GameObject object: objectsCopy()) {
+            if(object instanceof Ball) {
+                object.destroy();
+            }
+        }
+    }
 }

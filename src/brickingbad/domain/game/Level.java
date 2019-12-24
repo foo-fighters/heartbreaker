@@ -183,7 +183,6 @@ public class Level {
 
     // GAME OBJECTS
     public void addObject(GameObject object) {
-        System.out.println(gridX);
         trackObject(object);
         if(object instanceof Brick) bricks.add((Brick) object);
         if(object instanceof Ball) balls.add((Ball) object);
