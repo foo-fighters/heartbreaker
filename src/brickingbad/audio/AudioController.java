@@ -59,7 +59,6 @@ public class AudioController implements SfxListener {
     public void playTransitionMusic() {
         File music = new File("resources/sounds/game_transition.wav");
         long pos = (menuClip.getLongFramePosition() + menuClip.getFrameLength() / 1500) % menuClip.getFrameLength();
-        System.out.println(pos);
         try {
             if (!transitionClip.isOpen()){
                 transitionClip.open(AudioSystem.getAudioInputStream(music));

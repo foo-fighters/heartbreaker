@@ -148,7 +148,6 @@ public class SaveAssembler {
       String typeName = save.alienTypes.get(alienIndex);
       Alien alien = Alien.getByType(typeName);
       alien.setPosition(new Vector(x, y));
-      System.out.println(alien.toString());
       Level.getInstance().addObject(alien);
       alienIndex++;
     }

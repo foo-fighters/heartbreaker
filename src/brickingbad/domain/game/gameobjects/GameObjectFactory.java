@@ -178,7 +178,7 @@ public class GameObjectFactory {
                 }
             }
         }
-        if(minimumDistance < GameConstants.rectangularBrickLength + GameConstants.ballSize) {
+        if(minimumDistance < (GameConstants.rectangularBrickLength + GameConstants.ballSize) * 0.6) {
             for(int i = 0; i < GameConstants.gangOfBallsMultiplier; i++) {
                 Ball ball = new Ball(revealPosition);
                 ball.startMovement((360.0 / GameConstants.gangOfBallsMultiplier) * i, ((Ball) closestBall).getSpeed());

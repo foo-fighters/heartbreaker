@@ -202,8 +202,8 @@ public class Level {
     public void removeObject(GameObject object) {
         removeObjectFromListeners(object);
         gameObjects.remove(object);
-        bricks.remove(object);
-        balls.remove(object);
+        if (object instanceof Brick) bricks.remove(object);
+        if (object instanceof Ball) balls.remove(object);
     }
 
     // BRICKS
@@ -282,7 +282,6 @@ public class Level {
     }
 
     public void anyBricksLeft() {
-        System.out.println(bricks.size());
         if (bricks.isEmpty()) {
             gameStateListener.winGame();
         }
