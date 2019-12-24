@@ -1,4 +1,4 @@
-package brickingbad.domain.game.powerup;
+package brickingbad.domain.game.gameobjects.powerup;
 
 import brickingbad.domain.game.Level;
 import brickingbad.domain.game.gameobjects.GameObject;
@@ -17,10 +17,12 @@ public abstract class PowerUp extends GameObject {
         Level.getInstance().getActivePowerUps().add(this);
         startTime = Level.getInstance().getTime();
         active = true;
+        Level.getInstance().startAnimation("PowerupTimerAnimation", name.ordinal(), position, size.getX(), duration);
     }
 
     public void deactivate() {
         Level.getInstance().getActivePowerUps().remove(this);
+        Level.getInstance().finishAnimation("PowerupTimerAnimation", name.ordinal());
         destroy();
     }
 

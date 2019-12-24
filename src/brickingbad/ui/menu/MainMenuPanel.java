@@ -7,6 +7,7 @@ import brickingbad.ui.UIController;
 import brickingbad.ui.components.BBMenuButton;
 import brickingbad.ui.components.UIGameObject;
 import brickingbad.ui.game.animation.Animation;
+import brickingbad.ui.game.animation.Animator;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -59,6 +60,7 @@ public class MainMenuPanel extends JPanel implements ActionListener, DefaultActi
     if (e.getSource().equals(newGameButton)) {
       bbFrame.showBuildingModePanel();
       GameController.getInstance().initializeGame(false);
+      Animator.getInstance().start();
     } else if (e.getSource().equals(helpButton)) {
       bbFrame.showHelpPanel();
     } else if (e.getSource().equals(loadGameButton)) {

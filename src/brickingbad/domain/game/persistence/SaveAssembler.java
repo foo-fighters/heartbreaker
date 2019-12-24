@@ -7,7 +7,7 @@ import brickingbad.domain.game.gameobjects.Paddle;
 import brickingbad.domain.game.gameobjects.alien.Alien;
 import brickingbad.domain.game.gameobjects.brick.Brick;
 import brickingbad.domain.game.gameobjects.brick.BrickFactory;
-import brickingbad.domain.game.powerup.*;
+import brickingbad.domain.game.gameobjects.powerup.*;
 import brickingbad.domain.physics.Vector;
 
 import java.lang.reflect.InvocationTargetException;
@@ -148,7 +148,6 @@ public class SaveAssembler {
       String typeName = save.alienTypes.get(alienIndex);
       Alien alien = Alien.getByType(typeName);
       alien.setPosition(new Vector(x, y));
-      System.out.println(alien.toString());
       Level.getInstance().addObject(alien);
       alienIndex++;
     }

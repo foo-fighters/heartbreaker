@@ -11,8 +11,9 @@ public class CooperativeAlienRowAnimation extends Animation {
     int width = GameConstants.screenWidth;
     int startY;
 
-    public CooperativeAlienRowAnimation(AnimationListener listener, double rowHeight) {
+    public CooperativeAlienRowAnimation(AnimationListener listener, int tag, double rowHeight) {
         this.listener = listener;
+        this.tag = tag;
         this.startY = (int) rowHeight - height / 2;
     }
 

@@ -5,7 +5,7 @@ import brickingbad.domain.game.Level;
 import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.WrapperContent;
 import brickingbad.domain.game.gameobjects.brick.Brick;
-import brickingbad.domain.game.powerup.PowerUp;
+import brickingbad.domain.game.gameobjects.powerup.PowerUp;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.alien.AlienState;
 
@@ -66,10 +66,6 @@ public abstract class Alien extends GameObject {
             e.printStackTrace();
         }
         return alien;
-    }
-
-    public AlienState getAlienState() {
-        return alienState;
     }
 
 }

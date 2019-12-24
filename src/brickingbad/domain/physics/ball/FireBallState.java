@@ -3,11 +3,12 @@ package brickingbad.domain.physics.ball;
 import brickingbad.domain.game.*;
 import brickingbad.domain.game.gameobjects.Ball;
 import brickingbad.domain.game.gameobjects.alien.Alien;
+import brickingbad.domain.game.gameobjects.alien.CooperativeAlien;
 import brickingbad.domain.game.gameobjects.alien.ProtectingAlien;
 import brickingbad.domain.game.gameobjects.brick.Brick;
 import brickingbad.domain.game.gameobjects.brick.HalfMetalBrick;
 import brickingbad.domain.game.gameobjects.GameObject;
-import brickingbad.domain.game.powerup.PowerUp;
+import brickingbad.domain.game.gameobjects.powerup.PowerUp;
 import brickingbad.domain.physics.Direction;
 
 public class FireBallState extends BallState {
@@ -40,7 +41,12 @@ public class FireBallState extends BallState {
                 Direction dir = ball.getReflectionDirection();
                 if(dir == Direction.UP) {
                     object.destroy();
+                    GameLogic.destroyBricksInRadius(object.getPosition(), GameConstants.fireBallDestructionRadius);
                 }
+            }else if(object instanceof CooperativeAlien){
+                Level.getInstance().setCooperativeAlienIsKilled(true);
+                object.destroy();
+                GameLogic.destroyBricksInRadius(object.getPosition(), GameConstants.fireBallDestructionRadius);
             }else{
                 object.destroy();
                 GameLogic.destroyBricksInRadius(object.getPosition(), GameConstants.fireBallDestructionRadius);

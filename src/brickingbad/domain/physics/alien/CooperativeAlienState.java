@@ -20,9 +20,9 @@ public class CooperativeAlienState extends AlienState {
         this.startTime = Level.getInstance().getTime();
         this.rowHeight = GameLogic.getBrickRowHeight();
         if(drunk) {
-            Level.getInstance().startAnimation("DrunkAlienRowAnimation", rowHeight);
+            Level.getInstance().startAnimation("CooperativeAlienRowAnimation", 1, rowHeight);
         }else {
-            Level.getInstance().startAnimation("CooperativeAlienRowAnimation", rowHeight);
+            Level.getInstance().startAnimation("CooperativeAlienRowAnimation", 0, rowHeight);
         }
     }
 
@@ -35,7 +35,7 @@ public class CooperativeAlienState extends AlienState {
                 finishAction();
                 if(drunk) {
                     rowHeight = GameLogic.getBrickRowHeight();
-                    Level.getInstance().startAnimation("DrunkAlienRowAnimation", rowHeight);
+                    Level.getInstance().startAnimation("CooperativeAlienRowAnimation", 1, rowHeight);
                 }else {
                     alien.destroy();
                 }
@@ -49,9 +49,9 @@ public class CooperativeAlienState extends AlienState {
     @Override
     public void finishAction() {
         if(drunk) {
-            Level.getInstance().finishAnimation("DrunkAlienRowAnimation");
+            Level.getInstance().finishAnimation("CooperativeAlienRowAnimation", 1);
         }else {
-            Level.getInstance().finishAnimation("CooperativeAlienRowAnimation");
+            Level.getInstance().finishAnimation("CooperativeAlienRowAnimation", 0);
         }
     }
 
