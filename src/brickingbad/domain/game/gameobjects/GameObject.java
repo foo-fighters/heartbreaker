@@ -1,13 +1,16 @@
 package brickingbad.domain.game.gameobjects;
 
 import brickingbad.domain.game.GameConstants;
+import brickingbad.domain.game.GameLogic;
 import brickingbad.domain.game.Level;
 import brickingbad.domain.game.Shape;
+import brickingbad.domain.game.gameobjects.brick.Brick;
 import brickingbad.domain.game.listeners.GameObjectListener;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.Vector;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public abstract class GameObject implements Comparable {
 
@@ -28,7 +31,6 @@ public abstract class GameObject implements Comparable {
 
   public void destroy() {
     Level.getInstance().removeObject(this);
-    Level.getInstance().anyBricksLeft();
   }
 
   public Shape getShape() {

@@ -14,8 +14,9 @@ public class LaserAnimation extends Animation {
     int width;
     int height;
 
-    public LaserAnimation(AnimationListener listener, double startX, double endY) {
+    public LaserAnimation(AnimationListener listener, int tag, double startX, double endY) {
         this.listener = listener;
+        this.tag = tag;
         this.endY = (int) endY;
         this.startX = (int) startX;
         this.height = startY - this.endY;

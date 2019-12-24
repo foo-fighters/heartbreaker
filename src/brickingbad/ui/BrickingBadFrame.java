@@ -132,6 +132,7 @@ public class BrickingBadFrame extends JFrame {
   public void showYouAreDeadDialog() {
     JOptionPane.showMessageDialog(this, "All lives are lost!");
     showMainMenuPanel();
+    AudioController.getInstance().playMenuMusic();
   }
 
   public void showSaveDialog() {
@@ -169,6 +170,7 @@ public class BrickingBadFrame extends JFrame {
 
         if (name != null) {
           GameController.getInstance().initializeGame(true);
+          Animator.getInstance().start();
           boolean loadRunningModePanel = SaveController.getInstance().adapt(adapter).loadGame(name);
           if (loadRunningModePanel) {
             showRunningModePanel();
@@ -194,6 +196,7 @@ public class BrickingBadFrame extends JFrame {
   public void showWonDialog() {
       JOptionPane.showMessageDialog(this, "Congratz YOU HAVE WON" );
       showMainMenuPanel();
+      AudioController.getInstance().playMenuMusic();
     }
 
   private void showPauseWarning() {
