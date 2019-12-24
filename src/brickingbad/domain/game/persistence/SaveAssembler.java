@@ -7,7 +7,7 @@ import brickingbad.domain.game.gameobjects.Paddle;
 import brickingbad.domain.game.gameobjects.alien.Alien;
 import brickingbad.domain.game.gameobjects.brick.Brick;
 import brickingbad.domain.game.gameobjects.brick.BrickFactory;
-import brickingbad.domain.game.powerup.*;
+import brickingbad.domain.game.gameobjects.powerup.*;
 import brickingbad.domain.physics.Vector;
 
 import java.lang.reflect.InvocationTargetException;

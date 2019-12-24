@@ -4,7 +4,7 @@ import brickingbad.domain.game.gameobjects.Ball;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.Shape;
-import brickingbad.domain.game.powerup.PowerUp;
+import brickingbad.domain.game.gameobjects.powerup.PowerUp;
 import brickingbad.domain.physics.Vector;
 
 public class Ground extends GameObject {

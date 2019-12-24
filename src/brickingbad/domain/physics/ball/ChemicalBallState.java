@@ -4,7 +4,7 @@ import brickingbad.domain.game.gameobjects.Ball;
 import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.gameobjects.alien.Alien;
 import brickingbad.domain.game.gameobjects.brick.Brick;
-import brickingbad.domain.game.powerup.PowerUp;
+import brickingbad.domain.game.gameobjects.powerup.PowerUp;
 
 public class ChemicalBallState extends BallState {
 

@@ -8,7 +8,7 @@ import brickingbad.domain.game.gameobjects.alien.CooperativeAlien;
 import brickingbad.domain.game.gameobjects.alien.ProtectingAlien;
 import brickingbad.domain.game.gameobjects.brick.Brick;
 import brickingbad.domain.game.gameobjects.brick.HalfMetalBrick;
-import brickingbad.domain.game.powerup.PowerUp;
+import brickingbad.domain.game.gameobjects.powerup.PowerUp;
 import brickingbad.domain.physics.Direction;
 
 public class SimpleBallState extends BallState {

@@ -1,4 +1,4 @@
-package brickingbad.domain.game.powerup;
+package brickingbad.domain.game.gameobjects.powerup;
 
 import brickingbad.domain.game.Level;
 import brickingbad.domain.game.gameobjects.GameObject;

@@ -8,7 +8,7 @@ import brickingbad.domain.game.gameobjects.brick.Brick;
 import brickingbad.domain.game.gameobjects.brick.BrickFactory;
 import brickingbad.domain.game.gameobjects.brick.HalfMetalBrick;
 import brickingbad.domain.game.gameobjects.brick.SimpleBrick;
-import brickingbad.domain.game.powerup.*;
+import brickingbad.domain.game.gameobjects.powerup.*;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.domain.physics.Vector;
 import brickingbad.domain.physics.ball.ChemicalBallState;
@@ -87,12 +87,13 @@ public class GameObjectFactory {
     }
 
     public void addBrickHorizontal() {
-        boolean overlaps = false;
+        boolean overlaps;
         int y = ThreadLocalRandom.current().nextInt(Level.getInstance().getGridY());
         int x = GameConstants.rectangularBrickLength / 2;
         while(x <= GameConstants.screenWidth) {
             SimpleBrick brick = new SimpleBrick();
-            brick.setPosition(new Vector(x, y));
+            brick.setPosition(new Vector(x, GameConstants.menuAreaHeight + (y + 0.5) * GameConstants.rectangularBrickThickness));
+            overlaps = false;
             for(GameObject object: objectsCopy()) {
                 if(PhysicsEngine.getInstance().areColliding(object, brick)) {
                     overlaps = true;
@@ -106,17 +107,12 @@ public class GameObjectFactory {
         }
     }
 
-    public void spawnAlien(WrapperContent content, boolean cooperativeAlienIsKilled) {
+    public void spawnAlien(WrapperContent content) {
         Alien alien = null;
         switch (content) {
             case COOPERATIVE_ALIEN:
-                if (!cooperativeAlienIsKilled){
-                    alien = new CooperativeAlien();
-                }else {
-                    return;
-                }
+                alien = new CooperativeAlien();
                 break;
-
             case PROTECTING_ALIEN:
                 alien = new ProtectingAlien();
                 break;

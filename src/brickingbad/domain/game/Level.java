@@ -8,7 +8,7 @@ import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.listeners.AnimationListener;
 import brickingbad.domain.game.listeners.GameListener;
 import brickingbad.domain.game.listeners.GameStateListener;
-import brickingbad.domain.game.powerup.*;
+import brickingbad.domain.game.gameobjects.powerup.*;
 import brickingbad.domain.game.gameobjects.border.*;
 import brickingbad.domain.game.gameobjects.brick.*;
 import brickingbad.domain.physics.Direction;
@@ -183,6 +183,7 @@ public class Level {
 
     // GAME OBJECTS
     public void addObject(GameObject object) {
+        System.out.println(gridX);
         trackObject(object);
         if(object instanceof Brick) bricks.add((Brick) object);
         if(object instanceof Ball) balls.add((Ball) object);
@@ -232,10 +233,11 @@ public class Level {
             if(content.ordinal() < 6) {
                 GameObjectFactory.getInstance().spawnPowerup(content, revealPosition);
             }else {
-                if(activeAliens.stream().map(Alien::getName).collect(Collectors.toList()).contains(content)) {
+                if(activeAliens.stream().map(Alien::getName).collect(Collectors.toList()).contains(content)
+                        || (content == WrapperContent.COOPERATIVE_ALIEN && cooperativeAlienIsKilled)) {
                     return;
                 }
-                GameObjectFactory.getInstance().spawnAlien(content, cooperativeAlienIsKilled);
+                GameObjectFactory.getInstance().spawnAlien(content);
             }
         }
     }
@@ -258,10 +260,6 @@ public class Level {
         ArrayList<PowerUp> storedPowerUpsCopy = new ArrayList<>(storedPowerUps);
         for(PowerUp powerup: storedPowerUpsCopy) {
             if(powerup.getName() == name) {
-                if(powerup.getName() != WrapperContent.DESTRUCTIVE_LASER_GUN) {
-                    storedPowerUps.remove(powerup);
-                    activePowerUps.add(powerup);
-                }
                 powerup.activate();
                 break;
             }
