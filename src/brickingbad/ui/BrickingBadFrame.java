@@ -19,7 +19,6 @@ import brickingbad.ui.menu.MainMenuPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,7 +90,7 @@ public class BrickingBadFrame extends JFrame {
 
   public void showRunningModePanel() {
     currentPanelName = Panel.RUNNING_MODE;
-    UIController.getInstance().resumeGameIfPaused();
+    UIController.getInstance().resumeUI();
     showPanel(currentPanelName);
   }
 
@@ -102,7 +101,7 @@ public class BrickingBadFrame extends JFrame {
 
   public void showMainMenuPanel() {
     currentPanelName = Panel.MAIN_MENU;
-    UIController.getInstance().togglePauseResume();
+    UIController.getInstance().pauseUI();
     showPanel(currentPanelName);
   }
 
@@ -175,7 +174,7 @@ public class BrickingBadFrame extends JFrame {
           boolean loadRunningModePanel = SaveController.getInstance().adapt(adapter).loadGame(name);
           if (loadRunningModePanel) {
             showRunningModePanel();
-            UIController.getInstance().resumeGameIfPaused();
+            UIController.getInstance().resumeUI();
           } else {
             showBuildingModePanel();
           }

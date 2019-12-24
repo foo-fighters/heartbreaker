@@ -77,13 +77,17 @@ public class PhysicsEngine implements Runnable {
   }
 
   /**
-   * Resumes the thread if it is paused.
+   * Resumes the thread.
    */
-  public void resumeIfPaused() {
-    if (!running) {
-      System.out.println("Physics engine resumed.");
+  public void resume() {
       running = true;
-    }
+  }
+
+  /**
+   * Pauses the thread.
+   */
+  public void pause() {
+      running = false;
   }
 
   /**

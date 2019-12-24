@@ -51,7 +51,7 @@ public class BuildButtonPanel extends JPanel implements ActionListener {
             }else {
                 BuildingModePanel.getInstance().showError(checkedForCount);
             }
-            UIController.getInstance().resumeGameIfPaused();
+            UIController.getInstance().resumeUI();
         } else if (e.getSource().equals(quitButton)) {
             BrickingBadFrame.getInstance().showMainMenuPanel();
         } else {

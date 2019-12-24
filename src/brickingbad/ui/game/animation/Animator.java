@@ -37,16 +37,12 @@ public class Animator implements Runnable {
     }
   }
 
-  public void stop(){
-    if (running){
-      running = false;
-    }
+  public void pause(){
+    running = false;
   }
 
-  public void resumeIfPaused() {
-    if (!running) {
-      togglePauseResume();
-    }
+  public void resume() {
+    running = true;
   }
 
   public void start() {

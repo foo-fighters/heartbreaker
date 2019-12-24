@@ -130,7 +130,7 @@ public class Level {
                 startBrickCount++;
             }
         }
-        PhysicsEngine.getInstance().resumeIfPaused();
+        PhysicsEngine.getInstance().resume();
     }
 
     // LISTENER FUNCTIONS

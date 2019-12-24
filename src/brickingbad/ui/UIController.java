@@ -28,9 +28,14 @@ public class UIController implements GameStateListener {
         PhysicsEngine.getInstance().togglePauseResume();
     }
 
-    public void resumeGameIfPaused() {
-        Animator.getInstance().resumeIfPaused();
-        PhysicsEngine.getInstance().resumeIfPaused();
+    public void resumeUI() {
+        Animator.getInstance().resume();
+        PhysicsEngine.getInstance().resume();
+    }
+
+    public void pauseUI() {
+        Animator.getInstance().pause();
+        PhysicsEngine.getInstance().pause();
     }
 
     public void resetUI() {
@@ -41,7 +46,7 @@ public class UIController implements GameStateListener {
     @Override
     public void winGame() {
         if (!alreadyWon){
-            Animator.getInstance().stop();
+            Animator.getInstance().pause();
             BrickingBadFrame.getInstance().showWonDialog();
             alreadyWon = true;
         }
@@ -49,7 +54,7 @@ public class UIController implements GameStateListener {
 
     @Override
     public void loseGame() {
-        Animator.getInstance().stop();
+        Animator.getInstance().pause();
         BrickingBadFrame.getInstance().showYouAreDeadDialog();
     }
 
