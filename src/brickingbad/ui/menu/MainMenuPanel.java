@@ -63,7 +63,7 @@ public class MainMenuPanel extends JPanel implements ActionListener, DefaultActi
       bbFrame.showHelpPanel();
     } else if (e.getSource().equals(loadGameButton)) {
       bbFrame.showLoadDialog();
-      UIController.getInstance().resumeGameIfPaused();
+//      UIController.getInstance().resumeGameIfPaused();
     } else if (e.getSource().equals(exitButton)) {
       System.exit(0);
     }
