@@ -30,7 +30,7 @@ public class UIController implements GameStateListener {
 
     public void resumeGameIfPaused() {
         Animator.getInstance().resumeIfPaused();
-//        PhysicsEngine.getInstance().resumeIfPaused();
+        PhysicsEngine.getInstance().resumeIfPaused();
     }
 
     public void resetUI() {
