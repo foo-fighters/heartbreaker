@@ -102,6 +102,7 @@ public class BrickingBadFrame extends JFrame {
 
   public void showMainMenuPanel() {
     currentPanelName = Panel.MAIN_MENU;
+    UIController.getInstance().togglePauseResume();
     showPanel(currentPanelName);
   }
 
