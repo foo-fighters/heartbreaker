@@ -169,6 +169,7 @@ public class BrickingBadFrame extends JFrame {
 
         if (name != null) {
           GameController.getInstance().initializeGame(true);
+          Animator.getInstance().start();
           boolean loadRunningModePanel = SaveController.getInstance().adapt(adapter).loadGame(name);
           if (loadRunningModePanel) {
             showRunningModePanel();

@@ -84,6 +84,10 @@ public class Level {
             removeObjectFromListeners(object);
         }
 
+        for(AnimationListener lis: animationListeners) {
+            lis.clearAllAnimations();
+        }
+
         gameObjects = new ArrayList<>();
         bricks = new ArrayList<>();
         balls = new ArrayList<>();
@@ -382,10 +386,6 @@ public class Level {
 
     public long getCurrentTime() {
         return gameClock.millis();
-    }
-
-    public long getSaveTimeOffset() {
-        return saveTimeOffset;
     }
 
 }
