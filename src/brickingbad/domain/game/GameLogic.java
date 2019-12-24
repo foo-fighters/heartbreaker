@@ -105,16 +105,23 @@ public class GameLogic {
     public static void destroyBricksInRadius(Vector center, double radius) {
         double xdist;
         double ydist;
+        ArrayList<Vector> mineBrickCenters = new ArrayList<>();
         for (GameObject object: objectsCopy()) {
             if(object instanceof Brick) {
                 xdist = center.getX() - object.getPosition().getX();
                 ydist = center.getY() - object.getPosition().getY();
                 if(Math.hypot(xdist, ydist) < radius) {
-                    object.destroy();
+                    if(object instanceof MineBrick) {
+                        mineBrickCenters.add(object.getPosition());
+                        Level.getInstance().removeObject(object);
+                    }else {
+                        object.destroy();
+                    }
                 }
             }
         }
-        Level.getInstance().startAnimation("ExplosionAnimation", center, radius);
+        mineBrickCenters.forEach(c -> destroyBricksInRadius(c, GameConstants.mineBrickExplosionRadius));
+        Level.getInstance().startAnimation("ExplosionAnimation", 0, center, radius);
     }
 
     public static void shootLaserColumn(double x) {
@@ -137,10 +144,18 @@ public class GameLogic {
                 object.destroy();
             }
         }
-        Level.getInstance().startAnimation("LaserAnimation", x, endY);
+        Level.getInstance().startAnimation("LaserAnimation", 0, x, endY);
     }
 
     public static void invokeGodMode() {
         Level.getInstance().getPaddle().god();
+    }
+
+    public static void destroyAllBalls() {
+        for(GameObject object: objectsCopy()) {
+            if(object instanceof Ball) {
+                object.destroy();
+            }
+        }
     }
 }

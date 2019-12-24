@@ -48,7 +48,9 @@ public class AudioController implements SfxListener {
         mainLoopClip.close();
         File music = new File("resources/sounds/menu_loop.wav");
         try {
-            menuClip.open(AudioSystem.getAudioInputStream(music));
+            if(!menuClip.isOpen()) {
+                menuClip.open(AudioSystem.getAudioInputStream(music));
+            }
         } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
             e.printStackTrace();
         }
@@ -59,9 +61,8 @@ public class AudioController implements SfxListener {
     public void playTransitionMusic() {
         File music = new File("resources/sounds/game_transition.wav");
         long pos = (menuClip.getLongFramePosition() + menuClip.getFrameLength() / 1500) % menuClip.getFrameLength();
-        System.out.println(pos);
         try {
-            if (!transitionClip.isOpen()){
+            if (!transitionClip.isOpen()) {
                 transitionClip.open(AudioSystem.getAudioInputStream(music));
             }
             transitionClip.setFramePosition((int)pos);
@@ -82,7 +83,7 @@ public class AudioController implements SfxListener {
     public void playMainLoopMusic() {
         File music = new File("resources/sounds/game_music.wav");
         try {
-            if (!mainLoopClip.isOpen()){
+            if (!mainLoopClip.isOpen()) {
                 mainLoopClip.open(AudioSystem.getAudioInputStream(music));
             }
         } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {

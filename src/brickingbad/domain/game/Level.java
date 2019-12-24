@@ -8,13 +8,12 @@ import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.listeners.AnimationListener;
 import brickingbad.domain.game.listeners.GameListener;
 import brickingbad.domain.game.listeners.GameStateListener;
-import brickingbad.domain.game.powerup.*;
+import brickingbad.domain.game.gameobjects.powerup.*;
 import brickingbad.domain.game.gameobjects.border.*;
 import brickingbad.domain.game.gameobjects.brick.*;
 import brickingbad.domain.physics.Direction;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.domain.physics.Vector;
-import brickingbad.ui.UIController;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.Clock;
@@ -85,6 +84,10 @@ public class Level {
             removeObjectFromListeners(object);
         }
 
+        for(AnimationListener lis: animationListeners) {
+            lis.clearAllAnimations();
+        }
+
         gameObjects = new ArrayList<>();
         bricks = new ArrayList<>();
         balls = new ArrayList<>();
@@ -99,7 +102,7 @@ public class Level {
         trackObject(new Wall(Direction.RIGHT));
         trackObject(new Wall(Direction.LEFT));
         trackObject(new Ground());
-        UIController.getInstance().setAlreadyWon(false);
+        if(gameStateListener != null) gameStateListener.setAlreadyWon(false);
 
         if (!fromSave) {
 
@@ -159,10 +162,10 @@ public class Level {
         animationListeners.add(lis);
     }
 
-    public void startAnimation(String animationName, Object... args) {
+    public void startAnimation(String animationName, int animationTag, Object... args) {
         for(AnimationListener lis: animationListeners) {
             try {
-                lis.addAnimation(animationName, args);
+                lis.addAnimation(animationName, animationTag, args);
             } catch (ClassNotFoundException |
                     IllegalAccessException |
                     InvocationTargetException |
@@ -172,9 +175,9 @@ public class Level {
         }
     }
 
-    public void finishAnimation(String animationName) {
+    public void finishAnimation(String animationName, int animationTag) {
         for(AnimationListener lis: animationListeners) {
-            lis.removeAnimation(animationName);
+            lis.removeAnimation(animationName, animationTag);
         }
     }
 
@@ -199,8 +202,8 @@ public class Level {
     public void removeObject(GameObject object) {
         removeObjectFromListeners(object);
         gameObjects.remove(object);
-        bricks.remove(object);
-        balls.remove(object);
+        if (object instanceof Brick) bricks.remove(object);
+        if (object instanceof Ball) balls.remove(object);
     }
 
     // BRICKS
@@ -229,10 +232,11 @@ public class Level {
             if(content.ordinal() < 6) {
                 GameObjectFactory.getInstance().spawnPowerup(content, revealPosition);
             }else {
-                if(activeAliens.stream().map(Alien::getName).collect(Collectors.toList()).contains(content)) {
+                if(activeAliens.stream().map(Alien::getName).collect(Collectors.toList()).contains(content)
+                        || (content == WrapperContent.COOPERATIVE_ALIEN && cooperativeAlienIsKilled)) {
                     return;
                 }
-                GameObjectFactory.getInstance().spawnAlien(content, cooperativeAlienIsKilled);
+                GameObjectFactory.getInstance().spawnAlien(content);
             }
         }
     }
@@ -255,10 +259,6 @@ public class Level {
         ArrayList<PowerUp> storedPowerUpsCopy = new ArrayList<>(storedPowerUps);
         for(PowerUp powerup: storedPowerUpsCopy) {
             if(powerup.getName() == name) {
-                if(powerup.getName() != WrapperContent.DESTRUCTIVE_LASER_GUN) {
-                    storedPowerUps.remove(powerup);
-                    activePowerUps.add(powerup);
-                }
                 powerup.activate();
                 break;
             }
@@ -279,7 +279,6 @@ public class Level {
     }
 
     public void anyBricksLeft() {
-        System.out.println(bricks.size());
         if (bricks.isEmpty()) {
             gameStateListener.winGame();
         }
@@ -383,10 +382,6 @@ public class Level {
 
     public long getCurrentTime() {
         return gameClock.millis();
-    }
-
-    public long getSaveTimeOffset() {
-        return saveTimeOffset;
     }
 
 }

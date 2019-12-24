@@ -1,11 +1,13 @@
 package brickingbad.ui.components;
 
+import brickingbad.controller.GameController;
 import brickingbad.domain.game.GameLogic;
 import brickingbad.domain.game.Level;
 import brickingbad.domain.game.GameConstants;
 import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.listeners.GameObjectListener;
 import brickingbad.domain.game.gameobjects.brick.Brick;
+import brickingbad.domain.game.gameobjects.powerup.PowerUp;
 import brickingbad.domain.physics.Vector;
 import brickingbad.ui.BrickingBadFrame;
 
@@ -95,6 +97,18 @@ public class UIGameObject extends JLabel implements MouseListener, MouseMotionLi
                 if (Math.abs(mouseX-brickX) <= GameConstants.rectangularBrickLength / 2.0 &&
                         Math.abs(mouseY-brickY) <= GameConstants.rectangularBrickThickness / 2.0) {
                     Level.getInstance().removeObject(gameObject);
+                }
+            }
+        }
+        if(e.getButton() == MouseEvent.BUTTON1) {
+            if(gameObject instanceof PowerUp && Level.getInstance().getStoredPowerUps().contains(gameObject)) {
+                double mouseX = e.getX();
+                double mouseY = e.getY();
+                double brickX = gameObject.getPosition().getX();
+                double brickY = gameObject.getPosition().getY();
+                if (Math.abs(mouseX-brickX) <= GameConstants.powerupSize / 2.0 &&
+                        Math.abs(mouseY-brickY) <= GameConstants.powerupSize / 2.0) {
+                    GameController.getInstance().usePowerUp(((PowerUp) gameObject).getName());
                 }
             }
         }

@@ -5,6 +5,7 @@ import brickingbad.domain.game.*;
 import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.listeners.AnimationListener;
 import brickingbad.domain.game.listeners.GameListener;
+import brickingbad.domain.game.gameobjects.powerup.PowerUp;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.ui.DefaultActionable;
 import brickingbad.ui.components.UIGameObject;
@@ -81,7 +82,9 @@ public class RunningModePanel extends JPanel implements GameListener, AnimationL
 
   @Override
   public void addObject(GameObject object) {
-    uiObjects.add(new UIGameObject(object));
+    UIGameObject newUIObject = new UIGameObject(object);
+    if(object instanceof PowerUp) addMouseListener(newUIObject);
+    uiObjects.add(newUIObject);
   }
 
   @Override
@@ -105,11 +108,17 @@ public class RunningModePanel extends JPanel implements GameListener, AnimationL
     g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
     ArrayList<Animation> animationsCopy = new ArrayList<>(currentAnimations);
     for(Animation animation : animationsCopy) {
-      animation.drawFrame(g);
+      if(!animation.isFront()) {
+        animation.drawFrame(g);
+      }
     }
-    for (Iterator<UIGameObject> iterator = uiObjects.iterator(); iterator.hasNext(); ) {
-      UIGameObject object = iterator.next();
+    for (UIGameObject object : uiObjects) {
       object.paintComponent(g);
+    }
+    for(Animation animation : animationsCopy) {
+      if(animation.isFront()) {
+        animation.drawFrame(g);
+      }
     }
     drawHearts(g, numHearts);
   }
@@ -165,31 +174,34 @@ public class RunningModePanel extends JPanel implements GameListener, AnimationL
   }
 
   @Override
-  public void addAnimation(String animationName, Object... args)
+  public void addAnimation(String animationName, int animationTag, Object... args)
           throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
     Class animationClass = Class.forName("brickingbad.ui.game.animation." + animationName);
     Constructor constructor = animationClass.getConstructors()[0];
-    Object[] params = new Object[args.length + 1];
+    Object[] params = new Object[args.length + 2];
     params[0] = this;
+    params[1] = animationTag;
     for(int i = 0; i < args.length; i++) {
-      params[i + 1] = args[i];
+      params[i + 2] = args[i];
     }
     currentAnimations.add((Animation) constructor.newInstance(params));
   }
 
   @Override
-  public void removeAnimation(String animationName) {
+  public void removeAnimation(String animationName, int animationTag) {
     ArrayList<Animation> animCopy = new ArrayList<>(currentAnimations);
     for(Animation anim: animCopy) {
-      if(anim.getClass().getSimpleName().equals(animationName)) {
+      if(anim.getClass().getSimpleName().equals(animationName) && anim.getTag() == animationTag) {
         currentAnimations.remove(anim);
       }
     }
   }
 
   @Override
-  public void stopAnimation(Animation animation) {
-    currentAnimations.remove(animation);
+  public void stopAnimation(Object animation) {
+    if(animation instanceof Animation) {
+      currentAnimations.remove(animation);
+    }
   }
 
   @Override
