@@ -188,8 +188,10 @@ public class RunningModePanel extends JPanel implements GameListener, AnimationL
   }
 
   @Override
-  public void stopAnimation(Animation animation) {
-    currentAnimations.remove(animation);
+  public void stopAnimation(Object animation) {
+    if(animation instanceof Animation) {
+      currentAnimations.remove(animation);
+    }
   }
 
   @Override
