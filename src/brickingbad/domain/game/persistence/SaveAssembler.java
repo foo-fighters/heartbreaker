@@ -12,6 +12,7 @@ import brickingbad.domain.physics.Vector;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -22,6 +23,11 @@ public class SaveAssembler {
 
     int score = level.getScore();
     int lives = level.getLives();
+
+    boolean[][] grid = level.getBrickGrid();
+    Arrays.asList(grid).forEach((boolean[] arr) -> {
+      save.grid.add((ArrayList) Arrays.asList(arr));
+    });
 
     save.cooperativeAlienIsKilled = level.getCooperativeAlienIsKilled();
     save.offset = level.getCurrentTime();
@@ -87,6 +93,9 @@ public class SaveAssembler {
 
     Level.getInstance().setCooperativeAlienIsKilled(save.cooperativeAlienIsKilled);
     Level.getInstance().setSaveTimeOffset(save.offset);
+
+    boolean[][] grid = (boolean[][]) save.grid.toArray();
+    Level.getInstance().setGrid(grid);
 
     ArrayList<Brick> bricks = new ArrayList<>();
     int brickIndex = 0;

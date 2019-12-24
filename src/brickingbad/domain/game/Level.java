@@ -356,6 +356,10 @@ public class Level {
 
     public boolean[][] getBrickGrid() { return brickGrid; }
 
+    public void setGrid(boolean[][] arr) {
+        brickGrid = arr;
+    }
+
     public int getGridX() {
         return gridX;
     }

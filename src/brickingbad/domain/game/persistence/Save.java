@@ -8,6 +8,8 @@ public class Save {
 
   public String name;
 
+  List<List<Boolean>> grid;
+
   public boolean inRunningMode;
 
   public String username;
@@ -45,6 +47,7 @@ public class Save {
     alienCoordinates = new ArrayList<>();
     alienTypes = new ArrayList<>();
     ballOnPaddle = new ArrayList<>();
+    grid = new ArrayList<>();
   }
 
 }
