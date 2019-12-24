@@ -5,6 +5,7 @@ import brickingbad.domain.game.*;
 import brickingbad.domain.game.gameobjects.GameObject;
 import brickingbad.domain.game.listeners.AnimationListener;
 import brickingbad.domain.game.listeners.GameListener;
+import brickingbad.domain.game.powerup.PowerUp;
 import brickingbad.domain.physics.PhysicsEngine;
 import brickingbad.ui.DefaultActionable;
 import brickingbad.ui.components.UIGameObject;
@@ -81,7 +82,9 @@ public class RunningModePanel extends JPanel implements GameListener, AnimationL
 
   @Override
   public void addObject(GameObject object) {
-    uiObjects.add(new UIGameObject(object));
+    UIGameObject newUIObject = new UIGameObject(object);
+    if(object instanceof PowerUp) addMouseListener(newUIObject);
+    uiObjects.add(newUIObject);
   }
 
   @Override
