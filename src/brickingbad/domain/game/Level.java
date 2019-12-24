@@ -1,5 +1,6 @@
 package brickingbad.domain.game;
 
+import brickingbad.controller.GameController;
 import brickingbad.domain.game.gameobjects.Ball;
 import brickingbad.domain.game.gameobjects.GameObjectFactory;
 import brickingbad.domain.game.gameobjects.Paddle;
@@ -155,6 +156,17 @@ public class Level {
     private void publishScore() {
         for (GameListener lis : gameListeners) {
             lis.updateScore(score);
+        }
+    }
+
+    public void setupGrid() {
+        for (Brick brick : bricks) {
+            Vector gridPos = GameLogic.getClosestGridLocation(brick.getPosition());
+            int x = (int) gridPos.getX();
+            int y = (int) gridPos.getY();
+            brick.setCellX(x);
+            brick.setCellY(y);
+            brickGrid[x][y] = true;
         }
     }
 

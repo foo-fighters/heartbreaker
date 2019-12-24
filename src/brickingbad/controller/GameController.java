@@ -80,4 +80,7 @@ public class GameController {
 
     public void resetBalls() { GameLogic.destroyAllBalls(); }
 
+    public void setupGrid() {
+        Level.getInstance().setupGrid();
+    }
 }
