@@ -195,6 +195,7 @@ public class BrickingBadFrame extends JFrame {
   public void showWonDialog() {
       JOptionPane.showMessageDialog(this, "Congratz YOU HAVE WON" );
       showMainMenuPanel();
+      AudioController.getInstance().playMenuMusic();
     }
 
   private void showPauseWarning() {

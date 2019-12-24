@@ -102,7 +102,7 @@ public class Level {
         trackObject(new Wall(Direction.RIGHT));
         trackObject(new Wall(Direction.LEFT));
         trackObject(new Ground());
-        gameStateListener.setAlreadyWon(false);
+        if(gameStateListener != null) gameStateListener.setAlreadyWon(false);
 
         if (!fromSave) {
 
