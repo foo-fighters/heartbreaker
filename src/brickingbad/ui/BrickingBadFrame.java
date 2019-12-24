@@ -172,10 +172,10 @@ public class BrickingBadFrame extends JFrame {
           boolean loadRunningModePanel = SaveController.getInstance().adapt(adapter).loadGame(name);
           if (loadRunningModePanel) {
             showRunningModePanel();
+            UIController.getInstance().resumeGameIfPaused();
           } else {
             showBuildingModePanel();
           }
-          UIController.getInstance().resumeGameIfPaused();
         }
       }
     }

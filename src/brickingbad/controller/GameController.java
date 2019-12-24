@@ -27,7 +27,7 @@ public class GameController {
     public void initializeGame(boolean fromSave) {
         Level.getInstance().initialize(fromSave);
         RunningModePanel.getInstance().clearAllAnimations();
-        Animator.getInstance().start();
+//        Animator.getInstance().start();
     }
 
     public void startGame() {
