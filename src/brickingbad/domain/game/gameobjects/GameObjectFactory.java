@@ -86,6 +86,10 @@ public class GameObjectFactory {
         if(!overlaps) Level.getInstance().addObject(brick);
     }
 
+    public void addBrickManual(Brick brick) {
+        Level.getInstance().addObject(brick);
+    }
+
     public void addBrickHorizontal() {
         boolean overlaps;
         int y = ThreadLocalRandom.current().nextInt(Level.getInstance().getGridY());

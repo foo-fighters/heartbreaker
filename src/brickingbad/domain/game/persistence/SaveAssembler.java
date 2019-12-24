@@ -154,7 +154,7 @@ public class SaveAssembler {
 
     Level.getInstance().setScore(score);
     Level.getInstance().setLives(lives);
-    bricks.forEach(brick -> GameObjectFactory.getInstance().addBrick(brick));
+    bricks.forEach(brick -> GameObjectFactory.getInstance().addBrickManual(brick));
     Level.getInstance().setPaddle(paddle);
     for (int i = 0; i < balls.size(); i++) {
       Ball ball = balls.get(i);
